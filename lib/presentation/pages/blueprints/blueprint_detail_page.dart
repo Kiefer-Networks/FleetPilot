@@ -24,9 +24,9 @@ class BlueprintDetailPage extends ConsumerWidget {
     return blueprintsAsync.when(
       data: (blueprints) {
         final blueprint = blueprints.cast<Blueprint?>().firstWhere(
-              (bp) => bp!.id == blueprintId,
-              orElse: () => null,
-            );
+          (bp) => bp!.id == blueprintId,
+          orElse: () => null,
+        );
         if (blueprint == null) {
           return Scaffold(
             appBar: AppBar(),
@@ -38,10 +38,7 @@ class BlueprintDetailPage extends ConsumerWidget {
         }
         return _BlueprintDetailScaffold(blueprint: blueprint);
       },
-      loading: () => Scaffold(
-        appBar: AppBar(),
-        body: const LoadingWidget(),
-      ),
+      loading: () => Scaffold(appBar: AppBar(), body: const LoadingWidget()),
       error: (error, _) => Scaffold(
         appBar: AppBar(),
         body: ErrorStateWidget(
@@ -64,8 +61,9 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final deviceCount = ref.watch(blueprintDeviceCountProvider(blueprint.id));
-    final libraryItemsAsync =
-        ref.watch(blueprintLibraryItemsProvider(blueprint.id));
+    final libraryItemsAsync = ref.watch(
+      blueprintLibraryItemsProvider(blueprint.id),
+    );
 
     return Scaffold(
       body: NestedScrollView(
@@ -90,10 +88,14 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
                   PopupMenuItem(
                     value: 'delete',
                     child: ListTile(
-                      leading: Icon(Icons.delete_outline,
-                          color: colorScheme.error),
-                      title: Text(l10n.deleteBlueprint,
-                          style: TextStyle(color: colorScheme.error)),
+                      leading: Icon(
+                        Icons.delete_outline,
+                        color: colorScheme.error,
+                      ),
+                      title: Text(
+                        l10n.deleteBlueprint,
+                        style: TextStyle(color: colorScheme.error),
+                      ),
                       contentPadding: EdgeInsets.zero,
                       dense: true,
                     ),
@@ -141,7 +143,9 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
                     const SizedBox(height: 12),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 4),
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: blueprint.enrollmentCodeIsActive
                             ? colorScheme.primaryContainer
@@ -205,8 +209,11 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Icon(Icons.download_outlined,
-                          size: 20, color: colorScheme.primary),
+                      Icon(
+                        Icons.download_outlined,
+                        size: 20,
+                        color: colorScheme.primary,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
@@ -214,8 +221,11 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
                           style: theme.textTheme.bodyMedium,
                         ),
                       ),
-                      Icon(Icons.chevron_right,
-                          size: 20, color: colorScheme.onSurfaceVariant),
+                      Icon(
+                        Icons.chevron_right,
+                        size: 20,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                     ],
                   ),
                 ),
@@ -292,20 +302,22 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      ...grouped[type]!
-                          .map((item) => _LibraryItemTile(
-                            item: item,
-                            onRemove: () => _removeLibraryItem(context, ref, item),
-                            onTap: () {
-                              final id = item.itemId ?? item.id;
-                              final name = item.name ?? 'Unknown';
-                              if (id != null) {
-                                context.push(
-                                  '/more/library-items/$id?name=${Uri.encodeComponent(name)}',
-                                );
-                              }
-                            },
-                          )),
+                      ...grouped[type]!.map(
+                        (item) => _LibraryItemTile(
+                          item: item,
+                          onRemove: () =>
+                              _removeLibraryItem(context, ref, item),
+                          onTap: () {
+                            final id = item.itemId ?? item.id;
+                            final name = item.name ?? 'Unknown';
+                            if (id != null) {
+                              context.push(
+                                '/more/library-items/$id?name=${Uri.encodeComponent(name)}',
+                              );
+                            }
+                          },
+                        ),
+                      ),
                     ],
                   ],
                 );
@@ -316,8 +328,8 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
               ),
               error: (error, _) => ErrorStateWidget(
                 failure: error,
-                onRetry: () => ref.invalidate(
-                    blueprintLibraryItemsProvider(blueprint.id)),
+                onRetry: () =>
+                    ref.invalidate(blueprintLibraryItemsProvider(blueprint.id)),
               ),
             ),
             const SizedBox(height: 16),
@@ -383,15 +395,15 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
       await repo.updateBlueprint(blueprint.id, result);
       ref.invalidate(blueprintsProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.blueprintUpdated)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.blueprintUpdated)));
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -425,16 +437,16 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
       await repo.deleteBlueprint(blueprint.id);
       ref.invalidate(blueprintsProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.blueprintDeleted)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.blueprintDeleted)));
         context.pop();
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -475,21 +487,20 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
       });
       ref.invalidate(blueprintLibraryItemsProvider(blueprint.id));
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.libraryItemRemoved)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.libraryItemRemoved)));
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
 
-  Future<void> _downloadOtaProfile(
-      BuildContext context, WidgetRef ref) async {
+  Future<void> _downloadOtaProfile(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context);
     try {
       final repo = await ref.read(blueprintRepositoryProvider.future);
@@ -497,15 +508,15 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
       if (!context.mounted) return;
       await Clipboard.setData(ClipboardData(text: profile));
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.otaProfileCopied)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.otaProfileCopied)));
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.noOtaProfile)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.noOtaProfile)));
       }
     }
   }
@@ -528,8 +539,7 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
         .replaceAll('-', ' ')
         .replaceAll('_', ' ')
         .split(' ')
-        .map((w) =>
-            w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : w)
+        .map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : w)
         .join(' ');
   }
 }
@@ -551,63 +561,71 @@ class _LibraryItemTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: colorScheme.secondaryContainer,
-                borderRadius: BorderRadius.circular(10),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  _BlueprintDetailScaffold._iconForType(item.type ?? 'other'),
+                  color: colorScheme.onSecondaryContainer,
+                  size: 20,
+                ),
               ),
-              child: Icon(
-                _BlueprintDetailScaffold._iconForType(item.type ?? 'other'),
-                color: colorScheme.onSecondaryContainer,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name ?? item.itemId ?? 'Unknown',
-                    style: theme.textTheme.bodyMedium,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  if (item.type != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        _BlueprintDetailScaffold._displayType(item.type!),
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name ?? item.itemId ?? 'Unknown',
+                      style: theme.textTheme.bodyMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    if (item.type != null)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: colorScheme.surfaceContainerHighest,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          _BlueprintDetailScaffold._displayType(item.type!),
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            if (onRemove != null)
-              IconButton(
-                icon: Icon(Icons.remove_circle_outline,
-                    size: 20, color: colorScheme.error),
-                onPressed: onRemove,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
-              ),
-          ],
+              if (onRemove != null)
+                IconButton(
+                  icon: Icon(
+                    Icons.remove_circle_outline,
+                    size: 20,
+                    color: colorScheme.error,
+                  ),
+                  onPressed: onRemove,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(
+                    minWidth: 36,
+                    minHeight: 36,
+                  ),
+                ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

@@ -45,7 +45,6 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
   }
 
   Future<void> _showFilterSheet() async {
-    final l10n = AppLocalizations.of(context);
     final result = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -99,8 +98,9 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
                             onPressed: () {
                               _searchController.clear();
                               ref
-                                  .read(deviceSearchQueryProvider.notifier)
-                                  .state = '';
+                                      .read(deviceSearchQueryProvider.notifier)
+                                      .state =
+                                  '';
                               setState(() {});
                             },
                           ),
@@ -147,21 +147,25 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
                         padding: const EdgeInsets.only(right: 8),
                         child: InputChip(
                           label: Text(currentPlatform),
-                          onDeleted: () => ref
-                              .read(platformFilterProvider.notifier)
-                              .state = null,
+                          onDeleted: () =>
+                              ref.read(platformFilterProvider.notifier).state =
+                                  null,
                         ),
                       ),
                     if (supervisedFilter != null)
                       Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: InputChip(
-                          label: Text(supervisedFilter
-                              ? l10n.filterSupervised
-                              : l10n.filterUnsupervised),
-                          onDeleted: () => ref
-                              .read(supervisedFilterProvider.notifier)
-                              .state = null,
+                          label: Text(
+                            supervisedFilter
+                                ? l10n.filterSupervised
+                                : l10n.filterUnsupervised,
+                          ),
+                          onDeleted: () =>
+                              ref
+                                      .read(supervisedFilterProvider.notifier)
+                                      .state =
+                                  null,
                         ),
                       ),
                     if (lostModeFilter)
@@ -169,9 +173,9 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
                         padding: const EdgeInsets.only(right: 8),
                         child: InputChip(
                           label: Text(l10n.filterLostMode),
-                          onDeleted: () => ref
-                              .read(lostModeFilterProvider.notifier)
-                              .state = false,
+                          onDeleted: () =>
+                              ref.read(lostModeFilterProvider.notifier).state =
+                                  false,
                         ),
                       ),
                     ActionChip(
@@ -194,13 +198,14 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
                 children: [
                   FilterChip(
                     avatar: Icon(
-                        sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
-                        size: 16),
+                      sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
+                      size: 16,
+                    ),
                     label: Text(sortAsc ? l10n.sortAZ : l10n.sortZA),
                     selected: false,
-                    onSelected: (_) => ref
-                        .read(deviceSortAscProvider.notifier)
-                        .state = !sortAsc,
+                    onSelected: (_) =>
+                        ref.read(deviceSortAscProvider.notifier).state =
+                            !sortAsc,
                   ),
                 ],
               ),
@@ -270,8 +275,7 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
                 loading: () => const LoadingWidget(),
                 error: (error, _) => ErrorStateWidget(
                   failure: error,
-                  onRetry: () =>
-                      ref.read(devicesProvider.notifier).refresh(),
+                  onRetry: () => ref.read(devicesProvider.notifier).refresh(),
                 ),
               ),
             ),
@@ -314,8 +318,9 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                     width: 32,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.onSurfaceVariant
-                          .withValues(alpha: 0.4),
+                      color: theme.colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.4,
+                      ),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -326,8 +331,7 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     children: [
-                      Text(l10n.filterTitle,
-                          style: theme.textTheme.titleLarge),
+                      Text(l10n.filterTitle, style: theme.textTheme.titleLarge),
                       const Spacer(),
                       TextButton(
                         onPressed: () {
@@ -353,8 +357,10 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     children: [
                       // Platform
-                      Text(l10n.filterPlatform,
-                          style: theme.textTheme.titleSmall),
+                      Text(
+                        l10n.filterPlatform,
+                        style: theme.textTheme.titleSmall,
+                      ),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
@@ -364,9 +370,8 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                             label: Text(l10n.filterAll),
                             selected: platform == null,
                             onSelected: (_) {
-                              ref
-                                  .read(platformFilterProvider.notifier)
-                                  .state = null;
+                              ref.read(platformFilterProvider.notifier).state =
+                                  null;
                               setSheetState(() {});
                             },
                           ),
@@ -377,7 +382,9 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                               onSelected: (_) {
                                 ref
                                     .read(platformFilterProvider.notifier)
-                                    .state = platform == p ? null : p;
+                                    .state = platform == p
+                                    ? null
+                                    : p;
                                 setSheetState(() {});
                               },
                             ),
@@ -386,8 +393,10 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                       const SizedBox(height: 16),
 
                       // Supervision
-                      Text(l10n.filterSupervision,
-                          style: theme.textTheme.titleSmall),
+                      Text(
+                        l10n.filterSupervision,
+                        style: theme.textTheme.titleSmall,
+                      ),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
@@ -398,8 +407,9 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                             selected: supervised == null,
                             onSelected: (_) {
                               ref
-                                  .read(supervisedFilterProvider.notifier)
-                                  .state = null;
+                                      .read(supervisedFilterProvider.notifier)
+                                      .state =
+                                  null;
                               setSheetState(() {});
                             },
                           ),
@@ -409,8 +419,9 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                             onSelected: (_) {
                               ref
                                   .read(supervisedFilterProvider.notifier)
-                                  .state =
-                                  supervised == true ? null : true;
+                                  .state = supervised == true
+                                  ? null
+                                  : true;
                               setSheetState(() {});
                             },
                           ),
@@ -420,8 +431,9 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                             onSelected: (_) {
                               ref
                                   .read(supervisedFilterProvider.notifier)
-                                  .state =
-                                  supervised == false ? null : false;
+                                  .state = supervised == false
+                                  ? null
+                                  : false;
                               setSheetState(() {});
                             },
                           ),
@@ -434,9 +446,8 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                         label: Text(l10n.filterLostMode),
                         selected: lostMode,
                         onSelected: (_) {
-                          ref
-                              .read(lostModeFilterProvider.notifier)
-                              .state = !lostMode;
+                          ref.read(lostModeFilterProvider.notifier).state =
+                              !lostMode;
                           setSheetState(() {});
                         },
                       ),

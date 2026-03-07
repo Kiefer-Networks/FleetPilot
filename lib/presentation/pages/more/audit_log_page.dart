@@ -68,19 +68,22 @@ class _AuditLogPageState extends ConsumerState<AuditLogPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.history,
-                            size: 48,
-                            color: theme.colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.history,
+                          size: 48,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(height: 8),
-                        Text(l10n.noAuditEvents,
-                            style: theme.textTheme.bodyLarge),
+                        Text(
+                          l10n.noAuditEvents,
+                          style: theme.textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   );
                 }
                 return RefreshIndicator(
-                  onRefresh: () async =>
-                      ref.invalidate(auditEventsProvider),
+                  onRefresh: () async => ref.invalidate(auditEventsProvider),
                   child: ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: events.length,
@@ -129,43 +132,58 @@ class _AuditEventTile extends StatelessWidget {
                 color: colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon,
-                  size: 20, color: colorScheme.onSecondaryContainer),
+              child: Icon(
+                icon,
+                size: 20,
+                color: colorScheme.onSecondaryContainer,
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(description,
-                      style: theme.textTheme.bodyMedium,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis),
+                  Text(
+                    description,
+                    style: theme.textTheme.bodyMedium,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
                       if (actor.isNotEmpty) ...[
-                        Icon(Icons.person_outline,
-                            size: 14,
-                            color: colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.person_outline,
+                          size: 14,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(width: 4),
                         Flexible(
-                          child: Text(actor,
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                  color: colorScheme.onSurfaceVariant),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis),
+                          child: Text(
+                            actor,
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         const SizedBox(width: 8),
                       ],
                       if (event.eventDate != null) ...[
-                        Icon(Icons.schedule,
-                            size: 14,
-                            color: colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.schedule,
+                          size: 14,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(width: 4),
-                        Text(_formatDateTime(event.eventDate!),
-                            style: theme.textTheme.labelSmall?.copyWith(
-                                color: colorScheme.onSurfaceVariant)),
+                        Text(
+                          _formatDateTime(event.eventDate!),
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
                       ],
                     ],
                   ),
@@ -173,16 +191,21 @@ class _AuditEventTile extends StatelessWidget {
                     const SizedBox(height: 2),
                     Row(
                       children: [
-                        Icon(Icons.devices,
-                            size: 14,
-                            color: colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.devices,
+                          size: 14,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(width: 4),
                         Flexible(
-                          child: Text(event.deviceName!,
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                  color: colorScheme.onSurfaceVariant),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis),
+                          child: Text(
+                            event.deviceName!,
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),

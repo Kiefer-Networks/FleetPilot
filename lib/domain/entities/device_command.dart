@@ -23,13 +23,13 @@ abstract class DeviceCommand with _$DeviceCommand {
 
   /// Human-readable command status label.
   static String statusLabel(String? status) => switch (status) {
-        '1' => 'Pending',
-        '2' => 'Running',
-        '3' => 'Completed',
-        '4' => 'Failed',
-        '5' => 'Not Now',
-        _ => status ?? 'Unknown',
-      };
+    '1' => 'Pending',
+    '2' => 'Running',
+    '3' => 'Completed',
+    '4' => 'Failed',
+    '5' => 'Not Now',
+    _ => status ?? 'Unknown',
+  };
 }
 
 String? _statusFromJson(dynamic value) {

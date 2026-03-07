@@ -229,8 +229,7 @@ class _PinVerifyDialogState extends State<_PinVerifyDialog> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                PinDotIndicator(
-                    length: _pin.length, hasError: _error != null),
+                PinDotIndicator(length: _pin.length, hasError: _error != null),
                 if (_error != null) ...[
                   const SizedBox(height: 12),
                   Text(

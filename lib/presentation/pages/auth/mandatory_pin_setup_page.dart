@@ -18,10 +18,9 @@ class MandatoryPinSetupPage extends ConsumerStatefulWidget {
       _MandatoryPinSetupPageState();
 }
 
-enum _Phase { enterPin, confirmPin, biometric, done }
+enum _Phase { enterPin, confirmPin, biometric }
 
-class _MandatoryPinSetupPageState
-    extends ConsumerState<MandatoryPinSetupPage> {
+class _MandatoryPinSetupPageState extends ConsumerState<MandatoryPinSetupPage> {
   _Phase _phase = _Phase.enterPin;
   String _pin = '';
   String _firstPin = '';
@@ -133,17 +132,16 @@ class _MandatoryPinSetupPageState
   }
 
   Widget _buildPinStep(
-      AppLocalizations l10n, ThemeData theme, ColorScheme colorScheme) {
+    AppLocalizations l10n,
+    ThemeData theme,
+    ColorScheme colorScheme,
+  ) {
     final isConfirm = _phase == _Phase.confirmPin;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          Icons.lock_outline,
-          size: 56,
-          color: colorScheme.primary,
-        ),
+        Icon(Icons.lock_outline, size: 56, color: colorScheme.primary),
         const SizedBox(height: 16),
         Text(
           isConfirm ? l10n.securityConfirmPin : l10n.securitySetPin,
@@ -152,9 +150,7 @@ class _MandatoryPinSetupPageState
         ),
         const SizedBox(height: 8),
         Text(
-          isConfirm
-              ? l10n.securityConfirmPin
-              : l10n.securityAppLockDescription,
+          isConfirm ? l10n.securityConfirmPin : l10n.securityAppLockDescription,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: colorScheme.onSurfaceVariant,
           ),
@@ -179,7 +175,10 @@ class _MandatoryPinSetupPageState
   }
 
   Widget _buildBiometricStep(
-      AppLocalizations l10n, ThemeData theme, ColorScheme colorScheme) {
+    AppLocalizations l10n,
+    ThemeData theme,
+    ColorScheme colorScheme,
+  ) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -203,11 +202,7 @@ class _MandatoryPinSetupPageState
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 32),
-        Icon(
-          Icons.fingerprint,
-          size: 64,
-          color: colorScheme.primary,
-        ),
+        Icon(Icons.fingerprint, size: 64, color: colorScheme.primary),
         const SizedBox(height: 16),
         Text(
           l10n.securityBiometricDescription,
@@ -224,16 +219,15 @@ class _MandatoryPinSetupPageState
                   width: 18,
                   height: 18,
                   child: CircularProgressIndicator(
-                      strokeWidth: 2, color: Colors.white),
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
                 )
               : const Icon(Icons.fingerprint),
           label: Text(l10n.securityBiometricEnable),
         ),
         const SizedBox(height: 12),
-        TextButton(
-          onPressed: _finish,
-          child: Text(l10n.securityNext),
-        ),
+        TextButton(onPressed: _finish, child: Text(l10n.securityNext)),
       ],
     );
   }

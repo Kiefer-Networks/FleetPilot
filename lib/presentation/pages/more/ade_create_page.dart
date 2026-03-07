@@ -79,9 +79,9 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
       ref.invalidate(adeIntegrationsProvider);
       if (mounted) {
         final l10n = AppLocalizations.of(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.integrationCreated)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.integrationCreated)));
         Navigator.of(context).pop();
       }
     } catch (_) {
@@ -144,7 +144,9 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
                             width: 16,
                             height: 16,
                             child: CircularProgressIndicator(
-                                strokeWidth: 2, color: Colors.white),
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
                           )
                         : const Icon(Icons.cloud_upload_outlined),
                     label: Text(l10n.create),
@@ -182,8 +184,8 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
             state: _currentStep > 1
                 ? StepState.complete
                 : _currentStep == 1
-                    ? StepState.indexed
-                    : StepState.disabled,
+                ? StepState.indexed
+                : StepState.disabled,
             content: _buildTokenUploadStep(l10n, theme, colorScheme),
           ),
           // Step 3: Configure
@@ -199,7 +201,10 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
   }
 
   Widget _buildPublicKeyStep(
-      AppLocalizations l10n, ThemeData theme, ColorScheme colorScheme) {
+    AppLocalizations l10n,
+    ThemeData theme,
+    ColorScheme colorScheme,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -234,9 +239,9 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
           OutlinedButton.icon(
             onPressed: () {
               Clipboard.setData(ClipboardData(text: _publicKey!));
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.publicKeyCopied)),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(l10n.publicKeyCopied)));
             },
             icon: const Icon(Icons.copy, size: 18),
             label: Text(l10n.tapToCopy),
@@ -247,7 +252,10 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
   }
 
   Widget _buildTokenUploadStep(
-      AppLocalizations l10n, ThemeData theme, ColorScheme colorScheme) {
+    AppLocalizations l10n,
+    ThemeData theme,
+    ColorScheme colorScheme,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -255,8 +263,10 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
           Card(
             color: colorScheme.primaryContainer,
             child: ListTile(
-              leading: Icon(Icons.insert_drive_file,
-                  color: colorScheme.onPrimaryContainer),
+              leading: Icon(
+                Icons.insert_drive_file,
+                color: colorScheme.onPrimaryContainer,
+              ),
               title: Text(
                 _selectedFileName!,
                 style: theme.textTheme.bodyMedium?.copyWith(
@@ -286,7 +296,10 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
   }
 
   Widget _buildConfigureStep(
-      AppLocalizations l10n, ThemeData theme, ColorScheme colorScheme) {
+    AppLocalizations l10n,
+    ThemeData theme,
+    ColorScheme colorScheme,
+  ) {
     final blueprintsAsync = ref.watch(blueprintsProvider);
 
     return Column(
@@ -314,7 +327,7 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
         const SizedBox(height: 16),
         blueprintsAsync.when(
           data: (blueprints) => DropdownButtonFormField<String>(
-            value: blueprints.any((bp) => bp.id == _selectedBlueprintId)
+            initialValue: blueprints.any((bp) => bp.id == _selectedBlueprintId)
                 ? _selectedBlueprintId
                 : null,
             decoration: InputDecoration(
@@ -324,17 +337,17 @@ class _AdeCreatePageState extends ConsumerState<AdeCreatePage> {
             ),
             isExpanded: true,
             items: blueprints
-                .map((bp) => DropdownMenuItem(
-                      value: bp.id,
-                      child:
-                          Text(bp.name, overflow: TextOverflow.ellipsis),
-                    ))
+                .map(
+                  (bp) => DropdownMenuItem(
+                    value: bp.id,
+                    child: Text(bp.name, overflow: TextOverflow.ellipsis),
+                  ),
+                )
                 .toList(),
-            onChanged: (value) =>
-                setState(() => _selectedBlueprintId = value),
+            onChanged: (value) => setState(() => _selectedBlueprintId = value),
           ),
           loading: () => const LinearProgressIndicator(),
-          error: (_, __) => TextField(
+          error: (_, _) => TextField(
             decoration: InputDecoration(
               labelText: l10n.defaultBlueprintId,
               border: const OutlineInputBorder(),

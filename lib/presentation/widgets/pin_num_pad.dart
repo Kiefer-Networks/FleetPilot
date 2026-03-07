@@ -34,8 +34,8 @@ class PinDotIndicator extends StatelessWidget {
               color: hasError
                   ? colorScheme.error
                   : (filled
-                      ? colorScheme.primary
-                      : colorScheme.onSurfaceVariant),
+                        ? colorScheme.primary
+                        : colorScheme.onSurfaceVariant),
               width: 2,
             ),
           ),

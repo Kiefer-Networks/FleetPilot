@@ -31,11 +31,16 @@ class AdeIntegrationsPage extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.device_hub_outlined,
-                      size: 48, color: colorScheme.onSurfaceVariant),
+                  Icon(
+                    Icons.device_hub_outlined,
+                    size: 48,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                   const SizedBox(height: 8),
-                  Text(l10n.noAdeIntegrations,
-                      style: theme.textTheme.bodyLarge),
+                  Text(
+                    l10n.noAdeIntegrations,
+                    style: theme.textTheme.bodyLarge,
+                  ),
                 ],
               ),
             );
@@ -79,8 +84,7 @@ class _AdeIntegrationTile extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => context.push(
-            '/more/ade-integrations/${integration.id}'),
+        onTap: () => context.push('/more/ade-integrations/${integration.id}'),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
@@ -92,8 +96,7 @@ class _AdeIntegrationTile extends StatelessWidget {
                   color: statusColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(Icons.device_hub,
-                    color: statusColor, size: 24),
+                child: Icon(Icons.device_hub, color: statusColor, size: 24),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -120,32 +123,43 @@ class _AdeIntegrationTile extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: statusColor.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
                             isValid ? l10n.tokenValid : l10n.tokenExpired,
-                            style: theme.textTheme.labelSmall
-                                ?.copyWith(color: statusColor),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: statusColor,
+                            ),
                           ),
                         ),
                         if (integration.deviceCount != null) ...[
                           const SizedBox(width: 12),
-                          Icon(Icons.devices, size: 14,
-                              color: colorScheme.onSurfaceVariant),
+                          Icon(
+                            Icons.devices,
+                            size: 14,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                           const SizedBox(width: 4),
-                          Text('${integration.deviceCount}',
-                              style: theme.textTheme.labelSmall),
+                          Text(
+                            '${integration.deviceCount}',
+                            style: theme.textTheme.labelSmall,
+                          ),
                         ],
                       ],
                     ),
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right,
-                  size: 20, color: colorScheme.onSurfaceVariant),
+              Icon(
+                Icons.chevron_right,
+                size: 20,
+                color: colorScheme.onSurfaceVariant,
+              ),
             ],
           ),
         ),

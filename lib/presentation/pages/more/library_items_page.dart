@@ -26,11 +26,16 @@ class LibraryItemsPage extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.inventory_2_outlined,
-                      size: 48, color: theme.colorScheme.onSurfaceVariant),
+                  Icon(
+                    Icons.inventory_2_outlined,
+                    size: 48,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                   const SizedBox(height: 8),
-                  Text('No library items found.',
-                      style: theme.textTheme.bodyLarge),
+                  Text(
+                    'No library items found.',
+                    style: theme.textTheme.bodyLarge,
+                  ),
                 ],
               ),
             );
@@ -88,14 +93,16 @@ class _BlueprintLibrarySection extends ConsumerWidget {
                   const SizedBox(width: 8),
                   Text(
                     blueprintName,
-                    style: theme.textTheme.titleSmall
-                        ?.copyWith(color: colorScheme.primary),
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      color: colorScheme.primary,
+                    ),
                   ),
                   const Spacer(),
                   Text(
                     '${items.length}',
-                    style: theme.textTheme.labelSmall
-                        ?.copyWith(color: colorScheme.onSurfaceVariant),
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ],
               ),
@@ -107,7 +114,11 @@ class _BlueprintLibrarySection extends ConsumerWidget {
                   for (var i = 0; i < items.length; i++) ...[
                     _LibraryItemTile(item: items[i]),
                     if (i < items.length - 1)
-                      Divider(height: 1, indent: 56, color: colorScheme.outlineVariant),
+                      Divider(
+                        height: 1,
+                        indent: 56,
+                        color: colorScheme.outlineVariant,
+                      ),
                   ],
                 ],
               ),
@@ -152,8 +163,9 @@ class _LibraryItemTile extends StatelessWidget {
       subtitle: item.type != null
           ? Text(
               item.type!,
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: colorScheme.onSurfaceVariant),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
             )
           : null,
       dense: true,

@@ -20,6 +20,5 @@ abstract class Threat with _$Threat {
     @JsonKey(name: 'threat_name') String? threatName,
   }) = _Threat;
 
-  factory Threat.fromJson(Map<String, dynamic> json) =>
-      _$ThreatFromJson(json);
+  factory Threat.fromJson(Map<String, dynamic> json) => _$ThreatFromJson(json);
 }

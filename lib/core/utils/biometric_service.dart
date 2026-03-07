@@ -6,7 +6,7 @@ import 'package:local_auth/local_auth.dart';
 /// Never caches auth state — every call is a fresh biometric prompt.
 class BiometricService {
   BiometricService({LocalAuthentication? auth})
-      : _auth = auth ?? LocalAuthentication();
+    : _auth = auth ?? LocalAuthentication();
 
   final LocalAuthentication _auth;
 

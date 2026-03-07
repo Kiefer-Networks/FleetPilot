@@ -27,7 +27,8 @@ class SettingsTile extends StatelessWidget {
     return ListTile(
       leading: CircleIcon(icon: icon, color: iconColor),
       title: Text(title),
-      subtitle: subtitle ??
+      subtitle:
+          subtitle ??
           (subtitleText != null
               ? Text(
                   subtitleText!,

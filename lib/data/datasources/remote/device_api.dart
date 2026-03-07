@@ -47,7 +47,11 @@ class DeviceApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('DeviceApi.getDevicesPage parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'DeviceApi.getDevicesPage parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse device response: $e');
     }
   }
@@ -126,7 +130,11 @@ class DeviceApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('DeviceApi.getDeviceDetails parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'DeviceApi.getDeviceDetails parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse device details: $e');
     }
   }
@@ -148,15 +156,17 @@ class DeviceApi {
       }
 
       final castApps = appsList.cast<Map<String, dynamic>>();
-      return castApps
-          .map(DeviceApp.fromJson)
-          .toList(growable: false);
+      return castApps.map(DeviceApp.fromJson).toList(growable: false);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('DeviceApi.getDeviceApps parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'DeviceApi.getDeviceApps parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse device apps: $e');
     }
   }
@@ -175,7 +185,11 @@ class DeviceApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('DeviceApi.getDeviceStatus parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'DeviceApi.getDeviceStatus parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse device status: $e');
     }
   }
@@ -199,7 +213,8 @@ class DeviceApi {
         final activity = data['activity'];
         if (activity is List) {
           activityList = activity;
-        } else if (activity is Map<String, dynamic> && activity['results'] is List) {
+        } else if (activity is Map<String, dynamic> &&
+            activity['results'] is List) {
           activityList = activity['results'] as List;
         } else {
           return [];
@@ -219,7 +234,11 @@ class DeviceApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('DeviceApi.getDeviceActivity parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'DeviceApi.getDeviceActivity parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse device activity: $e');
     }
   }
@@ -243,7 +262,8 @@ class DeviceApi {
         final commands = data['commands'];
         if (commands is List) {
           commandsList = commands;
-        } else if (commands is Map<String, dynamic> && commands['results'] is List) {
+        } else if (commands is Map<String, dynamic> &&
+            commands['results'] is List) {
           commandsList = commands['results'] as List;
         } else {
           return [];
@@ -263,7 +283,11 @@ class DeviceApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('DeviceApi.getDeviceCommands parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'DeviceApi.getDeviceCommands parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse device commands: $e');
     }
   }
@@ -277,7 +301,9 @@ class DeviceApi {
 
     Future<String?> fetchSecret(String path, String key) async {
       try {
-        final response = await dio.get<dynamic>('/devices/$deviceId/secrets/$path');
+        final response = await dio.get<dynamic>(
+          '/devices/$deviceId/secrets/$path',
+        );
         final data = response.data;
         if (data is Map<String, dynamic>) return data[key] as String?;
       } on DioException catch (_) {
@@ -322,7 +348,11 @@ class DeviceApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('DeviceApi.getDeviceNotes parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'DeviceApi.getDeviceNotes parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse device notes: $e');
     }
   }
@@ -346,7 +376,11 @@ class DeviceApi {
     }
   }
 
-  Future<DeviceNote> updateDeviceNote(String deviceId, String noteId, String content) async {
+  Future<DeviceNote> updateDeviceNote(
+    String deviceId,
+    String noteId,
+    String content,
+  ) async {
     try {
       final response = await dio.patch<dynamic>(
         '/devices/$deviceId/notes/$noteId',
@@ -377,7 +411,10 @@ class DeviceApi {
   // Update / Delete Device
   // ---------------------------------------------------------------------------
 
-  Future<Device> updateDevice(String deviceId, Map<String, dynamic> body) async {
+  Future<Device> updateDevice(
+    String deviceId,
+    Map<String, dynamic> body,
+  ) async {
     try {
       final response = await dio.patch<dynamic>(
         '/devices/$deviceId',
@@ -437,10 +474,7 @@ class DeviceApi {
 
   Future<Tag> createTag(String name) async {
     try {
-      final response = await dio.post<dynamic>(
-        '/tags',
-        data: {'name': name},
-      );
+      final response = await dio.post<dynamic>('/tags', data: {'name': name});
       final data = response.data;
       if (data is Map<String, dynamic>) return Tag.fromJson(data);
       throw const UnexpectedFailure('Unexpected tag create response');
@@ -506,7 +540,17 @@ class DeviceApi {
 
     if (data is Map<String, dynamic>) {
       // Try common wrapper keys
-      for (final key in ['results', 'value', 'devices', 'data', 'activity', 'commands', 'apps', 'notes', 'tags']) {
+      for (final key in [
+        'results',
+        'value',
+        'devices',
+        'data',
+        'activity',
+        'commands',
+        'apps',
+        'notes',
+        'tags',
+      ]) {
         final list = data[key];
         if (list is List) {
           return list.cast<Map<String, dynamic>>();

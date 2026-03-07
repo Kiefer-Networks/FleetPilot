@@ -25,7 +25,9 @@ abstract class Device with _$Device {
     @JsonKey(name: 'is_supervised') @Default(false) bool isSupervised,
     @JsonKey(name: 'general_status') String? generalStatus,
     @JsonKey(name: 'lost_mode_status') String? lostModeStatus,
-    @JsonKey(name: 'tags', fromJson: _tagsFromJson) @Default([]) List<String> tags,
+    @JsonKey(name: 'tags', fromJson: _tagsFromJson)
+    @Default([])
+    List<String> tags,
   }) = _Device;
 
   factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
@@ -40,11 +42,14 @@ DeviceUser? _userFromJson(dynamic value) {
 /// Parses the `tags` field which can be null, a list of strings, or a list of maps.
 List<String> _tagsFromJson(dynamic value) {
   if (value == null || value is! List) return [];
-  return value.map((e) {
-    if (e is String) return e;
-    if (e is Map<String, dynamic>) return (e['name'] as String?) ?? '';
-    return e.toString();
-  }).where((s) => s.isNotEmpty).toList();
+  return value
+      .map((e) {
+        if (e is String) return e;
+        if (e is Map<String, dynamic>) return (e['name'] as String?) ?? '';
+        return e.toString();
+      })
+      .where((s) => s.isNotEmpty)
+      .toList();
 }
 
 /// The user assigned to a device.

@@ -142,66 +142,85 @@ class AboutPage extends ConsumerWidget {
 
           // Licensing
           licenseAsync.whenOrNull(
-            data: (info) {
-              if (info.deviceLimit == null && info.deviceCount == null) {
-                return null;
-              }
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4, bottom: 8),
-                    child: Text(
-                      l10n.licensing,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
+                data: (info) {
+                  if (info.deviceLimit == null && info.deviceCount == null) {
+                    return null;
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4, bottom: 8),
+                        child: Text(
+                          l10n.licensing,
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Card(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          if (info.licenseType != null)
-                            _InfoRow(label: l10n.licenseType, value: info.licenseType!),
-                          if (info.deviceCount != null)
-                            _InfoRow(label: l10n.devicesUsed, value: '${info.deviceCount}'),
-                          if (info.deviceLimit != null)
-                            _InfoRow(label: l10n.deviceLimit, value: '${info.deviceLimit}'),
-                          if (info.appleDeviceCount != null)
-                            _InfoRow(label: l10n.appleDevices, value: '${info.appleDeviceCount}'),
-                          if (info.deviceLimit != null && info.deviceCount != null) ...[
-                            const SizedBox(height: 8),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(4),
-                              child: LinearProgressIndicator(
-                                value: info.deviceLimit! > 0
-                                    ? info.deviceCount! / info.deviceLimit!
-                                    : 0,
-                                minHeight: 6,
-                              ),
-                            ),
-                          ],
-                        ],
+                      Card(
+                        margin: const EdgeInsets.only(bottom: 16),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              if (info.licenseType != null)
+                                _InfoRow(
+                                  label: l10n.licenseType,
+                                  value: info.licenseType!,
+                                ),
+                              if (info.deviceCount != null)
+                                _InfoRow(
+                                  label: l10n.devicesUsed,
+                                  value: '${info.deviceCount}',
+                                ),
+                              if (info.deviceLimit != null)
+                                _InfoRow(
+                                  label: l10n.deviceLimit,
+                                  value: '${info.deviceLimit}',
+                                ),
+                              if (info.appleDeviceCount != null)
+                                _InfoRow(
+                                  label: l10n.appleDevices,
+                                  value: '${info.appleDeviceCount}',
+                                ),
+                              if (info.deviceLimit != null &&
+                                  info.deviceCount != null) ...[
+                                const SizedBox(height: 8),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: LinearProgressIndicator(
+                                    value: info.deviceLimit! > 0
+                                        ? info.deviceCount! / info.deviceLimit!
+                                        : 0,
+                                    minHeight: 6,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ) ?? const SizedBox.shrink(),
+                    ],
+                  );
+                },
+              ) ??
+              const SizedBox.shrink(),
 
           // Licenses
           Card(
             clipBehavior: Clip.antiAlias,
             child: ListTile(
-              leading: Icon(Icons.description_outlined,
-                  color: colorScheme.primary),
+              leading: Icon(
+                Icons.description_outlined,
+                color: colorScheme.primary,
+              ),
               title: const Text('Open Source Licenses'),
-              trailing: Icon(Icons.chevron_right,
-                  size: 18, color: colorScheme.onSurfaceVariant),
+              trailing: Icon(
+                Icons.chevron_right,
+                size: 18,
+                color: colorScheme.onSurfaceVariant,
+              ),
               onTap: () => showLicensePage(
                 context: context,
                 applicationName: 'FleetPilot',

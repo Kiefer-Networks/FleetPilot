@@ -33,7 +33,13 @@ abstract class DeviceApp with _$DeviceApp {
 
   /// Resolved app name across platforms.
   String get resolvedName =>
-      displayName ?? appName ?? bundleName ?? name ?? packageName ?? bundleId ?? 'Unknown';
+      displayName ??
+      appName ??
+      bundleName ??
+      name ??
+      packageName ??
+      bundleId ??
+      'Unknown';
 
   /// Resolved version across platforms.
   String? get resolvedVersion => versionName ?? shortVersion ?? version;

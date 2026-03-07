@@ -29,8 +29,7 @@ class _BehavioralDetectionsPageState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final filteredDetections =
-        ref.watch(filteredBehavioralDetectionsProvider);
+    final filteredDetections = ref.watch(filteredBehavioralDetectionsProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.behavioralDetections)),
@@ -48,16 +47,14 @@ class _BehavioralDetectionsPageState
                     icon: const Icon(Icons.clear, size: 20),
                     onPressed: () {
                       _searchController.clear();
-                      ref
-                          .read(behavioralSearchQueryProvider.notifier)
-                          .state = '';
+                      ref.read(behavioralSearchQueryProvider.notifier).state =
+                          '';
                       setState(() {});
                     },
                   ),
               ],
               onChanged: (query) {
-                ref.read(behavioralSearchQueryProvider.notifier).state =
-                    query;
+                ref.read(behavioralSearchQueryProvider.notifier).state = query;
                 setState(() {});
               },
               padding: const WidgetStatePropertyAll(
@@ -74,12 +71,16 @@ class _BehavioralDetectionsPageState
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.psychology_outlined,
-                            size: 48,
-                            color: theme.colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.psychology_outlined,
+                          size: 48,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(height: 8),
-                        Text(l10n.noBehavioralDetections,
-                            style: theme.textTheme.bodyLarge),
+                        Text(
+                          l10n.noBehavioralDetections,
+                          style: theme.textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   );
@@ -91,16 +92,14 @@ class _BehavioralDetectionsPageState
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     itemCount: detections.length,
                     itemBuilder: (context, index) =>
-                        _BehavioralDetectionTile(
-                            detection: detections[index]),
+                        _BehavioralDetectionTile(detection: detections[index]),
                   ),
                 );
               },
               loading: () => const LoadingWidget(),
               error: (error, _) => ErrorStateWidget(
                 failure: error,
-                onRetry: () =>
-                    ref.invalidate(behavioralDetectionsProvider),
+                onRetry: () => ref.invalidate(behavioralDetectionsProvider),
               ),
             ),
           ),
@@ -136,8 +135,7 @@ class _BehavioralDetectionTile extends StatelessWidget {
                   color: severityColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(Icons.psychology,
-                    size: 20, color: severityColor),
+                child: Icon(Icons.psychology, size: 20, color: severityColor),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -151,48 +149,55 @@ class _BehavioralDetectionTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     if (detection.deviceName != null)
-                      Text(detection.deviceName!,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant)),
+                      Text(
+                        detection.deviceName!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
                     if (detection.processName != null)
-                      Text(detection.processName!,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
+                      Text(
+                        detection.processName!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     const SizedBox(height: 4),
                     Row(
                       children: [
                         if (detection.classification != null) ...[
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 2),
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
-                              color:
-                                  colorScheme.secondaryContainer,
+                              color: colorScheme.secondaryContainer,
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
                               detection.classification!,
-                              style: theme.textTheme.labelSmall
-                                  ?.copyWith(
-                                      color: colorScheme
-                                          .onSecondaryContainer),
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSecondaryContainer,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 8),
                         ],
                         if (detection.detectionDate != null) ...[
-                          Icon(Icons.schedule,
-                              size: 14,
-                              color: colorScheme.onSurfaceVariant),
+                          Icon(
+                            Icons.schedule,
+                            size: 14,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             _formatDateTime(detection.detectionDate!),
-                            style: theme.textTheme.labelSmall
-                                ?.copyWith(
-                                    color:
-                                        colorScheme.onSurfaceVariant),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
                           ),
                         ],
                       ],
@@ -203,14 +208,19 @@ class _BehavioralDetectionTile extends StatelessWidget {
               if (detection.status != null)
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 4),
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: severityColor.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Text(detection.status!,
-                      style: theme.textTheme.labelSmall
-                          ?.copyWith(color: severityColor)),
+                  child: Text(
+                    detection.status!,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: severityColor,
+                    ),
+                  ),
                 ),
             ],
           ),

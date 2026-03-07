@@ -98,8 +98,10 @@ final userDetailProvider = FutureProvider.family<MdmUser, String>((
 
 /// Devices assigned to a specific user, derived from the loaded device list.
 /// Matches by email since the device list's embedded user doesn't include user_id.
-final userDevicesProvider =
-    Provider.family<AsyncValue<List<Device>>, String>((ref, userId) {
+final userDevicesProvider = Provider.family<AsyncValue<List<Device>>, String>((
+  ref,
+  userId,
+) {
   final devicesAsync = ref.watch(devicesProvider);
   final userAsync = ref.watch(userDetailProvider(userId));
 

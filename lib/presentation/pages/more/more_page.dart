@@ -16,11 +16,7 @@ class MorePage extends StatelessWidget {
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            title: Text(l10n.navMore),
-            floating: true,
-            snap: true,
-          ),
+          SliverAppBar(title: Text(l10n.navMore), floating: true, snap: true),
         ],
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

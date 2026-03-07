@@ -57,8 +57,9 @@ class SecuritySettingsPage extends ConsumerWidget {
                     final pin = await PinDialog.showSetPin(context);
                     if (pin == null || !context.mounted) return;
 
-                    final ok =
-                        await ref.read(pinEnabledProvider.notifier).setPin(pin);
+                    final ok = await ref
+                        .read(pinEnabledProvider.notifier)
+                        .setPin(pin);
                     if (ok && context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(l10n.securityPinSet)),
@@ -77,49 +78,6 @@ class SecuritySettingsPage extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  Future<void> _confirmRemovePin(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-
-    // Verify current PIN first
-    final pin = await PinDialog.showVerifyPin(
-      context,
-      verifier: (pin) async =>
-          ref.read(pinEnabledProvider.notifier).verifyPin(pin),
-    );
-    if (pin == null || !context.mounted) return;
-
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.securityRemovePin),
-        content: Text(l10n.securityPinRemoved),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(l10n.securityRemovePin),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true) {
-      await ref.read(pinEnabledProvider.notifier).removePin();
-      ref.read(biometricEnabledProvider.notifier).setEnabled(false);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.securityPinRemoved)),
-        );
-      }
-    }
   }
 }
 
@@ -156,7 +114,8 @@ class _BiometricTile extends ConsumerWidget {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                          content: Text(l10n.securityBiometricUnavailable)),
+                        content: Text(l10n.securityBiometricUnavailable),
+                      ),
                     );
                   }
                   return;
@@ -166,9 +125,7 @@ class _BiometricTile extends ConsumerWidget {
                 );
                 if (!ok) return;
               }
-              ref
-                  .read(biometricEnabledProvider.notifier)
-                  .setEnabled(v);
+              ref.read(biometricEnabledProvider.notifier).setEnabled(v);
             }
           : null,
     );

@@ -25,9 +25,11 @@ void main() async {
   final pinHash = await storage.read(key: StorageKeys.pinHash);
   final hasPinLock = pinHash != null && pinHash.isNotEmpty;
 
-  runApp(ProviderScope(
-    child: FleetPilotApp(hasProfile: hasProfile, hasPinLock: hasPinLock),
-  ));
+  runApp(
+    ProviderScope(
+      child: FleetPilotApp(hasProfile: hasProfile, hasPinLock: hasPinLock),
+    ),
+  );
 }
 
 /// Root application widget for FleetPilot.
@@ -45,10 +47,7 @@ class FleetPilotApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = createRouter(
-      hasProfile: hasProfile,
-      hasPinLock: hasPinLock,
-    );
+    final router = createRouter(hasProfile: hasProfile, hasPinLock: hasPinLock);
     final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(

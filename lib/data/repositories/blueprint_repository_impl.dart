@@ -42,7 +42,10 @@ class BlueprintRepositoryImpl implements BlueprintRepository {
   }
 
   @override
-  Future<void> assignLibraryItem(String blueprintId, Map<String, dynamic> body) {
+  Future<void> assignLibraryItem(
+    String blueprintId,
+    Map<String, dynamic> body,
+  ) {
     return api.assignLibraryItem(blueprintId, body);
   }
 

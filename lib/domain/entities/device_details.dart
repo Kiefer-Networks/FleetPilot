@@ -33,12 +33,12 @@ abstract class DeviceDetails with _$DeviceDetails {
       final filevault = json['filevault'];
       if (filevault is Map<String, dynamic>) {
         if (filevault.containsKey('filevault_enabled')) {
-          secMap['is_encrypted'] =
-              filevault['filevault_enabled'] == true ? 1 : 0;
-          secMap['encryption_status'] =
-              filevault['filevault_enabled'] == true
-                  ? 'FileVault Enabled'
-                  : 'Not Encrypted';
+          secMap['is_encrypted'] = filevault['filevault_enabled'] == true
+              ? 1
+              : 0;
+          secMap['encryption_status'] = filevault['filevault_enabled'] == true
+              ? 'FileVault Enabled'
+              : 'Not Encrypted';
         }
       }
       final activationLock = json['activation_lock'];
@@ -61,8 +61,7 @@ abstract class DeviceDetails with _$DeviceDetails {
           ? DeviceCellular.fromJson(json['cellular'] as Map<String, dynamic>)
           : null,
       lostMode: json['lost_mode'] is Map<String, dynamic>
-          ? DeviceLostMode.fromJson(
-              json['lost_mode'] as Map<String, dynamic>)
+          ? DeviceLostMode.fromJson(json['lost_mode'] as Map<String, dynamic>)
           : null,
     );
   }
@@ -146,10 +145,7 @@ abstract class DeviceSecurity with _$DeviceSecurity {
 
 @freezed
 abstract class DeviceCellular with _$DeviceCellular {
-  const factory DeviceCellular({
-    String? imei,
-    String? meid,
-  }) = _DeviceCellular;
+  const factory DeviceCellular({String? imei, String? meid}) = _DeviceCellular;
 
   factory DeviceCellular.fromJson(Map<String, dynamic> json) =>
       _$DeviceCellularFromJson(json);

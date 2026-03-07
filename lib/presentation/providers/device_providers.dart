@@ -139,27 +139,20 @@ final deviceStatusProvider = FutureProvider.family<DeviceStatus, String>((
 
 /// Device activity log.
 final deviceActivityProvider =
-    FutureProvider.family<List<DeviceActivity>, String>((
-  ref,
-  deviceId,
-) async {
-  final repo = await ref.watch(deviceRepositoryProvider.future);
-  return repo.getDeviceActivity(deviceId);
-});
+    FutureProvider.family<List<DeviceActivity>, String>((ref, deviceId) async {
+      final repo = await ref.watch(deviceRepositoryProvider.future);
+      return repo.getDeviceActivity(deviceId);
+    });
 
 /// Device MDM commands.
 final deviceCommandsProvider =
-    FutureProvider.family<List<DeviceCommand>, String>((
-  ref,
-  deviceId,
-) async {
-  final repo = await ref.watch(deviceRepositoryProvider.future);
-  return repo.getDeviceCommands(deviceId);
-});
+    FutureProvider.family<List<DeviceCommand>, String>((ref, deviceId) async {
+      final repo = await ref.watch(deviceRepositoryProvider.future);
+      return repo.getDeviceCommands(deviceId);
+    });
 
 /// Device secrets (FileVault key, unlock pin, recovery password, bypass code).
-final deviceSecretsProvider =
-    FutureProvider.family<DeviceSecrets, String>((
+final deviceSecretsProvider = FutureProvider.family<DeviceSecrets, String>((
   ref,
   deviceId,
 ) async {
@@ -168,8 +161,7 @@ final deviceSecretsProvider =
 });
 
 /// Device notes.
-final deviceNotesProvider =
-    FutureProvider.family<List<DeviceNote>, String>((
+final deviceNotesProvider = FutureProvider.family<List<DeviceNote>, String>((
   ref,
   deviceId,
 ) async {

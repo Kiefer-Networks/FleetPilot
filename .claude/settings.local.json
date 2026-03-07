@@ -3,7 +3,34 @@
     "allow": [
       "Bash(flutter:*)",
       "Bash(dart:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(adb logcat:*)",
+      "WebFetch(domain:api-docs.kandji.io)",
+      "Bash(gh api:*)",
+      "Bash(python3:*)",
+      "Read(//home/pr0ph37/Bilder/Bildschirmfotos/**)",
+      "Read(//home/pr0ph37/Pictures/**)",
+      "Read(//home/pr0ph37/Bilder/**)",
+      "Bash(curl:*)",
+      "Bash(adb:*)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:release-assets.githubusercontent.com)",
+      "Bash(SPEC=\"/home/pr0ph37/.claude/projects/-home-pr0ph37-Entwicklung-FleetPilot/27b0c008-3c11-42af-b447-e94e2fd01564/tool-results/webfetch-1772863758753-rlxs6p.bin\")",
+      "Read(//home/pr0ph37/Entwicklung/FleetPilot/**)",
+      "Bash(pkill:*)",
+      "Bash(grep:*)",
+      "Bash(flutter gen-l10n:*)",
+      "Bash(ls -t /home/pr0ph37/Bilder/Bildschirmfotos/*.png)",
+      "Bash(ls -t /home/pr0ph37/Bilder/*.png)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(read f:*)",
+      "WebFetch(domain:developer.kandji.io)",
+      "WebSearch",
+      "WebFetch(domain:www.postman.com)",
+      "WebFetch(domain:panoply-documentation.document360.io)",
+      "WebFetch(domain:help.assetpanda.com)",
+      "WebFetch(domain:support.kandji.io)"
     ]
   }
 }

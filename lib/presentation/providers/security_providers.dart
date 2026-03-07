@@ -14,16 +14,17 @@ const _storage = FlutterSecureStorage(
 );
 
 /// Whether a PIN has been set (app lock is active).
-final pinEnabledProvider =
-    StateNotifierProvider<PinEnabledNotifier, bool>((ref) {
+final pinEnabledProvider = StateNotifierProvider<PinEnabledNotifier, bool>((
+  ref,
+) {
   return PinEnabledNotifier();
 });
 
 /// Whether biometric authentication is enabled (requires PIN to be set first).
 final biometricEnabledProvider =
     StateNotifierProvider<BiometricEnabledNotifier, bool>((ref) {
-  return BiometricEnabledNotifier();
-});
+      return BiometricEnabledNotifier();
+    });
 
 class PinEnabledNotifier extends StateNotifier<bool> {
   PinEnabledNotifier() : super(false) {

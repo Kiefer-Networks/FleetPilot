@@ -59,14 +59,17 @@ class BlueprintApi {
       final data = response.data;
 
       if (data is Map<String, dynamic>) {
-        log.d('BlueprintApi.getBlueprintLibraryItems keys: ${data.keys.toList()}');
+        log.d(
+          'BlueprintApi.getBlueprintLibraryItems keys: ${data.keys.toList()}',
+        );
       }
 
       List<dynamic> items;
       if (data is List) {
         items = data;
       } else if (data is Map<String, dynamic>) {
-        items = (data['results'] as List?) ??
+        items =
+            (data['results'] as List?) ??
             (data['library_items'] as List?) ??
             (data['data'] as List?) ??
             [];
@@ -83,8 +86,11 @@ class BlueprintApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('BlueprintApi.getBlueprintLibraryItems parse error: $e',
-          error: e, stackTrace: st);
+      log.e(
+        'BlueprintApi.getBlueprintLibraryItems parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse library items: $e');
     }
   }
@@ -107,7 +113,10 @@ class BlueprintApi {
   }
 
   /// Updates a blueprint.
-  Future<Blueprint> updateBlueprint(String id, Map<String, dynamic> body) async {
+  Future<Blueprint> updateBlueprint(
+    String id,
+    Map<String, dynamic> body,
+  ) async {
     try {
       final response = await dio.patch<dynamic>('/blueprints/$id', data: body);
       final data = response.data;
@@ -133,7 +142,10 @@ class BlueprintApi {
   }
 
   /// Assigns or removes a library item from a blueprint.
-  Future<void> assignLibraryItem(String blueprintId, Map<String, dynamic> body) async {
+  Future<void> assignLibraryItem(
+    String blueprintId,
+    Map<String, dynamic> body,
+  ) async {
     try {
       await dio.post<dynamic>(
         '/blueprints/$blueprintId/assign-library-item',
@@ -153,7 +165,8 @@ class BlueprintApi {
       if (data is List) {
         items = data;
       } else if (data is Map<String, dynamic>) {
-        items = (data['results'] as List?) ??
+        items =
+            (data['results'] as List?) ??
             (data['templates'] as List?) ??
             (data['data'] as List?) ??
             [];
@@ -169,7 +182,11 @@ class BlueprintApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('BlueprintApi.getBlueprintTemplates error: $e', error: e, stackTrace: st);
+      log.e(
+        'BlueprintApi.getBlueprintTemplates error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse blueprint templates: $e');
     }
   }
@@ -192,7 +209,9 @@ class BlueprintApi {
   }
 
   /// Fetches library item activity.
-  Future<List<LibraryItemActivity>> getLibraryItemActivity(String itemId) async {
+  Future<List<LibraryItemActivity>> getLibraryItemActivity(
+    String itemId,
+  ) async {
     try {
       final response = await dio.get<dynamic>(
         '/library/library-items/$itemId/activity',
@@ -202,7 +221,8 @@ class BlueprintApi {
       if (data is List) {
         items = data;
       } else if (data is Map<String, dynamic>) {
-        items = (data['results'] as List?) ??
+        items =
+            (data['results'] as List?) ??
             (data['activity'] as List?) ??
             (data['data'] as List?) ??
             [];
@@ -218,7 +238,11 @@ class BlueprintApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('BlueprintApi.getLibraryItemActivity error: $e', error: e, stackTrace: st);
+      log.e(
+        'BlueprintApi.getLibraryItemActivity error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse library item activity: $e');
     }
   }
@@ -234,7 +258,8 @@ class BlueprintApi {
       if (data is List) {
         items = data;
       } else if (data is Map<String, dynamic>) {
-        items = (data['results'] as List?) ??
+        items =
+            (data['results'] as List?) ??
             (data['status'] as List?) ??
             (data['data'] as List?) ??
             [];
@@ -250,7 +275,11 @@ class BlueprintApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('BlueprintApi.getLibraryItemStatus error: $e', error: e, stackTrace: st);
+      log.e(
+        'BlueprintApi.getLibraryItemStatus error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse library item status: $e');
     }
   }

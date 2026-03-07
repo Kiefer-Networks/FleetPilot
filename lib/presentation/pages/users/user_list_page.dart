@@ -67,11 +67,7 @@ class _UserListPageState extends ConsumerState<UserListPage> {
       ),
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            title: Text(l10n.navUsers),
-            floating: true,
-            snap: true,
-          ),
+          SliverAppBar(title: Text(l10n.navUsers), floating: true, snap: true),
         ],
         body: Column(
           children: [
@@ -91,9 +87,8 @@ class _UserListPageState extends ConsumerState<UserListPage> {
                             icon: const Icon(Icons.clear, size: 20),
                             onPressed: () {
                               _searchController.clear();
-                              ref
-                                  .read(userSearchQueryProvider.notifier)
-                                  .state = '';
+                              ref.read(userSearchQueryProvider.notifier).state =
+                                  '';
                               setState(() {});
                             },
                           ),
@@ -140,9 +135,11 @@ class _UserListPageState extends ConsumerState<UserListPage> {
                         padding: const EdgeInsets.only(right: 8),
                         child: InputChip(
                           label: Text(l10n.showArchived),
-                          onDeleted: () => ref
-                              .read(showArchivedUsersProvider.notifier)
-                              .state = false,
+                          onDeleted: () =>
+                              ref
+                                      .read(showArchivedUsersProvider.notifier)
+                                      .state =
+                                  false,
                         ),
                       ),
                     ActionChip(
@@ -165,13 +162,13 @@ class _UserListPageState extends ConsumerState<UserListPage> {
                 children: [
                   FilterChip(
                     avatar: Icon(
-                        sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
-                        size: 16),
+                      sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
+                      size: 16,
+                    ),
                     label: Text(sortAsc ? l10n.sortAZ : l10n.sortZA),
                     selected: false,
-                    onSelected: (_) => ref
-                        .read(userSortAscProvider.notifier)
-                        .state = !sortAsc,
+                    onSelected: (_) =>
+                        ref.read(userSortAscProvider.notifier).state = !sortAsc,
                   ),
                 ],
               ),
@@ -211,22 +208,18 @@ class _UserListPageState extends ConsumerState<UserListPage> {
                   }
 
                   return RefreshIndicator(
-                    onRefresh: () =>
-                        ref.read(usersProvider.notifier).refresh(),
+                    onRefresh: () => ref.read(usersProvider.notifier).refresh(),
                     child: ListView.builder(
                       padding: const EdgeInsets.only(bottom: 16),
                       itemCount: users.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {
                           return Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                             child: Text(
                               l10n.userCount(users.length),
-                              style:
-                                  theme.textTheme.labelMedium?.copyWith(
-                                color:
-                                    theme.colorScheme.onSurfaceVariant,
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
                               ),
                             ),
                           );
@@ -240,8 +233,7 @@ class _UserListPageState extends ConsumerState<UserListPage> {
                 loading: () => const LoadingWidget(),
                 error: (error, _) => ErrorStateWidget(
                   failure: error,
-                  onRetry: () =>
-                      ref.read(usersProvider.notifier).refresh(),
+                  onRetry: () => ref.read(usersProvider.notifier).refresh(),
                 ),
               ),
             ),
@@ -314,7 +306,9 @@ class _UserListTile extends StatelessWidget {
                 if (user.archived)
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 4),
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: colorScheme.errorContainer,
                       borderRadius: BorderRadius.circular(6),
@@ -379,8 +373,9 @@ class _UserFilterBottomSheet extends StatelessWidget {
                     width: 32,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.onSurfaceVariant
-                          .withValues(alpha: 0.4),
+                      color: theme.colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.4,
+                      ),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -391,14 +386,12 @@ class _UserFilterBottomSheet extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     children: [
-                      Text(l10n.filterTitle,
-                          style: theme.textTheme.titleLarge),
+                      Text(l10n.filterTitle, style: theme.textTheme.titleLarge),
                       const Spacer(),
                       TextButton(
                         onPressed: () {
-                          ref
-                              .read(showArchivedUsersProvider.notifier)
-                              .state = false;
+                          ref.read(showArchivedUsersProvider.notifier).state =
+                              false;
                           setSheetState(() {});
                         },
                         child: Text(l10n.filterClearAll),
@@ -414,16 +407,17 @@ class _UserFilterBottomSheet extends StatelessWidget {
                     controller: scrollController,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     children: [
-                      Text(l10n.filterStatus,
-                          style: theme.textTheme.titleSmall),
+                      Text(
+                        l10n.filterStatus,
+                        style: theme.textTheme.titleSmall,
+                      ),
                       const SizedBox(height: 8),
                       FilterChip(
                         label: Text(l10n.showArchived),
                         selected: showArchived,
                         onSelected: (_) {
-                          ref
-                              .read(showArchivedUsersProvider.notifier)
-                              .state = !showArchived;
+                          ref.read(showArchivedUsersProvider.notifier).state =
+                              !showArchived;
                           setSheetState(() {});
                         },
                       ),

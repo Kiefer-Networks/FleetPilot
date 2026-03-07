@@ -71,8 +71,8 @@ class _ActivityTab extends ConsumerWidget {
                 Text(
                   l10n.noActivityFound2,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -159,8 +159,7 @@ class _ActivityTile extends StatelessWidget {
                 ],
               ),
             ),
-            if (activity.status != null)
-              _StatusBadge(status: activity.status!),
+            if (activity.status != null) _StatusBadge(status: activity.status!),
           ],
         ),
       ),
@@ -194,8 +193,8 @@ class _StatusTab extends ConsumerWidget {
                 Text(
                   l10n.noStatusFound,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -271,8 +270,7 @@ class _StatusTile extends StatelessWidget {
                 ],
               ),
             ),
-            if (status.status != null)
-              _StatusBadge(status: status.status!),
+            if (status.status != null) _StatusBadge(status: status.status!),
           ],
         ),
       ),
@@ -325,9 +323,9 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         status,
-        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: _foregroundColor(colorScheme),
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.labelSmall?.copyWith(color: _foregroundColor(colorScheme)),
       ),
     );
   }

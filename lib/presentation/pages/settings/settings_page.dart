@@ -64,8 +64,7 @@ class SettingsPage extends ConsumerWidget {
                     ],
                   );
                 },
-                loading: () =>
-                    const ListTile(title: LinearProgressIndicator()),
+                loading: () => const ListTile(title: LinearProgressIndicator()),
                 error: (_, _) => const SizedBox.shrink(),
               ),
             ],
@@ -99,8 +98,7 @@ class SettingsPage extends ConsumerWidget {
                 title: l10n.language,
                 subtitleText: _languageLabel(currentLocale, l10n),
                 onTap: () async {
-                  final currentValue =
-                      currentLocale?.languageCode ?? 'system';
+                  final currentValue = currentLocale?.languageCode ?? 'system';
                   final selected = await showDialog<String>(
                     context: context,
                     builder: (ctx) => SimpleDialog(
@@ -134,9 +132,11 @@ class SettingsPage extends ConsumerWidget {
                     ),
                   );
                   if (selected != null) {
-                    ref.read(localeProvider.notifier).setLocale(
-                      selected == 'system' ? null : Locale(selected),
-                    );
+                    ref
+                        .read(localeProvider.notifier)
+                        .setLocale(
+                          selected == 'system' ? null : Locale(selected),
+                        );
                   }
                 },
               ),

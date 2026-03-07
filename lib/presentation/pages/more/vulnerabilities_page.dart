@@ -76,7 +76,8 @@ class _VulnerabilitiesPageState extends ConsumerState<VulnerabilitiesPage> {
                   label: Text(l10n.filterAll),
                   selected: severityFilter == null,
                   onSelected: (_) =>
-                      ref.read(vulnSeverityFilterProvider.notifier).state = null,
+                      ref.read(vulnSeverityFilterProvider.notifier).state =
+                          null,
                 ),
                 const SizedBox(width: 8),
                 FilterChip(
@@ -123,12 +124,16 @@ class _VulnerabilitiesPageState extends ConsumerState<VulnerabilitiesPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.bug_report_outlined,
-                            size: 48,
-                            color: theme.colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.bug_report_outlined,
+                          size: 48,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(height: 8),
-                        Text(l10n.noVulnerabilitiesFound,
-                            style: theme.textTheme.bodyLarge),
+                        Text(
+                          l10n.noVulnerabilitiesFound,
+                          style: theme.textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   );
@@ -188,46 +193,60 @@ class _VulnerabilityTile extends StatelessWidget {
                     color: severityColor.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child:
-                      Icon(Icons.bug_report, size: 20, color: severityColor),
+                  child: Icon(Icons.bug_report, size: 20, color: severityColor),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(vuln.cveId ?? 'Unknown',
-                          style: theme.textTheme.titleSmall),
+                      Text(
+                        vuln.cveId ?? 'Unknown',
+                        style: theme.textTheme.titleSmall,
+                      ),
                       if (vuln.software != null)
-                        Text(vuln.software!,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                                color: colorScheme.onSurfaceVariant)),
+                        Text(
+                          vuln.software!,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
                       Row(
                         children: [
                           if (vuln.cvssScore != null)
                             Text(
                               'CVSS ${vuln.cvssScore!.toStringAsFixed(1)}',
-                              style: theme.textTheme.labelSmall
-                                  ?.copyWith(color: severityColor),
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: severityColor,
+                              ),
                             ),
                           if (vuln.deviceCount != null) ...[
                             const SizedBox(width: 12),
-                            Icon(Icons.devices,
-                                size: 14,
-                                color: colorScheme.onSurfaceVariant),
+                            Icon(
+                              Icons.devices,
+                              size: 14,
+                              color: colorScheme.onSurfaceVariant,
+                            ),
                             const SizedBox(width: 2),
-                            Text('${vuln.deviceCount}',
-                                style: theme.textTheme.labelSmall),
+                            Text(
+                              '${vuln.deviceCount}',
+                              style: theme.textTheme.labelSmall,
+                            ),
                           ],
-                          if (vuln.kevScore != null &&
-                              vuln.kevScore! > 0) ...[
+                          if (vuln.kevScore != null && vuln.kevScore! > 0) ...[
                             const SizedBox(width: 12),
-                            Icon(Icons.warning_amber,
-                                size: 14, color: colorScheme.error),
+                            Icon(
+                              Icons.warning_amber,
+                              size: 14,
+                              color: colorScheme.error,
+                            ),
                             const SizedBox(width: 2),
-                            Text('KEV',
-                                style: theme.textTheme.labelSmall
-                                    ?.copyWith(color: colorScheme.error)),
+                            Text(
+                              'KEV',
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: colorScheme.error,
+                              ),
+                            ),
                           ],
                         ],
                       ),
@@ -237,14 +256,19 @@ class _VulnerabilityTile extends StatelessWidget {
                 if (vuln.severity != null)
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 4),
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: severityColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    child: Text(vuln.severity!,
-                        style: theme.textTheme.labelSmall
-                            ?.copyWith(color: severityColor)),
+                    child: Text(
+                      vuln.severity!,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: severityColor,
+                      ),
+                    ),
                   ),
               ],
             ),

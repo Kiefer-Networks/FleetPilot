@@ -68,12 +68,16 @@ class _ThreatsPageState extends ConsumerState<ThreatsPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.shield_outlined,
-                            size: 48,
-                            color: theme.colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.shield_outlined,
+                          size: 48,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(height: 8),
-                        Text(l10n.noThreatsFound,
-                            style: theme.textTheme.bodyLarge),
+                        Text(
+                          l10n.noThreatsFound,
+                          style: theme.textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   );
@@ -150,29 +154,40 @@ class _ThreatTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     if (threat.deviceName != null)
-                      Text(threat.deviceName!,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant)),
+                      Text(
+                        threat.deviceName!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
                     if (threat.filePath != null)
-                      Text(threat.filePath!,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
+                      Text(
+                        threat.filePath!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                   ],
                 ),
               ),
               if (threat.status != null)
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 4),
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: statusColor.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Text(threat.status!,
-                      style: theme.textTheme.labelSmall
-                          ?.copyWith(color: statusColor)),
+                  child: Text(
+                    threat.status!,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: statusColor,
+                    ),
+                  ),
                 ),
             ],
           ),

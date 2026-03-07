@@ -99,9 +99,7 @@ class TagsPage extends ConsumerWidget {
   }) async {
     final l10n = AppLocalizations.of(context);
     final isEditing = existingTag != null;
-    final nameController = TextEditingController(
-      text: existingTag?.name ?? '',
-    );
+    final nameController = TextEditingController(text: existingTag?.name ?? '');
     final formKey = GlobalKey<FormState>();
 
     final confirmed = await showDialog<bool>(
@@ -155,24 +153,24 @@ class TagsPage extends ConsumerWidget {
       if (isEditing) {
         await repo.updateTag(existingTag.tagId, name);
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.tagUpdated)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n.tagUpdated)));
         }
       } else {
         await repo.createTag(name);
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.tagCreated)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n.tagCreated)));
         }
       }
       ref.invalidate(tagsProvider);
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -214,16 +212,16 @@ class TagsPage extends ConsumerWidget {
       final repo = await ref.read(deviceRepositoryProvider.future);
       await repo.deleteTag(tag.tagId);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.tagDeleted)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.tagDeleted)));
       }
       ref.invalidate(tagsProvider);
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -255,10 +253,7 @@ class _TagCard extends StatelessWidget {
             backgroundColor: color,
             child: const SizedBox.shrink(),
           ),
-          title: Text(
-            tag.name,
-            style: theme.textTheme.titleSmall,
-          ),
+          title: Text(tag.name, style: theme.textTheme.titleSmall),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

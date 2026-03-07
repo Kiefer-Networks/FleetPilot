@@ -83,15 +83,15 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
       await repo.createBlueprint(result);
       ref.invalidate(blueprintsProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.blueprintCreated)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.blueprintCreated)));
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -157,13 +157,14 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
                 children: [
                   FilterChip(
                     avatar: Icon(
-                        sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
-                        size: 16),
+                      sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
+                      size: 16,
+                    ),
                     label: Text(sortAsc ? l10n.sortAZ : l10n.sortZA),
                     selected: false,
-                    onSelected: (_) => ref
-                        .read(blueprintSortAscProvider.notifier)
-                        .state = !sortAsc,
+                    onSelected: (_) =>
+                        ref.read(blueprintSortAscProvider.notifier).state =
+                            !sortAsc,
                   ),
                 ],
               ),
@@ -279,8 +280,11 @@ class _BlueprintListTile extends ConsumerWidget {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Icon(Icons.devices,
-                              size: 14, color: colorScheme.onSurfaceVariant),
+                          Icon(
+                            Icons.devices,
+                            size: 14,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             l10n.deviceCount(deviceCount),
@@ -291,7 +295,9 @@ class _BlueprintListTile extends ConsumerWidget {
                           const SizedBox(width: 12),
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 2),
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
                               color: blueprint.enrollmentCodeIsActive
                                   ? colorScheme.primaryContainer
@@ -314,8 +320,11 @@ class _BlueprintListTile extends ConsumerWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.chevron_right,
-                    size: 20, color: colorScheme.onSurfaceVariant),
+                Icon(
+                  Icons.chevron_right,
+                  size: 20,
+                  color: colorScheme.onSurfaceVariant,
+                ),
               ],
             ),
           ),

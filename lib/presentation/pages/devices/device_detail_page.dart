@@ -17,7 +17,6 @@ import '../../../domain/entities/device_command.dart';
 import '../../../domain/entities/device_details.dart';
 import '../../../domain/entities/device_note.dart';
 import '../../../domain/entities/device_status.dart';
-import '../../../domain/entities/tag.dart';
 import '../../providers/device_providers.dart';
 import '../../providers/security_providers.dart';
 import '../../widgets/common/confirm_dialog.dart';
@@ -38,10 +37,7 @@ class DeviceDetailPage extends ConsumerWidget {
 
     return deviceAsync.when(
       data: (device) => _DeviceDetailScaffold(device: device),
-      loading: () => Scaffold(
-        appBar: AppBar(),
-        body: const LoadingWidget(),
-      ),
+      loading: () => Scaffold(appBar: AppBar(), body: const LoadingWidget()),
       error: (error, _) => Scaffold(
         appBar: AppBar(),
         body: ErrorStateWidget(
@@ -101,30 +97,90 @@ class _DeviceDetailScaffold extends ConsumerWidget {
                   },
                   itemBuilder: (context) => [
                     // Common actions
-                    _menuItem(DeviceAction.lock, Icons.lock_outline, l10n.actionLock),
-                    _menuItem(DeviceAction.sendBlankPush, Icons.send_outlined, l10n.actionBlankPush),
-                    _menuItem(DeviceAction.updateInventory, Icons.inventory_2_outlined, l10n.actionUpdateInventory),
-                    _menuItem(DeviceAction.dailyCheckIn, Icons.today, l10n.actionDailyCheckIn),
-                    _menuItem(DeviceAction.setName, Icons.edit_outlined, l10n.actionSetName),
-                    _menuItem(DeviceAction.renewMdmProfile, Icons.sync, l10n.actionRenewMdm),
-                    _menuItem(DeviceAction.restart, Icons.restart_alt, l10n.actionRestart),
+                    _menuItem(
+                      DeviceAction.lock,
+                      Icons.lock_outline,
+                      l10n.actionLock,
+                    ),
+                    _menuItem(
+                      DeviceAction.sendBlankPush,
+                      Icons.send_outlined,
+                      l10n.actionBlankPush,
+                    ),
+                    _menuItem(
+                      DeviceAction.updateInventory,
+                      Icons.inventory_2_outlined,
+                      l10n.actionUpdateInventory,
+                    ),
+                    _menuItem(
+                      DeviceAction.dailyCheckIn,
+                      Icons.today,
+                      l10n.actionDailyCheckIn,
+                    ),
+                    _menuItem(
+                      DeviceAction.setName,
+                      Icons.edit_outlined,
+                      l10n.actionSetName,
+                    ),
+                    _menuItem(
+                      DeviceAction.renewMdmProfile,
+                      Icons.sync,
+                      l10n.actionRenewMdm,
+                    ),
+                    _menuItem(
+                      DeviceAction.restart,
+                      Icons.restart_alt,
+                      l10n.actionRestart,
+                    ),
                     // Mac-only actions
                     if (isMac) ...[
                       const PopupMenuDivider(),
-                      _menuItem(DeviceAction.reinstallAgent, Icons.install_desktop, l10n.actionReinstallAgent),
-                      _menuItem(DeviceAction.remoteDesktop, Icons.desktop_windows, l10n.actionRemoteDesktop),
-                      _menuItem(DeviceAction.deleteUser, Icons.person_remove, l10n.actionDeleteUser),
-                      _menuItem(DeviceAction.unlockAccount, Icons.lock_open, l10n.actionUnlockAccount),
+                      _menuItem(
+                        DeviceAction.reinstallAgent,
+                        Icons.install_desktop,
+                        l10n.actionReinstallAgent,
+                      ),
+                      _menuItem(
+                        DeviceAction.remoteDesktop,
+                        Icons.desktop_windows,
+                        l10n.actionRemoteDesktop,
+                      ),
+                      _menuItem(
+                        DeviceAction.deleteUser,
+                        Icons.person_remove,
+                        l10n.actionDeleteUser,
+                      ),
+                      _menuItem(
+                        DeviceAction.unlockAccount,
+                        Icons.lock_open,
+                        l10n.actionUnlockAccount,
+                      ),
                     ],
                     // Mobile-only actions
                     if (isMobile) ...[
                       const PopupMenuDivider(),
                       if (!isLostMode)
-                        _menuItem(DeviceAction.enableLostMode, Icons.location_off, l10n.actionLostMode),
+                        _menuItem(
+                          DeviceAction.enableLostMode,
+                          Icons.location_off,
+                          l10n.actionLostMode,
+                        ),
                       if (isLostMode) ...[
-                        _menuItem(DeviceAction.disableLostMode, Icons.location_on, l10n.actionDisableLostMode),
-                        _menuItem(DeviceAction.playLostModeSound, Icons.volume_up, l10n.actionPlayLostModeSound),
-                        _menuItem(DeviceAction.updateLocation, Icons.my_location, l10n.actionUpdateLocation),
+                        _menuItem(
+                          DeviceAction.disableLostMode,
+                          Icons.location_on,
+                          l10n.actionDisableLostMode,
+                        ),
+                        _menuItem(
+                          DeviceAction.playLostModeSound,
+                          Icons.volume_up,
+                          l10n.actionPlayLostModeSound,
+                        ),
+                        _menuItem(
+                          DeviceAction.updateLocation,
+                          Icons.my_location,
+                          l10n.actionUpdateLocation,
+                        ),
                         PopupMenuItem<String>(
                           value: '_cancel_lost_mode',
                           child: ListTile(
@@ -135,17 +191,39 @@ class _DeviceDetailScaffold extends ConsumerWidget {
                           ),
                         ),
                       ],
-                      _menuItem(DeviceAction.clearPasscode, Icons.pin_outlined, l10n.actionClearPasscode),
+                      _menuItem(
+                        DeviceAction.clearPasscode,
+                        Icons.pin_outlined,
+                        l10n.actionClearPasscode,
+                      ),
                     ],
                     // Destructive actions
                     const PopupMenuDivider(),
-                    _menuItem(DeviceAction.shutdown, Icons.power_settings_new, l10n.actionShutdown, isDestructive: true, theme: theme),
-                    _menuItem(DeviceAction.erase, Icons.delete_forever, l10n.actionErase, isDestructive: true, theme: theme),
+                    _menuItem(
+                      DeviceAction.shutdown,
+                      Icons.power_settings_new,
+                      l10n.actionShutdown,
+                      isDestructive: true,
+                      theme: theme,
+                    ),
+                    _menuItem(
+                      DeviceAction.erase,
+                      Icons.delete_forever,
+                      l10n.actionErase,
+                      isDestructive: true,
+                      theme: theme,
+                    ),
                     PopupMenuItem<String>(
                       value: '_delete_device',
                       child: ListTile(
-                        leading: Icon(Icons.delete_outline, color: theme.colorScheme.error),
-                        title: Text(l10n.deleteDevice, style: TextStyle(color: theme.colorScheme.error)),
+                        leading: Icon(
+                          Icons.delete_outline,
+                          color: theme.colorScheme.error,
+                        ),
+                        title: Text(
+                          l10n.deleteDevice,
+                          style: TextStyle(color: theme.colorScheme.error),
+                        ),
                         contentPadding: EdgeInsets.zero,
                         dense: true,
                       ),
@@ -198,8 +276,16 @@ class _DeviceDetailScaffold extends ConsumerWidget {
     return PopupMenuItem(
       value: action.apiPath,
       child: ListTile(
-        leading: Icon(icon, color: isDestructive ? theme?.colorScheme.error : null),
-        title: Text(label, style: isDestructive ? TextStyle(color: theme?.colorScheme.error) : null),
+        leading: Icon(
+          icon,
+          color: isDestructive ? theme?.colorScheme.error : null,
+        ),
+        title: Text(
+          label,
+          style: isDestructive
+              ? TextStyle(color: theme?.colorScheme.error)
+              : null,
+        ),
         contentPadding: EdgeInsets.zero,
         dense: true,
       ),
@@ -276,23 +362,22 @@ class _DeviceDetailScaffold extends ConsumerWidget {
 
     final l10n = AppLocalizations.of(context);
     try {
-      final useCase =
-          await ref.read(executeDeviceActionUseCaseProvider.future);
+      final useCase = await ref.read(executeDeviceActionUseCaseProvider.future);
       await useCase.call(device.deviceId, action, body: body);
       // Refresh everything after action
       ref.invalidate(deviceDetailsProvider(device.deviceId));
       ref.invalidate(deviceDetailProvider(device.deviceId));
       ref.invalidate(devicesProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionSuccess)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionSuccess)));
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -330,8 +415,8 @@ class _DeviceDetailScaffold extends ConsumerWidget {
             Text(
               l10n.lostModeFootnote,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ),
@@ -346,8 +431,7 @@ class _DeviceDetailScaffold extends ConsumerWidget {
                 'Message': messageCtl.text.isEmpty
                     ? 'This device has been reported lost.'
                     : messageCtl.text,
-                if (phoneCtl.text.isNotEmpty)
-                  'PhoneNumber': phoneCtl.text,
+                if (phoneCtl.text.isNotEmpty) 'PhoneNumber': phoneCtl.text,
               });
             },
             child: Text(l10n.confirm),
@@ -411,10 +495,8 @@ class _DeviceDetailScaffold extends ConsumerWidget {
           FilledButton(
             onPressed: () {
               Navigator.of(ctx).pop(<String, dynamic>{
-                if (messageCtl.text.isNotEmpty)
-                  'Message': messageCtl.text,
-                if (phoneCtl.text.isNotEmpty)
-                  'PhoneNumber': phoneCtl.text,
+                if (messageCtl.text.isNotEmpty) 'Message': messageCtl.text,
+                if (phoneCtl.text.isNotEmpty) 'PhoneNumber': phoneCtl.text,
               });
             },
             child: Text(l10n.confirm),
@@ -434,9 +516,7 @@ class _DeviceDetailScaffold extends ConsumerWidget {
 
   Future<Map<String, dynamic>?> _showSetNameDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final nameCtl = TextEditingController(
-      text: device.deviceName ?? '',
-    );
+    final nameCtl = TextEditingController(text: device.deviceName ?? '');
 
     return showDialog<Map<String, dynamic>>(
       context: context,
@@ -458,9 +538,9 @@ class _DeviceDetailScaffold extends ConsumerWidget {
           FilledButton(
             onPressed: () {
               if (nameCtl.text.trim().isEmpty) return;
-              Navigator.of(ctx).pop(<String, dynamic>{
-                'DeviceName': nameCtl.text.trim(),
-              });
+              Navigator.of(
+                ctx,
+              ).pop(<String, dynamic>{'DeviceName': nameCtl.text.trim()});
             },
             child: Text(l10n.confirm),
           ),
@@ -481,16 +561,16 @@ class _DeviceDetailScaffold extends ConsumerWidget {
             ListTile(
               title: Text(l10n.actionRemoteDesktopEnable),
               leading: const Icon(Icons.desktop_windows),
-              onTap: () => Navigator.of(ctx).pop(
-                <String, dynamic>{'EnableRemoteDesktop': true},
-              ),
+              onTap: () => Navigator.of(
+                ctx,
+              ).pop(<String, dynamic>{'EnableRemoteDesktop': true}),
             ),
             ListTile(
               title: Text(l10n.actionRemoteDesktopDisable),
               leading: const Icon(Icons.desktop_access_disabled),
-              onTap: () => Navigator.of(ctx).pop(
-                <String, dynamic>{'EnableRemoteDesktop': false},
-              ),
+              onTap: () => Navigator.of(
+                ctx,
+              ).pop(<String, dynamic>{'EnableRemoteDesktop': false}),
             ),
           ],
         ),
@@ -536,9 +616,9 @@ class _DeviceDetailScaffold extends ConsumerWidget {
           FilledButton(
             onPressed: () {
               if (userCtl.text.trim().isEmpty) return;
-              Navigator.of(ctx).pop(<String, dynamic>{
-                'UserName': userCtl.text.trim(),
-              });
+              Navigator.of(
+                ctx,
+              ).pop(<String, dynamic>{'UserName': userCtl.text.trim()});
             },
             child: Text(l10n.confirm),
           ),
@@ -547,7 +627,10 @@ class _DeviceDetailScaffold extends ConsumerWidget {
     );
   }
 
-  Future<void> _showEditDeviceDialog(BuildContext context, WidgetRef ref) async {
+  Future<void> _showEditDeviceDialog(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     final l10n = AppLocalizations.of(context);
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
@@ -561,15 +644,15 @@ class _DeviceDetailScaffold extends ConsumerWidget {
       ref.invalidate(deviceDetailProvider(device.deviceId));
       ref.invalidate(devicesProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.deviceUpdated)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.deviceUpdated)));
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -609,16 +692,16 @@ class _DeviceDetailScaffold extends ConsumerWidget {
       await repo.deleteDevice(device.deviceId);
       ref.invalidate(devicesProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.deviceDeleted)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.deviceDeleted)));
         context.pop();
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -650,15 +733,15 @@ class _DeviceDetailScaffold extends ConsumerWidget {
       ref.invalidate(deviceDetailsProvider(device.deviceId));
       ref.invalidate(deviceDetailProvider(device.deviceId));
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.lostModeCancelled)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.lostModeCancelled)));
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -799,16 +882,13 @@ class _EraseDeviceDialogState extends State<_EraseDeviceDialog> {
               ),
               keyboardType: TextInputType.number,
               maxLength: 6,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
             const SizedBox(height: 8),
             CheckboxListTile(
               title: Text(l10n.erasePreserveDataPlan),
               value: _preserveDataPlan,
-              onChanged: (v) =>
-                  setState(() => _preserveDataPlan = v ?? false),
+              onChanged: (v) => setState(() => _preserveDataPlan = v ?? false),
               contentPadding: EdgeInsets.zero,
               dense: true,
             ),
@@ -823,8 +903,7 @@ class _EraseDeviceDialogState extends State<_EraseDeviceDialog> {
             CheckboxListTile(
               title: Text(l10n.eraseReturnToService),
               value: _returnToService,
-              onChanged: (v) =>
-                  setState(() => _returnToService = v ?? false),
+              onChanged: (v) => setState(() => _returnToService = v ?? false),
               contentPadding: EdgeInsets.zero,
               dense: true,
             ),
@@ -847,10 +926,7 @@ class _EraseDeviceDialogState extends State<_EraseDeviceDialog> {
               'PIN': pin,
               'PreserveDataPlan': _preserveDataPlan,
               'DisallowProximitySetup': _disallowProximitySetup,
-              'ReturnToService': {
-                'Enabled': _returnToService,
-                'ProfileId': '',
-              },
+              'ReturnToService': {'Enabled': _returnToService, 'ProfileId': ''},
             });
           },
           child: Text(l10n.actionErase),
@@ -887,16 +963,14 @@ class _RestartDialogState extends State<_RestartDialog> {
           CheckboxListTile(
             title: Text(l10n.restartRebuildKernelCache),
             value: _rebuildKernelCache,
-            onChanged: (v) =>
-                setState(() => _rebuildKernelCache = v ?? false),
+            onChanged: (v) => setState(() => _rebuildKernelCache = v ?? false),
             contentPadding: EdgeInsets.zero,
             dense: true,
           ),
           CheckboxListTile(
             title: Text(l10n.restartNotifyUser),
             value: _notifyUser,
-            onChanged: (v) =>
-                setState(() => _notifyUser = v ?? false),
+            onChanged: (v) => setState(() => _notifyUser = v ?? false),
             contentPadding: EdgeInsets.zero,
             dense: true,
           ),
@@ -964,16 +1038,14 @@ class _DeleteUserDialogState extends State<_DeleteUserDialog> {
           CheckboxListTile(
             title: Text(l10n.actionDeleteAllUsers),
             value: _deleteAllUsers,
-            onChanged: (v) =>
-                setState(() => _deleteAllUsers = v ?? false),
+            onChanged: (v) => setState(() => _deleteAllUsers = v ?? false),
             contentPadding: EdgeInsets.zero,
             dense: true,
           ),
           CheckboxListTile(
             title: Text(l10n.actionForceDeletion),
             value: _forceDeletion,
-            onChanged: (v) =>
-                setState(() => _forceDeletion = v ?? false),
+            onChanged: (v) => setState(() => _forceDeletion = v ?? false),
             contentPadding: EdgeInsets.zero,
             dense: true,
           ),
@@ -993,8 +1065,7 @@ class _DeleteUserDialogState extends State<_DeleteUserDialog> {
             Navigator.of(context).pop(<String, dynamic>{
               'DeleteAllUsers': _deleteAllUsers,
               'ForceDeletion': _forceDeletion,
-              if (!_deleteAllUsers)
-                'UserName': _userCtl.text.trim(),
+              if (!_deleteAllUsers) 'UserName': _userCtl.text.trim(),
             });
           },
           child: Text(l10n.confirm),
@@ -1027,10 +1098,26 @@ class _OverviewTab extends ConsumerWidget {
           children: [
             _DeviceHeader(device: device),
             const Divider(height: 24),
-            _InfoTile(icon: Icons.tag, label: l10n.serialNumber, value: device.serialNumber),
-            _InfoTile(icon: Icons.phone_android, label: l10n.model, value: device.model),
-            _InfoTile(icon: Icons.system_update, label: l10n.osVersion, value: device.osVersion),
-            _InfoTile(icon: Icons.sell_outlined, label: l10n.assetTag, value: device.assetTag),
+            _InfoTile(
+              icon: Icons.tag,
+              label: l10n.serialNumber,
+              value: device.serialNumber,
+            ),
+            _InfoTile(
+              icon: Icons.phone_android,
+              label: l10n.model,
+              value: device.model,
+            ),
+            _InfoTile(
+              icon: Icons.system_update,
+              label: l10n.osVersion,
+              value: device.osVersion,
+            ),
+            _InfoTile(
+              icon: Icons.sell_outlined,
+              label: l10n.assetTag,
+              value: device.assetTag,
+            ),
           ],
         ),
         const SizedBox(height: 12),
@@ -1039,7 +1126,11 @@ class _OverviewTab extends ConsumerWidget {
         _SectionCard(
           children: [
             _SectionTitle(title: l10n.sectionManagement),
-            _InfoTile(icon: Icons.layers_outlined, label: l10n.blueprint, value: device.blueprintName),
+            _InfoTile(
+              icon: Icons.layers_outlined,
+              label: l10n.blueprint,
+              value: device.blueprintName,
+            ),
             _TappableInfoTile(
               icon: Icons.person_outline,
               label: l10n.assignedUser,
@@ -1048,31 +1139,53 @@ class _OverviewTab extends ConsumerWidget {
                   ? () => context.push('/users/${device.user!.userId}')
                   : null,
             ),
-            _InfoTile(icon: Icons.login, label: l10n.enrolledDate, value: _formatDate(device.firstEnrollment)),
+            _InfoTile(
+              icon: Icons.login,
+              label: l10n.enrolledDate,
+              value: _formatDate(device.firstEnrollment),
+            ),
             _InfoTile(
               icon: Icons.schedule,
-              label: l10n.lastCheckIn(_parseRelativeTime(device.lastCheckIn) ?? '-'),
+              label: l10n.lastCheckIn(
+                _parseRelativeTime(device.lastCheckIn) ?? '-',
+              ),
               value: _formatDate(device.lastCheckIn),
             ),
-            _InfoTile(icon: Icons.verified_outlined, label: l10n.agent, value: device.agentVersion),
+            _InfoTile(
+              icon: Icons.verified_outlined,
+              label: l10n.agent,
+              value: device.agentVersion,
+            ),
             if (device.tags.isNotEmpty) ...[
               const Divider(height: 16),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.label_outline, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                    Icon(
+                      Icons.label_outline,
+                      size: 20,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Wrap(
                         spacing: 6,
                         runSpacing: 4,
-                        children: device.tags.map((tag) => Chip(
-                          label: Text(tag),
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          visualDensity: VisualDensity.compact,
-                        )).toList(),
+                        children: device.tags
+                            .map(
+                              (tag) => Chip(
+                                label: Text(tag),
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                visualDensity: VisualDensity.compact,
+                              ),
+                            )
+                            .toList(),
                       ),
                     ),
                   ],
@@ -1085,52 +1198,65 @@ class _OverviewTab extends ConsumerWidget {
 
         // Status indicators
         detailsAsync.whenOrNull(
-          data: (details) {
-            final lostMode = details.lostMode;
-            final isLost = lostMode?.isEnabled ?? false;
-            return _SectionCard(
+              data: (details) {
+                final lostMode = details.lostMode;
+                final isLost = lostMode?.isEnabled ?? false;
+                return _SectionCard(
+                  children: [
+                    _SectionTitle(title: l10n.sectionStatus),
+                    _StatusRow(
+                      label: l10n.statusMissing,
+                      isActive: device.isMissing,
+                    ),
+                    _StatusRow(
+                      label: l10n.statusRemoved,
+                      isActive: device.isRemoved,
+                    ),
+                    _StatusRow(label: l10n.lostModeEnabled, isActive: isLost),
+                    if (isLost && lostMode != null) ...[
+                      const SizedBox(height: 4),
+                      if (lostMode.lockScreenMessage != null)
+                        _InfoTile(
+                          icon: Icons.message_outlined,
+                          label: l10n.lostModeMessage,
+                          value: lostMode.lockScreenMessage,
+                        ),
+                      if (lostMode.lockScreenPhoneNumber != null)
+                        _InfoTile(
+                          icon: Icons.phone_outlined,
+                          label: l10n.lostModePhone,
+                          value: lostMode.lockScreenPhoneNumber,
+                        ),
+                      if (lostMode.enabledBy != null)
+                        _InfoTile(
+                          icon: Icons.person_outline,
+                          label: l10n.lostModeEnabledBy,
+                          value: lostMode.enabledBy,
+                        ),
+                      if (lostMode.enableStatusAt != null)
+                        _InfoTile(
+                          icon: Icons.schedule,
+                          label: l10n.lostModeEnabledAt,
+                          value: _formatDate(lostMode.enableStatusAt),
+                        ),
+                    ],
+                  ],
+                );
+              },
+            ) ??
+            _SectionCard(
               children: [
                 _SectionTitle(title: l10n.sectionStatus),
-                _StatusRow(label: l10n.statusMissing, isActive: device.isMissing),
-                _StatusRow(label: l10n.statusRemoved, isActive: device.isRemoved),
-                _StatusRow(label: l10n.lostModeEnabled, isActive: isLost),
-                if (isLost && lostMode != null) ...[
-                  const SizedBox(height: 4),
-                  if (lostMode.lockScreenMessage != null)
-                    _InfoTile(
-                      icon: Icons.message_outlined,
-                      label: l10n.lostModeMessage,
-                      value: lostMode.lockScreenMessage,
-                    ),
-                  if (lostMode.lockScreenPhoneNumber != null)
-                    _InfoTile(
-                      icon: Icons.phone_outlined,
-                      label: l10n.lostModePhone,
-                      value: lostMode.lockScreenPhoneNumber,
-                    ),
-                  if (lostMode.enabledBy != null)
-                    _InfoTile(
-                      icon: Icons.person_outline,
-                      label: l10n.lostModeEnabledBy,
-                      value: lostMode.enabledBy,
-                    ),
-                  if (lostMode.enableStatusAt != null)
-                    _InfoTile(
-                      icon: Icons.schedule,
-                      label: l10n.lostModeEnabledAt,
-                      value: _formatDate(lostMode.enableStatusAt),
-                    ),
-                ],
+                _StatusRow(
+                  label: l10n.statusMissing,
+                  isActive: device.isMissing,
+                ),
+                _StatusRow(
+                  label: l10n.statusRemoved,
+                  isActive: device.isRemoved,
+                ),
               ],
-            );
-          },
-        ) ?? _SectionCard(
-          children: [
-            _SectionTitle(title: l10n.sectionStatus),
-            _StatusRow(label: l10n.statusMissing, isActive: device.isMissing),
-            _StatusRow(label: l10n.statusRemoved, isActive: device.isRemoved),
-          ],
-        ),
+            ),
         const SizedBox(height: 12),
 
         // Extended details from /details endpoint
@@ -1140,9 +1266,13 @@ class _OverviewTab extends ConsumerWidget {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: _HardwareCard(details: details, l10n: l10n)),
+                  Expanded(
+                    child: _HardwareCard(details: details, l10n: l10n),
+                  ),
                   const SizedBox(width: 12),
-                  Expanded(child: _SecurityCard(details: details, l10n: l10n)),
+                  Expanded(
+                    child: _SecurityCard(details: details, l10n: l10n),
+                  ),
                 ],
               );
             }
@@ -1154,10 +1284,12 @@ class _OverviewTab extends ConsumerWidget {
               ],
             );
           },
-          loading: () => const Center(child: Padding(
-            padding: EdgeInsets.all(24),
-            child: CircularProgressIndicator(),
-          )),
+          loading: () => const Center(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: CircularProgressIndicator(),
+            ),
+          ),
           error: (_, _) => const SizedBox.shrink(),
         ),
         const SizedBox(height: 16),
@@ -1194,16 +1326,52 @@ class _HardwareCard extends StatelessWidget {
       children: [
         _SectionTitle(title: l10n.hardware),
         _InfoTile(icon: Icons.devices, label: l10n.model, value: hw?.modelName),
-        _InfoTile(icon: Icons.developer_board, label: l10n.identifier, value: hw?.modelIdentifier),
-        _InfoTile(icon: Icons.memory, label: l10n.processor, value: hw?.resolvedProcessor),
-        _InfoTile(icon: Icons.memory, label: l10n.totalRam, value: hw?.resolvedRam),
-        _InfoTile(icon: Icons.storage, label: l10n.totalStorage, value: hw?.totalCapacity),
-        _InfoTile(icon: Icons.sd_storage_outlined, label: l10n.availableStorage, value: hw?.availableCapacity),
-        _InfoTile(icon: Icons.wifi, label: l10n.wifiMac, value: hw?.wifiMacAddress),
-        _InfoTile(icon: Icons.fingerprint, label: l10n.hardwareUuid, value: hw?.hardwareUuid),
-        _InfoTile(icon: Icons.build_outlined, label: l10n.osBuild, value: general?.osBuild),
+        _InfoTile(
+          icon: Icons.developer_board,
+          label: l10n.identifier,
+          value: hw?.modelIdentifier,
+        ),
+        _InfoTile(
+          icon: Icons.memory,
+          label: l10n.processor,
+          value: hw?.resolvedProcessor,
+        ),
+        _InfoTile(
+          icon: Icons.memory,
+          label: l10n.totalRam,
+          value: hw?.resolvedRam,
+        ),
+        _InfoTile(
+          icon: Icons.storage,
+          label: l10n.totalStorage,
+          value: hw?.totalCapacity,
+        ),
+        _InfoTile(
+          icon: Icons.sd_storage_outlined,
+          label: l10n.availableStorage,
+          value: hw?.availableCapacity,
+        ),
+        _InfoTile(
+          icon: Icons.wifi,
+          label: l10n.wifiMac,
+          value: hw?.wifiMacAddress,
+        ),
+        _InfoTile(
+          icon: Icons.fingerprint,
+          label: l10n.hardwareUuid,
+          value: hw?.hardwareUuid,
+        ),
+        _InfoTile(
+          icon: Icons.build_outlined,
+          label: l10n.osBuild,
+          value: general?.osBuild,
+        ),
         if (cell != null) ...[
-          _InfoTile(icon: Icons.sim_card_outlined, label: l10n.imei, value: cell.imei),
+          _InfoTile(
+            icon: Icons.sim_card_outlined,
+            label: l10n.imei,
+            value: cell.imei,
+          ),
         ],
       ],
     );
@@ -1224,8 +1392,16 @@ class _SecurityCard extends StatelessWidget {
     return _SectionCard(
       children: [
         _SectionTitle(title: l10n.security),
-        _InfoTile(icon: Icons.lock, label: l10n.encryption, value: sec.encryptionStatus),
-        _InfoTile(icon: Icons.shield_outlined, label: l10n.devicePosture, value: sec.devicePosture),
+        _InfoTile(
+          icon: Icons.lock,
+          label: l10n.encryption,
+          value: sec.encryptionStatus,
+        ),
+        _InfoTile(
+          icon: Icons.shield_outlined,
+          label: l10n.devicePosture,
+          value: sec.devicePosture,
+        ),
         _StatusRow(label: l10n.passcode, isActive: sec.hasPasscode == 1),
         _StatusRow(label: l10n.encryption, isActive: sec.isEncrypted == 1),
       ],
@@ -1256,7 +1432,11 @@ class _AppsTab extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.apps, size: 48, color: theme.colorScheme.onSurfaceVariant),
+                Icon(
+                  Icons.apps,
+                  size: 48,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(height: 8),
                 Text(l10n.noAppsFound, style: theme.textTheme.bodyLarge),
               ],
@@ -1329,7 +1509,11 @@ class _AppCard extends StatelessWidget {
                 color: colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(Icons.apps, size: 20, color: colorScheme.onSecondaryContainer),
+              child: Icon(
+                Icons.apps,
+                size: 20,
+                color: colorScheme.onSecondaryContainer,
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -1436,7 +1620,11 @@ class _StatusTab extends ConsumerWidget {
 }
 
 class _StatusList extends StatelessWidget {
-  const _StatusList({required this.title, required this.items, required this.icon});
+  const _StatusList({
+    required this.title,
+    required this.items,
+    required this.icon,
+  });
 
   final String title;
   final List<StatusItem> items;
@@ -1446,15 +1634,17 @@ class _StatusList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(16),
-      children: [
-        _StatusListSection(title: title, items: items, icon: icon),
-      ],
+      children: [_StatusListSection(title: title, items: items, icon: icon)],
     );
   }
 }
 
 class _StatusListSection extends StatelessWidget {
-  const _StatusListSection({required this.title, required this.items, required this.icon});
+  const _StatusListSection({
+    required this.title,
+    required this.items,
+    required this.icon,
+  });
 
   final String title;
   final List<StatusItem> items;
@@ -1471,9 +1661,12 @@ class _StatusListSection extends StatelessWidget {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Text('No items', style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              )),
+              child: Text(
+                'No items',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
             ),
           ),
         ],
@@ -1483,7 +1676,12 @@ class _StatusListSection extends StatelessWidget {
     return _SectionCard(
       children: [
         _SectionTitle(title: '$title (${items.length})'),
-        ...(List.of(items)..sort((a, b) => (a.name ?? '').toLowerCase().compareTo((b.name ?? '').toLowerCase()))).map((item) => _StatusItemTile(item: item, icon: icon)),
+        ...(List.of(items)..sort(
+              (a, b) => (a.name ?? '').toLowerCase().compareTo(
+                (b.name ?? '').toLowerCase(),
+              ),
+            ))
+            .map((item) => _StatusItemTile(item: item, icon: icon)),
       ],
     );
   }
@@ -1535,18 +1733,34 @@ class _StatusItemTile extends StatelessWidget {
 
   Color _statusColor(String? status, ColorScheme cs) {
     final s = status?.toUpperCase() ?? '';
-    if (s == 'PASS' || s == 'COMPLETED' || s.contains('SUCCESS')) return cs.primary;
-    if (s == 'ERROR' || s == 'FAILED') return cs.error;
-    if (s == 'WARNING' || s == 'REMEDIATED') return Colors.orange;
+    if (s == 'PASS' || s == 'COMPLETED' || s.contains('SUCCESS')) {
+      return cs.primary;
+    }
+    if (s == 'ERROR' || s == 'FAILED') {
+      return cs.error;
+    }
+    if (s == 'WARNING' || s == 'REMEDIATED') {
+      return Colors.orange;
+    }
     return cs.onSurfaceVariant;
   }
 
   IconData _statusIcon(String? status) {
     final s = status?.toUpperCase() ?? '';
-    if (s == 'PASS' || s == 'COMPLETED' || s.contains('SUCCESS')) return Icons.check_circle_outline;
-    if (s == 'ERROR' || s == 'FAILED') return Icons.error_outline;
-    if (s == 'WARNING' || s == 'REMEDIATED') return Icons.warning_amber;
-    if (s.contains('PENDING') || s.contains('INSTALLING') || s.contains('DOWNLOADING')) return Icons.hourglass_empty;
+    if (s == 'PASS' || s == 'COMPLETED' || s.contains('SUCCESS')) {
+      return Icons.check_circle_outline;
+    }
+    if (s == 'ERROR' || s == 'FAILED') {
+      return Icons.error_outline;
+    }
+    if (s == 'WARNING' || s == 'REMEDIATED') {
+      return Icons.warning_amber;
+    }
+    if (s.contains('PENDING') ||
+        s.contains('INSTALLING') ||
+        s.contains('DOWNLOADING')) {
+      return Icons.hourglass_empty;
+    }
     return Icons.help_outline;
   }
 }
@@ -1573,7 +1787,11 @@ class _ActivityTab extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.history, size: 48, color: theme.colorScheme.onSurfaceVariant),
+                Icon(
+                  Icons.history,
+                  size: 48,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(height: 8),
                 Text(l10n.noActivityFound, style: theme.textTheme.bodyLarge),
               ],
@@ -1584,7 +1802,8 @@ class _ActivityTab extends ConsumerWidget {
         return ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: activities.length,
-          itemBuilder: (context, index) => _ActivityTile(activity: activities[index]),
+          itemBuilder: (context, index) =>
+              _ActivityTile(activity: activities[index]),
         );
       },
       loading: () => const LoadingWidget(),
@@ -1621,7 +1840,11 @@ class _ActivityTile extends StatelessWidget {
                   color: _activityColor(activity.actionType, colorScheme),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(_activityIcon(activity.actionType), size: 18, color: colorScheme.onTertiaryContainer),
+                child: Icon(
+                  _activityIcon(activity.actionType),
+                  size: 18,
+                  color: colorScheme.onTertiaryContainer,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -1632,7 +1855,8 @@ class _ActivityTile extends StatelessWidget {
                       _formatActionType(activity.actionType),
                       style: theme.textTheme.titleSmall,
                     ),
-                    if (activity.details != null && activity.details!.isNotEmpty)
+                    if (activity.details != null &&
+                        activity.details!.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 2),
                         child: Text(
@@ -1673,14 +1897,19 @@ class _ActivityTile extends StatelessWidget {
   String _formatActionType(String? type) {
     if (type == null) return 'Unknown';
     // Convert snake_case to Title Case
-    return type.split('_').map((w) => w.isEmpty ? '' : '${w[0].toUpperCase()}${w.substring(1)}').join(' ');
+    return type
+        .split('_')
+        .map((w) => w.isEmpty ? '' : '${w[0].toUpperCase()}${w.substring(1)}')
+        .join(' ');
   }
 
   IconData _activityIcon(String? type) {
     final t = type?.toLowerCase() ?? '';
     if (t.contains('enrollment')) return Icons.login;
     if (t.contains('failed') || t.contains('error')) return Icons.error_outline;
-    if (t.contains('completed') || t.contains('success')) return Icons.check_circle_outline;
+    if (t.contains('completed') || t.contains('success')) {
+      return Icons.check_circle_outline;
+    }
     if (t.contains('command')) return Icons.terminal;
     if (t.contains('lock')) return Icons.lock_outline;
     return Icons.history;
@@ -1689,7 +1918,9 @@ class _ActivityTile extends StatelessWidget {
   Color _activityColor(String? type, ColorScheme cs) {
     final t = type?.toLowerCase() ?? '';
     if (t.contains('failed') || t.contains('error')) return cs.errorContainer;
-    if (t.contains('completed') || t.contains('success')) return cs.primaryContainer;
+    if (t.contains('completed') || t.contains('success')) {
+      return cs.primaryContainer;
+    }
     return cs.tertiaryContainer;
   }
 }
@@ -1716,7 +1947,11 @@ class _CommandsTab extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.terminal, size: 48, color: theme.colorScheme.onSurfaceVariant),
+                Icon(
+                  Icons.terminal,
+                  size: 48,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(height: 8),
                 Text(l10n.noCommandsFound, style: theme.textTheme.bodyLarge),
               ],
@@ -1727,7 +1962,8 @@ class _CommandsTab extends ConsumerWidget {
         return ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: commands.length,
-          itemBuilder: (context, index) => _CommandTile(command: commands[index]),
+          itemBuilder: (context, index) =>
+              _CommandTile(command: commands[index]),
         );
       },
       loading: () => const LoadingWidget(),
@@ -1800,7 +2036,9 @@ class _CommandTile extends StatelessWidget {
                 ),
                 child: Text(
                   statusLabel,
-                  style: theme.textTheme.labelSmall?.copyWith(color: statusColor),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: statusColor,
+                  ),
                 ),
               ),
             ],
@@ -1849,11 +2087,9 @@ class _SecretsTab extends ConsumerStatefulWidget {
 class _SecretsTabState extends ConsumerState<_SecretsTab> {
   bool _authenticated = false;
 
-  bool get _securityConfigured =>
-      ref.read(pinEnabledProvider);
+  bool get _securityConfigured => ref.read(pinEnabledProvider);
 
-  bool get _biometricConfigured =>
-      ref.read(biometricEnabledProvider);
+  bool get _biometricConfigured => ref.read(biometricEnabledProvider);
 
   Future<void> _authenticate() async {
     if (_biometricConfigured) {
@@ -1920,14 +2156,20 @@ class _SecretsTabState extends ConsumerState<_SecretsTab> {
           (label: l10n.bypassCode, value: secrets.bypassCode),
         ];
 
-        final available = entries.where((e) => e.value != null && e.value!.isNotEmpty).toList();
+        final available = entries
+            .where((e) => e.value != null && e.value!.isNotEmpty)
+            .toList();
 
         if (available.isEmpty) {
           return Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.lock_outline, size: 48, color: theme.colorScheme.onSurfaceVariant),
+                Icon(
+                  Icons.lock_outline,
+                  size: 48,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(height: 8),
                 Text(l10n.noSecretsFound, style: theme.textTheme.bodyLarge),
               ],
@@ -1937,10 +2179,11 @@ class _SecretsTabState extends ConsumerState<_SecretsTab> {
 
         return ListView(
           padding: const EdgeInsets.all(16),
-          children: available.map((entry) => _SecretCard(
-            label: entry.label,
-            value: entry.value!,
-          )).toList(),
+          children: available
+              .map(
+                (entry) => _SecretCard(label: entry.label, value: entry.value!),
+              )
+              .toList(),
         );
       },
       loading: () => const LoadingWidget(),
@@ -1986,7 +2229,10 @@ class _SecretCardState extends State<_SecretCard> {
                   Text(widget.label, style: theme.textTheme.titleSmall),
                   const Spacer(),
                   IconButton(
-                    icon: Icon(_revealed ? Icons.visibility_off : Icons.visibility, size: 20),
+                    icon: Icon(
+                      _revealed ? Icons.visibility_off : Icons.visibility,
+                      size: 20,
+                    ),
                     onPressed: () => setState(() => _revealed = !_revealed),
                     tooltip: _revealed ? 'Hide' : 'Show',
                   ),
@@ -2095,24 +2341,34 @@ class _DeviceHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(device.deviceName ?? AppLocalizations.of(context).unknownDevice, style: theme.textTheme.titleMedium),
+              Text(
+                device.deviceName ?? AppLocalizations.of(context).unknownDevice,
+                style: theme.textTheme.titleMedium,
+              ),
               if (device.model != null)
                 Text(
                   device.model!,
-                  style: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
               if (device.platform != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: colorScheme.tertiaryContainer,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
                       device.platform!,
-                      style: theme.textTheme.labelSmall?.copyWith(color: colorScheme.onTertiaryContainer),
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onTertiaryContainer,
+                      ),
                     ),
                   ),
                 ),
@@ -2148,7 +2404,12 @@ class _InfoTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: theme.textTheme.labelSmall?.copyWith(color: colorScheme.onSurfaceVariant)),
+                Text(
+                  label,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
                 Text(value!, style: theme.textTheme.bodyMedium),
               ],
             ),
@@ -2192,23 +2453,30 @@ class _TappableInfoTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(label,
-                      style: theme.textTheme.labelSmall
-                          ?.copyWith(color: colorScheme.onSurfaceVariant)),
+                  Text(
+                    label,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                   Text(
                     value!,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: onTap != null ? colorScheme.primary : null,
-                      decoration:
-                          onTap != null ? TextDecoration.underline : null,
+                      decoration: onTap != null
+                          ? TextDecoration.underline
+                          : null,
                     ),
                   ),
                 ],
               ),
             ),
             if (onTap != null)
-              Icon(Icons.chevron_right,
-                  size: 18, color: colorScheme.onSurfaceVariant),
+              Icon(
+                Icons.chevron_right,
+                size: 18,
+                color: colorScheme.onSurfaceVariant,
+              ),
           ],
         ),
       ),
@@ -2242,13 +2510,17 @@ class _StatusRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(
-              color: isActive ? colorScheme.errorContainer : colorScheme.primaryContainer,
+              color: isActive
+                  ? colorScheme.errorContainer
+                  : colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(6),
             ),
             child: Text(
               isActive ? 'Yes' : 'No',
               style: theme.textTheme.labelSmall?.copyWith(
-                color: isActive ? colorScheme.onErrorContainer : colorScheme.onPrimaryContainer,
+                color: isActive
+                    ? colorScheme.onErrorContainer
+                    : colorScheme.onPrimaryContainer,
               ),
             ),
           ),
@@ -2313,15 +2585,15 @@ class _NotesTabState extends ConsumerState<_NotesTab> {
       await repo.createDeviceNote(widget.deviceId, result);
       ref.invalidate(deviceNotesProvider(widget.deviceId));
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.noteSaved)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.noteSaved)));
       }
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -2365,15 +2637,15 @@ class _NotesTabState extends ConsumerState<_NotesTab> {
       await repo.updateDeviceNote(widget.deviceId, note.noteId, result);
       ref.invalidate(deviceNotesProvider(widget.deviceId));
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.noteSaved)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.noteSaved)));
       }
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -2407,15 +2679,15 @@ class _NotesTabState extends ConsumerState<_NotesTab> {
       await repo.deleteDeviceNote(widget.deviceId, note.noteId);
       ref.invalidate(deviceNotesProvider(widget.deviceId));
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.noteDeleted)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.noteDeleted)));
       }
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.actionFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -2434,7 +2706,11 @@ class _NotesTabState extends ConsumerState<_NotesTab> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.note_outlined, size: 48, color: theme.colorScheme.onSurfaceVariant),
+                      Icon(
+                        Icons.note_outlined,
+                        size: 48,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                       const SizedBox(height: 8),
                       Text(l10n.noNotesFound, style: theme.textTheme.bodyLarge),
                     ],
@@ -2478,7 +2754,9 @@ class _NotesTabState extends ConsumerState<_NotesTab> {
                                     PopupMenuItem(
                                       value: 'edit',
                                       child: ListTile(
-                                        leading: const Icon(Icons.edit_outlined),
+                                        leading: const Icon(
+                                          Icons.edit_outlined,
+                                        ),
                                         title: Text(l10n.editNote),
                                         contentPadding: EdgeInsets.zero,
                                         dense: true,
@@ -2487,8 +2765,16 @@ class _NotesTabState extends ConsumerState<_NotesTab> {
                                     PopupMenuItem(
                                       value: 'delete',
                                       child: ListTile(
-                                        leading: Icon(Icons.delete_outline, color: theme.colorScheme.error),
-                                        title: Text(l10n.deleteNote, style: TextStyle(color: theme.colorScheme.error)),
+                                        leading: Icon(
+                                          Icons.delete_outline,
+                                          color: theme.colorScheme.error,
+                                        ),
+                                        title: Text(
+                                          l10n.deleteNote,
+                                          style: TextStyle(
+                                            color: theme.colorScheme.error,
+                                          ),
+                                        ),
                                         contentPadding: EdgeInsets.zero,
                                         dense: true,
                                       ),
@@ -2498,7 +2784,10 @@ class _NotesTabState extends ConsumerState<_NotesTab> {
                               ],
                             ),
                             const SizedBox(height: 4),
-                            Text(note.content, style: theme.textTheme.bodyMedium),
+                            Text(
+                              note.content,
+                              style: theme.textTheme.bodyMedium,
+                            ),
                           ],
                         ),
                       ),
@@ -2558,12 +2847,17 @@ class _LocationTab extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.location_off,
-                      size: 48, color: colorScheme.onSurfaceVariant),
+                  Icon(
+                    Icons.location_off,
+                    size: 48,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                   const SizedBox(height: 12),
-                  Text(l10n.locationNotAvailable,
-                      style: theme.textTheme.bodyLarge,
-                      textAlign: TextAlign.center),
+                  Text(
+                    l10n.locationNotAvailable,
+                    style: theme.textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(height: 8),
                   Text(
                     'Enable Lost Mode to track this device.',
@@ -2585,10 +2879,7 @@ class _LocationTab extends ConsumerWidget {
           children: [
             Expanded(
               child: FlutterMap(
-                options: MapOptions(
-                  initialCenter: position,
-                  initialZoom: 15,
-                ),
+                options: MapOptions(initialCenter: position, initialZoom: 15),
                 children: [
                   TileLayer(
                     urlTemplate:
@@ -2601,8 +2892,11 @@ class _LocationTab extends ConsumerWidget {
                         point: position,
                         width: 40,
                         height: 40,
-                        child: Icon(Icons.location_on,
-                            color: colorScheme.error, size: 40),
+                        child: Icon(
+                          Icons.location_on,
+                          color: colorScheme.error,
+                          size: 40,
+                        ),
                       ),
                     ],
                   ),
@@ -2618,8 +2912,11 @@ class _LocationTab extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.location_on,
-                            size: 18, color: colorScheme.primary),
+                        Icon(
+                          Icons.location_on,
+                          size: 18,
+                          color: colorScheme.primary,
+                        ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
@@ -2633,8 +2930,11 @@ class _LocationTab extends ConsumerWidget {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Icon(Icons.access_time,
-                              size: 18, color: colorScheme.onSurfaceVariant),
+                          Icon(
+                            Icons.access_time,
+                            size: 18,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                           const SizedBox(width: 8),
                           Text(
                             lostMode!.lastLocationAt!,
@@ -2649,7 +2949,9 @@ class _LocationTab extends ConsumerWidget {
                       const SizedBox(height: 8),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 4),
+                          horizontal: 12,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: colorScheme.errorContainer,
                           borderRadius: BorderRadius.circular(8),

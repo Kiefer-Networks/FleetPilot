@@ -147,7 +147,9 @@ class _BiometricGatePageState extends ConsumerState<BiometricGatePage> {
                 const CircularProgressIndicator()
               else if (_showPinInput) ...[
                 PinDotIndicator(
-                    length: _pin.length, hasError: _pinError != null),
+                  length: _pin.length,
+                  hasError: _pinError != null,
+                ),
                 if (_pinError != null) ...[
                   const SizedBox(height: 12),
                   Text(

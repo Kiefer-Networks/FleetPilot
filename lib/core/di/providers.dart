@@ -38,8 +38,7 @@ final profileRepositoryProvider = Provider<ProfileRepository>(
 );
 
 /// Async provider for the active connection profile.
-final activeProfileProvider =
-    FutureProvider<ConnectionProfile?>((ref) async {
+final activeProfileProvider = FutureProvider<ConnectionProfile?>((ref) async {
   final profileRepo = ref.watch(profileRepositoryProvider);
   final activeId = await profileRepo.getActiveProfileId();
   if (activeId == null) return null;
@@ -81,15 +80,15 @@ final blueprintApiProvider = FutureProvider<BlueprintApi>((ref) async {
 });
 
 /// Device repository (async — depends on DeviceApi).
-final deviceRepositoryProvider =
-    FutureProvider<DeviceRepository>((ref) async {
+final deviceRepositoryProvider = FutureProvider<DeviceRepository>((ref) async {
   final api = await ref.watch(deviceApiProvider.future);
   return DeviceRepositoryImpl(api: api);
 });
 
 /// Blueprint repository (async — depends on BlueprintApi).
-final blueprintRepositoryProvider =
-    FutureProvider<BlueprintRepository>((ref) async {
+final blueprintRepositoryProvider = FutureProvider<BlueprintRepository>((
+  ref,
+) async {
   final api = await ref.watch(blueprintApiProvider.future);
   return BlueprintRepositoryImpl(api: api);
 });
@@ -101,8 +100,9 @@ final getDevicesUseCaseProvider = FutureProvider<GetDevices>((ref) async {
 });
 
 /// Use case: execute device action (async — depends on DeviceRepository).
-final executeDeviceActionUseCaseProvider =
-    FutureProvider<ExecuteDeviceAction>((ref) async {
+final executeDeviceActionUseCaseProvider = FutureProvider<ExecuteDeviceAction>((
+  ref,
+) async {
   final repo = await ref.watch(deviceRepositoryProvider.future);
   return ExecuteDeviceAction(repository: repo);
 });

@@ -112,8 +112,7 @@ GoRouter createRouter({required bool hasProfile, required bool hasPinLock}) {
                 routes: [
                   GoRoute(
                     path: 'security',
-                    builder: (context, state) =>
-                        const SecuritySettingsPage(),
+                    builder: (context, state) => const SecuritySettingsPage(),
                   ),
                 ],
               ),
@@ -132,7 +131,9 @@ GoRouter createRouter({required bool hasProfile, required bool hasPinLock}) {
                   final itemName =
                       state.uri.queryParameters['name'] ?? 'Library Item';
                   return LibraryItemDetailPage(
-                      itemId: itemId, itemName: itemName);
+                    itemId: itemId,
+                    itemName: itemName,
+                  );
                 },
               ),
               GoRoute(
@@ -158,29 +159,25 @@ GoRouter createRouter({required bool hasProfile, required bool hasPinLock}) {
               ),
               GoRoute(
                 path: 'ade-integrations',
-                builder: (context, state) =>
-                    const AdeIntegrationsPage(),
+                builder: (context, state) => const AdeIntegrationsPage(),
                 routes: [
                   GoRoute(
                     path: 'create',
-                    builder: (context, state) =>
-                        const AdeCreatePage(),
+                    builder: (context, state) => const AdeCreatePage(),
                   ),
                   GoRoute(
                     path: ':integrationId',
                     builder: (context, state) {
                       final integrationId =
                           state.pathParameters['integrationId']!;
-                      return AdeDetailPage(
-                          integrationId: integrationId);
+                      return AdeDetailPage(integrationId: integrationId);
                     },
                   ),
                 ],
               ),
               GoRoute(
                 path: 'behavioral-detections',
-                builder: (context, state) =>
-                    const BehavioralDetectionsPage(),
+                builder: (context, state) => const BehavioralDetectionsPage(),
               ),
               GoRoute(
                 path: 'tags',

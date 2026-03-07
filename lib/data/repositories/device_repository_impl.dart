@@ -58,8 +58,11 @@ class DeviceRepositoryImpl implements DeviceRepository {
       api.getDeviceSecrets(deviceId);
 
   @override
-  Future<void> executeAction(String deviceId, DeviceAction action, {Map<String, dynamic>? body}) =>
-      api.executeAction(deviceId, action, body: body);
+  Future<void> executeAction(
+    String deviceId,
+    DeviceAction action, {
+    Map<String, dynamic>? body,
+  }) => api.executeAction(deviceId, action, body: body);
 
   @override
   Future<bool> validateCredentials() => api.validateCredentials();
@@ -74,8 +77,11 @@ class DeviceRepositoryImpl implements DeviceRepository {
       api.createDeviceNote(deviceId, content);
 
   @override
-  Future<DeviceNote> updateDeviceNote(String deviceId, String noteId, String content) =>
-      api.updateDeviceNote(deviceId, noteId, content);
+  Future<DeviceNote> updateDeviceNote(
+    String deviceId,
+    String noteId,
+    String content,
+  ) => api.updateDeviceNote(deviceId, noteId, content);
 
   @override
   Future<void> deleteDeviceNote(String deviceId, String noteId) =>

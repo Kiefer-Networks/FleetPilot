@@ -34,10 +34,7 @@ class DeviceListTile extends StatelessWidget {
                     color: colorScheme.secondaryContainer,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: PlatformIcon(
-                    platform: device.platform,
-                    size: 24,
-                  ),
+                  child: PlatformIcon(platform: device.platform, size: 24),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -67,7 +64,10 @@ class DeviceListTile extends StatelessWidget {
                 if (device.lostModeStatus?.toUpperCase() == 'ENABLED') ...[
                   const SizedBox(width: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.orange.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(6),
@@ -75,7 +75,11 @@ class DeviceListTile extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.location_off, size: 12, color: Colors.orange.shade700),
+                        Icon(
+                          Icons.location_off,
+                          size: 12,
+                          color: Colors.orange.shade700,
+                        ),
                         const SizedBox(width: 2),
                         Text(
                           'Lost',
@@ -154,10 +158,7 @@ class _ComplianceDot extends StatelessWidget {
     return Container(
       width: 10,
       height: 10,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
 }

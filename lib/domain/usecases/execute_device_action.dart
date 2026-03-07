@@ -8,7 +8,11 @@ class ExecuteDeviceAction {
   final DeviceRepository repository;
 
   /// Sends the [action] command to the device identified by [deviceId].
-  Future<void> call(String deviceId, DeviceAction action, {Map<String, dynamic>? body}) {
+  Future<void> call(
+    String deviceId,
+    DeviceAction action, {
+    Map<String, dynamic>? body,
+  }) {
     return repository.executeAction(deviceId, action, body: body);
   }
 }

@@ -42,7 +42,11 @@ abstract interface class DeviceRepository {
   Future<DeviceSecrets> getDeviceSecrets(String deviceId);
 
   /// Executes a device [action] on the device with [deviceId].
-  Future<void> executeAction(String deviceId, DeviceAction action, {Map<String, dynamic>? body});
+  Future<void> executeAction(
+    String deviceId,
+    DeviceAction action, {
+    Map<String, dynamic>? body,
+  });
 
   /// Validates credentials by attempting a minimal API request.
   Future<bool> validateCredentials();
@@ -50,7 +54,11 @@ abstract interface class DeviceRepository {
   // Notes CRUD
   Future<List<DeviceNote>> getDeviceNotes(String deviceId);
   Future<DeviceNote> createDeviceNote(String deviceId, String content);
-  Future<DeviceNote> updateDeviceNote(String deviceId, String noteId, String content);
+  Future<DeviceNote> updateDeviceNote(
+    String deviceId,
+    String noteId,
+    String content,
+  );
   Future<void> deleteDeviceNote(String deviceId, String noteId);
 
   // Update / Delete Device

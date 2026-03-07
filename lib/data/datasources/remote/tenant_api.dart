@@ -34,9 +34,7 @@ class TenantApi {
       if (data is List) {
         items = data;
       } else if (data is Map<String, dynamic>) {
-        items = (data['results'] as List?) ??
-            (data['threats'] as List?) ??
-            [];
+        items = (data['results'] as List?) ?? (data['threats'] as List?) ?? [];
       } else {
         return [];
       }
@@ -56,7 +54,10 @@ class TenantApi {
   }
 
   /// Fetches vulnerabilities from the tenant.
-  Future<List<Vulnerability>> getVulnerabilities({int page = 1, int size = 50}) async {
+  Future<List<Vulnerability>> getVulnerabilities({
+    int page = 1,
+    int size = 50,
+  }) async {
     try {
       final response = await dio.get<dynamic>(
         '/vulnerability-management/vulnerabilities',
@@ -68,7 +69,8 @@ class TenantApi {
       if (data is List) {
         items = data;
       } else if (data is Map<String, dynamic>) {
-        items = (data['results'] as List?) ??
+        items =
+            (data['results'] as List?) ??
             (data['data'] as List?) ??
             (data['vulnerabilities'] as List?) ??
             [];
@@ -85,7 +87,11 @@ class TenantApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.getVulnerabilities parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.getVulnerabilities parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse vulnerabilities: $e');
     }
   }
@@ -99,10 +105,7 @@ class TenantApi {
     String? cursor,
   }) async {
     try {
-      final queryParams = <String, dynamic>{
-        'limit': limit,
-        'sort_by': sortBy,
-      };
+      final queryParams = <String, dynamic>{'limit': limit, 'sort_by': sortBy};
       if (startDate != null) queryParams['start_date'] = startDate;
       if (endDate != null) queryParams['end_date'] = endDate;
       if (cursor != null) queryParams['cursor'] = cursor;
@@ -111,15 +114,19 @@ class TenantApi {
         '/audit/events',
         queryParameters: queryParams,
       );
-      return _extractListItems(response.data)
-          .map(AuditEvent.fromJson)
-          .toList(growable: false);
+      return _extractListItems(
+        response.data,
+      ).map(AuditEvent.fromJson).toList(growable: false);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.getAuditEvents parse error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.getAuditEvents parse error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse audit events: $e');
     }
   }
@@ -138,15 +145,19 @@ class TenantApi {
         '/vulnerability-management/detections',
         queryParameters: {'page': page, 'size': size},
       );
-      return _extractListItems(response.data)
-          .map(VulnerabilityDetection.fromJson)
-          .toList(growable: false);
+      return _extractListItems(
+        response.data,
+      ).map(VulnerabilityDetection.fromJson).toList(growable: false);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.getVulnerabilityDetections error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.getVulnerabilityDetections error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse vulnerability detections: $e');
     }
   }
@@ -165,13 +176,19 @@ class TenantApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.getVulnerabilityDetail error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.getVulnerabilityDetail error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse CVE detail: $e');
     }
   }
 
   /// Fetches devices affected by a specific CVE.
-  Future<List<Map<String, dynamic>>> getVulnerabilityDevices(String cveId) async {
+  Future<List<Map<String, dynamic>>> getVulnerabilityDevices(
+    String cveId,
+  ) async {
     try {
       final response = await dio.get<dynamic>(
         '/vulnerability-management/vulnerabilities/$cveId/devices',
@@ -182,13 +199,19 @@ class TenantApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.getVulnerabilityDevices error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.getVulnerabilityDevices error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse CVE devices: $e');
     }
   }
 
   /// Fetches software affected by a specific CVE.
-  Future<List<Map<String, dynamic>>> getVulnerabilitySoftware(String cveId) async {
+  Future<List<Map<String, dynamic>>> getVulnerabilitySoftware(
+    String cveId,
+  ) async {
     try {
       final response = await dio.get<dynamic>(
         '/vulnerability-management/vulnerabilities/$cveId/software',
@@ -199,7 +222,11 @@ class TenantApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.getVulnerabilitySoftware error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.getVulnerabilitySoftware error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse CVE software: $e');
     }
   }
@@ -214,15 +241,19 @@ class TenantApi {
         '/behavioral-detections',
         queryParameters: {'page': page, 'size': size},
       );
-      return _extractListItems(response.data)
-          .map(BehavioralDetection.fromJson)
-          .toList(growable: false);
+      return _extractListItems(
+        response.data,
+      ).map(BehavioralDetection.fromJson).toList(growable: false);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.getBehavioralDetections error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.getBehavioralDetections error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to parse behavioral detections: $e');
     }
   }
@@ -235,9 +266,9 @@ class TenantApi {
   Future<List<AdeIntegration>> getAdeIntegrations() async {
     try {
       final response = await dio.get<dynamic>('/integrations/apple/ade');
-      return _extractListItems(response.data)
-          .map(AdeIntegration.fromJson)
-          .toList(growable: false);
+      return _extractListItems(
+        response.data,
+      ).map(AdeIntegration.fromJson).toList(growable: false);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
@@ -293,13 +324,20 @@ class TenantApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.createAdeIntegration error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.createAdeIntegration error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to create ADE integration: $e');
     }
   }
 
   /// Updates an ADE integration.
-  Future<AdeIntegration> updateAdeIntegration(String id, Map<String, dynamic> body) async {
+  Future<AdeIntegration> updateAdeIntegration(
+    String id,
+    Map<String, dynamic> body,
+  ) async {
     try {
       final response = await dio.patch<dynamic>(
         '/integrations/apple/ade/$id',
@@ -313,7 +351,11 @@ class TenantApi {
     } on Failure {
       rethrow;
     } catch (e, st) {
-      log.e('TenantApi.updateAdeIntegration error: $e', error: e, stackTrace: st);
+      log.e(
+        'TenantApi.updateAdeIntegration error: $e',
+        error: e,
+        stackTrace: st,
+      );
       throw UnexpectedFailure('Failed to update ADE integration: $e');
     }
   }
@@ -333,9 +375,9 @@ class TenantApi {
       final response = await dio.get<dynamic>(
         '/integrations/apple/ade/$integrationId/devices',
       );
-      return _extractListItems(response.data)
-          .map(AdeDevice.fromJson)
-          .toList(growable: false);
+      return _extractListItems(
+        response.data,
+      ).map(AdeDevice.fromJson).toList(growable: false);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
@@ -364,7 +406,8 @@ class TenantApi {
   }
 
   /// Renews the ADE token for an integration with a new .p7m file.
-  Future<void> renewAdeToken(String integrationId, {
+  Future<void> renewAdeToken(
+    String integrationId, {
     required String filePath,
     required String fileName,
   }) async {
@@ -404,7 +447,14 @@ class TenantApi {
   List<Map<String, dynamic>> _extractListItems(dynamic data) {
     if (data is List) return data.cast<Map<String, dynamic>>();
     if (data is Map<String, dynamic>) {
-      for (final key in ['results', 'data', 'devices', 'detections', 'integrations', 'events']) {
+      for (final key in [
+        'results',
+        'data',
+        'devices',
+        'detections',
+        'integrations',
+        'events',
+      ]) {
         final list = data[key];
         if (list is List) return list.cast<Map<String, dynamic>>();
       }
