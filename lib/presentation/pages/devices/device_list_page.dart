@@ -1,0 +1,466 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fleetpilot/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../providers/device_providers.dart';
+import '../../widgets/common/empty_state_widget.dart';
+import '../../widgets/common/error_state_widget.dart';
+import '../../widgets/common/loading_widget.dart';
+import '../../widgets/device/device_list_tile.dart';
+
+/// Device list with M3 SearchBar, Badge filter icon, and pull-to-refresh.
+class DeviceListPage extends ConsumerStatefulWidget {
+  const DeviceListPage({super.key});
+
+  @override
+  ConsumerState<DeviceListPage> createState() => _DeviceListPageState();
+}
+
+class _DeviceListPageState extends ConsumerState<DeviceListPage> {
+  final _searchController = SearchController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  int _countActiveFilters() {
+    var count = 0;
+    if (ref.read(platformFilterProvider) != null) count++;
+    if (ref.read(supervisedFilterProvider) != null) count++;
+    if (ref.read(lostModeFilterProvider)) count++;
+    return count;
+  }
+
+  void _clearAllFilters() {
+    _searchController.clear();
+    ref.read(deviceSearchQueryProvider.notifier).state = '';
+    ref.read(platformFilterProvider.notifier).state = null;
+    ref.read(supervisedFilterProvider.notifier).state = null;
+    ref.read(lostModeFilterProvider.notifier).state = false;
+    ref.read(deviceSortAscProvider.notifier).state = true;
+    setState(() {});
+  }
+
+  Future<void> _showFilterSheet() async {
+    final l10n = AppLocalizations.of(context);
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (_) => _DeviceFilterBottomSheet(ref: ref),
+    );
+    if (result == true) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final filteredDevices = ref.watch(filteredDevicesProvider);
+    final loadingCount = ref.watch(devicesLoadingCountProvider);
+    final currentPlatform = ref.watch(platformFilterProvider);
+    final sortAsc = ref.watch(deviceSortAscProvider);
+    final supervisedFilter = ref.watch(supervisedFilterProvider);
+    final lostModeFilter = ref.watch(lostModeFilterProvider);
+    final activeFilterCount = _countActiveFilters();
+
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => ref.read(devicesProvider.notifier).refresh(),
+        child: const Icon(Icons.refresh),
+      ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            title: Text(l10n.navDevices),
+            floating: true,
+            snap: true,
+          ),
+        ],
+        body: Column(
+          children: [
+            // Search bar + filter button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SearchBar(
+                      controller: _searchController,
+                      hintText: l10n.searchDevices,
+                      leading: const Icon(Icons.search, size: 20),
+                      trailing: [
+                        if (_searchController.text.isNotEmpty)
+                          IconButton(
+                            icon: const Icon(Icons.clear, size: 20),
+                            onPressed: () {
+                              _searchController.clear();
+                              ref
+                                  .read(deviceSearchQueryProvider.notifier)
+                                  .state = '';
+                              setState(() {});
+                            },
+                          ),
+                      ],
+                      onChanged: (query) {
+                        ref.read(deviceSearchQueryProvider.notifier).state =
+                            query;
+                        setState(() {});
+                      },
+                      padding: const WidgetStatePropertyAll(
+                        EdgeInsets.symmetric(horizontal: 8),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Badge(
+                    isLabelVisible: activeFilterCount > 0,
+                    label: Text('$activeFilterCount'),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.tune,
+                        color: activeFilterCount > 0
+                            ? theme.colorScheme.primary
+                            : null,
+                      ),
+                      onPressed: _showFilterSheet,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Active filter chips
+            if (activeFilterCount > 0) ...[
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 36,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  children: [
+                    if (currentPlatform != null)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: InputChip(
+                          label: Text(currentPlatform),
+                          onDeleted: () => ref
+                              .read(platformFilterProvider.notifier)
+                              .state = null,
+                        ),
+                      ),
+                    if (supervisedFilter != null)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: InputChip(
+                          label: Text(supervisedFilter
+                              ? l10n.filterSupervised
+                              : l10n.filterUnsupervised),
+                          onDeleted: () => ref
+                              .read(supervisedFilterProvider.notifier)
+                              .state = null,
+                        ),
+                      ),
+                    if (lostModeFilter)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: InputChip(
+                          label: Text(l10n.filterLostMode),
+                          onDeleted: () => ref
+                              .read(lostModeFilterProvider.notifier)
+                              .state = false,
+                        ),
+                      ),
+                    ActionChip(
+                      label: Text(l10n.filterClearAll),
+                      avatar: const Icon(Icons.clear_all, size: 16),
+                      onPressed: _clearAllFilters,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+
+            // Sort chip row
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 40,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  FilterChip(
+                    avatar: Icon(
+                        sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
+                        size: 16),
+                    label: Text(sortAsc ? l10n.sortAZ : l10n.sortZA),
+                    selected: false,
+                    onSelected: (_) => ref
+                        .read(deviceSortAscProvider.notifier)
+                        .state = !sortAsc,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            // Loading progress
+            if (filteredDevices.isLoading && loadingCount > 0)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    const LinearProgressIndicator(),
+                    const SizedBox(height: 4),
+                    Text(
+                      l10n.loadingDevices(loadingCount),
+                      style: theme.textTheme.labelSmall,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+
+            // Device list
+            Expanded(
+              child: filteredDevices.when(
+                data: (devices) {
+                  if (devices.isEmpty) {
+                    return EmptyStateWidget(
+                      icon: Icons.devices_other,
+                      title: l10n.noDevicesFound,
+                      message: l10n.noDevicesFoundMessage,
+                      actionLabel: l10n.retry,
+                      onAction: () =>
+                          ref.read(devicesProvider.notifier).refresh(),
+                    );
+                  }
+
+                  return RefreshIndicator(
+                    onRefresh: () =>
+                        ref.read(devicesProvider.notifier).refresh(),
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      itemCount: devices.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                            child: Text(
+                              l10n.deviceCount(devices.length),
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          );
+                        }
+                        final device = devices[index - 1];
+                        return DeviceListTile(
+                          device: device,
+                          onTap: () =>
+                              context.push('/devices/${device.deviceId}'),
+                        );
+                      },
+                    ),
+                  );
+                },
+                loading: () => const LoadingWidget(),
+                error: (error, _) => ErrorStateWidget(
+                  failure: error,
+                  onRetry: () =>
+                      ref.read(devicesProvider.notifier).refresh(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Bottom sheet for device filters (platform, supervision, lost mode).
+class _DeviceFilterBottomSheet extends StatelessWidget {
+  const _DeviceFilterBottomSheet({required this.ref});
+
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+
+    return DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.55,
+      minChildSize: 0.3,
+      maxChildSize: 0.85,
+      builder: (context, scrollController) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            final platform = ref.read(platformFilterProvider);
+            final supervised = ref.read(supervisedFilterProvider);
+            final lostMode = ref.read(lostModeFilterProvider);
+
+            return Column(
+              children: [
+                // Handle
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Container(
+                    width: 32,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.onSurfaceVariant
+                          .withValues(alpha: 0.4),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+
+                // Title
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(l10n.filterTitle,
+                          style: theme.textTheme.titleLarge),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          ref.read(platformFilterProvider.notifier).state =
+                              null;
+                          ref.read(supervisedFilterProvider.notifier).state =
+                              null;
+                          ref.read(lostModeFilterProvider.notifier).state =
+                              false;
+                          setSheetState(() {});
+                        },
+                        child: Text(l10n.filterClearAll),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // Content
+                Expanded(
+                  child: ListView(
+                    controller: scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    children: [
+                      // Platform
+                      Text(l10n.filterPlatform,
+                          style: theme.textTheme.titleSmall),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          FilterChip(
+                            label: Text(l10n.filterAll),
+                            selected: platform == null,
+                            onSelected: (_) {
+                              ref
+                                  .read(platformFilterProvider.notifier)
+                                  .state = null;
+                              setSheetState(() {});
+                            },
+                          ),
+                          for (final p in ['Mac', 'iPhone', 'iPad', 'AppleTV'])
+                            FilterChip(
+                              label: Text(p),
+                              selected: platform == p,
+                              onSelected: (_) {
+                                ref
+                                    .read(platformFilterProvider.notifier)
+                                    .state = platform == p ? null : p;
+                                setSheetState(() {});
+                              },
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Supervision
+                      Text(l10n.filterSupervision,
+                          style: theme.textTheme.titleSmall),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          FilterChip(
+                            label: Text(l10n.filterAll),
+                            selected: supervised == null,
+                            onSelected: (_) {
+                              ref
+                                  .read(supervisedFilterProvider.notifier)
+                                  .state = null;
+                              setSheetState(() {});
+                            },
+                          ),
+                          FilterChip(
+                            label: Text(l10n.filterSupervised),
+                            selected: supervised == true,
+                            onSelected: (_) {
+                              ref
+                                  .read(supervisedFilterProvider.notifier)
+                                  .state =
+                                  supervised == true ? null : true;
+                              setSheetState(() {});
+                            },
+                          ),
+                          FilterChip(
+                            label: Text(l10n.filterUnsupervised),
+                            selected: supervised == false,
+                            onSelected: (_) {
+                              ref
+                                  .read(supervisedFilterProvider.notifier)
+                                  .state =
+                                  supervised == false ? null : false;
+                              setSheetState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Lost Mode
+                      FilterChip(
+                        label: Text(l10n.filterLostMode),
+                        selected: lostMode,
+                        onSelected: (_) {
+                          ref
+                              .read(lostModeFilterProvider.notifier)
+                              .state = !lostMode;
+                          setSheetState(() {});
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+
+                // Apply button
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: Text(l10n.filterApply),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+}
