@@ -1,0 +1,2298 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_de.dart';
+import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en'),
+    Locale('es'),
+  ];
+
+  /// The application title
+  ///
+  /// In en, this message translates to:
+  /// **'FleetPilot'**
+  String get appTitle;
+
+  /// Navigation label for devices tab
+  ///
+  /// In en, this message translates to:
+  /// **'Devices'**
+  String get navDevices;
+
+  /// Navigation label for blueprints tab
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprints'**
+  String get navBlueprints;
+
+  /// Navigation label for users tab
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get navUsers;
+
+  /// Navigation label for settings tab
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get navSettings;
+
+  /// Title on the welcome/onboarding screen
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to FleetPilot'**
+  String get welcomeTitle;
+
+  /// Subtitle on the welcome screen
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your Apple device fleet from anywhere.'**
+  String get welcomeSubtitle;
+
+  /// Button label to add a new connection profile
+  ///
+  /// In en, this message translates to:
+  /// **'Add Profile'**
+  String get addProfile;
+
+  /// Title for editing a profile
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// Label for profile display name field
+  ///
+  /// In en, this message translates to:
+  /// **'Display Name'**
+  String get displayName;
+
+  /// Hint text for profile display name
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Acme Corp — Prod'**
+  String get displayNameHint;
+
+  /// Label for region selector
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get region;
+
+  /// US region label
+  ///
+  /// In en, this message translates to:
+  /// **'US'**
+  String get regionUs;
+
+  /// EU region label
+  ///
+  /// In en, this message translates to:
+  /// **'EU'**
+  String get regionEu;
+
+  /// Label for subdomain field
+  ///
+  /// In en, this message translates to:
+  /// **'Subdomain'**
+  String get subdomain;
+
+  /// Hint text for subdomain field
+  ///
+  /// In en, this message translates to:
+  /// **'your-tenant'**
+  String get subdomainHint;
+
+  /// Label for API token field
+  ///
+  /// In en, this message translates to:
+  /// **'API Token'**
+  String get apiToken;
+
+  /// Hint text for API token field
+  ///
+  /// In en, this message translates to:
+  /// **'Paste your API token here'**
+  String get apiTokenHint;
+
+  /// Preview of constructed API URL
+  ///
+  /// In en, this message translates to:
+  /// **'API URL: {url}'**
+  String urlPreview(String url);
+
+  /// Button label for verifying and saving credentials
+  ///
+  /// In en, this message translates to:
+  /// **'Verify & Save'**
+  String get verifyAndSave;
+
+  /// Loading message during credential verification
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying connection...'**
+  String get verifying;
+
+  /// Success message after credential verification
+  ///
+  /// In en, this message translates to:
+  /// **'Connection verified successfully!'**
+  String get connectionSuccess;
+
+  /// Error message for 401 response
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid API token. Please check your token in the web console.'**
+  String get errorInvalidToken;
+
+  /// Error message for 403 response
+  ///
+  /// In en, this message translates to:
+  /// **'Token lacks required permissions. Ensure the token has read access to Devices.'**
+  String get errorInsufficientPermissions;
+
+  /// Error message for network failures
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the API. Check your internet connection and subdomain.'**
+  String get errorNetworkUnreachable;
+
+  /// Error message for 404 response
+  ///
+  /// In en, this message translates to:
+  /// **'The requested resource was not found.'**
+  String get errorNotFound;
+
+  /// Error message for 422 response
+  ///
+  /// In en, this message translates to:
+  /// **'The request contained invalid data. Please check your input.'**
+  String get errorValidation;
+
+  /// Error message for 429 response
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Please wait a moment and try again.'**
+  String get errorRateLimit;
+
+  /// Error message for 500 response
+  ///
+  /// In en, this message translates to:
+  /// **'The server encountered an error. Please try again later.'**
+  String get errorServer;
+
+  /// Error message for unexpected errors
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again.'**
+  String get errorUnexpected;
+
+  /// Retry button label
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Delete button label
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// Save button label
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// Search label
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// Placeholder for device search bar
+  ///
+  /// In en, this message translates to:
+  /// **'Search devices...'**
+  String get searchDevices;
+
+  /// Filter chip label for all items
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// Filter chip label for Mac devices
+  ///
+  /// In en, this message translates to:
+  /// **'Mac'**
+  String get filterMac;
+
+  /// Filter chip label for iPhone devices
+  ///
+  /// In en, this message translates to:
+  /// **'iPhone'**
+  String get filterIphone;
+
+  /// Filter chip label for iPad devices
+  ///
+  /// In en, this message translates to:
+  /// **'iPad'**
+  String get filterIpad;
+
+  /// Filter chip label for Apple TV devices
+  ///
+  /// In en, this message translates to:
+  /// **'Apple TV'**
+  String get filterAppleTv;
+
+  /// Filter chip label for all blueprints
+  ///
+  /// In en, this message translates to:
+  /// **'All Blueprints'**
+  String get allBlueprints;
+
+  /// Loading indicator during device pagination
+  ///
+  /// In en, this message translates to:
+  /// **'Loading {count} devices...'**
+  String loadingDevices(int count);
+
+  /// Device count display
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No devices} =1{1 device} other{{count} devices}}'**
+  String deviceCount(int count);
+
+  /// Empty state title when no devices match
+  ///
+  /// In en, this message translates to:
+  /// **'No devices found'**
+  String get noDevicesFound;
+
+  /// Empty state message when no devices match
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your search or filters.'**
+  String get noDevicesFoundMessage;
+
+  /// Label for last check-in time
+  ///
+  /// In en, this message translates to:
+  /// **'Last check-in: {time}'**
+  String lastCheckIn(String time);
+
+  /// Compliance status pass
+  ///
+  /// In en, this message translates to:
+  /// **'Pass'**
+  String get compliancePass;
+
+  /// Compliance status fail
+  ///
+  /// In en, this message translates to:
+  /// **'Fail'**
+  String get complianceFail;
+
+  /// Compliance status pending
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get compliancePending;
+
+  /// Title for device detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'Device Details'**
+  String get deviceDetails;
+
+  /// Label for serial number
+  ///
+  /// In en, this message translates to:
+  /// **'Serial Number'**
+  String get serialNumber;
+
+  /// Label for device model
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get model;
+
+  /// Label for OS version
+  ///
+  /// In en, this message translates to:
+  /// **'OS Version'**
+  String get osVersion;
+
+  /// Label for asset tag
+  ///
+  /// In en, this message translates to:
+  /// **'Asset Tag'**
+  String get assetTag;
+
+  /// Label for blueprint
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint'**
+  String get blueprint;
+
+  /// Label for enrollment date
+  ///
+  /// In en, this message translates to:
+  /// **'Enrolled'**
+  String get enrolledDate;
+
+  /// Label for assigned user
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned User'**
+  String get assignedUser;
+
+  /// Title for actions section
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actions;
+
+  /// Device action: lock
+  ///
+  /// In en, this message translates to:
+  /// **'Lock'**
+  String get actionLock;
+
+  /// Device action: restart
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get actionRestart;
+
+  /// Device action: shutdown
+  ///
+  /// In en, this message translates to:
+  /// **'Shutdown'**
+  String get actionShutdown;
+
+  /// Device action: erase
+  ///
+  /// In en, this message translates to:
+  /// **'Erase'**
+  String get actionErase;
+
+  /// Device action: send blank push
+  ///
+  /// In en, this message translates to:
+  /// **'Send Blank Push'**
+  String get actionBlankPush;
+
+  /// Device action: reinstall agent
+  ///
+  /// In en, this message translates to:
+  /// **'Reinstall Agent'**
+  String get actionReinstallAgent;
+
+  /// Device action: update inventory
+  ///
+  /// In en, this message translates to:
+  /// **'Update Inventory'**
+  String get actionUpdateInventory;
+
+  /// Device action: recovery lock
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery Lock'**
+  String get actionRecoveryLock;
+
+  /// Device action: enable remote desktop
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Remote Desktop'**
+  String get actionRemoteDesktopEnable;
+
+  /// Device action: disable remote desktop
+  ///
+  /// In en, this message translates to:
+  /// **'Disable Remote Desktop'**
+  String get actionRemoteDesktopDisable;
+
+  /// Device action: enable lost mode for mobile devices
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Lost Mode'**
+  String get actionLostMode;
+
+  /// Title for destructive action confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Destructive Action'**
+  String get destructiveActionTitle;
+
+  /// Message for destructive action confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone. Type \"{deviceName}\" to confirm.'**
+  String destructiveActionMessage(String deviceName);
+
+  /// Hint for destructive action confirmation input
+  ///
+  /// In en, this message translates to:
+  /// **'Type device name to confirm'**
+  String get destructiveActionHint;
+
+  /// Confirm button label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// Success message after device action
+  ///
+  /// In en, this message translates to:
+  /// **'Action completed successfully.'**
+  String get actionSuccess;
+
+  /// Error message after device action failure
+  ///
+  /// In en, this message translates to:
+  /// **'Action failed. Please try again.'**
+  String get actionFailed;
+
+  /// Reason shown in biometric prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to access FleetPilot'**
+  String get biometricReason;
+
+  /// Reason shown in biometric prompt for secret access
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to view sensitive data'**
+  String get biometricReasonSecrets;
+
+  /// Reason shown in biometric prompt for destructive actions
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to perform this action'**
+  String get biometricReasonDestructive;
+
+  /// Error message when biometric auth fails
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication failed. Please try again.'**
+  String get biometricFailed;
+
+  /// Title for profiles section in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Profiles'**
+  String get profiles;
+
+  /// Active profile indicator
+  ///
+  /// In en, this message translates to:
+  /// **'Active: {name}'**
+  String activeProfile(String name);
+
+  /// Label for profile switcher
+  ///
+  /// In en, this message translates to:
+  /// **'Switch Profile'**
+  String get switchProfile;
+
+  /// Label for delete profile action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Profile'**
+  String get deleteProfile;
+
+  /// Confirmation message for profile deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this profile? This action cannot be undone.'**
+  String get deleteProfileConfirm;
+
+  /// Empty state when no profiles exist
+  ///
+  /// In en, this message translates to:
+  /// **'No profiles configured'**
+  String get noProfiles;
+
+  /// Settings page title
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// About section label
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// Version display
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String version(String version);
+
+  /// Validation error for empty required fields
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required.'**
+  String get validationRequired;
+
+  /// Validation error for invalid subdomain
+  ///
+  /// In en, this message translates to:
+  /// **'Only letters, numbers, and hyphens allowed. No leading or trailing hyphens.'**
+  String get validationSubdomain;
+
+  /// Title for compliance status section
+  ///
+  /// In en, this message translates to:
+  /// **'Compliance Status'**
+  String get complianceStatus;
+
+  /// Label for device platform
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get platform;
+
+  /// Label for device name
+  ///
+  /// In en, this message translates to:
+  /// **'Device Name'**
+  String get deviceName;
+
+  /// Placeholder for user search bar
+  ///
+  /// In en, this message translates to:
+  /// **'Search users...'**
+  String get searchUsers;
+
+  /// User count display
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No users} =1{1 user} other{{count} users}}'**
+  String userCount(int count);
+
+  /// Empty state title when no users match
+  ///
+  /// In en, this message translates to:
+  /// **'No users found'**
+  String get noUsersFound;
+
+  /// Empty state message when no users match
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your search or filters.'**
+  String get noUsersFoundMessage;
+
+  /// Label for showing archived users toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Show Archived'**
+  String get showArchived;
+
+  /// Label for archived status
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get archived;
+
+  /// Label for email
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// Blueprint count display
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No blueprints} =1{1 blueprint} other{{count} blueprints}}'**
+  String blueprintCount(int count);
+
+  /// Empty state title when no blueprints found
+  ///
+  /// In en, this message translates to:
+  /// **'No blueprints found'**
+  String get noBlueprintsFound;
+
+  /// Empty state message when no blueprints found
+  ///
+  /// In en, this message translates to:
+  /// **'No blueprints have been configured yet.'**
+  String get noBlueprintsFoundMessage;
+
+  /// Label for active enrollment code
+  ///
+  /// In en, this message translates to:
+  /// **'Enrollment Active'**
+  String get enrollmentActive;
+
+  /// Label for inactive enrollment code
+  ///
+  /// In en, this message translates to:
+  /// **'Enrollment Inactive'**
+  String get enrollmentInactive;
+
+  /// Tab label for device overview
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get tabOverview;
+
+  /// Tab label for installed apps
+  ///
+  /// In en, this message translates to:
+  /// **'Apps'**
+  String get tabApps;
+
+  /// Tab label for device status
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get tabStatus;
+
+  /// Tab label for device activity
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get tabActivity;
+
+  /// Tab label for MDM commands
+  ///
+  /// In en, this message translates to:
+  /// **'Commands'**
+  String get tabCommands;
+
+  /// Section title for hardware info
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get hardware;
+
+  /// Section title for security info
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get security;
+
+  /// Label for total storage capacity
+  ///
+  /// In en, this message translates to:
+  /// **'Total Storage'**
+  String get totalStorage;
+
+  /// Label for available storage
+  ///
+  /// In en, this message translates to:
+  /// **'Available Storage'**
+  String get availableStorage;
+
+  /// Label for total RAM
+  ///
+  /// In en, this message translates to:
+  /// **'Total RAM'**
+  String get totalRam;
+
+  /// Label for Wi-Fi MAC address
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi MAC Address'**
+  String get wifiMac;
+
+  /// Label for encryption status
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption'**
+  String get encryption;
+
+  /// Label for passcode status
+  ///
+  /// In en, this message translates to:
+  /// **'Passcode'**
+  String get passcode;
+
+  /// Empty state when no apps on device
+  ///
+  /// In en, this message translates to:
+  /// **'No apps found'**
+  String get noAppsFound;
+
+  /// Empty state when no activity on device
+  ///
+  /// In en, this message translates to:
+  /// **'No activity found'**
+  String get noActivityFound;
+
+  /// Empty state when no commands for device
+  ///
+  /// In en, this message translates to:
+  /// **'No commands found'**
+  String get noCommandsFound;
+
+  /// Section title for library items
+  ///
+  /// In en, this message translates to:
+  /// **'Library Items'**
+  String get libraryItems;
+
+  /// Section title for parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Parameters'**
+  String get parameters;
+
+  /// Label for IMEI number
+  ///
+  /// In en, this message translates to:
+  /// **'IMEI'**
+  String get imei;
+
+  /// Label for OS build number
+  ///
+  /// In en, this message translates to:
+  /// **'OS Build'**
+  String get osBuild;
+
+  /// Section title for cellular info
+  ///
+  /// In en, this message translates to:
+  /// **'Cellular'**
+  String get cellular;
+
+  /// App count display
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No apps} =1{1 app} other{{count} apps}}'**
+  String appCount(int count);
+
+  /// Sort ascending label
+  ///
+  /// In en, this message translates to:
+  /// **'A → Z'**
+  String get sortAZ;
+
+  /// Sort descending label
+  ///
+  /// In en, this message translates to:
+  /// **'Z → A'**
+  String get sortZA;
+
+  /// Title for user detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'User Details'**
+  String get userDetails;
+
+  /// Label for job title
+  ///
+  /// In en, this message translates to:
+  /// **'Job Title'**
+  String get jobTitle;
+
+  /// Label for department
+  ///
+  /// In en, this message translates to:
+  /// **'Department'**
+  String get department;
+
+  /// Label for creation date
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get createdAt;
+
+  /// Label for last update date
+  ///
+  /// In en, this message translates to:
+  /// **'Updated'**
+  String get updatedAt;
+
+  /// Section title for user's devices
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned Devices'**
+  String get assignedDevices;
+
+  /// Empty state when user has no devices
+  ///
+  /// In en, this message translates to:
+  /// **'No devices assigned to this user.'**
+  String get noAssignedDevices;
+
+  /// Section title for user information
+  ///
+  /// In en, this message translates to:
+  /// **'User Info'**
+  String get userInfo;
+
+  /// Navigation label for more tab
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get navMore;
+
+  /// Tab label for device secrets
+  ///
+  /// In en, this message translates to:
+  /// **'Secrets'**
+  String get tabSecrets;
+
+  /// Label for FileVault recovery key
+  ///
+  /// In en, this message translates to:
+  /// **'FileVault Recovery Key'**
+  String get filevaultKey;
+
+  /// Label for device unlock PIN
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock PIN'**
+  String get unlockPin;
+
+  /// Label for recovery lock password
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery Lock Password'**
+  String get recoveryPassword;
+
+  /// Label for activation lock bypass code
+  ///
+  /// In en, this message translates to:
+  /// **'Activation Lock Bypass Code'**
+  String get bypassCode;
+
+  /// Empty state when no secrets found
+  ///
+  /// In en, this message translates to:
+  /// **'No secrets available for this device.'**
+  String get noSecretsFound;
+
+  /// Snackbar message when secret is copied
+  ///
+  /// In en, this message translates to:
+  /// **'Secret copied to clipboard'**
+  String get secretCopied;
+
+  /// Title for threats section
+  ///
+  /// In en, this message translates to:
+  /// **'Threats'**
+  String get threats;
+
+  /// Empty state when no threats found
+  ///
+  /// In en, this message translates to:
+  /// **'No threats detected.'**
+  String get noThreatsFound;
+
+  /// Title for vulnerabilities section
+  ///
+  /// In en, this message translates to:
+  /// **'Vulnerabilities'**
+  String get vulnerabilities;
+
+  /// Empty state when no vulnerabilities found
+  ///
+  /// In en, this message translates to:
+  /// **'No vulnerabilities detected.'**
+  String get noVulnerabilitiesFound;
+
+  /// Title for about section
+  ///
+  /// In en, this message translates to:
+  /// **'About FleetPilot'**
+  String get aboutApp;
+
+  /// App description in about
+  ///
+  /// In en, this message translates to:
+  /// **'FleetPilot is an open-source MDM management app for Kandji.'**
+  String get aboutDescription;
+
+  /// Hint to tap to copy a secret
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to copy'**
+  String get tapToCopy;
+
+  /// Label for devices count
+  ///
+  /// In en, this message translates to:
+  /// **'Devices'**
+  String get devices;
+
+  /// Label for vulnerability severity
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get severity;
+
+  /// Tab label for device location
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get tabLocation;
+
+  /// Message when no location data is available
+  ///
+  /// In en, this message translates to:
+  /// **'Location data is not available for this device.'**
+  String get locationNotAvailable;
+
+  /// Label for lost mode enabled status
+  ///
+  /// In en, this message translates to:
+  /// **'Lost Mode Enabled'**
+  String get lostModeEnabled;
+
+  /// Empty state when no library items found
+  ///
+  /// In en, this message translates to:
+  /// **'No library items found.'**
+  String get noLibraryItemsFound;
+
+  /// Label for licenses section
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get licenses;
+
+  /// Label for lost mode message field
+  ///
+  /// In en, this message translates to:
+  /// **'Lost Mode Message'**
+  String get lostModeMessage;
+
+  /// Label for lost mode phone number field
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get lostModePhone;
+
+  /// Footnote explaining lost mode message and phone fields
+  ///
+  /// In en, this message translates to:
+  /// **'Optional message and phone number shown on device'**
+  String get lostModeFootnote;
+
+  /// Label for supervised device status
+  ///
+  /// In en, this message translates to:
+  /// **'Supervised'**
+  String get supervised;
+
+  /// Label for unsupervised device status
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupervised'**
+  String get unsupervised;
+
+  /// Filter chip label for supervised devices
+  ///
+  /// In en, this message translates to:
+  /// **'Supervised'**
+  String get filterSupervised;
+
+  /// Filter chip label for unsupervised devices
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupervised'**
+  String get filterUnsupervised;
+
+  /// Label for language setting
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// Label for system default language option
+  ///
+  /// In en, this message translates to:
+  /// **'System Default'**
+  String get languageSystem;
+
+  /// Device action: disable lost mode
+  ///
+  /// In en, this message translates to:
+  /// **'Disable Lost Mode'**
+  String get actionDisableLostMode;
+
+  /// Device action: clear passcode
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Passcode'**
+  String get actionClearPasscode;
+
+  /// Filter chip label for devices in lost mode
+  ///
+  /// In en, this message translates to:
+  /// **'Lost Mode'**
+  String get filterLostMode;
+
+  /// Label for lost mode status badge
+  ///
+  /// In en, this message translates to:
+  /// **'Lost Mode'**
+  String get lostMode;
+
+  /// Section title for device management info
+  ///
+  /// In en, this message translates to:
+  /// **'Management'**
+  String get sectionManagement;
+
+  /// Section title for device status indicators
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get sectionStatus;
+
+  /// Status label for missing device
+  ///
+  /// In en, this message translates to:
+  /// **'Missing'**
+  String get statusMissing;
+
+  /// Status label for removed device
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get statusRemoved;
+
+  /// Label for device agent version
+  ///
+  /// In en, this message translates to:
+  /// **'Agent'**
+  String get agent;
+
+  /// Label for hardware model identifier
+  ///
+  /// In en, this message translates to:
+  /// **'Identifier'**
+  String get identifier;
+
+  /// Label for device processor
+  ///
+  /// In en, this message translates to:
+  /// **'Processor'**
+  String get processor;
+
+  /// Label for hardware UUID
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware UUID'**
+  String get hardwareUuid;
+
+  /// Label for device posture security status
+  ///
+  /// In en, this message translates to:
+  /// **'Device Posture'**
+  String get devicePosture;
+
+  /// Fallback name for a device with no name
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Device'**
+  String get unknownDevice;
+
+  /// Title for app lock section in security settings
+  ///
+  /// In en, this message translates to:
+  /// **'App Lock'**
+  String get securityAppLock;
+
+  /// Description for app lock feature
+  ///
+  /// In en, this message translates to:
+  /// **'Set a 6-digit PIN to protect the app. Biometric authentication can be enabled after setting a PIN.'**
+  String get securityAppLockDescription;
+
+  /// Subtitle when app lock is active
+  ///
+  /// In en, this message translates to:
+  /// **'App lock enabled'**
+  String get securityAppLockActive;
+
+  /// Subtitle when app lock is not configured
+  ///
+  /// In en, this message translates to:
+  /// **'No app lock configured'**
+  String get securityAppLockInactive;
+
+  /// Button label to set a new PIN
+  ///
+  /// In en, this message translates to:
+  /// **'Set PIN'**
+  String get securitySetPin;
+
+  /// Button label to change existing PIN
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get securityChangePin;
+
+  /// Button label to remove PIN
+  ///
+  /// In en, this message translates to:
+  /// **'Remove PIN'**
+  String get securityRemovePin;
+
+  /// Dialog title for entering current PIN
+  ///
+  /// In en, this message translates to:
+  /// **'Current PIN'**
+  String get securityCurrentPin;
+
+  /// Dialog title for entering new PIN
+  ///
+  /// In en, this message translates to:
+  /// **'New PIN'**
+  String get securityNewPin;
+
+  /// Label for PIN confirmation step
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the PIN again to confirm.'**
+  String get securityConfirmPin;
+
+  /// Error when PIN is not 6 digits
+  ///
+  /// In en, this message translates to:
+  /// **'PIN must be 6 digits.'**
+  String get securityPinLength;
+
+  /// Error when confirmation PIN does not match
+  ///
+  /// In en, this message translates to:
+  /// **'PINs do not match.'**
+  String get securityPinMismatch;
+
+  /// Error when entered PIN is wrong
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect PIN.'**
+  String get securityPinWrong;
+
+  /// Snackbar after PIN is set
+  ///
+  /// In en, this message translates to:
+  /// **'PIN has been set.'**
+  String get securityPinSet;
+
+  /// Snackbar after PIN is changed
+  ///
+  /// In en, this message translates to:
+  /// **'PIN has been changed.'**
+  String get securityPinChanged;
+
+  /// Snackbar after PIN is removed
+  ///
+  /// In en, this message translates to:
+  /// **'PIN and app lock have been removed.'**
+  String get securityPinRemoved;
+
+  /// Title for biometric section
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric'**
+  String get securityBiometric;
+
+  /// Description for biometric feature
+  ///
+  /// In en, this message translates to:
+  /// **'Use fingerprint or face recognition to unlock the app instead of entering the PIN.'**
+  String get securityBiometricDescription;
+
+  /// Toggle label for biometric unlock
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric Unlock'**
+  String get securityBiometricEnable;
+
+  /// Subtitle when biometric is active
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get securityBiometricActive;
+
+  /// Subtitle when biometric is inactive
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get securityBiometricInactive;
+
+  /// Error when biometric is not available
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric authentication is not available on this device.'**
+  String get securityBiometricUnavailable;
+
+  /// Button label for next step in PIN setup
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get securityNext;
+
+  /// Device action: renew MDM profile
+  ///
+  /// In en, this message translates to:
+  /// **'Renew MDM Profile'**
+  String get actionRenewMdm;
+
+  /// Device action: set device name
+  ///
+  /// In en, this message translates to:
+  /// **'Set Device Name'**
+  String get actionSetName;
+
+  /// Hint for set device name input
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new device name'**
+  String get actionSetNameHint;
+
+  /// Device action: delete user from Mac
+  ///
+  /// In en, this message translates to:
+  /// **'Delete User'**
+  String get actionDeleteUser;
+
+  /// Label for username field in delete user dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get actionDeleteUserName;
+
+  /// Checkbox label for deleting all users
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all users'**
+  String get actionDeleteAllUsers;
+
+  /// Checkbox label for forcing user deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Force deletion'**
+  String get actionForceDeletion;
+
+  /// Device action: unlock user account on Mac
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Account'**
+  String get actionUnlockAccount;
+
+  /// Device action: play sound on lost device
+  ///
+  /// In en, this message translates to:
+  /// **'Play Lost Mode Sound'**
+  String get actionPlayLostModeSound;
+
+  /// Device action: update device location
+  ///
+  /// In en, this message translates to:
+  /// **'Update Location'**
+  String get actionUpdateLocation;
+
+  /// Label for erase PIN field
+  ///
+  /// In en, this message translates to:
+  /// **'6-Digit PIN'**
+  String get erasePin;
+
+  /// Hint for erase PIN
+  ///
+  /// In en, this message translates to:
+  /// **'Required for mobile devices'**
+  String get erasePinHint;
+
+  /// Checkbox label for preserving cellular data plan
+  ///
+  /// In en, this message translates to:
+  /// **'Preserve data plan'**
+  String get erasePreserveDataPlan;
+
+  /// Checkbox label for disallowing proximity setup
+  ///
+  /// In en, this message translates to:
+  /// **'Disallow proximity setup'**
+  String get eraseDisallowProximitySetup;
+
+  /// Checkbox label for return to service after erase
+  ///
+  /// In en, this message translates to:
+  /// **'Return to service'**
+  String get eraseReturnToService;
+
+  /// Label for lock screen message
+  ///
+  /// In en, this message translates to:
+  /// **'Lock Message'**
+  String get lockMessage;
+
+  /// Label for lock screen phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get lockPhone;
+
+  /// Checkbox label for rebuilding kernel cache on restart
+  ///
+  /// In en, this message translates to:
+  /// **'Rebuild kernel cache'**
+  String get restartRebuildKernelCache;
+
+  /// Checkbox label for notifying user before restart
+  ///
+  /// In en, this message translates to:
+  /// **'Notify user'**
+  String get restartNotifyUser;
+
+  /// Device action: toggle remote desktop
+  ///
+  /// In en, this message translates to:
+  /// **'Remote Desktop'**
+  String get actionRemoteDesktop;
+
+  /// Tab label for device notes
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get tabNotes;
+
+  /// Empty state when no notes found
+  ///
+  /// In en, this message translates to:
+  /// **'No notes yet'**
+  String get noNotesFound;
+
+  /// Button label to add a new note
+  ///
+  /// In en, this message translates to:
+  /// **'Add Note'**
+  String get addNote;
+
+  /// Title for editing a note
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Note'**
+  String get editNote;
+
+  /// Action label for deleting a note
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Note'**
+  String get deleteNote;
+
+  /// Confirmation message for note deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this note?'**
+  String get deleteNoteConfirm;
+
+  /// Hint for note content field
+  ///
+  /// In en, this message translates to:
+  /// **'Note content'**
+  String get noteContent;
+
+  /// Snackbar after note is saved
+  ///
+  /// In en, this message translates to:
+  /// **'Note saved.'**
+  String get noteSaved;
+
+  /// Snackbar after note is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Note deleted.'**
+  String get noteDeleted;
+
+  /// Title for edit device dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Device'**
+  String get editDevice;
+
+  /// Snackbar after device is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Device updated.'**
+  String get deviceUpdated;
+
+  /// Action label for deleting a device from MDM
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Device'**
+  String get deleteDevice;
+
+  /// Confirmation message for device deletion
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently remove the device from MDM. This action cannot be undone.'**
+  String get deleteDeviceConfirm;
+
+  /// Snackbar after device is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Device deleted.'**
+  String get deviceDeleted;
+
+  /// Action label for cancelling stuck lost mode
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Lost Mode'**
+  String get cancelLostMode;
+
+  /// Confirmation message for cancelling lost mode
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the pending lost mode request?'**
+  String get cancelLostModeConfirm;
+
+  /// Snackbar after lost mode is cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Lost mode cancelled.'**
+  String get lostModeCancelled;
+
+  /// Label for tags
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get tags;
+
+  /// Empty state when no tags
+  ///
+  /// In en, this message translates to:
+  /// **'No tags'**
+  String get noTags;
+
+  /// Button label to add a tag
+  ///
+  /// In en, this message translates to:
+  /// **'Add Tag'**
+  String get addTag;
+
+  /// Label for tag name field
+  ///
+  /// In en, this message translates to:
+  /// **'Tag name'**
+  String get tagName;
+
+  /// Title for tag management
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Tags'**
+  String get manageTags;
+
+  /// Title for audit log page
+  ///
+  /// In en, this message translates to:
+  /// **'Audit Log'**
+  String get auditLog;
+
+  /// Empty state when no audit events
+  ///
+  /// In en, this message translates to:
+  /// **'No audit events found'**
+  String get noAuditEvents;
+
+  /// Device action: daily check-in and CSP sync
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Check-in'**
+  String get actionDailyCheckIn;
+
+  /// Title for licensing section
+  ///
+  /// In en, this message translates to:
+  /// **'Licensing'**
+  String get licensing;
+
+  /// Label for device limit
+  ///
+  /// In en, this message translates to:
+  /// **'Device Limit'**
+  String get deviceLimit;
+
+  /// Label for devices used count
+  ///
+  /// In en, this message translates to:
+  /// **'Devices Used'**
+  String get devicesUsed;
+
+  /// Label for license type
+  ///
+  /// In en, this message translates to:
+  /// **'License Type'**
+  String get licenseType;
+
+  /// Label for Apple device count
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Devices'**
+  String get appleDevices;
+
+  /// Action label for deleting a user
+  ///
+  /// In en, this message translates to:
+  /// **'Delete User'**
+  String get deleteUser;
+
+  /// Confirmation message for user deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this user? This action cannot be undone.'**
+  String get deleteUserConfirm;
+
+  /// Snackbar after user is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'User deleted.'**
+  String get userDeleted;
+
+  /// Title for creating a blueprint
+  ///
+  /// In en, this message translates to:
+  /// **'Create Blueprint'**
+  String get createBlueprint;
+
+  /// Title for editing a blueprint
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Blueprint'**
+  String get editBlueprint;
+
+  /// Action label for deleting a blueprint
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Blueprint'**
+  String get deleteBlueprint;
+
+  /// Confirmation message for blueprint deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting this blueprint will unenroll all assigned devices. This action cannot be undone.'**
+  String get deleteBlueprintConfirm;
+
+  /// Snackbar after blueprint is created
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint created.'**
+  String get blueprintCreated;
+
+  /// Snackbar after blueprint is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint updated.'**
+  String get blueprintUpdated;
+
+  /// Snackbar after blueprint is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint deleted.'**
+  String get blueprintDeleted;
+
+  /// Label for blueprint name field
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint Name'**
+  String get blueprintName;
+
+  /// Label for blueprint description field
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get blueprintDescription;
+
+  /// Label for enrollment code toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Enrollment Code'**
+  String get enrollmentCode;
+
+  /// Title for assigning library item to blueprint
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Library Item'**
+  String get assignLibraryItem;
+
+  /// Action label for removing library item from blueprint
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Library Item'**
+  String get removeLibraryItem;
+
+  /// Snackbar after library item is assigned
+  ///
+  /// In en, this message translates to:
+  /// **'Library item assigned.'**
+  String get libraryItemAssigned;
+
+  /// Snackbar after library item is removed
+  ///
+  /// In en, this message translates to:
+  /// **'Library item removed.'**
+  String get libraryItemRemoved;
+
+  /// Title for lost mode details section
+  ///
+  /// In en, this message translates to:
+  /// **'Lost Mode Details'**
+  String get lostModeDetails;
+
+  /// Label for who enabled lost mode
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled By'**
+  String get lostModeEnabledBy;
+
+  /// Label for when lost mode was enabled
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled At'**
+  String get lostModeEnabledAt;
+
+  /// No description provided for @searchBlueprints.
+  ///
+  /// In en, this message translates to:
+  /// **'Search blueprints...'**
+  String get searchBlueprints;
+
+  /// No description provided for @searchVulnerabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Search vulnerabilities...'**
+  String get searchVulnerabilities;
+
+  /// No description provided for @searchThreats.
+  ///
+  /// In en, this message translates to:
+  /// **'Search threats...'**
+  String get searchThreats;
+
+  /// No description provided for @searchAuditLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Search audit log...'**
+  String get searchAuditLog;
+
+  /// No description provided for @filterCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get filterCritical;
+
+  /// No description provided for @filterHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get filterHigh;
+
+  /// No description provided for @filterMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get filterMedium;
+
+  /// No description provided for @filterLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get filterLow;
+
+  /// No description provided for @filterClearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear All'**
+  String get filterClearAll;
+
+  /// No description provided for @filterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filterTitle;
+
+  /// No description provided for @filterApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get filterApply;
+
+  /// No description provided for @filterPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get filterPlatform;
+
+  /// No description provided for @filterSupervision.
+  ///
+  /// In en, this message translates to:
+  /// **'Supervision'**
+  String get filterSupervision;
+
+  /// No description provided for @filterStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get filterStatus;
+
+  /// No description provided for @adeIntegrations.
+  ///
+  /// In en, this message translates to:
+  /// **'ADE Integrations'**
+  String get adeIntegrations;
+
+  /// No description provided for @noAdeIntegrations.
+  ///
+  /// In en, this message translates to:
+  /// **'No ADE integrations found.'**
+  String get noAdeIntegrations;
+
+  /// No description provided for @adeDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'ADE Devices'**
+  String get adeDevices;
+
+  /// No description provided for @noAdeDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'No ADE devices found.'**
+  String get noAdeDevices;
+
+  /// No description provided for @tokenExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Token Expiry'**
+  String get tokenExpiry;
+
+  /// No description provided for @tokenValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Token Valid'**
+  String get tokenValid;
+
+  /// No description provided for @tokenExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Token Expired'**
+  String get tokenExpired;
+
+  /// No description provided for @orgName.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get orgName;
+
+  /// No description provided for @defaultBlueprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Default Blueprint'**
+  String get defaultBlueprint;
+
+  /// No description provided for @renewToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew Token'**
+  String get renewToken;
+
+  /// No description provided for @publicKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Public Key'**
+  String get publicKey;
+
+  /// No description provided for @vulnerabilityDetections.
+  ///
+  /// In en, this message translates to:
+  /// **'Vulnerability Detections'**
+  String get vulnerabilityDetections;
+
+  /// No description provided for @noDetectionsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No detections found.'**
+  String get noDetectionsFound;
+
+  /// No description provided for @behavioralDetections.
+  ///
+  /// In en, this message translates to:
+  /// **'Behavioral Detections'**
+  String get behavioralDetections;
+
+  /// No description provided for @noBehavioralDetections.
+  ///
+  /// In en, this message translates to:
+  /// **'No behavioral detections found.'**
+  String get noBehavioralDetections;
+
+  /// No description provided for @searchBehavioralDetections.
+  ///
+  /// In en, this message translates to:
+  /// **'Search detections...'**
+  String get searchBehavioralDetections;
+
+  /// No description provided for @affectedDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Affected Devices'**
+  String get affectedDevices;
+
+  /// No description provided for @affectedSoftware.
+  ///
+  /// In en, this message translates to:
+  /// **'Affected Software'**
+  String get affectedSoftware;
+
+  /// No description provided for @blueprintTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint Templates'**
+  String get blueprintTemplates;
+
+  /// No description provided for @noTemplatesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No templates found.'**
+  String get noTemplatesFound;
+
+  /// No description provided for @otaEnrollmentProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'OTA Enrollment Profile'**
+  String get otaEnrollmentProfile;
+
+  /// No description provided for @libraryItemActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get libraryItemActivity;
+
+  /// No description provided for @libraryItemDeploymentStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Deployment Status'**
+  String get libraryItemDeploymentStatus;
+
+  /// No description provided for @noActivityFound2.
+  ///
+  /// In en, this message translates to:
+  /// **'No activity found.'**
+  String get noActivityFound2;
+
+  /// No description provided for @noStatusFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No deployment status found.'**
+  String get noStatusFound;
+
+  /// No description provided for @detectionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No detections} =1{1 detection} other{{count} detections}}'**
+  String detectionCount(int count);
+
+  /// No description provided for @integrationCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No integrations} =1{1 integration} other{{count} integrations}}'**
+  String integrationCount(int count);
+
+  /// No description provided for @vulnerabilityDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Vulnerability Detail'**
+  String get vulnerabilityDetail;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @firstDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'First Detected'**
+  String get firstDetected;
+
+  /// No description provided for @lastDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Detected'**
+  String get lastDetected;
+
+  /// No description provided for @softwareCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No software} =1{1 software} other{{count} software}}'**
+  String softwareCount(int count);
+
+  /// No description provided for @editIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Integration'**
+  String get editIntegration;
+
+  /// No description provided for @deleteIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Integration'**
+  String get deleteIntegration;
+
+  /// No description provided for @deleteIntegrationConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this ADE integration? This cannot be undone.'**
+  String get deleteIntegrationConfirm;
+
+  /// No description provided for @integrationDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Integration deleted.'**
+  String get integrationDeleted;
+
+  /// No description provided for @integrationUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Integration updated.'**
+  String get integrationUpdated;
+
+  /// No description provided for @defaultBlueprintId.
+  ///
+  /// In en, this message translates to:
+  /// **'Default Blueprint ID'**
+  String get defaultBlueprintId;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
+
+  /// No description provided for @downloadOtaProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Enrollment Profile'**
+  String get downloadOtaProfile;
+
+  /// No description provided for @otaProfileCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrollment profile copied to clipboard.'**
+  String get otaProfileCopied;
+
+  /// No description provided for @noOtaProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'No enrollment profile available.'**
+  String get noOtaProfile;
+
+  /// No description provided for @createTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Tag'**
+  String get createTag;
+
+  /// No description provided for @editTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Tag'**
+  String get editTag;
+
+  /// No description provided for @deleteTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Tag'**
+  String get deleteTag;
+
+  /// No description provided for @deleteTagConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this tag?'**
+  String get deleteTagConfirm;
+
+  /// No description provided for @tagColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get tagColor;
+
+  /// No description provided for @tagCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag created.'**
+  String get tagCreated;
+
+  /// No description provided for @tagUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag updated.'**
+  String get tagUpdated;
+
+  /// No description provided for @tagDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag deleted.'**
+  String get tagDeleted;
+
+  /// No description provided for @noTagsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No tags found.'**
+  String get noTagsFound;
+
+  /// No description provided for @libraryItemDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Library Item'**
+  String get libraryItemDetail;
+
+  /// No description provided for @viewActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'View Activity'**
+  String get viewActivity;
+
+  /// No description provided for @viewStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'View Status'**
+  String get viewStatus;
+
+  /// No description provided for @installations.
+  ///
+  /// In en, this message translates to:
+  /// **'Installations'**
+  String get installations;
+
+  /// No description provided for @createAdeIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Create ADE Integration'**
+  String get createAdeIntegration;
+
+  /// No description provided for @adeCreateDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a server token file (.p7m) from Apple Business Manager to create a new ADE integration.'**
+  String get adeCreateDescription;
+
+  /// No description provided for @selectTokenFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Token File'**
+  String get selectTokenFile;
+
+  /// No description provided for @tokenFileSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Token file: {name}'**
+  String tokenFileSelected(String name);
+
+  /// No description provided for @noTokenFileSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No token file selected'**
+  String get noTokenFileSelected;
+
+  /// No description provided for @integrationCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Integration created.'**
+  String get integrationCreated;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
+
+  /// No description provided for @step1GetPublicKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 1: Download Public Key'**
+  String get step1GetPublicKey;
+
+  /// No description provided for @step1Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the public key and upload it to Apple Business Manager.'**
+  String get step1Description;
+
+  /// No description provided for @step2UploadToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 2: Upload Server Token'**
+  String get step2UploadToken;
+
+  /// No description provided for @step2Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the .p7m token file downloaded from Apple.'**
+  String get step2Description;
+
+  /// No description provided for @step3Configure.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 3: Configure'**
+  String get step3Configure;
+
+  /// No description provided for @publicKeyCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Public key copied to clipboard.'**
+  String get publicKeyCopied;
+
+  /// No description provided for @renewTokenDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a new .p7m token file to renew this integration\'s token.'**
+  String get renewTokenDescription;
+
+  /// No description provided for @tokenRenewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Token renewed.'**
+  String get tokenRenewed;
+}
+
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+      <String>['de', 'en', 'es'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'de':
+      return AppLocalizationsDe();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

@@ -1,0 +1,1253 @@
+{
+  "@@locale": "en",
+  "appTitle": "FleetPilot",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "navDevices": "Devices",
+  "@navDevices": {
+    "description": "Navigation label for devices tab"
+  },
+  "navBlueprints": "Blueprints",
+  "@navBlueprints": {
+    "description": "Navigation label for blueprints tab"
+  },
+  "navUsers": "Users",
+  "@navUsers": {
+    "description": "Navigation label for users tab"
+  },
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Navigation label for settings tab"
+  },
+  "welcomeTitle": "Welcome to FleetPilot",
+  "@welcomeTitle": {
+    "description": "Title on the welcome/onboarding screen"
+  },
+  "welcomeSubtitle": "Manage your Apple device fleet from anywhere.",
+  "@welcomeSubtitle": {
+    "description": "Subtitle on the welcome screen"
+  },
+  "addProfile": "Add Profile",
+  "@addProfile": {
+    "description": "Button label to add a new connection profile"
+  },
+  "editProfile": "Edit Profile",
+  "@editProfile": {
+    "description": "Title for editing a profile"
+  },
+  "displayName": "Display Name",
+  "@displayName": {
+    "description": "Label for profile display name field"
+  },
+  "displayNameHint": "e.g. Acme Corp — Prod",
+  "@displayNameHint": {
+    "description": "Hint text for profile display name"
+  },
+  "region": "Region",
+  "@region": {
+    "description": "Label for region selector"
+  },
+  "regionUs": "US",
+  "@regionUs": {
+    "description": "US region label"
+  },
+  "regionEu": "EU",
+  "@regionEu": {
+    "description": "EU region label"
+  },
+  "subdomain": "Subdomain",
+  "@subdomain": {
+    "description": "Label for subdomain field"
+  },
+  "subdomainHint": "your-tenant",
+  "@subdomainHint": {
+    "description": "Hint text for subdomain field"
+  },
+  "apiToken": "API Token",
+  "@apiToken": {
+    "description": "Label for API token field"
+  },
+  "apiTokenHint": "Paste your API token here",
+  "@apiTokenHint": {
+    "description": "Hint text for API token field"
+  },
+  "urlPreview": "API URL: {url}",
+  "@urlPreview": {
+    "description": "Preview of constructed API URL",
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyAndSave": "Verify & Save",
+  "@verifyAndSave": {
+    "description": "Button label for verifying and saving credentials"
+  },
+  "verifying": "Verifying connection...",
+  "@verifying": {
+    "description": "Loading message during credential verification"
+  },
+  "connectionSuccess": "Connection verified successfully!",
+  "@connectionSuccess": {
+    "description": "Success message after credential verification"
+  },
+  "errorInvalidToken": "Invalid API token. Please check your token in the web console.",
+  "@errorInvalidToken": {
+    "description": "Error message for 401 response"
+  },
+  "errorInsufficientPermissions": "Token lacks required permissions. Ensure the token has read access to Devices.",
+  "@errorInsufficientPermissions": {
+    "description": "Error message for 403 response"
+  },
+  "errorNetworkUnreachable": "Could not reach the API. Check your internet connection and subdomain.",
+  "@errorNetworkUnreachable": {
+    "description": "Error message for network failures"
+  },
+  "errorNotFound": "The requested resource was not found.",
+  "@errorNotFound": {
+    "description": "Error message for 404 response"
+  },
+  "errorValidation": "The request contained invalid data. Please check your input.",
+  "@errorValidation": {
+    "description": "Error message for 422 response"
+  },
+  "errorRateLimit": "Too many requests. Please wait a moment and try again.",
+  "@errorRateLimit": {
+    "description": "Error message for 429 response"
+  },
+  "errorServer": "The server encountered an error. Please try again later.",
+  "@errorServer": {
+    "description": "Error message for 500 response"
+  },
+  "errorUnexpected": "An unexpected error occurred. Please try again.",
+  "@errorUnexpected": {
+    "description": "Error message for unexpected errors"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button label"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button label"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button label"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button label"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search label"
+  },
+  "searchDevices": "Search devices...",
+  "@searchDevices": {
+    "description": "Placeholder for device search bar"
+  },
+  "filterAll": "All",
+  "@filterAll": {
+    "description": "Filter chip label for all items"
+  },
+  "filterMac": "Mac",
+  "@filterMac": {
+    "description": "Filter chip label for Mac devices"
+  },
+  "filterIphone": "iPhone",
+  "@filterIphone": {
+    "description": "Filter chip label for iPhone devices"
+  },
+  "filterIpad": "iPad",
+  "@filterIpad": {
+    "description": "Filter chip label for iPad devices"
+  },
+  "filterAppleTv": "Apple TV",
+  "@filterAppleTv": {
+    "description": "Filter chip label for Apple TV devices"
+  },
+  "allBlueprints": "All Blueprints",
+  "@allBlueprints": {
+    "description": "Filter chip label for all blueprints"
+  },
+  "loadingDevices": "Loading {count} devices...",
+  "@loadingDevices": {
+    "description": "Loading indicator during device pagination",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deviceCount": "{count, plural, =0{No devices} =1{1 device} other{{count} devices}}",
+  "@deviceCount": {
+    "description": "Device count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noDevicesFound": "No devices found",
+  "@noDevicesFound": {
+    "description": "Empty state title when no devices match"
+  },
+  "noDevicesFoundMessage": "Try adjusting your search or filters.",
+  "@noDevicesFoundMessage": {
+    "description": "Empty state message when no devices match"
+  },
+  "lastCheckIn": "Last check-in: {time}",
+  "@lastCheckIn": {
+    "description": "Label for last check-in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "compliancePass": "Pass",
+  "@compliancePass": {
+    "description": "Compliance status pass"
+  },
+  "complianceFail": "Fail",
+  "@complianceFail": {
+    "description": "Compliance status fail"
+  },
+  "compliancePending": "Pending",
+  "@compliancePending": {
+    "description": "Compliance status pending"
+  },
+  "deviceDetails": "Device Details",
+  "@deviceDetails": {
+    "description": "Title for device detail screen"
+  },
+  "serialNumber": "Serial Number",
+  "@serialNumber": {
+    "description": "Label for serial number"
+  },
+  "model": "Model",
+  "@model": {
+    "description": "Label for device model"
+  },
+  "osVersion": "OS Version",
+  "@osVersion": {
+    "description": "Label for OS version"
+  },
+  "assetTag": "Asset Tag",
+  "@assetTag": {
+    "description": "Label for asset tag"
+  },
+  "blueprint": "Blueprint",
+  "@blueprint": {
+    "description": "Label for blueprint"
+  },
+  "enrolledDate": "Enrolled",
+  "@enrolledDate": {
+    "description": "Label for enrollment date"
+  },
+  "assignedUser": "Assigned User",
+  "@assignedUser": {
+    "description": "Label for assigned user"
+  },
+  "actions": "Actions",
+  "@actions": {
+    "description": "Title for actions section"
+  },
+  "actionLock": "Lock",
+  "@actionLock": {
+    "description": "Device action: lock"
+  },
+  "actionRestart": "Restart",
+  "@actionRestart": {
+    "description": "Device action: restart"
+  },
+  "actionShutdown": "Shutdown",
+  "@actionShutdown": {
+    "description": "Device action: shutdown"
+  },
+  "actionErase": "Erase",
+  "@actionErase": {
+    "description": "Device action: erase"
+  },
+  "actionBlankPush": "Send Blank Push",
+  "@actionBlankPush": {
+    "description": "Device action: send blank push"
+  },
+  "actionReinstallAgent": "Reinstall Agent",
+  "@actionReinstallAgent": {
+    "description": "Device action: reinstall agent"
+  },
+  "actionUpdateInventory": "Update Inventory",
+  "@actionUpdateInventory": {
+    "description": "Device action: update inventory"
+  },
+  "actionRecoveryLock": "Recovery Lock",
+  "@actionRecoveryLock": {
+    "description": "Device action: recovery lock"
+  },
+  "actionRemoteDesktopEnable": "Enable Remote Desktop",
+  "@actionRemoteDesktopEnable": {
+    "description": "Device action: enable remote desktop"
+  },
+  "actionRemoteDesktopDisable": "Disable Remote Desktop",
+  "@actionRemoteDesktopDisable": {
+    "description": "Device action: disable remote desktop"
+  },
+  "actionLostMode": "Enable Lost Mode",
+  "@actionLostMode": {
+    "description": "Device action: enable lost mode for mobile devices"
+  },
+  "destructiveActionTitle": "Confirm Destructive Action",
+  "@destructiveActionTitle": {
+    "description": "Title for destructive action confirmation dialog"
+  },
+  "destructiveActionMessage": "This action cannot be undone. Type \"{deviceName}\" to confirm.",
+  "@destructiveActionMessage": {
+    "description": "Message for destructive action confirmation",
+    "placeholders": {
+      "deviceName": {
+        "type": "String"
+      }
+    }
+  },
+  "destructiveActionHint": "Type device name to confirm",
+  "@destructiveActionHint": {
+    "description": "Hint for destructive action confirmation input"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm button label"
+  },
+  "actionSuccess": "Action completed successfully.",
+  "@actionSuccess": {
+    "description": "Success message after device action"
+  },
+  "actionFailed": "Action failed. Please try again.",
+  "@actionFailed": {
+    "description": "Error message after device action failure"
+  },
+  "biometricReason": "Authenticate to access FleetPilot",
+  "@biometricReason": {
+    "description": "Reason shown in biometric prompt"
+  },
+  "biometricReasonSecrets": "Authenticate to view sensitive data",
+  "@biometricReasonSecrets": {
+    "description": "Reason shown in biometric prompt for secret access"
+  },
+  "biometricReasonDestructive": "Authenticate to perform this action",
+  "@biometricReasonDestructive": {
+    "description": "Reason shown in biometric prompt for destructive actions"
+  },
+  "biometricFailed": "Authentication failed. Please try again.",
+  "@biometricFailed": {
+    "description": "Error message when biometric auth fails"
+  },
+  "profiles": "Profiles",
+  "@profiles": {
+    "description": "Title for profiles section in settings"
+  },
+  "activeProfile": "Active: {name}",
+  "@activeProfile": {
+    "description": "Active profile indicator",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "switchProfile": "Switch Profile",
+  "@switchProfile": {
+    "description": "Label for profile switcher"
+  },
+  "deleteProfile": "Delete Profile",
+  "@deleteProfile": {
+    "description": "Label for delete profile action"
+  },
+  "deleteProfileConfirm": "Are you sure you want to delete this profile? This action cannot be undone.",
+  "@deleteProfileConfirm": {
+    "description": "Confirmation message for profile deletion"
+  },
+  "noProfiles": "No profiles configured",
+  "@noProfiles": {
+    "description": "Empty state when no profiles exist"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings page title"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About section label"
+  },
+  "version": "Version {version}",
+  "@version": {
+    "description": "Version display",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "validationRequired": "This field is required.",
+  "@validationRequired": {
+    "description": "Validation error for empty required fields"
+  },
+  "validationSubdomain": "Only letters, numbers, and hyphens allowed. No leading or trailing hyphens.",
+  "@validationSubdomain": {
+    "description": "Validation error for invalid subdomain"
+  },
+  "complianceStatus": "Compliance Status",
+  "@complianceStatus": {
+    "description": "Title for compliance status section"
+  },
+  "platform": "Platform",
+  "@platform": {
+    "description": "Label for device platform"
+  },
+  "deviceName": "Device Name",
+  "@deviceName": {
+    "description": "Label for device name"
+  },
+  "searchUsers": "Search users...",
+  "@searchUsers": {
+    "description": "Placeholder for user search bar"
+  },
+  "userCount": "{count, plural, =0{No users} =1{1 user} other{{count} users}}",
+  "@userCount": {
+    "description": "User count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noUsersFound": "No users found",
+  "@noUsersFound": {
+    "description": "Empty state title when no users match"
+  },
+  "noUsersFoundMessage": "Try adjusting your search or filters.",
+  "@noUsersFoundMessage": {
+    "description": "Empty state message when no users match"
+  },
+  "showArchived": "Show Archived",
+  "@showArchived": {
+    "description": "Label for showing archived users toggle"
+  },
+  "archived": "Archived",
+  "@archived": {
+    "description": "Label for archived status"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Label for email"
+  },
+  "blueprintCount": "{count, plural, =0{No blueprints} =1{1 blueprint} other{{count} blueprints}}",
+  "@blueprintCount": {
+    "description": "Blueprint count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noBlueprintsFound": "No blueprints found",
+  "@noBlueprintsFound": {
+    "description": "Empty state title when no blueprints found"
+  },
+  "noBlueprintsFoundMessage": "No blueprints have been configured yet.",
+  "@noBlueprintsFoundMessage": {
+    "description": "Empty state message when no blueprints found"
+  },
+  "enrollmentActive": "Enrollment Active",
+  "@enrollmentActive": {
+    "description": "Label for active enrollment code"
+  },
+  "enrollmentInactive": "Enrollment Inactive",
+  "@enrollmentInactive": {
+    "description": "Label for inactive enrollment code"
+  },
+  "tabOverview": "Overview",
+  "@tabOverview": {
+    "description": "Tab label for device overview"
+  },
+  "tabApps": "Apps",
+  "@tabApps": {
+    "description": "Tab label for installed apps"
+  },
+  "tabStatus": "Status",
+  "@tabStatus": {
+    "description": "Tab label for device status"
+  },
+  "tabActivity": "Activity",
+  "@tabActivity": {
+    "description": "Tab label for device activity"
+  },
+  "tabCommands": "Commands",
+  "@tabCommands": {
+    "description": "Tab label for MDM commands"
+  },
+  "hardware": "Hardware",
+  "@hardware": {
+    "description": "Section title for hardware info"
+  },
+  "security": "Security",
+  "@security": {
+    "description": "Section title for security info"
+  },
+  "totalStorage": "Total Storage",
+  "@totalStorage": {
+    "description": "Label for total storage capacity"
+  },
+  "availableStorage": "Available Storage",
+  "@availableStorage": {
+    "description": "Label for available storage"
+  },
+  "totalRam": "Total RAM",
+  "@totalRam": {
+    "description": "Label for total RAM"
+  },
+  "wifiMac": "Wi-Fi MAC Address",
+  "@wifiMac": {
+    "description": "Label for Wi-Fi MAC address"
+  },
+  "encryption": "Encryption",
+  "@encryption": {
+    "description": "Label for encryption status"
+  },
+  "passcode": "Passcode",
+  "@passcode": {
+    "description": "Label for passcode status"
+  },
+  "noAppsFound": "No apps found",
+  "@noAppsFound": {
+    "description": "Empty state when no apps on device"
+  },
+  "noActivityFound": "No activity found",
+  "@noActivityFound": {
+    "description": "Empty state when no activity on device"
+  },
+  "noCommandsFound": "No commands found",
+  "@noCommandsFound": {
+    "description": "Empty state when no commands for device"
+  },
+  "libraryItems": "Library Items",
+  "@libraryItems": {
+    "description": "Section title for library items"
+  },
+  "parameters": "Parameters",
+  "@parameters": {
+    "description": "Section title for parameters"
+  },
+  "imei": "IMEI",
+  "@imei": {
+    "description": "Label for IMEI number"
+  },
+  "osBuild": "OS Build",
+  "@osBuild": {
+    "description": "Label for OS build number"
+  },
+  "cellular": "Cellular",
+  "@cellular": {
+    "description": "Section title for cellular info"
+  },
+  "appCount": "{count, plural, =0{No apps} =1{1 app} other{{count} apps}}",
+  "@appCount": {
+    "description": "App count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sortAZ": "A → Z",
+  "@sortAZ": {
+    "description": "Sort ascending label"
+  },
+  "sortZA": "Z → A",
+  "@sortZA": {
+    "description": "Sort descending label"
+  },
+  "userDetails": "User Details",
+  "@userDetails": {
+    "description": "Title for user detail screen"
+  },
+  "jobTitle": "Job Title",
+  "@jobTitle": {
+    "description": "Label for job title"
+  },
+  "department": "Department",
+  "@department": {
+    "description": "Label for department"
+  },
+  "createdAt": "Created",
+  "@createdAt": {
+    "description": "Label for creation date"
+  },
+  "updatedAt": "Updated",
+  "@updatedAt": {
+    "description": "Label for last update date"
+  },
+  "assignedDevices": "Assigned Devices",
+  "@assignedDevices": {
+    "description": "Section title for user's devices"
+  },
+  "noAssignedDevices": "No devices assigned to this user.",
+  "@noAssignedDevices": {
+    "description": "Empty state when user has no devices"
+  },
+  "userInfo": "User Info",
+  "@userInfo": {
+    "description": "Section title for user information"
+  },
+  "navMore": "More",
+  "@navMore": {
+    "description": "Navigation label for more tab"
+  },
+  "tabSecrets": "Secrets",
+  "@tabSecrets": {
+    "description": "Tab label for device secrets"
+  },
+  "filevaultKey": "FileVault Recovery Key",
+  "@filevaultKey": {
+    "description": "Label for FileVault recovery key"
+  },
+  "unlockPin": "Unlock PIN",
+  "@unlockPin": {
+    "description": "Label for device unlock PIN"
+  },
+  "recoveryPassword": "Recovery Lock Password",
+  "@recoveryPassword": {
+    "description": "Label for recovery lock password"
+  },
+  "bypassCode": "Activation Lock Bypass Code",
+  "@bypassCode": {
+    "description": "Label for activation lock bypass code"
+  },
+  "noSecretsFound": "No secrets available for this device.",
+  "@noSecretsFound": {
+    "description": "Empty state when no secrets found"
+  },
+  "secretCopied": "Secret copied to clipboard",
+  "@secretCopied": {
+    "description": "Snackbar message when secret is copied"
+  },
+  "threats": "Threats",
+  "@threats": {
+    "description": "Title for threats section"
+  },
+  "noThreatsFound": "No threats detected.",
+  "@noThreatsFound": {
+    "description": "Empty state when no threats found"
+  },
+  "vulnerabilities": "Vulnerabilities",
+  "@vulnerabilities": {
+    "description": "Title for vulnerabilities section"
+  },
+  "noVulnerabilitiesFound": "No vulnerabilities detected.",
+  "@noVulnerabilitiesFound": {
+    "description": "Empty state when no vulnerabilities found"
+  },
+  "aboutApp": "About FleetPilot",
+  "@aboutApp": {
+    "description": "Title for about section"
+  },
+  "aboutDescription": "FleetPilot is an open-source MDM management app for Kandji.",
+  "@aboutDescription": {
+    "description": "App description in about"
+  },
+  "tapToCopy": "Tap to copy",
+  "@tapToCopy": {
+    "description": "Hint to tap to copy a secret"
+  },
+  "devices": "Devices",
+  "@devices": {
+    "description": "Label for devices count"
+  },
+  "severity": "Severity",
+  "@severity": {
+    "description": "Label for vulnerability severity"
+  },
+  "tabLocation": "Location",
+  "@tabLocation": {
+    "description": "Tab label for device location"
+  },
+  "locationNotAvailable": "Location data is not available for this device.",
+  "@locationNotAvailable": {
+    "description": "Message when no location data is available"
+  },
+  "lostModeEnabled": "Lost Mode Enabled",
+  "@lostModeEnabled": {
+    "description": "Label for lost mode enabled status"
+  },
+  "noLibraryItemsFound": "No library items found.",
+  "@noLibraryItemsFound": {
+    "description": "Empty state when no library items found"
+  },
+  "licenses": "Licenses",
+  "@licenses": {
+    "description": "Label for licenses section"
+  },
+  "lostModeMessage": "Lost Mode Message",
+  "@lostModeMessage": {
+    "description": "Label for lost mode message field"
+  },
+  "lostModePhone": "Phone Number",
+  "@lostModePhone": {
+    "description": "Label for lost mode phone number field"
+  },
+  "lostModeFootnote": "Optional message and phone number shown on device",
+  "@lostModeFootnote": {
+    "description": "Footnote explaining lost mode message and phone fields"
+  },
+  "supervised": "Supervised",
+  "@supervised": {
+    "description": "Label for supervised device status"
+  },
+  "unsupervised": "Unsupervised",
+  "@unsupervised": {
+    "description": "Label for unsupervised device status"
+  },
+  "filterSupervised": "Supervised",
+  "@filterSupervised": {
+    "description": "Filter chip label for supervised devices"
+  },
+  "filterUnsupervised": "Unsupervised",
+  "@filterUnsupervised": {
+    "description": "Filter chip label for unsupervised devices"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Label for language setting"
+  },
+  "languageSystem": "System Default",
+  "@languageSystem": {
+    "description": "Label for system default language option"
+  },
+  "actionDisableLostMode": "Disable Lost Mode",
+  "@actionDisableLostMode": {
+    "description": "Device action: disable lost mode"
+  },
+  "actionClearPasscode": "Clear Passcode",
+  "@actionClearPasscode": {
+    "description": "Device action: clear passcode"
+  },
+  "filterLostMode": "Lost Mode",
+  "@filterLostMode": {
+    "description": "Filter chip label for devices in lost mode"
+  },
+  "lostMode": "Lost Mode",
+  "@lostMode": {
+    "description": "Label for lost mode status badge"
+  },
+  "sectionManagement": "Management",
+  "@sectionManagement": {
+    "description": "Section title for device management info"
+  },
+  "sectionStatus": "Status",
+  "@sectionStatus": {
+    "description": "Section title for device status indicators"
+  },
+  "statusMissing": "Missing",
+  "@statusMissing": {
+    "description": "Status label for missing device"
+  },
+  "statusRemoved": "Removed",
+  "@statusRemoved": {
+    "description": "Status label for removed device"
+  },
+  "agent": "Agent",
+  "@agent": {
+    "description": "Label for device agent version"
+  },
+  "identifier": "Identifier",
+  "@identifier": {
+    "description": "Label for hardware model identifier"
+  },
+  "processor": "Processor",
+  "@processor": {
+    "description": "Label for device processor"
+  },
+  "hardwareUuid": "Hardware UUID",
+  "@hardwareUuid": {
+    "description": "Label for hardware UUID"
+  },
+  "devicePosture": "Device Posture",
+  "@devicePosture": {
+    "description": "Label for device posture security status"
+  },
+  "unknownDevice": "Unknown Device",
+  "@unknownDevice": {
+    "description": "Fallback name for a device with no name"
+  },
+  "securityAppLock": "App Lock",
+  "@securityAppLock": {
+    "description": "Title for app lock section in security settings"
+  },
+  "securityAppLockDescription": "Set a 6-digit PIN to protect the app. Biometric authentication can be enabled after setting a PIN.",
+  "@securityAppLockDescription": {
+    "description": "Description for app lock feature"
+  },
+  "securityAppLockActive": "App lock enabled",
+  "@securityAppLockActive": {
+    "description": "Subtitle when app lock is active"
+  },
+  "securityAppLockInactive": "No app lock configured",
+  "@securityAppLockInactive": {
+    "description": "Subtitle when app lock is not configured"
+  },
+  "securitySetPin": "Set PIN",
+  "@securitySetPin": {
+    "description": "Button label to set a new PIN"
+  },
+  "securityChangePin": "Change PIN",
+  "@securityChangePin": {
+    "description": "Button label to change existing PIN"
+  },
+  "securityRemovePin": "Remove PIN",
+  "@securityRemovePin": {
+    "description": "Button label to remove PIN"
+  },
+  "securityCurrentPin": "Current PIN",
+  "@securityCurrentPin": {
+    "description": "Dialog title for entering current PIN"
+  },
+  "securityNewPin": "New PIN",
+  "@securityNewPin": {
+    "description": "Dialog title for entering new PIN"
+  },
+  "securityConfirmPin": "Enter the PIN again to confirm.",
+  "@securityConfirmPin": {
+    "description": "Label for PIN confirmation step"
+  },
+  "securityPinLength": "PIN must be 6 digits.",
+  "@securityPinLength": {
+    "description": "Error when PIN is not 6 digits"
+  },
+  "securityPinMismatch": "PINs do not match.",
+  "@securityPinMismatch": {
+    "description": "Error when confirmation PIN does not match"
+  },
+  "securityPinWrong": "Incorrect PIN.",
+  "@securityPinWrong": {
+    "description": "Error when entered PIN is wrong"
+  },
+  "securityPinSet": "PIN has been set.",
+  "@securityPinSet": {
+    "description": "Snackbar after PIN is set"
+  },
+  "securityPinChanged": "PIN has been changed.",
+  "@securityPinChanged": {
+    "description": "Snackbar after PIN is changed"
+  },
+  "securityPinRemoved": "PIN and app lock have been removed.",
+  "@securityPinRemoved": {
+    "description": "Snackbar after PIN is removed"
+  },
+  "securityBiometric": "Biometric",
+  "@securityBiometric": {
+    "description": "Title for biometric section"
+  },
+  "securityBiometricDescription": "Use fingerprint or face recognition to unlock the app instead of entering the PIN.",
+  "@securityBiometricDescription": {
+    "description": "Description for biometric feature"
+  },
+  "securityBiometricEnable": "Biometric Unlock",
+  "@securityBiometricEnable": {
+    "description": "Toggle label for biometric unlock"
+  },
+  "securityBiometricActive": "Active",
+  "@securityBiometricActive": {
+    "description": "Subtitle when biometric is active"
+  },
+  "securityBiometricInactive": "Inactive",
+  "@securityBiometricInactive": {
+    "description": "Subtitle when biometric is inactive"
+  },
+  "securityBiometricUnavailable": "Biometric authentication is not available on this device.",
+  "@securityBiometricUnavailable": {
+    "description": "Error when biometric is not available"
+  },
+  "securityNext": "Next",
+  "@securityNext": {
+    "description": "Button label for next step in PIN setup"
+  },
+  "actionRenewMdm": "Renew MDM Profile",
+  "@actionRenewMdm": {
+    "description": "Device action: renew MDM profile"
+  },
+  "actionSetName": "Set Device Name",
+  "@actionSetName": {
+    "description": "Device action: set device name"
+  },
+  "actionSetNameHint": "Enter new device name",
+  "@actionSetNameHint": {
+    "description": "Hint for set device name input"
+  },
+  "actionDeleteUser": "Delete User",
+  "@actionDeleteUser": {
+    "description": "Device action: delete user from Mac"
+  },
+  "actionDeleteUserName": "Username",
+  "@actionDeleteUserName": {
+    "description": "Label for username field in delete user dialog"
+  },
+  "actionDeleteAllUsers": "Delete all users",
+  "@actionDeleteAllUsers": {
+    "description": "Checkbox label for deleting all users"
+  },
+  "actionForceDeletion": "Force deletion",
+  "@actionForceDeletion": {
+    "description": "Checkbox label for forcing user deletion"
+  },
+  "actionUnlockAccount": "Unlock Account",
+  "@actionUnlockAccount": {
+    "description": "Device action: unlock user account on Mac"
+  },
+  "actionPlayLostModeSound": "Play Lost Mode Sound",
+  "@actionPlayLostModeSound": {
+    "description": "Device action: play sound on lost device"
+  },
+  "actionUpdateLocation": "Update Location",
+  "@actionUpdateLocation": {
+    "description": "Device action: update device location"
+  },
+  "erasePin": "6-Digit PIN",
+  "@erasePin": {
+    "description": "Label for erase PIN field"
+  },
+  "erasePinHint": "Required for mobile devices",
+  "@erasePinHint": {
+    "description": "Hint for erase PIN"
+  },
+  "erasePreserveDataPlan": "Preserve data plan",
+  "@erasePreserveDataPlan": {
+    "description": "Checkbox label for preserving cellular data plan"
+  },
+  "eraseDisallowProximitySetup": "Disallow proximity setup",
+  "@eraseDisallowProximitySetup": {
+    "description": "Checkbox label for disallowing proximity setup"
+  },
+  "eraseReturnToService": "Return to service",
+  "@eraseReturnToService": {
+    "description": "Checkbox label for return to service after erase"
+  },
+  "lockMessage": "Lock Message",
+  "@lockMessage": {
+    "description": "Label for lock screen message"
+  },
+  "lockPhone": "Phone Number",
+  "@lockPhone": {
+    "description": "Label for lock screen phone number"
+  },
+  "restartRebuildKernelCache": "Rebuild kernel cache",
+  "@restartRebuildKernelCache": {
+    "description": "Checkbox label for rebuilding kernel cache on restart"
+  },
+  "restartNotifyUser": "Notify user",
+  "@restartNotifyUser": {
+    "description": "Checkbox label for notifying user before restart"
+  },
+  "actionRemoteDesktop": "Remote Desktop",
+  "@actionRemoteDesktop": {
+    "description": "Device action: toggle remote desktop"
+  },
+  "tabNotes": "Notes",
+  "@tabNotes": {
+    "description": "Tab label for device notes"
+  },
+  "noNotesFound": "No notes yet",
+  "@noNotesFound": {
+    "description": "Empty state when no notes found"
+  },
+  "addNote": "Add Note",
+  "@addNote": {
+    "description": "Button label to add a new note"
+  },
+  "editNote": "Edit Note",
+  "@editNote": {
+    "description": "Title for editing a note"
+  },
+  "deleteNote": "Delete Note",
+  "@deleteNote": {
+    "description": "Action label for deleting a note"
+  },
+  "deleteNoteConfirm": "Are you sure you want to delete this note?",
+  "@deleteNoteConfirm": {
+    "description": "Confirmation message for note deletion"
+  },
+  "noteContent": "Note content",
+  "@noteContent": {
+    "description": "Hint for note content field"
+  },
+  "noteSaved": "Note saved.",
+  "@noteSaved": {
+    "description": "Snackbar after note is saved"
+  },
+  "noteDeleted": "Note deleted.",
+  "@noteDeleted": {
+    "description": "Snackbar after note is deleted"
+  },
+  "editDevice": "Edit Device",
+  "@editDevice": {
+    "description": "Title for edit device dialog"
+  },
+  "deviceUpdated": "Device updated.",
+  "@deviceUpdated": {
+    "description": "Snackbar after device is updated"
+  },
+  "deleteDevice": "Delete Device",
+  "@deleteDevice": {
+    "description": "Action label for deleting a device from MDM"
+  },
+  "deleteDeviceConfirm": "This will permanently remove the device from MDM. This action cannot be undone.",
+  "@deleteDeviceConfirm": {
+    "description": "Confirmation message for device deletion"
+  },
+  "deviceDeleted": "Device deleted.",
+  "@deviceDeleted": {
+    "description": "Snackbar after device is deleted"
+  },
+  "cancelLostMode": "Cancel Lost Mode",
+  "@cancelLostMode": {
+    "description": "Action label for cancelling stuck lost mode"
+  },
+  "cancelLostModeConfirm": "Cancel the pending lost mode request?",
+  "@cancelLostModeConfirm": {
+    "description": "Confirmation message for cancelling lost mode"
+  },
+  "lostModeCancelled": "Lost mode cancelled.",
+  "@lostModeCancelled": {
+    "description": "Snackbar after lost mode is cancelled"
+  },
+  "tags": "Tags",
+  "@tags": {
+    "description": "Label for tags"
+  },
+  "noTags": "No tags",
+  "@noTags": {
+    "description": "Empty state when no tags"
+  },
+  "addTag": "Add Tag",
+  "@addTag": {
+    "description": "Button label to add a tag"
+  },
+  "tagName": "Tag name",
+  "@tagName": {
+    "description": "Label for tag name field"
+  },
+  "manageTags": "Manage Tags",
+  "@manageTags": {
+    "description": "Title for tag management"
+  },
+  "auditLog": "Audit Log",
+  "@auditLog": {
+    "description": "Title for audit log page"
+  },
+  "noAuditEvents": "No audit events found",
+  "@noAuditEvents": {
+    "description": "Empty state when no audit events"
+  },
+  "actionDailyCheckIn": "Daily Check-in",
+  "@actionDailyCheckIn": {
+    "description": "Device action: daily check-in and CSP sync"
+  },
+  "licensing": "Licensing",
+  "@licensing": {
+    "description": "Title for licensing section"
+  },
+  "deviceLimit": "Device Limit",
+  "@deviceLimit": {
+    "description": "Label for device limit"
+  },
+  "devicesUsed": "Devices Used",
+  "@devicesUsed": {
+    "description": "Label for devices used count"
+  },
+  "licenseType": "License Type",
+  "@licenseType": {
+    "description": "Label for license type"
+  },
+  "appleDevices": "Apple Devices",
+  "@appleDevices": {
+    "description": "Label for Apple device count"
+  },
+  "deleteUser": "Delete User",
+  "@deleteUser": {
+    "description": "Action label for deleting a user"
+  },
+  "deleteUserConfirm": "Are you sure you want to delete this user? This action cannot be undone.",
+  "@deleteUserConfirm": {
+    "description": "Confirmation message for user deletion"
+  },
+  "userDeleted": "User deleted.",
+  "@userDeleted": {
+    "description": "Snackbar after user is deleted"
+  },
+  "createBlueprint": "Create Blueprint",
+  "@createBlueprint": {
+    "description": "Title for creating a blueprint"
+  },
+  "editBlueprint": "Edit Blueprint",
+  "@editBlueprint": {
+    "description": "Title for editing a blueprint"
+  },
+  "deleteBlueprint": "Delete Blueprint",
+  "@deleteBlueprint": {
+    "description": "Action label for deleting a blueprint"
+  },
+  "deleteBlueprintConfirm": "Deleting this blueprint will unenroll all assigned devices. This action cannot be undone.",
+  "@deleteBlueprintConfirm": {
+    "description": "Confirmation message for blueprint deletion"
+  },
+  "blueprintCreated": "Blueprint created.",
+  "@blueprintCreated": {
+    "description": "Snackbar after blueprint is created"
+  },
+  "blueprintUpdated": "Blueprint updated.",
+  "@blueprintUpdated": {
+    "description": "Snackbar after blueprint is updated"
+  },
+  "blueprintDeleted": "Blueprint deleted.",
+  "@blueprintDeleted": {
+    "description": "Snackbar after blueprint is deleted"
+  },
+  "blueprintName": "Blueprint Name",
+  "@blueprintName": {
+    "description": "Label for blueprint name field"
+  },
+  "blueprintDescription": "Description",
+  "@blueprintDescription": {
+    "description": "Label for blueprint description field"
+  },
+  "enrollmentCode": "Enrollment Code",
+  "@enrollmentCode": {
+    "description": "Label for enrollment code toggle"
+  },
+  "assignLibraryItem": "Assign Library Item",
+  "@assignLibraryItem": {
+    "description": "Title for assigning library item to blueprint"
+  },
+  "removeLibraryItem": "Remove Library Item",
+  "@removeLibraryItem": {
+    "description": "Action label for removing library item from blueprint"
+  },
+  "libraryItemAssigned": "Library item assigned.",
+  "@libraryItemAssigned": {
+    "description": "Snackbar after library item is assigned"
+  },
+  "libraryItemRemoved": "Library item removed.",
+  "@libraryItemRemoved": {
+    "description": "Snackbar after library item is removed"
+  },
+  "lostModeDetails": "Lost Mode Details",
+  "@lostModeDetails": {
+    "description": "Title for lost mode details section"
+  },
+  "lostModeEnabledBy": "Enabled By",
+  "@lostModeEnabledBy": {
+    "description": "Label for who enabled lost mode"
+  },
+  "lostModeEnabledAt": "Enabled At",
+  "@lostModeEnabledAt": {
+    "description": "Label for when lost mode was enabled"
+  },
+  "searchBlueprints": "Search blueprints...",
+  "searchVulnerabilities": "Search vulnerabilities...",
+  "searchThreats": "Search threats...",
+  "searchAuditLog": "Search audit log...",
+  "filterCritical": "Critical",
+  "filterHigh": "High",
+  "filterMedium": "Medium",
+  "filterLow": "Low",
+  "filterClearAll": "Clear All",
+  "filterTitle": "Filters",
+  "filterApply": "Apply",
+  "filterPlatform": "Platform",
+  "filterSupervision": "Supervision",
+  "filterStatus": "Status",
+  "adeIntegrations": "ADE Integrations",
+  "noAdeIntegrations": "No ADE integrations found.",
+  "adeDevices": "ADE Devices",
+  "noAdeDevices": "No ADE devices found.",
+  "tokenExpiry": "Token Expiry",
+  "tokenValid": "Token Valid",
+  "tokenExpired": "Token Expired",
+  "orgName": "Organization",
+  "defaultBlueprint": "Default Blueprint",
+  "renewToken": "Renew Token",
+  "publicKey": "Public Key",
+  "vulnerabilityDetections": "Vulnerability Detections",
+  "noDetectionsFound": "No detections found.",
+  "behavioralDetections": "Behavioral Detections",
+  "noBehavioralDetections": "No behavioral detections found.",
+  "searchBehavioralDetections": "Search detections...",
+  "affectedDevices": "Affected Devices",
+  "affectedSoftware": "Affected Software",
+  "blueprintTemplates": "Blueprint Templates",
+  "noTemplatesFound": "No templates found.",
+  "otaEnrollmentProfile": "OTA Enrollment Profile",
+  "libraryItemActivity": "Activity",
+  "libraryItemDeploymentStatus": "Deployment Status",
+  "noActivityFound2": "No activity found.",
+  "noStatusFound": "No deployment status found.",
+  "detectionCount": "{count, plural, =0{No detections} =1{1 detection} other{{count} detections}}",
+  "@detectionCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "integrationCount": "{count, plural, =0{No integrations} =1{1 integration} other{{count} integrations}}",
+  "@integrationCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "vulnerabilityDetail": "Vulnerability Detail",
+  "description": "Description",
+  "firstDetected": "First Detected",
+  "lastDetected": "Last Detected",
+  "softwareCount": "{count, plural, =0{No software} =1{1 software} other{{count} software}}",
+  "@softwareCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "editIntegration": "Edit Integration",
+  "deleteIntegration": "Delete Integration",
+  "deleteIntegrationConfirm": "Are you sure you want to delete this ADE integration? This cannot be undone.",
+  "integrationDeleted": "Integration deleted.",
+  "integrationUpdated": "Integration updated.",
+  "defaultBlueprintId": "Default Blueprint ID",
+  "phone": "Phone",
+  "downloadOtaProfile": "Download Enrollment Profile",
+  "otaProfileCopied": "Enrollment profile copied to clipboard.",
+  "noOtaProfile": "No enrollment profile available.",
+  "createTag": "Create Tag",
+  "editTag": "Edit Tag",
+  "deleteTag": "Delete Tag",
+  "deleteTagConfirm": "Are you sure you want to delete this tag?",
+  "tagColor": "Color",
+  "tagCreated": "Tag created.",
+  "tagUpdated": "Tag updated.",
+  "tagDeleted": "Tag deleted.",
+  "noTagsFound": "No tags found.",
+  "libraryItemDetail": "Library Item",
+  "viewActivity": "View Activity",
+  "viewStatus": "View Status",
+  "installations": "Installations",
+  "createAdeIntegration": "Create ADE Integration",
+  "adeCreateDescription": "Upload a server token file (.p7m) from Apple Business Manager to create a new ADE integration.",
+  "selectTokenFile": "Select Token File",
+  "tokenFileSelected": "Token file: {name}",
+  "@tokenFileSelected": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "noTokenFileSelected": "No token file selected",
+  "integrationCreated": "Integration created.",
+  "create": "Create",
+  "step1GetPublicKey": "Step 1: Download Public Key",
+  "step1Description": "Copy the public key and upload it to Apple Business Manager.",
+  "step2UploadToken": "Step 2: Upload Server Token",
+  "step2Description": "Select the .p7m token file downloaded from Apple.",
+  "step3Configure": "Step 3: Configure",
+  "publicKeyCopied": "Public key copied to clipboard.",
+  "renewTokenDescription": "Upload a new .p7m token file to renew this integration's token.",
+  "tokenRenewed": "Token renewed."
+}
