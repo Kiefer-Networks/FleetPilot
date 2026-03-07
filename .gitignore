@@ -43,3 +43,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Work log
+**/coding.md
+
+# Generated localization files
+.dart_tool/flutter_gen/
+
+# Environment files
+.env
+.env.*
