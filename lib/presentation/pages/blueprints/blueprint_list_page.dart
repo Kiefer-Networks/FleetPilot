@@ -103,6 +103,7 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      showDragHandle: true,
       builder: (_) => _BlueprintFilterBottomSheet(ref: ref),
     );
     if (result == true) setState(() {});
@@ -374,21 +375,6 @@ class _BlueprintFilterBottomSheet extends StatelessWidget {
 
             return Column(
               children: [
-                // Handle
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Container(
-                    width: 32,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.4,
-                      ),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                ),
-
                 // Title
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),

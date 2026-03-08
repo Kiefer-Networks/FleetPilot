@@ -61,6 +61,7 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      showDragHandle: true,
       builder: (_) => _DeviceFilterBottomSheet(ref: ref),
     );
     if (result == true) setState(() {});
@@ -145,6 +146,7 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      showDragHandle: true,
       builder: (context) =>
           _BulkActionBottomSheet(selectedCount: selectedDevices.length),
     );
@@ -309,7 +311,6 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
     final currentPlatform = ref.watch(platformFilterProvider);
     final currentBlueprintId = ref.watch(blueprintFilterProvider);
     final blueprintsAsync = ref.watch(blueprintsProvider);
-    final sortAsc = ref.watch(deviceSortAscProvider);
     final supervisedFilter = ref.watch(supervisedFilterProvider);
     final lostModeFilter = ref.watch(lostModeFilterProvider);
     final activeFilterCount = _countActiveFilters();
@@ -543,27 +544,6 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
                   ),
                 ],
 
-                const SizedBox(height: 8),
-                SizedBox(
-                  height: 40,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    children: [
-                      FilterChip(
-                        avatar: Icon(
-                          sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
-                          size: 16,
-                        ),
-                        label: Text(sortAsc ? l10n.sortAZ : l10n.sortZA),
-                        selected: false,
-                        onSelected: (_) =>
-                            ref.read(deviceSortAscProvider.notifier).state =
-                                !sortAsc,
-                      ),
-                    ],
-                  ),
-                ),
                 const SizedBox(height: 8),
               ],
 
@@ -848,22 +828,10 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
             final blueprintsAsync = ref.read(blueprintsProvider);
             final supervised = ref.read(supervisedFilterProvider);
             final lostMode = ref.read(lostModeFilterProvider);
+            final sortAsc = ref.read(deviceSortAscProvider);
 
             return Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Container(
-                    width: 32,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.4,
-                      ),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
@@ -880,6 +848,7 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                               null;
                           ref.read(lostModeFilterProvider.notifier).state =
                               false;
+                          ref.read(deviceSortAscProvider.notifier).state = true;
                           setSheetState(() {});
                         },
                         child: Text(l10n.filterClearAll),
@@ -1019,6 +988,34 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
                               !lostMode;
                           setSheetState(() {});
                         },
+                      ),
+                      const SizedBox(height: 16),
+                      Text(l10n.sortTitle, style: theme.textTheme.titleSmall),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        children: [
+                          FilterChip(
+                            avatar: const Icon(Icons.arrow_downward, size: 16),
+                            label: Text(l10n.sortAZ),
+                            selected: sortAsc,
+                            onSelected: (_) {
+                              ref.read(deviceSortAscProvider.notifier).state =
+                                  true;
+                              setSheetState(() {});
+                            },
+                          ),
+                          FilterChip(
+                            avatar: const Icon(Icons.arrow_upward, size: 16),
+                            label: Text(l10n.sortZA),
+                            selected: !sortAsc,
+                            onSelected: (_) {
+                              ref.read(deviceSortAscProvider.notifier).state =
+                                  false;
+                              setSheetState(() {});
+                            },
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 24),
                     ],

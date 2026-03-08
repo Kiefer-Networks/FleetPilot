@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fleetpilot/l10n/app_localizations.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../providers/tenant_providers.dart';
 
-/// About page with app info, links, tech stack, and licenses.
+/// Cached package info provider.
+final _packageInfoProvider = FutureProvider<PackageInfo>((ref) {
+  return PackageInfo.fromPlatform();
+});
+
+/// About page with app info, links, and licenses.
 class AboutPage extends ConsumerWidget {
   const AboutPage({super.key});
 
@@ -22,6 +28,11 @@ class AboutPage extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final licenseAsync = ref.watch(licenseInfoProvider);
+    final pkgAsync = ref.watch(_packageInfoProvider);
+    final appVersion = pkgAsync.value?.version ?? '';
+    final buildNumber = pkgAsync.value?.buildNumber ?? '';
+    final versionString =
+        buildNumber.isNotEmpty ? '$appVersion+$buildNumber' : appVersion;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.aboutApp)),
@@ -51,7 +62,7 @@ class AboutPage extends ConsumerWidget {
                   Text(l10n.appTitle, style: theme.textTheme.headlineSmall),
                   const SizedBox(height: 4),
                   Text(
-                    l10n.version('0.1.0'),
+                    l10n.version(versionString),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -110,36 +121,6 @@ class AboutPage extends ConsumerWidget {
                       _openUrl('https://github.com/Kiefer-Networks/FleetPilot'),
                 ),
               ],
-            ),
-          ),
-
-          // Tech Stack section
-          Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 8),
-            child: Text(
-              l10n.aboutTechStack,
-              style: theme.textTheme.titleSmall?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          Card(
-            margin: const EdgeInsets.only(bottom: 16),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  _InfoRow(label: l10n.aboutFramework, value: 'Flutter'),
-                  _InfoRow(label: l10n.aboutStateManagement, value: 'Riverpod'),
-                  _InfoRow(
-                    label: l10n.aboutArchitecture,
-                    value: 'Clean Architecture',
-                  ),
-                  _InfoRow(label: l10n.aboutApi, value: 'REST / Dio'),
-                  _InfoRow(label: l10n.aboutDataClasses, value: 'Freezed'),
-                  _InfoRow(label: l10n.aboutNavigationLabel, value: 'GoRouter'),
-                ],
-              ),
             ),
           ),
 
@@ -227,7 +208,7 @@ class AboutPage extends ConsumerWidget {
               onTap: () => showLicensePage(
                 context: context,
                 applicationName: l10n.appTitle,
-                applicationVersion: '0.1.0',
+                applicationVersion: versionString,
                 applicationIcon: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Container(
