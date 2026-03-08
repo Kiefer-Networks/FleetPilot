@@ -164,9 +164,7 @@ class _VulnerabilitiesPageState extends ConsumerState<VulnerabilitiesPage> {
                       padding: const EdgeInsets.only(right: 8),
                       child: InputChip(
                         avatar: Icon(
-                          sortAsc
-                              ? Icons.arrow_upward
-                              : Icons.arrow_downward,
+                          sortAsc ? Icons.arrow_upward : Icons.arrow_downward,
                           size: 16,
                         ),
                         label: Text(_sortFieldLabel(sortField)),
@@ -290,10 +288,7 @@ class _VulnFilterBottomSheet extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     children: [
-                      Text(
-                        l10n.filterSort,
-                        style: theme.textTheme.titleLarge,
-                      ),
+                      Text(l10n.filterSort, style: theme.textTheme.titleLarge),
                       const Spacer(),
                       TextButton(
                         onPressed: () {
@@ -330,8 +325,9 @@ class _VulnFilterBottomSheet extends StatelessWidget {
                             selected: severityFilter == null,
                             onSelected: (_) {
                               ref
-                                  .read(vulnSeverityFilterProvider.notifier)
-                                  .state = null;
+                                      .read(vulnSeverityFilterProvider.notifier)
+                                      .state =
+                                  null;
                               setSheetState(() {});
                             },
                           ),
@@ -358,10 +354,7 @@ class _VulnFilterBottomSheet extends StatelessWidget {
                       const SizedBox(height: 20),
 
                       // Sort field section
-                      Text(
-                        l10n.sortBy,
-                        style: theme.textTheme.titleSmall,
-                      ),
+                      Text(l10n.sortBy, style: theme.textTheme.titleSmall),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
@@ -396,10 +389,7 @@ class _VulnFilterBottomSheet extends StatelessWidget {
                         runSpacing: 4,
                         children: [
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_downward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_downward, size: 16),
                             label: Text(l10n.descending),
                             selected: !sortAsc,
                             onSelected: (_) {
@@ -409,10 +399,7 @@ class _VulnFilterBottomSheet extends StatelessWidget {
                             },
                           ),
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_upward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_upward, size: 16),
                             label: Text(l10n.ascending),
                             selected: sortAsc,
                             onSelected: (_) {

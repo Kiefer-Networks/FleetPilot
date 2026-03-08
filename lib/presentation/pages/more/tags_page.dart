@@ -97,8 +97,7 @@ class _TagsPageState extends ConsumerState<TagsPage> {
                     ? tags
                     : tags
                           .where(
-                            (t) =>
-                                t.name.toLowerCase().contains(searchQuery),
+                            (t) => t.name.toLowerCase().contains(searchQuery),
                           )
                           .toList();
 
@@ -312,7 +311,9 @@ class _TagCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final l10n = AppLocalizations.of(context);
-    final countText = deviceCount != null ? l10n.tagDeviceCount(deviceCount!) : '\u2014';
+    final countText = deviceCount != null
+        ? l10n.tagDeviceCount(deviceCount!)
+        : '\u2014';
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -347,10 +348,7 @@ class _TagCard extends StatelessWidget {
                 tooltip: AppLocalizations.of(context).editTag,
               ),
               IconButton(
-                icon: Icon(
-                  Icons.delete_outlined,
-                  color: colorScheme.error,
-                ),
+                icon: Icon(Icons.delete_outlined, color: colorScheme.error),
                 onPressed: onDelete,
                 tooltip: AppLocalizations.of(context).deleteTag,
               ),

@@ -121,8 +121,9 @@ final vulnSeverityFilterProvider = StateProvider<String?>((ref) => null);
 /// Sort field for vulnerability list.
 enum VulnSortField { cvss, deviceCount, cveId }
 
-final vulnSortFieldProvider =
-    StateProvider<VulnSortField>((ref) => VulnSortField.cvss);
+final vulnSortFieldProvider = StateProvider<VulnSortField>(
+  (ref) => VulnSortField.cvss,
+);
 
 /// Sort ascending for vulnerability list.
 final vulnSortAscProvider = StateProvider<bool>((ref) => false);

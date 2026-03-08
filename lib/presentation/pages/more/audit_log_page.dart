@@ -119,8 +119,9 @@ class _AuditEventTile extends StatelessWidget {
     // Build a human-readable description from available fields.
     final description = _buildDescription(event);
     final actor = event.actorId ?? '';
-    final actorLabel =
-        event.actorType != null ? '${event.actorType}: $actor' : actor;
+    final actorLabel = event.actorType != null
+        ? '${event.actorType}: $actor'
+        : actor;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),

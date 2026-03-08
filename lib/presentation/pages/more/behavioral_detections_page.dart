@@ -83,10 +83,11 @@ class _BehavioralDetectionsPageState
                           onPressed: () {
                             _searchController.clear();
                             ref
-                                .read(
-                                  behavioralSearchQueryProvider.notifier,
-                                )
-                                .state = '';
+                                    .read(
+                                      behavioralSearchQueryProvider.notifier,
+                                    )
+                                    .state =
+                                '';
                             setState(() {});
                           },
                         ),
@@ -134,9 +135,13 @@ class _BehavioralDetectionsPageState
                       padding: const EdgeInsets.only(right: 8),
                       child: InputChip(
                         label: Text(severityFilter),
-                        onDeleted: () => ref
-                            .read(behavioralSeverityFilterProvider.notifier)
-                            .state = null,
+                        onDeleted: () =>
+                            ref
+                                    .read(
+                                      behavioralSeverityFilterProvider.notifier,
+                                    )
+                                    .state =
+                                null,
                       ),
                     ),
                   ActionChip(
@@ -267,10 +272,11 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           ref
-                              .read(
-                                behavioralSeverityFilterProvider.notifier,
-                              )
-                              .state = null;
+                                  .read(
+                                    behavioralSeverityFilterProvider.notifier,
+                                  )
+                                  .state =
+                              null;
                           ref.read(behavioralSortAscProvider.notifier).state =
                               true;
                           setSheetState(() {});
@@ -300,24 +306,29 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                             selected: severity == null,
                             onSelected: (_) {
                               ref
-                                  .read(
-                                    behavioralSeverityFilterProvider.notifier,
-                                  )
-                                  .state = null;
+                                      .read(
+                                        behavioralSeverityFilterProvider
+                                            .notifier,
+                                      )
+                                      .state =
+                                  null;
                               setSheetState(() {});
                             },
                           ),
                           for (final entry in severityOptions.entries)
                             FilterChip(
                               label: Text(entry.value),
-                              selected: severity?.toLowerCase() ==
+                              selected:
+                                  severity?.toLowerCase() ==
                                   entry.key.toLowerCase(),
                               onSelected: (_) {
                                 ref
-                                    .read(
-                                      behavioralSeverityFilterProvider.notifier,
-                                    )
-                                    .state = severity?.toLowerCase() ==
+                                        .read(
+                                          behavioralSeverityFilterProvider
+                                              .notifier,
+                                        )
+                                        .state =
+                                    severity?.toLowerCase() ==
                                         entry.key.toLowerCase()
                                     ? null
                                     : entry.key;
@@ -327,40 +338,33 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        l10n.sortTitle,
-                        style: theme.textTheme.titleSmall,
-                      ),
+                      Text(l10n.sortTitle, style: theme.textTheme.titleSmall),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
                         runSpacing: 4,
                         children: [
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_downward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_downward, size: 16),
                             label: Text(l10n.sortAZ),
                             selected: sortAsc,
                             onSelected: (_) {
                               ref
-                                  .read(behavioralSortAscProvider.notifier)
-                                  .state = true;
+                                      .read(behavioralSortAscProvider.notifier)
+                                      .state =
+                                  true;
                               setSheetState(() {});
                             },
                           ),
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_upward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_upward, size: 16),
                             label: Text(l10n.sortZA),
                             selected: !sortAsc,
                             onSelected: (_) {
                               ref
-                                  .read(behavioralSortAscProvider.notifier)
-                                  .state = false;
+                                      .read(behavioralSortAscProvider.notifier)
+                                      .state =
+                                  false;
                               setSheetState(() {});
                             },
                           ),

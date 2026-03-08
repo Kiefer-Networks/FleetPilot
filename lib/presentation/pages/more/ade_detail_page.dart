@@ -231,9 +231,7 @@ class _AdeDetailScaffold extends ConsumerWidget {
                               if (context.mounted) {
                                 Clipboard.setData(ClipboardData(text: key));
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(l10n.publicKeyCopied),
-                                  ),
+                                  SnackBar(content: Text(l10n.publicKeyCopied)),
                                 );
                               }
                             } catch (_) {
@@ -254,26 +252,20 @@ class _AdeDetailScaffold extends ConsumerWidget {
                                 tenantApiProvider.future,
                               );
                               final key = await api.getAdePublicKey();
-                              final result =
-                                  await FilePicker.platform.saveFile(
+                              final result = await FilePicker.platform.saveFile(
                                 dialogTitle: l10n.downloadPublicKey,
                                 fileName: 'ade_public_key.pem',
-                                bytes:
-                                    Uint8List.fromList(utf8.encode(key)),
+                                bytes: Uint8List.fromList(utf8.encode(key)),
                               );
                               if (result != null && context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(l10n.publicKeySaved),
-                                  ),
+                                  SnackBar(content: Text(l10n.publicKeySaved)),
                                 );
                               }
                             } catch (_) {
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(l10n.actionFailed),
-                                  ),
+                                  SnackBar(content: Text(l10n.actionFailed)),
                                 );
                               }
                             }

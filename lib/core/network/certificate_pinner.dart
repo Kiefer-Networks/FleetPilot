@@ -24,10 +24,7 @@ abstract final class CertificatePinner {
 
   /// Domains that require CA pinning.
   /// Connections to other hosts use the system trust store.
-  static const _pinnedDomains = [
-    'api.kandji.io',
-    'api.eu.kandji.io',
-  ];
+  static const _pinnedDomains = ['api.kandji.io', 'api.eu.kandji.io'];
 
   /// Initializes the pinned [SecurityContext] by loading the embedded
   /// CA bundle from assets. Must be called once at app startup.

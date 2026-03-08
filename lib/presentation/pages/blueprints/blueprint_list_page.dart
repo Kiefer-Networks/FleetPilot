@@ -148,10 +148,11 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
                             onPressed: () {
                               _searchController.clear();
                               ref
-                                  .read(
-                                    blueprintSearchQueryProvider.notifier,
-                                  )
-                                  .state = '';
+                                      .read(
+                                        blueprintSearchQueryProvider.notifier,
+                                      )
+                                      .state =
+                                  '';
                               setState(() {});
                             },
                           ),
@@ -415,39 +416,32 @@ class _BlueprintFilterBottomSheet extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     children: [
                       // Sort section
-                      Text(
-                        l10n.sortTitle,
-                        style: theme.textTheme.titleSmall,
-                      ),
+                      Text(l10n.sortTitle, style: theme.textTheme.titleSmall),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
                         children: [
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_downward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_downward, size: 16),
                             label: Text(l10n.sortAZ),
                             selected: sortAsc,
                             onSelected: (_) {
                               ref
-                                  .read(blueprintSortAscProvider.notifier)
-                                  .state = true;
+                                      .read(blueprintSortAscProvider.notifier)
+                                      .state =
+                                  true;
                               setSheetState(() {});
                             },
                           ),
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_upward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_upward, size: 16),
                             label: Text(l10n.sortZA),
                             selected: !sortAsc,
                             onSelected: (_) {
                               ref
-                                  .read(blueprintSortAscProvider.notifier)
-                                  .state = false;
+                                      .read(blueprintSortAscProvider.notifier)
+                                      .state =
+                                  false;
                               setSheetState(() {});
                             },
                           ),

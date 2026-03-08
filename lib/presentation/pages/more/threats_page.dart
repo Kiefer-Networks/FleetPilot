@@ -80,9 +80,8 @@ class _ThreatsPageState extends ConsumerState<ThreatsPage> {
                           tooltip: l10n.clearSearch,
                           onPressed: () {
                             _searchController.clear();
-                            ref
-                                .read(threatSearchQueryProvider.notifier)
-                                .state = '';
+                            ref.read(threatSearchQueryProvider.notifier).state =
+                                '';
                             setState(() {});
                           },
                         ),
@@ -130,9 +129,11 @@ class _ThreatsPageState extends ConsumerState<ThreatsPage> {
                       padding: const EdgeInsets.only(right: 8),
                       child: InputChip(
                         label: Text(statusFilter),
-                        onDeleted: () => ref
-                            .read(threatStatusFilterProvider.notifier)
-                            .state = null,
+                        onDeleted: () =>
+                            ref
+                                    .read(threatStatusFilterProvider.notifier)
+                                    .state =
+                                null,
                       ),
                     ),
                   ActionChip(
@@ -289,20 +290,25 @@ class _ThreatFilterBottomSheet extends StatelessWidget {
                             selected: status == null,
                             onSelected: (_) {
                               ref
-                                  .read(threatStatusFilterProvider.notifier)
-                                  .state = null;
+                                      .read(threatStatusFilterProvider.notifier)
+                                      .state =
+                                  null;
                               setSheetState(() {});
                             },
                           ),
                           for (final entry in statusOptions.entries)
                             FilterChip(
                               label: Text(entry.value),
-                              selected: status?.toLowerCase() ==
+                              selected:
+                                  status?.toLowerCase() ==
                                   entry.key.toLowerCase(),
                               onSelected: (_) {
                                 ref
-                                    .read(threatStatusFilterProvider.notifier)
-                                    .state = status?.toLowerCase() ==
+                                        .read(
+                                          threatStatusFilterProvider.notifier,
+                                        )
+                                        .state =
+                                    status?.toLowerCase() ==
                                         entry.key.toLowerCase()
                                     ? null
                                     : entry.key;
@@ -312,20 +318,14 @@ class _ThreatFilterBottomSheet extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        l10n.sortTitle,
-                        style: theme.textTheme.titleSmall,
-                      ),
+                      Text(l10n.sortTitle, style: theme.textTheme.titleSmall),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
                         runSpacing: 4,
                         children: [
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_downward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_downward, size: 16),
                             label: Text(l10n.sortAZ),
                             selected: sortAsc,
                             onSelected: (_) {
@@ -335,10 +335,7 @@ class _ThreatFilterBottomSheet extends StatelessWidget {
                             },
                           ),
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_upward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_upward, size: 16),
                             label: Text(l10n.sortZA),
                             selected: !sortAsc,
                             onSelected: (_) {

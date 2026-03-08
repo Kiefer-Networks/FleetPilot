@@ -406,19 +406,13 @@ class _UserFilterBottomSheet extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       // Sort section
-                      Text(
-                        l10n.sortTitle,
-                        style: theme.textTheme.titleSmall,
-                      ),
+                      Text(l10n.sortTitle, style: theme.textTheme.titleSmall),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
                         children: [
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_downward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_downward, size: 16),
                             label: Text(l10n.sortAZ),
                             selected: sortAsc,
                             onSelected: (_) {
@@ -428,10 +422,7 @@ class _UserFilterBottomSheet extends StatelessWidget {
                             },
                           ),
                           FilterChip(
-                            avatar: const Icon(
-                              Icons.arrow_upward,
-                              size: 16,
-                            ),
+                            avatar: const Icon(Icons.arrow_upward, size: 16),
                             label: Text(l10n.sortZA),
                             selected: !sortAsc,
                             onSelected: (_) {

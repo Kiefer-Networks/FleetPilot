@@ -42,22 +42,30 @@ String? _descriptionFromNewState(dynamic value) {
 abstract class AuditEvent with _$AuditEvent {
   const factory AuditEvent({
     @JsonKey(fromJson: _toNullableString) String? id,
+
     /// The action performed, e.g. "create", "update", "delete", "detect".
     @JsonKey(fromJson: _toNullableString) String? action,
+
     /// ISO-8601 timestamp when the event occurred.
     @JsonKey(name: 'occurred_at') String? occurredAt,
+
     /// ID of the actor (admin user or system component).
     @JsonKey(name: 'actor_id', fromJson: _toNullableString) String? actorId,
+
     /// Type of actor, e.g. "admin", "kandji".
     @JsonKey(name: 'actor_type', fromJson: _toNullableString) String? actorType,
+
     /// ID of the target object.
     @JsonKey(name: 'target_id', fromJson: _toNullableString) String? targetId,
+
     /// Type of target, e.g. "device", "blueprint", "user".
     @JsonKey(name: 'target_type', fromJson: _toNullableString)
     String? targetType,
+
     /// Component category, e.g. "library_item", "vulnerability".
     @JsonKey(name: 'target_component', fromJson: _toNullableString)
     String? targetComponent,
+
     /// State details — may be a nested object. Extracted as description.
     @JsonKey(name: 'new_state', fromJson: _descriptionFromNewState)
     String? newState,
