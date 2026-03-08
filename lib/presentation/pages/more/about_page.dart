@@ -48,7 +48,7 @@ class AboutPage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text('FleetPilot', style: theme.textTheme.headlineSmall),
+                  Text(l10n.appTitle, style: theme.textTheme.headlineSmall),
                   const SizedBox(height: 4),
                   Text(
                     l10n.version('0.1.0'),
@@ -74,7 +74,7 @@ class AboutPage extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(left: 4, bottom: 8),
             child: Text(
-              'Links',
+              l10n.aboutLinks,
               style: theme.textTheme.titleSmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -87,8 +87,8 @@ class AboutPage extends ConsumerWidget {
               children: [
                 ListTile(
                   leading: Icon(Icons.language, color: colorScheme.primary),
-                  title: const Text('Website'),
-                  subtitle: const Text('kiefer-networks.de'),
+                  title: Text(l10n.aboutWebsite),
+                  subtitle: Text(l10n.aboutWebsiteDomain),
                   trailing: Icon(
                     Icons.open_in_new,
                     size: 18,
@@ -99,15 +99,15 @@ class AboutPage extends ConsumerWidget {
                 const Divider(height: 1, indent: 56),
                 ListTile(
                   leading: Icon(Icons.code, color: colorScheme.primary),
-                  title: const Text('Source Code'),
-                  subtitle: const Text('GitHub'),
+                  title: Text(l10n.aboutSourceCode),
+                  subtitle: Text(l10n.aboutGitHub),
                   trailing: Icon(
                     Icons.open_in_new,
                     size: 18,
                     color: colorScheme.onSurfaceVariant,
                   ),
                   onTap: () =>
-                      _openUrl('https://github.com/kiefer-networks/fleetpilot'),
+                      _openUrl('https://github.com/Kiefer-Networks/FleetPilot'),
                 ),
               ],
             ),
@@ -117,24 +117,27 @@ class AboutPage extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(left: 4, bottom: 8),
             child: Text(
-              'Tech Stack',
+              l10n.aboutTechStack,
               style: theme.textTheme.titleSmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
           ),
-          const Card(
-            margin: EdgeInsets.only(bottom: 16),
+          Card(
+            margin: const EdgeInsets.only(bottom: 16),
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  _InfoRow(label: 'Framework', value: 'Flutter'),
-                  _InfoRow(label: 'State Management', value: 'Riverpod'),
-                  _InfoRow(label: 'Architecture', value: 'Clean Architecture'),
-                  _InfoRow(label: 'API', value: 'Kandji MDM'),
-                  _InfoRow(label: 'Data Classes', value: 'Freezed'),
-                  _InfoRow(label: 'Navigation', value: 'GoRouter'),
+                  _InfoRow(label: l10n.aboutFramework, value: 'Flutter'),
+                  _InfoRow(label: l10n.aboutStateManagement, value: 'Riverpod'),
+                  _InfoRow(
+                    label: l10n.aboutArchitecture,
+                    value: 'Clean Architecture',
+                  ),
+                  _InfoRow(label: l10n.aboutApi, value: 'REST / Dio'),
+                  _InfoRow(label: l10n.aboutDataClasses, value: 'Freezed'),
+                  _InfoRow(label: l10n.aboutNavigationLabel, value: 'GoRouter'),
                 ],
               ),
             ),
@@ -215,7 +218,7 @@ class AboutPage extends ConsumerWidget {
                 Icons.description_outlined,
                 color: colorScheme.primary,
               ),
-              title: const Text('Open Source Licenses'),
+              title: Text(l10n.aboutOpenSourceLicenses),
               trailing: Icon(
                 Icons.chevron_right,
                 size: 18,
@@ -223,7 +226,7 @@ class AboutPage extends ConsumerWidget {
               ),
               onTap: () => showLicensePage(
                 context: context,
-                applicationName: 'FleetPilot',
+                applicationName: l10n.appTitle,
                 applicationVersion: '0.1.0',
                 applicationIcon: Padding(
                   padding: const EdgeInsets.all(16),

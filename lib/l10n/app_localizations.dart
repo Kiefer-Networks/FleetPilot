@@ -2259,6 +2259,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Token renewed.'**
   String get tokenRenewed;
+
+  /// No description provided for @aboutLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get aboutLinks;
+
+  /// No description provided for @aboutWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get aboutWebsite;
+
+  /// No description provided for @aboutWebsiteDomain.
+  ///
+  /// In en, this message translates to:
+  /// **'kiefer-networks.de'**
+  String get aboutWebsiteDomain;
+
+  /// No description provided for @aboutSourceCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Code'**
+  String get aboutSourceCode;
+
+  /// No description provided for @aboutGitHub.
+  ///
+  /// In en, this message translates to:
+  /// **'GitHub'**
+  String get aboutGitHub;
+
+  /// No description provided for @aboutTechStack.
+  ///
+  /// In en, this message translates to:
+  /// **'Tech Stack'**
+  String get aboutTechStack;
+
+  /// No description provided for @aboutFramework.
+  ///
+  /// In en, this message translates to:
+  /// **'Framework'**
+  String get aboutFramework;
+
+  /// No description provided for @aboutStateManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'State Management'**
+  String get aboutStateManagement;
+
+  /// No description provided for @aboutArchitecture.
+  ///
+  /// In en, this message translates to:
+  /// **'Architecture'**
+  String get aboutArchitecture;
+
+  /// No description provided for @aboutApi.
+  ///
+  /// In en, this message translates to:
+  /// **'API'**
+  String get aboutApi;
+
+  /// No description provided for @aboutDataClasses.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Classes'**
+  String get aboutDataClasses;
+
+  /// No description provided for @aboutNavigationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get aboutNavigationLabel;
+
+  /// No description provided for @aboutOpenSourceLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source Licenses'**
+  String get aboutOpenSourceLicenses;
+
+  /// No description provided for @aboutShowHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle visibility'**
+  String get aboutShowHide;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Connection'**
+  String get editProfileTitle;
+
+  /// No description provided for @editProfileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your tenant connection settings.'**
+  String get editProfileSubtitle;
+
+  /// No description provided for @apiTokenHintEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to keep existing token'**
+  String get apiTokenHintEdit;
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated.'**
+  String get profileUpdated;
+
+  /// Snackbar message after switching profile
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to {name}.'**
+  String profileSwitched(String name);
 }
 
 class _AppLocalizationsDelegate

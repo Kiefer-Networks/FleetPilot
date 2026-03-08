@@ -1202,4 +1202,64 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tokenRenewed => 'Token renovado.';
+
+  @override
+  String get aboutLinks => 'Enlaces';
+
+  @override
+  String get aboutWebsite => 'Sitio web';
+
+  @override
+  String get aboutWebsiteDomain => 'kiefer-networks.de';
+
+  @override
+  String get aboutSourceCode => 'Código fuente';
+
+  @override
+  String get aboutGitHub => 'GitHub';
+
+  @override
+  String get aboutTechStack => 'Tecnología';
+
+  @override
+  String get aboutFramework => 'Framework';
+
+  @override
+  String get aboutStateManagement => 'Gestión de estado';
+
+  @override
+  String get aboutArchitecture => 'Arquitectura';
+
+  @override
+  String get aboutApi => 'API';
+
+  @override
+  String get aboutDataClasses => 'Clases de datos';
+
+  @override
+  String get aboutNavigationLabel => 'Navegación';
+
+  @override
+  String get aboutOpenSourceLicenses => 'Licencias de código abierto';
+
+  @override
+  String get aboutShowHide => 'Alternar visibilidad';
+
+  @override
+  String get editProfileTitle => 'Editar conexión';
+
+  @override
+  String get editProfileSubtitle =>
+      'Actualiza la configuración de conexión de tu tenant.';
+
+  @override
+  String get apiTokenHintEdit => 'Dejar vacío para conservar el token actual';
+
+  @override
+  String get profileUpdated => 'Perfil actualizado.';
+
+  @override
+  String profileSwitched(String name) {
+    return 'Cambiado a $name.';
+  }
 }

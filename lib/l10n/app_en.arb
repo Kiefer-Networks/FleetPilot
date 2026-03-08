@@ -1249,5 +1249,32 @@
   "step3Configure": "Step 3: Configure",
   "publicKeyCopied": "Public key copied to clipboard.",
   "renewTokenDescription": "Upload a new .p7m token file to renew this integration's token.",
-  "tokenRenewed": "Token renewed."
+  "tokenRenewed": "Token renewed.",
+  "aboutLinks": "Links",
+  "aboutWebsite": "Website",
+  "aboutWebsiteDomain": "kiefer-networks.de",
+  "aboutSourceCode": "Source Code",
+  "aboutGitHub": "GitHub",
+  "aboutTechStack": "Tech Stack",
+  "aboutFramework": "Framework",
+  "aboutStateManagement": "State Management",
+  "aboutArchitecture": "Architecture",
+  "aboutApi": "API",
+  "aboutDataClasses": "Data Classes",
+  "aboutNavigationLabel": "Navigation",
+  "aboutOpenSourceLicenses": "Open Source Licenses",
+  "aboutShowHide": "Toggle visibility",
+  "editProfileTitle": "Edit Connection",
+  "editProfileSubtitle": "Update your tenant connection settings.",
+  "apiTokenHintEdit": "Leave empty to keep existing token",
+  "profileUpdated": "Profile updated.",
+  "profileSwitched": "Switched to {name}.",
+  "@profileSwitched": {
+    "description": "Snackbar message after switching profile",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

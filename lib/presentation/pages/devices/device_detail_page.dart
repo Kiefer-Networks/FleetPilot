@@ -2234,7 +2234,7 @@ class _SecretCardState extends State<_SecretCard> {
                       size: 20,
                     ),
                     onPressed: () => setState(() => _revealed = !_revealed),
-                    tooltip: _revealed ? 'Hide' : 'Show',
+                    tooltip: l10n.aboutShowHide,
                   ),
                   IconButton(
                     icon: const Icon(Icons.copy, size: 20),
