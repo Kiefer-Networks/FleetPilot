@@ -32,4 +32,7 @@ abstract final class StorageKeys {
 
   /// Key for the timestamp when the app was last backgrounded (epoch ms).
   static const String lastBackgroundedAt = 'fleetpilot_last_backgrounded';
+
+  /// Key for saved device filter presets (JSON array).
+  static const String deviceFilterPresets = 'fleetpilot_device_filter_presets';
 }
