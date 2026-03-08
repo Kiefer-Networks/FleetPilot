@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/constants/api_constants.dart';
 import '../../core/di/providers.dart';
 import '../../domain/entities/device.dart';
 import '../../domain/entities/device_activity.dart';
@@ -32,29 +33,92 @@ final lostModeFilterProvider = StateProvider<bool>((ref) => false);
 /// Number of devices loaded so far during pagination.
 final devicesLoadingCountProvider = StateProvider<int>((ref) => 0);
 
+/// Whether all device pages have been fetched.
+final devicesFullyLoadedProvider = StateProvider<bool>((ref) => false);
+
 /// Provider for the full device list, respecting active filters.
 final devicesProvider = AsyncNotifierProvider<DevicesNotifier, List<Device>>(
   DevicesNotifier.new,
 );
 
-/// Manages device list state with transparent pagination.
+/// Manages device list state with progressive transparent pagination.
+///
+/// The first page of devices is shown immediately while remaining pages
+/// are fetched in the background and appended as they arrive.
 class DevicesNotifier extends AsyncNotifier<List<Device>> {
   @override
   Future<List<Device>> build() async {
     final platform = ref.watch(platformFilterProvider);
     final blueprintId = ref.watch(blueprintFilterProvider);
 
-    final getDevices = await ref.watch(getDevicesUseCaseProvider.future);
-    return getDevices(
+    ref.read(devicesLoadingCountProvider.notifier).state = 0;
+    ref.read(devicesFullyLoadedProvider.notifier).state = false;
+
+    final repo = await ref.watch(deviceRepositoryProvider.future);
+
+    // Fetch the first page and return it immediately so the UI can render.
+    final firstPage = await repo.getDevicesPage(
+      offset: 0,
       platform: platform,
       blueprintId: blueprintId,
-      onPageLoaded: (count) {
-        ref.read(devicesLoadingCountProvider.notifier).state = count;
-      },
     );
+
+    ref.read(devicesLoadingCountProvider.notifier).state = firstPage.length;
+
+    // If the first page is smaller than the limit, all devices fit in one page.
+    if (firstPage.length < ApiConstants.pageLimit) {
+      ref.read(devicesFullyLoadedProvider.notifier).state = true;
+      return firstPage;
+    }
+
+    // Schedule background fetching of remaining pages.
+    _fetchRemainingPages(
+      platform: platform,
+      blueprintId: blueprintId,
+      initialDevices: firstPage,
+    );
+
+    return firstPage;
   }
 
-  /// Force refresh the device list.
+  /// Fetches all remaining pages in the background and appends them
+  /// to the current state as each page arrives.
+  Future<void> _fetchRemainingPages({
+    String? platform,
+    String? blueprintId,
+    required List<Device> initialDevices,
+  }) async {
+    final repo = await ref.read(deviceRepositoryProvider.future);
+    final allDevices = List<Device>.of(initialDevices);
+    var offset = ApiConstants.pageLimit;
+
+    while (true) {
+      try {
+        final page = await repo.getDevicesPage(
+          offset: offset,
+          platform: platform,
+          blueprintId: blueprintId,
+        );
+
+        allDevices.addAll(page);
+        ref.read(devicesLoadingCountProvider.notifier).state =
+            allDevices.length;
+
+        // Update state so the UI sees the new devices immediately.
+        state = AsyncData(List.unmodifiable(allDevices));
+
+        if (page.length < ApiConstants.pageLimit) break;
+        offset += ApiConstants.pageLimit;
+      } on Exception {
+        // If a subsequent page fails, keep whatever we have so far and stop.
+        break;
+      }
+    }
+
+    ref.read(devicesFullyLoadedProvider.notifier).state = true;
+  }
+
+  /// Force refresh the device list from scratch.
   Future<void> refresh() async {
     ref.invalidateSelf();
   }

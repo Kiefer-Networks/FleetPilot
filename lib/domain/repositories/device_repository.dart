@@ -20,6 +20,17 @@ abstract interface class DeviceRepository {
     void Function(int loadedCount)? onPageLoaded,
   });
 
+  /// Fetches a single page of devices starting at [offset].
+  ///
+  /// Returns up to [ApiConstants.pageLimit] devices. Used for progressive
+  /// loading where the first page should be shown immediately while
+  /// remaining pages are fetched in the background.
+  Future<List<Device>> getDevicesPage({
+    required int offset,
+    String? platform,
+    String? blueprintId,
+  });
+
   /// Fetches a single device by [deviceId].
   Future<Device> getDevice(String deviceId);
 

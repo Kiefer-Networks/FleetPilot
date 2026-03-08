@@ -212,8 +212,8 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
             ),
             const SizedBox(height: 8),
 
-            // Loading progress
-            if (filteredDevices.isLoading && loadingCount > 0)
+            // Loading progress — shown while background pages are still being fetched
+            if (!ref.watch(devicesFullyLoadedProvider) && loadingCount > 0)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(

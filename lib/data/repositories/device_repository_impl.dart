@@ -31,6 +31,19 @@ class DeviceRepositoryImpl implements DeviceRepository {
   }
 
   @override
+  Future<List<Device>> getDevicesPage({
+    required int offset,
+    String? platform,
+    String? blueprintId,
+  }) {
+    return api.getDevicesPage(
+      offset: offset,
+      platform: platform,
+      blueprintId: blueprintId,
+    );
+  }
+
+  @override
   Future<Device> getDevice(String deviceId) => api.getDevice(deviceId);
 
   @override
