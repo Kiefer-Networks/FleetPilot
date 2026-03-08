@@ -1870,11 +1870,15 @@ class _ActivityTab extends ConsumerWidget {
           );
         }
 
-        return ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: activities.length,
-          itemBuilder: (context, index) =>
-              _ActivityTile(activity: activities[index]),
+        return RefreshIndicator(
+          onRefresh: () async =>
+              ref.invalidate(deviceActivityProvider(deviceId)),
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: activities.length,
+            itemBuilder: (context, index) =>
+                _ActivityTile(activity: activities[index]),
+          ),
         );
       },
       loading: () => const LoadingWidget(),
@@ -2097,11 +2101,15 @@ class _CommandsTab extends ConsumerWidget {
           );
         }
 
-        return ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: commands.length,
-          itemBuilder: (context, index) =>
-              _CommandTile(command: commands[index]),
+        return RefreshIndicator(
+          onRefresh: () async =>
+              ref.invalidate(deviceCommandsProvider(deviceId)),
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: commands.length,
+            itemBuilder: (context, index) =>
+                _CommandTile(command: commands[index]),
+          ),
         );
       },
       loading: () => const LoadingWidget(),
