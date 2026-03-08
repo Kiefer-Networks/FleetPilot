@@ -745,7 +745,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eraseReturnToService => 'Volver al servicio';
 
   @override
-  String get lockMessage => 'Mensaje de bloqueo';
+  String get lockMessage => 'Mensaje de bloqueo (opcional)';
 
   @override
   String get lockPhone => 'Número de teléfono';
@@ -1326,4 +1326,164 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get presetNameRequired => 'Ingresa un nombre para el predefinido.';
+
+  @override
+  String selectedCount(int count) {
+    return '$count seleccionados';
+  }
+
+  @override
+  String get selectAll => 'Seleccionar todo';
+
+  @override
+  String get deselectAll => 'Deseleccionar todo';
+
+  @override
+  String get bulkActions => 'Acciones';
+
+  @override
+  String bulkActionsTitle(int count) {
+    return 'Acciones para $count dispositivos';
+  }
+
+  @override
+  String get bulkActionAssignTag => 'Asignar etiqueta';
+
+  @override
+  String get bulkActionAssignTagDescription =>
+      'Agregar una etiqueta a todos los dispositivos seleccionados';
+
+  @override
+  String get bulkActionAssignBlueprint => 'Asignar blueprint';
+
+  @override
+  String get bulkActionAssignBlueprintDescription =>
+      'Mover los dispositivos seleccionados a un blueprint';
+
+  @override
+  String get bulkActionLock => 'Bloquear dispositivos';
+
+  @override
+  String get bulkActionLockDescription =>
+      'Bloquear de forma remota todos los dispositivos seleccionados';
+
+  @override
+  String get bulkActionRestart => 'Reiniciar dispositivos';
+
+  @override
+  String get bulkActionRestartDescription =>
+      'Reiniciar todos los dispositivos seleccionados';
+
+  @override
+  String bulkRestartConfirmMessage(int count) {
+    return '¿Está seguro de que desea reiniciar $count dispositivos?';
+  }
+
+  @override
+  String bulkActionSuccess(int count) {
+    return 'Acción completada con éxito en $count dispositivos.';
+  }
+
+  @override
+  String bulkActionPartialSuccess(int success, int failed) {
+    return 'Completado en $success dispositivos, $failed fallidos.';
+  }
+
+  @override
+  String bulkProgressStatus(int completed, int total) {
+    return '$completed de $total completados';
+  }
+
+  @override
+  String get biometricReasonBulkAction =>
+      'Autenticarse para realizar la acción masiva';
+
+  @override
+  String get lockPin => 'PIN de bloqueo (opcional)';
+
+  @override
+  String get noTagsAvailable =>
+      'No hay etiquetas disponibles. Cree etiquetas en la consola de Kandji.';
+
+  @override
+  String get noBlueprintsAvailable => 'No hay blueprints disponibles.';
+
+  @override
+  String get selectADevice => 'Seleccionar un dispositivo';
+
+  @override
+  String get selectABlueprint => 'Seleccionar un blueprint';
+
+  @override
+  String get clearSearch => 'Borrar búsqueda';
+
+  @override
+  String get refresh => 'Actualizar';
+
+  @override
+  String get moreActions => 'Más acciones';
+
+  @override
+  String get close => 'Cerrar';
+
+  @override
+  String get onboardingSkip => 'Omitir';
+
+  @override
+  String get onboardingNext => 'Siguiente';
+
+  @override
+  String get onboardingGetStarted => 'Comenzar';
+
+  @override
+  String get onboardingWelcomeTitle => 'Bienvenido a FleetPilot';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Tu centro de mando móvil para la gestión de flotas de dispositivos Apple. Supervisa, gestiona y protege toda tu flota desde cualquier lugar.';
+
+  @override
+  String get onboardingDevicesTitle => 'Gestión de dispositivos';
+
+  @override
+  String get onboardingDevicesSubtitle =>
+      'Visibilidad y control total sobre cada dispositivo de tu flota.';
+
+  @override
+  String get onboardingDevicesFeature1 =>
+      'Ver todos los iPhones, iPads, Macs y Apple TVs registrados';
+
+  @override
+  String get onboardingDevicesFeature2 =>
+      'Enviar comandos remotos: bloquear, reiniciar, borrar y más';
+
+  @override
+  String get onboardingDevicesFeature3 =>
+      'Seguir blueprints, apps y estado de cumplimiento';
+
+  @override
+  String get onboardingSecurityTitle => 'Diseñado para la seguridad';
+
+  @override
+  String get onboardingSecuritySubtitle =>
+      'Los datos de tu flota están protegidos con múltiples capas de seguridad.';
+
+  @override
+  String get onboardingSecurityFeature1 =>
+      'Autenticación biométrica con Face ID o huella digital';
+
+  @override
+  String get onboardingSecurityFeature2 =>
+      'Bloqueo con PIN de 6 dígitos para acceder a la app';
+
+  @override
+  String get onboardingSecurityFeature3 =>
+      'Bloqueo automático de sesión tras tiempo de espera';
+
+  @override
+  String get onboardingReadyTitle => 'Listo para empezar';
+
+  @override
+  String get onboardingReadySubtitle =>
+      'Conecta tu tenant de Kandji para comenzar a gestionar tu flota de dispositivos Apple. A continuación, configurarás tu conexión API y PIN de seguridad.';
 }

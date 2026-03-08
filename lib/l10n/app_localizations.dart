@@ -1426,10 +1426,10 @@ abstract class AppLocalizations {
   /// **'Return to service'**
   String get eraseReturnToService;
 
-  /// Label for lock screen message
+  /// Label for lock message field in bulk lock dialog
   ///
   /// In en, this message translates to:
-  /// **'Lock Message'**
+  /// **'Lock message (optional)'**
   String get lockMessage;
 
   /// Label for lock screen phone number
@@ -2493,6 +2493,270 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a preset name.'**
   String get presetNameRequired;
+
+  /// Number of selected devices in selection mode
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String selectedCount(int count);
+
+  /// Tooltip for select all button
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get selectAll;
+
+  /// Tooltip for deselect all button
+  ///
+  /// In en, this message translates to:
+  /// **'Deselect all'**
+  String get deselectAll;
+
+  /// Label for bulk actions FAB
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get bulkActions;
+
+  /// Title of bulk action bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Actions for {count} devices'**
+  String bulkActionsTitle(int count);
+
+  /// Bulk action: assign a tag
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Tag'**
+  String get bulkActionAssignTag;
+
+  /// Description for bulk tag assignment
+  ///
+  /// In en, this message translates to:
+  /// **'Add a tag to all selected devices'**
+  String get bulkActionAssignTagDescription;
+
+  /// Bulk action: assign a blueprint
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Blueprint'**
+  String get bulkActionAssignBlueprint;
+
+  /// Description for bulk blueprint assignment
+  ///
+  /// In en, this message translates to:
+  /// **'Move selected devices to a blueprint'**
+  String get bulkActionAssignBlueprintDescription;
+
+  /// Bulk action: lock devices
+  ///
+  /// In en, this message translates to:
+  /// **'Lock Devices'**
+  String get bulkActionLock;
+
+  /// Description for bulk lock action
+  ///
+  /// In en, this message translates to:
+  /// **'Lock all selected devices remotely'**
+  String get bulkActionLockDescription;
+
+  /// Bulk action: restart devices
+  ///
+  /// In en, this message translates to:
+  /// **'Restart Devices'**
+  String get bulkActionRestart;
+
+  /// Description for bulk restart action
+  ///
+  /// In en, this message translates to:
+  /// **'Restart all selected devices'**
+  String get bulkActionRestartDescription;
+
+  /// Confirmation message for bulk restart
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to restart {count} devices?'**
+  String bulkRestartConfirmMessage(int count);
+
+  /// Snackbar message when all bulk actions succeed
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully completed action on {count} devices.'**
+  String bulkActionSuccess(int count);
+
+  /// Snackbar message when some bulk actions fail
+  ///
+  /// In en, this message translates to:
+  /// **'Completed on {success} devices, {failed} failed.'**
+  String bulkActionPartialSuccess(int success, int failed);
+
+  /// Progress label during bulk operation
+  ///
+  /// In en, this message translates to:
+  /// **'{completed} of {total} completed'**
+  String bulkProgressStatus(int completed, int total);
+
+  /// Biometric prompt reason for bulk actions
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to perform bulk action'**
+  String get biometricReasonBulkAction;
+
+  /// Label for lock PIN field in bulk lock dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Lock PIN (optional)'**
+  String get lockPin;
+
+  /// Empty state when no tags exist for picker
+  ///
+  /// In en, this message translates to:
+  /// **'No tags available. Create tags in the Kandji console.'**
+  String get noTagsAvailable;
+
+  /// Empty state when no blueprints exist for picker
+  ///
+  /// In en, this message translates to:
+  /// **'No blueprints available.'**
+  String get noBlueprintsAvailable;
+
+  /// Placeholder shown in detail pane when no device is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Select a device'**
+  String get selectADevice;
+
+  /// Placeholder shown in detail pane when no blueprint is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Select a blueprint'**
+  String get selectABlueprint;
+
+  /// No description provided for @clearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get clearSearch;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @moreActions.
+  ///
+  /// In en, this message translates to:
+  /// **'More actions'**
+  String get moreActions;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// Button to skip onboarding
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// Button to go to next onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// Button to finish onboarding and go to profile setup
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get onboardingGetStarted;
+
+  /// Title on the first onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to FleetPilot'**
+  String get onboardingWelcomeTitle;
+
+  /// Subtitle on the first onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Your mobile command center for Apple device fleet management. Monitor, manage, and secure your entire fleet from anywhere.'**
+  String get onboardingWelcomeSubtitle;
+
+  /// Title on the device management onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Device Management'**
+  String get onboardingDevicesTitle;
+
+  /// Subtitle on the device management onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Full visibility and control over every device in your fleet.'**
+  String get onboardingDevicesSubtitle;
+
+  /// First device management feature
+  ///
+  /// In en, this message translates to:
+  /// **'View all enrolled iPhones, iPads, Macs, and Apple TVs'**
+  String get onboardingDevicesFeature1;
+
+  /// Second device management feature
+  ///
+  /// In en, this message translates to:
+  /// **'Send remote commands: lock, restart, erase, and more'**
+  String get onboardingDevicesFeature2;
+
+  /// Third device management feature
+  ///
+  /// In en, this message translates to:
+  /// **'Track blueprints, apps, and compliance status'**
+  String get onboardingDevicesFeature3;
+
+  /// Title on the security onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Built for Security'**
+  String get onboardingSecurityTitle;
+
+  /// Subtitle on the security onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Your fleet data stays protected with multiple layers of security.'**
+  String get onboardingSecuritySubtitle;
+
+  /// First security feature
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric authentication with Face ID or fingerprint'**
+  String get onboardingSecurityFeature1;
+
+  /// Second security feature
+  ///
+  /// In en, this message translates to:
+  /// **'6-digit PIN lock for app access'**
+  String get onboardingSecurityFeature2;
+
+  /// Third security feature
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic session lock after timeout'**
+  String get onboardingSecurityFeature3;
+
+  /// Title on the final onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Go'**
+  String get onboardingReadyTitle;
+
+  /// Subtitle on the final onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your Kandji tenant to start managing your Apple device fleet. You\'ll set up your API connection and security PIN next.'**
+  String get onboardingReadySubtitle;
 }
 
 class _AppLocalizationsDelegate

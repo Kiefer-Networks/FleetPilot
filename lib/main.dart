@@ -27,9 +27,16 @@ void main() async {
   final pinHash = await storage.read(key: StorageKeys.pinHash);
   final hasPinLock = pinHash != null && pinHash.isNotEmpty;
 
+  final onboarded = await storage.read(key: StorageKeys.onboardingCompleted);
+  final hasCompletedOnboarding = onboarded == 'true';
+
   runApp(
     ProviderScope(
-      child: FleetPilotApp(hasProfile: hasProfile, hasPinLock: hasPinLock),
+      child: FleetPilotApp(
+        hasProfile: hasProfile,
+        hasPinLock: hasPinLock,
+        hasCompletedOnboarding: hasCompletedOnboarding,
+      ),
     ),
   );
 }
@@ -43,10 +50,12 @@ class FleetPilotApp extends ConsumerStatefulWidget {
     super.key,
     required this.hasProfile,
     required this.hasPinLock,
+    required this.hasCompletedOnboarding,
   });
 
   final bool hasProfile;
   final bool hasPinLock;
+  final bool hasCompletedOnboarding;
 
   @override
   ConsumerState<FleetPilotApp> createState() => _FleetPilotAppState();
@@ -64,6 +73,7 @@ class _FleetPilotAppState extends ConsumerState<FleetPilotApp>
     _router = createRouter(
       hasProfile: widget.hasProfile,
       hasPinLock: widget.hasPinLock,
+      hasCompletedOnboarding: widget.hasCompletedOnboarding,
     );
   }
 

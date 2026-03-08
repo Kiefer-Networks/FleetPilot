@@ -21,19 +21,24 @@ import '../../presentation/pages/more/ade_integrations_page.dart';
 import '../../presentation/pages/more/behavioral_detections_page.dart';
 import '../../presentation/pages/more/vulnerabilities_page.dart';
 import '../../presentation/pages/more/vulnerability_detail_page.dart';
+import '../../presentation/pages/onboarding/onboarding_page.dart';
 import '../../presentation/pages/root_shell.dart';
 import '../../presentation/pages/settings/security_settings_page.dart';
 import '../../presentation/pages/settings/settings_page.dart';
 import '../../presentation/pages/users/user_detail_page.dart';
 import '../../presentation/pages/users/user_list_page.dart';
 
-/// Application router configuration using go_router.
-GoRouter createRouter({required bool hasProfile, required bool hasPinLock}) {
+GoRouter createRouter({
+  required bool hasProfile,
+  required bool hasPinLock,
+  required bool hasCompletedOnboarding,
+}) {
   final String initialLocation;
-  if (!hasProfile) {
+  if (!hasCompletedOnboarding) {
+    initialLocation = '/onboarding';
+  } else if (!hasProfile) {
     initialLocation = '/auth/setup';
   } else if (!hasPinLock) {
-    // Profile exists but no PIN — force PIN setup
     initialLocation = '/auth/pin-setup';
   } else {
     initialLocation = '/auth/biometric';
@@ -42,6 +47,11 @@ GoRouter createRouter({required bool hasProfile, required bool hasPinLock}) {
   return GoRouter(
     initialLocation: initialLocation,
     routes: [
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingPage(),
+      ),
+
       // Auth routes (no shell)
       GoRoute(
         path: '/auth/setup',

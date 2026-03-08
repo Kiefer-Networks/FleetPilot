@@ -35,4 +35,7 @@ abstract final class StorageKeys {
 
   /// Key for saved device filter presets (JSON array).
   static const String deviceFilterPresets = 'fleetpilot_device_filter_presets';
+
+  /// Key for whether the first-launch onboarding has been completed.
+  static const String onboardingCompleted = 'fleetpilot_onboarding_completed';
 }

@@ -1356,5 +1356,209 @@
   "presetNameRequired": "Please enter a preset name.",
   "@presetNameRequired": {
     "description": "Validation error when preset name is empty"
+  },
+  "selectedCount": "{count} selected",
+  "@selectedCount": {
+    "description": "Number of selected devices in selection mode",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectAll": "Select all",
+  "@selectAll": {
+    "description": "Tooltip for select all button"
+  },
+  "deselectAll": "Deselect all",
+  "@deselectAll": {
+    "description": "Tooltip for deselect all button"
+  },
+  "bulkActions": "Actions",
+  "@bulkActions": {
+    "description": "Label for bulk actions FAB"
+  },
+  "bulkActionsTitle": "Actions for {count} devices",
+  "@bulkActionsTitle": {
+    "description": "Title of bulk action bottom sheet",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bulkActionAssignTag": "Assign Tag",
+  "@bulkActionAssignTag": {
+    "description": "Bulk action: assign a tag"
+  },
+  "bulkActionAssignTagDescription": "Add a tag to all selected devices",
+  "@bulkActionAssignTagDescription": {
+    "description": "Description for bulk tag assignment"
+  },
+  "bulkActionAssignBlueprint": "Assign Blueprint",
+  "@bulkActionAssignBlueprint": {
+    "description": "Bulk action: assign a blueprint"
+  },
+  "bulkActionAssignBlueprintDescription": "Move selected devices to a blueprint",
+  "@bulkActionAssignBlueprintDescription": {
+    "description": "Description for bulk blueprint assignment"
+  },
+  "bulkActionLock": "Lock Devices",
+  "@bulkActionLock": {
+    "description": "Bulk action: lock devices"
+  },
+  "bulkActionLockDescription": "Lock all selected devices remotely",
+  "@bulkActionLockDescription": {
+    "description": "Description for bulk lock action"
+  },
+  "bulkActionRestart": "Restart Devices",
+  "@bulkActionRestart": {
+    "description": "Bulk action: restart devices"
+  },
+  "bulkActionRestartDescription": "Restart all selected devices",
+  "@bulkActionRestartDescription": {
+    "description": "Description for bulk restart action"
+  },
+  "bulkRestartConfirmMessage": "Are you sure you want to restart {count} devices?",
+  "@bulkRestartConfirmMessage": {
+    "description": "Confirmation message for bulk restart",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bulkActionSuccess": "Successfully completed action on {count} devices.",
+  "@bulkActionSuccess": {
+    "description": "Snackbar message when all bulk actions succeed",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bulkActionPartialSuccess": "Completed on {success} devices, {failed} failed.",
+  "@bulkActionPartialSuccess": {
+    "description": "Snackbar message when some bulk actions fail",
+    "placeholders": {
+      "success": {
+        "type": "int"
+      },
+      "failed": {
+        "type": "int"
+      }
+    }
+  },
+  "bulkProgressStatus": "{completed} of {total} completed",
+  "@bulkProgressStatus": {
+    "description": "Progress label during bulk operation",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "biometricReasonBulkAction": "Authenticate to perform bulk action",
+  "@biometricReasonBulkAction": {
+    "description": "Biometric prompt reason for bulk actions"
+  },
+  "lockPin": "Lock PIN (optional)",
+  "@lockPin": {
+    "description": "Label for lock PIN field in bulk lock dialog"
+  },
+  "lockMessage": "Lock message (optional)",
+  "@lockMessage": {
+    "description": "Label for lock message field in bulk lock dialog"
+  },
+  "noTagsAvailable": "No tags available. Create tags in the Kandji console.",
+  "@noTagsAvailable": {
+    "description": "Empty state when no tags exist for picker"
+  },
+  "noBlueprintsAvailable": "No blueprints available.",
+  "@noBlueprintsAvailable": {
+    "description": "Empty state when no blueprints exist for picker"
+  },
+  "selectADevice": "Select a device",
+  "@selectADevice": {
+    "description": "Placeholder shown in detail pane when no device is selected"
+  },
+  "selectABlueprint": "Select a blueprint",
+  "@selectABlueprint": {
+    "description": "Placeholder shown in detail pane when no blueprint is selected"
+  },
+  "clearSearch": "Clear search",
+  "refresh": "Refresh",
+  "moreActions": "More actions",
+  "close": "Close",
+  "onboardingSkip": "Skip",
+  "@onboardingSkip": {
+    "description": "Button to skip onboarding"
+  },
+  "onboardingNext": "Next",
+  "@onboardingNext": {
+    "description": "Button to go to next onboarding page"
+  },
+  "onboardingGetStarted": "Get Started",
+  "@onboardingGetStarted": {
+    "description": "Button to finish onboarding and go to profile setup"
+  },
+  "onboardingWelcomeTitle": "Welcome to FleetPilot",
+  "@onboardingWelcomeTitle": {
+    "description": "Title on the first onboarding page"
+  },
+  "onboardingWelcomeSubtitle": "Your mobile command center for Apple device fleet management. Monitor, manage, and secure your entire fleet from anywhere.",
+  "@onboardingWelcomeSubtitle": {
+    "description": "Subtitle on the first onboarding page"
+  },
+  "onboardingDevicesTitle": "Device Management",
+  "@onboardingDevicesTitle": {
+    "description": "Title on the device management onboarding page"
+  },
+  "onboardingDevicesSubtitle": "Full visibility and control over every device in your fleet.",
+  "@onboardingDevicesSubtitle": {
+    "description": "Subtitle on the device management onboarding page"
+  },
+  "onboardingDevicesFeature1": "View all enrolled iPhones, iPads, Macs, and Apple TVs",
+  "@onboardingDevicesFeature1": {
+    "description": "First device management feature"
+  },
+  "onboardingDevicesFeature2": "Send remote commands: lock, restart, erase, and more",
+  "@onboardingDevicesFeature2": {
+    "description": "Second device management feature"
+  },
+  "onboardingDevicesFeature3": "Track blueprints, apps, and compliance status",
+  "@onboardingDevicesFeature3": {
+    "description": "Third device management feature"
+  },
+  "onboardingSecurityTitle": "Built for Security",
+  "@onboardingSecurityTitle": {
+    "description": "Title on the security onboarding page"
+  },
+  "onboardingSecuritySubtitle": "Your fleet data stays protected with multiple layers of security.",
+  "@onboardingSecuritySubtitle": {
+    "description": "Subtitle on the security onboarding page"
+  },
+  "onboardingSecurityFeature1": "Biometric authentication with Face ID or fingerprint",
+  "@onboardingSecurityFeature1": {
+    "description": "First security feature"
+  },
+  "onboardingSecurityFeature2": "6-digit PIN lock for app access",
+  "@onboardingSecurityFeature2": {
+    "description": "Second security feature"
+  },
+  "onboardingSecurityFeature3": "Automatic session lock after timeout",
+  "@onboardingSecurityFeature3": {
+    "description": "Third security feature"
+  },
+  "onboardingReadyTitle": "Ready to Go",
+  "@onboardingReadyTitle": {
+    "description": "Title on the final onboarding page"
+  },
+  "onboardingReadySubtitle": "Connect your Kandji tenant to start managing your Apple device fleet. You'll set up your API connection and security PIN next.",
+  "@onboardingReadySubtitle": {
+    "description": "Subtitle on the final onboarding page"
   }
 }

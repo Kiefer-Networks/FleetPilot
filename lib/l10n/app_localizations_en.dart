@@ -737,7 +737,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eraseReturnToService => 'Return to service';
 
   @override
-  String get lockMessage => 'Lock Message';
+  String get lockMessage => 'Lock message (optional)';
 
   @override
   String get lockPhone => 'Phone Number';
@@ -1312,4 +1312,160 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get presetNameRequired => 'Please enter a preset name.';
+
+  @override
+  String selectedCount(int count) {
+    return '$count selected';
+  }
+
+  @override
+  String get selectAll => 'Select all';
+
+  @override
+  String get deselectAll => 'Deselect all';
+
+  @override
+  String get bulkActions => 'Actions';
+
+  @override
+  String bulkActionsTitle(int count) {
+    return 'Actions for $count devices';
+  }
+
+  @override
+  String get bulkActionAssignTag => 'Assign Tag';
+
+  @override
+  String get bulkActionAssignTagDescription =>
+      'Add a tag to all selected devices';
+
+  @override
+  String get bulkActionAssignBlueprint => 'Assign Blueprint';
+
+  @override
+  String get bulkActionAssignBlueprintDescription =>
+      'Move selected devices to a blueprint';
+
+  @override
+  String get bulkActionLock => 'Lock Devices';
+
+  @override
+  String get bulkActionLockDescription => 'Lock all selected devices remotely';
+
+  @override
+  String get bulkActionRestart => 'Restart Devices';
+
+  @override
+  String get bulkActionRestartDescription => 'Restart all selected devices';
+
+  @override
+  String bulkRestartConfirmMessage(int count) {
+    return 'Are you sure you want to restart $count devices?';
+  }
+
+  @override
+  String bulkActionSuccess(int count) {
+    return 'Successfully completed action on $count devices.';
+  }
+
+  @override
+  String bulkActionPartialSuccess(int success, int failed) {
+    return 'Completed on $success devices, $failed failed.';
+  }
+
+  @override
+  String bulkProgressStatus(int completed, int total) {
+    return '$completed of $total completed';
+  }
+
+  @override
+  String get biometricReasonBulkAction => 'Authenticate to perform bulk action';
+
+  @override
+  String get lockPin => 'Lock PIN (optional)';
+
+  @override
+  String get noTagsAvailable =>
+      'No tags available. Create tags in the Kandji console.';
+
+  @override
+  String get noBlueprintsAvailable => 'No blueprints available.';
+
+  @override
+  String get selectADevice => 'Select a device';
+
+  @override
+  String get selectABlueprint => 'Select a blueprint';
+
+  @override
+  String get clearSearch => 'Clear search';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get moreActions => 'More actions';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingGetStarted => 'Get Started';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to FleetPilot';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Your mobile command center for Apple device fleet management. Monitor, manage, and secure your entire fleet from anywhere.';
+
+  @override
+  String get onboardingDevicesTitle => 'Device Management';
+
+  @override
+  String get onboardingDevicesSubtitle =>
+      'Full visibility and control over every device in your fleet.';
+
+  @override
+  String get onboardingDevicesFeature1 =>
+      'View all enrolled iPhones, iPads, Macs, and Apple TVs';
+
+  @override
+  String get onboardingDevicesFeature2 =>
+      'Send remote commands: lock, restart, erase, and more';
+
+  @override
+  String get onboardingDevicesFeature3 =>
+      'Track blueprints, apps, and compliance status';
+
+  @override
+  String get onboardingSecurityTitle => 'Built for Security';
+
+  @override
+  String get onboardingSecuritySubtitle =>
+      'Your fleet data stays protected with multiple layers of security.';
+
+  @override
+  String get onboardingSecurityFeature1 =>
+      'Biometric authentication with Face ID or fingerprint';
+
+  @override
+  String get onboardingSecurityFeature2 => '6-digit PIN lock for app access';
+
+  @override
+  String get onboardingSecurityFeature3 =>
+      'Automatic session lock after timeout';
+
+  @override
+  String get onboardingReadyTitle => 'Ready to Go';
+
+  @override
+  String get onboardingReadySubtitle =>
+      'Connect your Kandji tenant to start managing your Apple device fleet. You\'ll set up your API connection and security PIN next.';
 }
