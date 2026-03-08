@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fleetpilot/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/library_item.dart';
 import '../../providers/blueprint_providers.dart';
@@ -141,52 +142,40 @@ class _LibraryItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final icon = _iconForType(item.type);
-    final color = _colorForType(item.type, colorScheme);
+
+    final id = item.id;
+    final name = item.name ?? 'Unknown';
 
     return ListTile(
       leading: Container(
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.12),
+          color: colorScheme.primary.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(icon, size: 18, color: color),
+        child: Icon(Icons.inventory_2, size: 18, color: colorScheme.primary),
       ),
       title: Text(
-        item.name ?? item.itemId ?? 'Unknown',
+        name,
         style: theme.textTheme.bodyMedium,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      subtitle: item.type != null
-          ? Text(
-              item.type!,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+      trailing: id != null
+          ? Icon(
+              Icons.chevron_right,
+              color: colorScheme.onSurfaceVariant,
+              size: 20,
             )
           : null,
       dense: true,
+      onTap: id != null
+          ? () => context.push(
+                '/more/library-items/$id?name=${Uri.encodeComponent(name)}',
+              )
+          : null,
     );
   }
 
-  IconData _iconForType(String? type) {
-    final t = type?.toLowerCase() ?? '';
-    if (t.contains('profile')) return Icons.tune;
-    if (t.contains('app')) return Icons.apps;
-    if (t.contains('script')) return Icons.code;
-    if (t.contains('media')) return Icons.perm_media;
-    return Icons.inventory_2;
-  }
-
-  Color _colorForType(String? type, ColorScheme cs) {
-    final t = type?.toLowerCase() ?? '';
-    if (t.contains('profile')) return cs.primary;
-    if (t.contains('app')) return cs.tertiary;
-    if (t.contains('script')) return Colors.orange;
-    if (t.contains('media')) return cs.secondary;
-    return cs.onSurfaceVariant;
-  }
 }

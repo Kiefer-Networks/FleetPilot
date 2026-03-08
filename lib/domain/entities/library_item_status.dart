@@ -7,14 +7,14 @@ part 'library_item_status.g.dart';
 @freezed
 abstract class LibraryItemStatus with _$LibraryItemStatus {
   const factory LibraryItemStatus({
-    @JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,
-    @JsonKey(name: 'device_name', readValue: _readDeviceName)
-    String? deviceName,
-    @JsonKey(name: 'serial_number', readValue: _readSerialNumber)
-    String? serialNumber,
+    @JsonKey(readValue: _readDeviceId) String? deviceId,
+    @JsonKey(readValue: _readDeviceName) String? deviceName,
     @JsonKey(readValue: _readStatus) String? status,
-    @JsonKey(name: 'last_run', readValue: _readLastRun) String? lastRun,
-    @JsonKey(name: 'completed_at') String? completedAt,
+    @JsonKey(name: 'reported_at') String? reportedAt,
+    @JsonKey(name: 'last_audit_run') String? lastAuditRun,
+    @JsonKey(name: 'last_audit_log') String? lastAuditLog,
+    String? log,
+    String? type,
   }) = _LibraryItemStatus;
 
   factory LibraryItemStatus.fromJson(Map<String, dynamic> json) =>
@@ -26,15 +26,14 @@ abstract class LibraryItemStatus with _$LibraryItemStatus {
 abstract class LibraryItemActivity with _$LibraryItemActivity {
   const factory LibraryItemActivity({
     @JsonKey(fromJson: _toNullableString) String? id,
-    @JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,
-    @JsonKey(name: 'device_name', readValue: _readDeviceName)
-    String? deviceName,
-    @JsonKey(name: 'serial_number', readValue: _readSerialNumber)
-    String? serialNumber,
+    @JsonKey(readValue: _readDeviceId) String? deviceId,
+    @JsonKey(readValue: _readDeviceName) String? deviceName,
     @JsonKey(readValue: _readAction) String? action,
     @JsonKey(readValue: _readStatus) String? status,
     @JsonKey(name: 'created_at', readValue: _readCreatedAt) String? createdAt,
     @JsonKey(fromJson: _toNullableString) String? details,
+    @JsonKey(name: 'user_email') String? userEmail,
+    @JsonKey(name: 'user_id') String? userId,
   }) = _LibraryItemActivity;
 
   factory LibraryItemActivity.fromJson(Map<String, dynamic> json) =>
@@ -43,30 +42,42 @@ abstract class LibraryItemActivity with _$LibraryItemActivity {
 
 String? _toNullableString(dynamic value) => value?.toString();
 
-/// Reads device_id with fallback keys.
-Object? _readDeviceId(Map<dynamic, dynamic> json, String key) =>
-    json['device_id'] ?? json['computer_id'] ?? json['id'];
+/// Reads device ID — handles nested {computer: {id}} and flat {device_id}.
+Object? _readDeviceId(Map<dynamic, dynamic> json, String key) {
+  final computer = json['computer'];
+  if (computer is Map) return computer['id']?.toString();
+  final val = json['device_id'] ?? json['computer_id'];
+  if (val != null) return val.toString();
+  final id = json['id'];
+  if (id is String) return id;
+  return null;
+}
 
-/// Reads device_name with fallback keys.
-Object? _readDeviceName(Map<dynamic, dynamic> json, String key) =>
-    json['device_name'] ?? json['computer_name'] ?? json['name'];
-
-/// Reads serial_number with fallback keys.
-Object? _readSerialNumber(Map<dynamic, dynamic> json, String key) =>
-    json['serial_number'] ?? json['serial'];
+/// Reads device name — handles nested {computer: {name}} and flat fields.
+Object? _readDeviceName(Map<dynamic, dynamic> json, String key) {
+  final computer = json['computer'];
+  if (computer is Map) return computer['name']?.toString();
+  return (json['device_name'] ?? json['computer_name'] ?? json['name'])
+      ?.toString();
+}
 
 /// Reads action with fallback keys.
 Object? _readAction(Map<dynamic, dynamic> json, String key) =>
-    json['action'] ?? json['action_type'] ?? json['event_type'] ?? json['type'];
+    (json['action'] ??
+            json['action_type'] ??
+            json['activity_type'] ??
+            json['event_type'] ??
+            json['type'])
+        ?.toString();
 
 /// Reads status with fallback keys.
 Object? _readStatus(Map<dynamic, dynamic> json, String key) =>
-    json['status'] ?? json['run_status'] ?? json['result'];
+    (json['status'] ?? json['run_status'] ?? json['result'])?.toString();
 
 /// Reads created_at with fallback keys.
 Object? _readCreatedAt(Map<dynamic, dynamic> json, String key) =>
-    json['created_at'] ?? json['timestamp'] ?? json['date'];
-
-/// Reads last_run with fallback keys.
-Object? _readLastRun(Map<dynamic, dynamic> json, String key) =>
-    json['last_run'] ?? json['last_execution'] ?? json['completed_at'];
+    (json['created_at'] ??
+            json['activity_time'] ??
+            json['timestamp'] ??
+            json['date'])
+        ?.toString();

@@ -30,166 +30,16 @@ class LibraryItemDetailPage extends ConsumerWidget {
           title: Text(itemName),
           bottom: TabBar(
             tabs: [
-              Tab(text: l10n.libraryItemActivity),
               Tab(text: l10n.libraryItemDeploymentStatus),
+              Tab(text: l10n.libraryItemActivity),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            _ActivityTab(itemId: itemId),
             _StatusTab(itemId: itemId),
+            _ActivityTab(itemId: itemId),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ActivityTab extends ConsumerWidget {
-  const _ActivityTab({required this.itemId});
-
-  final String itemId;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final activityAsync = ref.watch(libraryItemActivityProvider(itemId));
-
-    return activityAsync.when(
-      data: (activities) {
-        if (activities.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.history_outlined,
-                  size: 48,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  l10n.noActivityFound2,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-
-        return ListView.builder(
-          padding: const EdgeInsets.all(12),
-          itemCount: activities.length,
-          itemBuilder: (context, index) {
-            final activity = activities[index];
-            return _ActivityTile(activity: activity);
-          },
-        );
-      },
-      loading: () => const LoadingWidget(),
-      error: (error, _) => ErrorStateWidget(
-        failure: error,
-        onRetry: () => ref.invalidate(libraryItemActivityProvider(itemId)),
-      ),
-    );
-  }
-}
-
-class _ActivityTile extends StatelessWidget {
-  const _ActivityTile({required this.activity});
-
-  final LibraryItemActivity activity;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final hasTapTarget = activity.deviceId != null;
-    final displayName =
-        activity.deviceName ?? activity.serialNumber ?? 'Unknown';
-
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: hasTapTarget
-            ? () => context.push('/devices/${activity.deviceId}')
-            : null,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: colorScheme.secondaryContainer,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  Icons.play_arrow_outlined,
-                  color: colorScheme.onSecondaryContainer,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      activity.action ?? 'Unknown',
-                      style: theme.textTheme.bodyMedium,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      displayName,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (activity.serialNumber != null &&
-                        activity.deviceName != null) ...[
-                      const SizedBox(height: 2),
-                      Text(
-                        activity.serialNumber!,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                    if (activity.createdAt != null) ...[
-                      const SizedBox(height: 2),
-                      Text(
-                        _formatDateTime(activity.createdAt!),
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              if (activity.status != null)
-                _StatusBadge(status: activity.status!),
-              if (hasTapTarget) ...[
-                const SizedBox(width: 4),
-                Icon(
-                  Icons.chevron_right,
-                  color: colorScheme.onSurfaceVariant,
-                  size: 20,
-                ),
-              ],
-            ],
-          ),
         ),
       ),
     );
@@ -233,10 +83,8 @@ class _StatusTab extends ConsumerWidget {
         return ListView.builder(
           padding: const EdgeInsets.all(12),
           itemCount: statuses.length,
-          itemBuilder: (context, index) {
-            final status = statuses[index];
-            return _StatusTile(status: status);
-          },
+          itemBuilder: (context, index) =>
+              _StatusTile(status: statuses[index]),
         );
       },
       loading: () => const LoadingWidget(),
@@ -258,7 +106,10 @@ class _StatusTile extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final hasTapTarget = status.deviceId != null;
-    final displayName = status.deviceName ?? status.serialNumber ?? 'Unknown';
+    final displayName = status.deviceName ?? status.deviceId ?? 'Unknown';
+
+    // First non-empty line of the audit log as description.
+    final auditSummary = _firstLine(status.lastAuditLog);
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -294,11 +145,10 @@ class _StatusTile extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (status.serialNumber != null &&
-                        status.deviceName != null) ...[
+                    if (status.type != null) ...[
                       const SizedBox(height: 2),
                       Text(
-                        status.serialNumber!,
+                        _formatAction(status.type!),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -306,12 +156,23 @@ class _StatusTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
-                    if (status.lastRun != null) ...[
+                    if (auditSummary != null) ...[
                       const SizedBox(height: 2),
                       Text(
-                        _formatDateTime(status.lastRun!),
+                        auditSummary,
                         style: theme.textTheme.labelSmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                    if (status.reportedAt != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        _formatDateTime(status.reportedAt!),
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: colorScheme.outline,
                         ),
                       ),
                     ],
@@ -319,6 +180,143 @@ class _StatusTile extends StatelessWidget {
                 ),
               ),
               if (status.status != null) _StatusBadge(status: status.status!),
+              if (hasTapTarget) ...[
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.chevron_right,
+                  color: colorScheme.onSurfaceVariant,
+                  size: 20,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ActivityTab extends ConsumerWidget {
+  const _ActivityTab({required this.itemId});
+
+  final String itemId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final activityAsync = ref.watch(libraryItemActivityProvider(itemId));
+
+    return activityAsync.when(
+      data: (activities) {
+        if (activities.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.history_outlined,
+                  size: 48,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  l10n.noActivityFound2,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return ListView.builder(
+          padding: const EdgeInsets.all(12),
+          itemCount: activities.length,
+          itemBuilder: (context, index) =>
+              _ActivityTile(activity: activities[index]),
+        );
+      },
+      loading: () => const LoadingWidget(),
+      error: (error, _) => ErrorStateWidget(
+        failure: error,
+        onRetry: () => ref.invalidate(libraryItemActivityProvider(itemId)),
+      ),
+    );
+  }
+}
+
+class _ActivityTile extends StatelessWidget {
+  const _ActivityTile({required this.activity});
+
+  final LibraryItemActivity activity;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final hasTapTarget = activity.deviceId != null;
+    final displayName = activity.deviceName ??
+        activity.userEmail ??
+        'Unknown';
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: hasTapTarget
+            ? () => context.push('/devices/${activity.deviceId}')
+            : null,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.play_arrow_outlined,
+                  color: colorScheme.onSecondaryContainer,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _formatAction(activity.action ?? 'Unknown'),
+                      style: theme.textTheme.bodyMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      displayName,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (activity.createdAt != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        _formatDateTime(activity.createdAt!),
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: colorScheme.outline,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              if (activity.status != null)
+                _StatusBadge(status: activity.status!),
               if (hasTapTarget) ...[
                 const SizedBox(width: 4),
                 Icon(
@@ -386,6 +384,26 @@ class _StatusBadge extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Returns the first non-empty line of a multi-line string, or null.
+String? _firstLine(String? text) {
+  if (text == null || text.isEmpty) return null;
+  for (final line in text.split('\n')) {
+    final trimmed = line.trim();
+    if (trimmed.isNotEmpty) return trimmed;
+  }
+  return null;
+}
+
+/// Converts snake/kebab-case names to Title Case for display.
+String _formatAction(String action) {
+  return action
+      .replaceAll(RegExp(r'[_-]'), ' ')
+      .replaceAllMapped(
+        RegExp(r'(^|\s)\w'),
+        (m) => m.group(0)!.toUpperCase(),
+      );
 }
 
 String _formatDateTime(String dateStr) {

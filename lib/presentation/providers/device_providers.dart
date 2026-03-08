@@ -55,10 +55,12 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
     final platform = ref.watch(platformFilterProvider);
     final blueprintId = ref.watch(blueprintFilterProvider);
 
+    final repo = await ref.watch(deviceRepositoryProvider.future);
+
+    // Reset loading state after first await – Riverpod 3 forbids
+    // modifying other providers during the synchronous init phase.
     ref.read(devicesLoadingCountProvider.notifier).state = 0;
     ref.read(devicesFullyLoadedProvider.notifier).state = false;
-
-    final repo = await ref.watch(deviceRepositoryProvider.future);
 
     // Fetch the first page and return it immediately so the UI can render.
     final firstPage = await repo.getDevicesPage(

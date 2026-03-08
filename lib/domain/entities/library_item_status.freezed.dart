@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LibraryItemStatus {
 
-@JsonKey(name: 'device_id', readValue: _readDeviceId) String? get deviceId;@JsonKey(name: 'device_name', readValue: _readDeviceName) String? get deviceName;@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? get serialNumber;@JsonKey(readValue: _readStatus) String? get status;@JsonKey(name: 'last_run', readValue: _readLastRun) String? get lastRun;@JsonKey(name: 'completed_at') String? get completedAt;
+@JsonKey(readValue: _readDeviceId) String? get deviceId;@JsonKey(readValue: _readDeviceName) String? get deviceName;@JsonKey(readValue: _readStatus) String? get status;@JsonKey(name: 'reported_at') String? get reportedAt;@JsonKey(name: 'last_audit_run') String? get lastAuditRun;@JsonKey(name: 'last_audit_log') String? get lastAuditLog; String? get log; String? get type;
 /// Create a copy of LibraryItemStatus
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $LibraryItemStatusCopyWith<LibraryItemStatus> get copyWith => _$LibraryItemStatu
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemStatus&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.serialNumber, serialNumber) || other.serialNumber == serialNumber)&&(identical(other.status, status) || other.status == status)&&(identical(other.lastRun, lastRun) || other.lastRun == lastRun)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemStatus&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.status, status) || other.status == status)&&(identical(other.reportedAt, reportedAt) || other.reportedAt == reportedAt)&&(identical(other.lastAuditRun, lastAuditRun) || other.lastAuditRun == lastAuditRun)&&(identical(other.lastAuditLog, lastAuditLog) || other.lastAuditLog == lastAuditLog)&&(identical(other.log, log) || other.log == log)&&(identical(other.type, type) || other.type == type));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,deviceId,deviceName,serialNumber,status,lastRun,completedAt);
+int get hashCode => Object.hash(runtimeType,deviceId,deviceName,status,reportedAt,lastAuditRun,lastAuditLog,log,type);
 
 @override
 String toString() {
-  return 'LibraryItemStatus(deviceId: $deviceId, deviceName: $deviceName, serialNumber: $serialNumber, status: $status, lastRun: $lastRun, completedAt: $completedAt)';
+  return 'LibraryItemStatus(deviceId: $deviceId, deviceName: $deviceName, status: $status, reportedAt: $reportedAt, lastAuditRun: $lastAuditRun, lastAuditLog: $lastAuditLog, log: $log, type: $type)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $LibraryItemStatusCopyWith<$Res>  {
   factory $LibraryItemStatusCopyWith(LibraryItemStatus value, $Res Function(LibraryItemStatus) _then) = _$LibraryItemStatusCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? serialNumber,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'last_run', readValue: _readLastRun) String? lastRun,@JsonKey(name: 'completed_at') String? completedAt
+@JsonKey(readValue: _readDeviceId) String? deviceId,@JsonKey(readValue: _readDeviceName) String? deviceName,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'reported_at') String? reportedAt,@JsonKey(name: 'last_audit_run') String? lastAuditRun,@JsonKey(name: 'last_audit_log') String? lastAuditLog, String? log, String? type
 });
 
 
@@ -65,14 +65,16 @@ class _$LibraryItemStatusCopyWithImpl<$Res>
 
 /// Create a copy of LibraryItemStatus
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? deviceId = freezed,Object? deviceName = freezed,Object? serialNumber = freezed,Object? status = freezed,Object? lastRun = freezed,Object? completedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? deviceId = freezed,Object? deviceName = freezed,Object? status = freezed,Object? reportedAt = freezed,Object? lastAuditRun = freezed,Object? lastAuditLog = freezed,Object? log = freezed,Object? type = freezed,}) {
   return _then(_self.copyWith(
 deviceId: freezed == deviceId ? _self.deviceId : deviceId // ignore: cast_nullable_to_non_nullable
 as String?,deviceName: freezed == deviceName ? _self.deviceName : deviceName // ignore: cast_nullable_to_non_nullable
-as String?,serialNumber: freezed == serialNumber ? _self.serialNumber : serialNumber // ignore: cast_nullable_to_non_nullable
 as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String?,lastRun: freezed == lastRun ? _self.lastRun : lastRun // ignore: cast_nullable_to_non_nullable
-as String?,completedAt: freezed == completedAt ? _self.completedAt : completedAt // ignore: cast_nullable_to_non_nullable
+as String?,reportedAt: freezed == reportedAt ? _self.reportedAt : reportedAt // ignore: cast_nullable_to_non_nullable
+as String?,lastAuditRun: freezed == lastAuditRun ? _self.lastAuditRun : lastAuditRun // ignore: cast_nullable_to_non_nullable
+as String?,lastAuditLog: freezed == lastAuditLog ? _self.lastAuditLog : lastAuditLog // ignore: cast_nullable_to_non_nullable
+as String?,log: freezed == log ? _self.log : log // ignore: cast_nullable_to_non_nullable
+as String?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -158,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'last_run', readValue: _readLastRun)  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(readValue: _readDeviceId)  String? deviceId, @JsonKey(readValue: _readDeviceName)  String? deviceName, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'reported_at')  String? reportedAt, @JsonKey(name: 'last_audit_run')  String? lastAuditRun, @JsonKey(name: 'last_audit_log')  String? lastAuditLog,  String? log,  String? type)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LibraryItemStatus() when $default != null:
-return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,_that.lastRun,_that.completedAt);case _:
+return $default(_that.deviceId,_that.deviceName,_that.status,_that.reportedAt,_that.lastAuditRun,_that.lastAuditLog,_that.log,_that.type);case _:
   return orElse();
 
 }
@@ -179,10 +181,10 @@ return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'last_run', readValue: _readLastRun)  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(readValue: _readDeviceId)  String? deviceId, @JsonKey(readValue: _readDeviceName)  String? deviceName, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'reported_at')  String? reportedAt, @JsonKey(name: 'last_audit_run')  String? lastAuditRun, @JsonKey(name: 'last_audit_log')  String? lastAuditLog,  String? log,  String? type)  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemStatus():
-return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,_that.lastRun,_that.completedAt);case _:
+return $default(_that.deviceId,_that.deviceName,_that.status,_that.reportedAt,_that.lastAuditRun,_that.lastAuditLog,_that.log,_that.type);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +201,10 @@ return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'last_run', readValue: _readLastRun)  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(readValue: _readDeviceId)  String? deviceId, @JsonKey(readValue: _readDeviceName)  String? deviceName, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'reported_at')  String? reportedAt, @JsonKey(name: 'last_audit_run')  String? lastAuditRun, @JsonKey(name: 'last_audit_log')  String? lastAuditLog,  String? log,  String? type)?  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemStatus() when $default != null:
-return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,_that.lastRun,_that.completedAt);case _:
+return $default(_that.deviceId,_that.deviceName,_that.status,_that.reportedAt,_that.lastAuditRun,_that.lastAuditLog,_that.log,_that.type);case _:
   return null;
 
 }
@@ -214,15 +216,17 @@ return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,
 @JsonSerializable()
 
 class _LibraryItemStatus implements LibraryItemStatus {
-  const _LibraryItemStatus({@JsonKey(name: 'device_id', readValue: _readDeviceId) this.deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName) this.deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber) this.serialNumber, @JsonKey(readValue: _readStatus) this.status, @JsonKey(name: 'last_run', readValue: _readLastRun) this.lastRun, @JsonKey(name: 'completed_at') this.completedAt});
+  const _LibraryItemStatus({@JsonKey(readValue: _readDeviceId) this.deviceId, @JsonKey(readValue: _readDeviceName) this.deviceName, @JsonKey(readValue: _readStatus) this.status, @JsonKey(name: 'reported_at') this.reportedAt, @JsonKey(name: 'last_audit_run') this.lastAuditRun, @JsonKey(name: 'last_audit_log') this.lastAuditLog, this.log, this.type});
   factory _LibraryItemStatus.fromJson(Map<String, dynamic> json) => _$LibraryItemStatusFromJson(json);
 
-@override@JsonKey(name: 'device_id', readValue: _readDeviceId) final  String? deviceId;
-@override@JsonKey(name: 'device_name', readValue: _readDeviceName) final  String? deviceName;
-@override@JsonKey(name: 'serial_number', readValue: _readSerialNumber) final  String? serialNumber;
+@override@JsonKey(readValue: _readDeviceId) final  String? deviceId;
+@override@JsonKey(readValue: _readDeviceName) final  String? deviceName;
 @override@JsonKey(readValue: _readStatus) final  String? status;
-@override@JsonKey(name: 'last_run', readValue: _readLastRun) final  String? lastRun;
-@override@JsonKey(name: 'completed_at') final  String? completedAt;
+@override@JsonKey(name: 'reported_at') final  String? reportedAt;
+@override@JsonKey(name: 'last_audit_run') final  String? lastAuditRun;
+@override@JsonKey(name: 'last_audit_log') final  String? lastAuditLog;
+@override final  String? log;
+@override final  String? type;
 
 /// Create a copy of LibraryItemStatus
 /// with the given fields replaced by the non-null parameter values.
@@ -237,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItemStatus&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.serialNumber, serialNumber) || other.serialNumber == serialNumber)&&(identical(other.status, status) || other.status == status)&&(identical(other.lastRun, lastRun) || other.lastRun == lastRun)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItemStatus&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.status, status) || other.status == status)&&(identical(other.reportedAt, reportedAt) || other.reportedAt == reportedAt)&&(identical(other.lastAuditRun, lastAuditRun) || other.lastAuditRun == lastAuditRun)&&(identical(other.lastAuditLog, lastAuditLog) || other.lastAuditLog == lastAuditLog)&&(identical(other.log, log) || other.log == log)&&(identical(other.type, type) || other.type == type));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,deviceId,deviceName,serialNumber,status,lastRun,completedAt);
+int get hashCode => Object.hash(runtimeType,deviceId,deviceName,status,reportedAt,lastAuditRun,lastAuditLog,log,type);
 
 @override
 String toString() {
-  return 'LibraryItemStatus(deviceId: $deviceId, deviceName: $deviceName, serialNumber: $serialNumber, status: $status, lastRun: $lastRun, completedAt: $completedAt)';
+  return 'LibraryItemStatus(deviceId: $deviceId, deviceName: $deviceName, status: $status, reportedAt: $reportedAt, lastAuditRun: $lastAuditRun, lastAuditLog: $lastAuditLog, log: $log, type: $type)';
 }
 
 
@@ -257,7 +261,7 @@ abstract mixin class _$LibraryItemStatusCopyWith<$Res> implements $LibraryItemSt
   factory _$LibraryItemStatusCopyWith(_LibraryItemStatus value, $Res Function(_LibraryItemStatus) _then) = __$LibraryItemStatusCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? serialNumber,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'last_run', readValue: _readLastRun) String? lastRun,@JsonKey(name: 'completed_at') String? completedAt
+@JsonKey(readValue: _readDeviceId) String? deviceId,@JsonKey(readValue: _readDeviceName) String? deviceName,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'reported_at') String? reportedAt,@JsonKey(name: 'last_audit_run') String? lastAuditRun,@JsonKey(name: 'last_audit_log') String? lastAuditLog, String? log, String? type
 });
 
 
@@ -274,14 +278,16 @@ class __$LibraryItemStatusCopyWithImpl<$Res>
 
 /// Create a copy of LibraryItemStatus
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? deviceId = freezed,Object? deviceName = freezed,Object? serialNumber = freezed,Object? status = freezed,Object? lastRun = freezed,Object? completedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? deviceId = freezed,Object? deviceName = freezed,Object? status = freezed,Object? reportedAt = freezed,Object? lastAuditRun = freezed,Object? lastAuditLog = freezed,Object? log = freezed,Object? type = freezed,}) {
   return _then(_LibraryItemStatus(
 deviceId: freezed == deviceId ? _self.deviceId : deviceId // ignore: cast_nullable_to_non_nullable
 as String?,deviceName: freezed == deviceName ? _self.deviceName : deviceName // ignore: cast_nullable_to_non_nullable
-as String?,serialNumber: freezed == serialNumber ? _self.serialNumber : serialNumber // ignore: cast_nullable_to_non_nullable
 as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String?,lastRun: freezed == lastRun ? _self.lastRun : lastRun // ignore: cast_nullable_to_non_nullable
-as String?,completedAt: freezed == completedAt ? _self.completedAt : completedAt // ignore: cast_nullable_to_non_nullable
+as String?,reportedAt: freezed == reportedAt ? _self.reportedAt : reportedAt // ignore: cast_nullable_to_non_nullable
+as String?,lastAuditRun: freezed == lastAuditRun ? _self.lastAuditRun : lastAuditRun // ignore: cast_nullable_to_non_nullable
+as String?,lastAuditLog: freezed == lastAuditLog ? _self.lastAuditLog : lastAuditLog // ignore: cast_nullable_to_non_nullable
+as String?,log: freezed == log ? _self.log : log // ignore: cast_nullable_to_non_nullable
+as String?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -293,7 +299,7 @@ as String?,
 /// @nodoc
 mixin _$LibraryItemActivity {
 
-@JsonKey(fromJson: _toNullableString) String? get id;@JsonKey(name: 'device_id', readValue: _readDeviceId) String? get deviceId;@JsonKey(name: 'device_name', readValue: _readDeviceName) String? get deviceName;@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? get serialNumber;@JsonKey(readValue: _readAction) String? get action;@JsonKey(readValue: _readStatus) String? get status;@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? get createdAt;@JsonKey(fromJson: _toNullableString) String? get details;
+@JsonKey(fromJson: _toNullableString) String? get id;@JsonKey(readValue: _readDeviceId) String? get deviceId;@JsonKey(readValue: _readDeviceName) String? get deviceName;@JsonKey(readValue: _readAction) String? get action;@JsonKey(readValue: _readStatus) String? get status;@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? get createdAt;@JsonKey(fromJson: _toNullableString) String? get details;@JsonKey(name: 'user_email') String? get userEmail;@JsonKey(name: 'user_id') String? get userId;
 /// Create a copy of LibraryItemActivity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -306,16 +312,16 @@ $LibraryItemActivityCopyWith<LibraryItemActivity> get copyWith => _$LibraryItemA
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemActivity&&(identical(other.id, id) || other.id == id)&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.serialNumber, serialNumber) || other.serialNumber == serialNumber)&&(identical(other.action, action) || other.action == action)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.details, details) || other.details == details));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemActivity&&(identical(other.id, id) || other.id == id)&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.action, action) || other.action == action)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.details, details) || other.details == details)&&(identical(other.userEmail, userEmail) || other.userEmail == userEmail)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deviceId,deviceName,serialNumber,action,status,createdAt,details);
+int get hashCode => Object.hash(runtimeType,id,deviceId,deviceName,action,status,createdAt,details,userEmail,userId);
 
 @override
 String toString() {
-  return 'LibraryItemActivity(id: $id, deviceId: $deviceId, deviceName: $deviceName, serialNumber: $serialNumber, action: $action, status: $status, createdAt: $createdAt, details: $details)';
+  return 'LibraryItemActivity(id: $id, deviceId: $deviceId, deviceName: $deviceName, action: $action, status: $status, createdAt: $createdAt, details: $details, userEmail: $userEmail, userId: $userId)';
 }
 
 
@@ -326,7 +332,7 @@ abstract mixin class $LibraryItemActivityCopyWith<$Res>  {
   factory $LibraryItemActivityCopyWith(LibraryItemActivity value, $Res Function(LibraryItemActivity) _then) = _$LibraryItemActivityCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? serialNumber,@JsonKey(readValue: _readAction) String? action,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? createdAt,@JsonKey(fromJson: _toNullableString) String? details
+@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(readValue: _readDeviceId) String? deviceId,@JsonKey(readValue: _readDeviceName) String? deviceName,@JsonKey(readValue: _readAction) String? action,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? createdAt,@JsonKey(fromJson: _toNullableString) String? details,@JsonKey(name: 'user_email') String? userEmail,@JsonKey(name: 'user_id') String? userId
 });
 
 
@@ -343,16 +349,17 @@ class _$LibraryItemActivityCopyWithImpl<$Res>
 
 /// Create a copy of LibraryItemActivity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? deviceId = freezed,Object? deviceName = freezed,Object? serialNumber = freezed,Object? action = freezed,Object? status = freezed,Object? createdAt = freezed,Object? details = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? deviceId = freezed,Object? deviceName = freezed,Object? action = freezed,Object? status = freezed,Object? createdAt = freezed,Object? details = freezed,Object? userEmail = freezed,Object? userId = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,deviceId: freezed == deviceId ? _self.deviceId : deviceId // ignore: cast_nullable_to_non_nullable
 as String?,deviceName: freezed == deviceName ? _self.deviceName : deviceName // ignore: cast_nullable_to_non_nullable
-as String?,serialNumber: freezed == serialNumber ? _self.serialNumber : serialNumber // ignore: cast_nullable_to_non_nullable
 as String?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String?,details: freezed == details ? _self.details : details // ignore: cast_nullable_to_non_nullable
+as String?,userEmail: freezed == userEmail ? _self.userEmail : userEmail // ignore: cast_nullable_to_non_nullable
+as String?,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -438,10 +445,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(readValue: _readDeviceId)  String? deviceId, @JsonKey(readValue: _readDeviceName)  String? deviceName, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details, @JsonKey(name: 'user_email')  String? userEmail, @JsonKey(name: 'user_id')  String? userId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LibraryItemActivity() when $default != null:
-return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_that.action,_that.status,_that.createdAt,_that.details);case _:
+return $default(_that.id,_that.deviceId,_that.deviceName,_that.action,_that.status,_that.createdAt,_that.details,_that.userEmail,_that.userId);case _:
   return orElse();
 
 }
@@ -459,10 +466,10 @@ return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(readValue: _readDeviceId)  String? deviceId, @JsonKey(readValue: _readDeviceName)  String? deviceName, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details, @JsonKey(name: 'user_email')  String? userEmail, @JsonKey(name: 'user_id')  String? userId)  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemActivity():
-return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_that.action,_that.status,_that.createdAt,_that.details);case _:
+return $default(_that.id,_that.deviceId,_that.deviceName,_that.action,_that.status,_that.createdAt,_that.details,_that.userEmail,_that.userId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -479,10 +486,10 @@ return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(readValue: _readDeviceId)  String? deviceId, @JsonKey(readValue: _readDeviceName)  String? deviceName, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details, @JsonKey(name: 'user_email')  String? userEmail, @JsonKey(name: 'user_id')  String? userId)?  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemActivity() when $default != null:
-return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_that.action,_that.status,_that.createdAt,_that.details);case _:
+return $default(_that.id,_that.deviceId,_that.deviceName,_that.action,_that.status,_that.createdAt,_that.details,_that.userEmail,_that.userId);case _:
   return null;
 
 }
@@ -494,17 +501,18 @@ return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_tha
 @JsonSerializable()
 
 class _LibraryItemActivity implements LibraryItemActivity {
-  const _LibraryItemActivity({@JsonKey(fromJson: _toNullableString) this.id, @JsonKey(name: 'device_id', readValue: _readDeviceId) this.deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName) this.deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber) this.serialNumber, @JsonKey(readValue: _readAction) this.action, @JsonKey(readValue: _readStatus) this.status, @JsonKey(name: 'created_at', readValue: _readCreatedAt) this.createdAt, @JsonKey(fromJson: _toNullableString) this.details});
+  const _LibraryItemActivity({@JsonKey(fromJson: _toNullableString) this.id, @JsonKey(readValue: _readDeviceId) this.deviceId, @JsonKey(readValue: _readDeviceName) this.deviceName, @JsonKey(readValue: _readAction) this.action, @JsonKey(readValue: _readStatus) this.status, @JsonKey(name: 'created_at', readValue: _readCreatedAt) this.createdAt, @JsonKey(fromJson: _toNullableString) this.details, @JsonKey(name: 'user_email') this.userEmail, @JsonKey(name: 'user_id') this.userId});
   factory _LibraryItemActivity.fromJson(Map<String, dynamic> json) => _$LibraryItemActivityFromJson(json);
 
 @override@JsonKey(fromJson: _toNullableString) final  String? id;
-@override@JsonKey(name: 'device_id', readValue: _readDeviceId) final  String? deviceId;
-@override@JsonKey(name: 'device_name', readValue: _readDeviceName) final  String? deviceName;
-@override@JsonKey(name: 'serial_number', readValue: _readSerialNumber) final  String? serialNumber;
+@override@JsonKey(readValue: _readDeviceId) final  String? deviceId;
+@override@JsonKey(readValue: _readDeviceName) final  String? deviceName;
 @override@JsonKey(readValue: _readAction) final  String? action;
 @override@JsonKey(readValue: _readStatus) final  String? status;
 @override@JsonKey(name: 'created_at', readValue: _readCreatedAt) final  String? createdAt;
 @override@JsonKey(fromJson: _toNullableString) final  String? details;
+@override@JsonKey(name: 'user_email') final  String? userEmail;
+@override@JsonKey(name: 'user_id') final  String? userId;
 
 /// Create a copy of LibraryItemActivity
 /// with the given fields replaced by the non-null parameter values.
@@ -519,16 +527,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItemActivity&&(identical(other.id, id) || other.id == id)&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.serialNumber, serialNumber) || other.serialNumber == serialNumber)&&(identical(other.action, action) || other.action == action)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.details, details) || other.details == details));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItemActivity&&(identical(other.id, id) || other.id == id)&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.action, action) || other.action == action)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.details, details) || other.details == details)&&(identical(other.userEmail, userEmail) || other.userEmail == userEmail)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,deviceId,deviceName,serialNumber,action,status,createdAt,details);
+int get hashCode => Object.hash(runtimeType,id,deviceId,deviceName,action,status,createdAt,details,userEmail,userId);
 
 @override
 String toString() {
-  return 'LibraryItemActivity(id: $id, deviceId: $deviceId, deviceName: $deviceName, serialNumber: $serialNumber, action: $action, status: $status, createdAt: $createdAt, details: $details)';
+  return 'LibraryItemActivity(id: $id, deviceId: $deviceId, deviceName: $deviceName, action: $action, status: $status, createdAt: $createdAt, details: $details, userEmail: $userEmail, userId: $userId)';
 }
 
 
@@ -539,7 +547,7 @@ abstract mixin class _$LibraryItemActivityCopyWith<$Res> implements $LibraryItem
   factory _$LibraryItemActivityCopyWith(_LibraryItemActivity value, $Res Function(_LibraryItemActivity) _then) = __$LibraryItemActivityCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? serialNumber,@JsonKey(readValue: _readAction) String? action,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? createdAt,@JsonKey(fromJson: _toNullableString) String? details
+@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(readValue: _readDeviceId) String? deviceId,@JsonKey(readValue: _readDeviceName) String? deviceName,@JsonKey(readValue: _readAction) String? action,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? createdAt,@JsonKey(fromJson: _toNullableString) String? details,@JsonKey(name: 'user_email') String? userEmail,@JsonKey(name: 'user_id') String? userId
 });
 
 
@@ -556,16 +564,17 @@ class __$LibraryItemActivityCopyWithImpl<$Res>
 
 /// Create a copy of LibraryItemActivity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? deviceId = freezed,Object? deviceName = freezed,Object? serialNumber = freezed,Object? action = freezed,Object? status = freezed,Object? createdAt = freezed,Object? details = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? deviceId = freezed,Object? deviceName = freezed,Object? action = freezed,Object? status = freezed,Object? createdAt = freezed,Object? details = freezed,Object? userEmail = freezed,Object? userId = freezed,}) {
   return _then(_LibraryItemActivity(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,deviceId: freezed == deviceId ? _self.deviceId : deviceId // ignore: cast_nullable_to_non_nullable
 as String?,deviceName: freezed == deviceName ? _self.deviceName : deviceName // ignore: cast_nullable_to_non_nullable
-as String?,serialNumber: freezed == serialNumber ? _self.serialNumber : serialNumber // ignore: cast_nullable_to_non_nullable
 as String?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String?,details: freezed == details ? _self.details : details // ignore: cast_nullable_to_non_nullable
+as String?,userEmail: freezed == userEmail ? _self.userEmail : userEmail // ignore: cast_nullable_to_non_nullable
+as String?,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
