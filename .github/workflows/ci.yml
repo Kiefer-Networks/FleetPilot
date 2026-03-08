@@ -36,12 +36,13 @@ jobs:
 
       - name: Verify l10n completeness
         run: |
-          EN_KEYS=$(grep -oP '^\s*"(?!@@|@)(\w+)"' lib/l10n/app_en.arb | sort)
+          # Extract top-level translation keys (exclude @-metadata keys)
+          EN_KEYS=$(jq -r 'keys[] | select(startswith("@") | not)' lib/l10n/app_en.arb | sort -u)
           ERRORS=0
 
           for ARB in lib/l10n/app_de.arb lib/l10n/app_es.arb; do
             LOCALE=$(basename "$ARB" .arb | sed 's/app_//')
-            ARB_KEYS=$(grep -oP '^\s*"(?!@@|@)(\w+)"' "$ARB" | sort)
+            ARB_KEYS=$(jq -r 'keys[] | select(startswith("@") | not)' "$ARB" | sort -u)
 
             MISSING=$(comm -23 <(echo "$EN_KEYS") <(echo "$ARB_KEYS"))
             if [ -n "$MISSING" ]; then
