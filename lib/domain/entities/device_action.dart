@@ -22,7 +22,11 @@ enum DeviceAction {
   disableLostMode('disablelostmode'),
   playLostModeSound('playlostmodesound'),
   updateLocation('updatelocation'),
-  clearPasscode('clearpasscode');
+  clearPasscode('clearpasscode'),
+  resetWorkProfilePasscode('resetworkprofilepasscode'),
+  refreshCellularPlans('refreshcellularplans'),
+  togglePersonalHotspot('togglepersonalhotspot'),
+  toggleDataRoaming('toggledataroaming');
 
   const DeviceAction(this.apiPath);
 
@@ -52,7 +56,11 @@ enum DeviceAction {
     DeviceAction.disableLostMode ||
     DeviceAction.playLostModeSound ||
     DeviceAction.updateLocation ||
-    DeviceAction.clearPasscode => true,
+    DeviceAction.clearPasscode ||
+    DeviceAction.resetWorkProfilePasscode ||
+    DeviceAction.refreshCellularPlans ||
+    DeviceAction.togglePersonalHotspot ||
+    DeviceAction.toggleDataRoaming => true,
     _ => false,
   };
 }

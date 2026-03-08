@@ -35,11 +35,13 @@ class DeviceRepositoryImpl implements DeviceRepository {
     required int offset,
     String? platform,
     String? blueprintId,
+    String? ordering,
   }) {
     return api.getDevicesPage(
       offset: offset,
       platform: platform,
       blueprintId: blueprintId,
+      ordering: ordering,
     );
   }
 

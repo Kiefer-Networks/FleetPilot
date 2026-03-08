@@ -26,6 +26,7 @@ class DeviceApi {
     required int offset,
     String? platform,
     String? blueprintId,
+    String? ordering,
   }) async {
     try {
       final queryParams = <String, dynamic>{
@@ -34,6 +35,7 @@ class DeviceApi {
       };
       if (platform != null) queryParams['platform'] = platform;
       if (blueprintId != null) queryParams['blueprint_id'] = blueprintId;
+      if (ordering != null) queryParams['ordering'] = ordering;
 
       final response = await dio.get<dynamic>(
         '/devices',
@@ -60,6 +62,7 @@ class DeviceApi {
   Future<List<Device>> getAllDevices({
     String? platform,
     String? blueprintId,
+    String? ordering,
     void Function(int loadedCount)? onPageLoaded,
   }) async {
     final allDevices = <Device>[];
@@ -70,6 +73,7 @@ class DeviceApi {
         offset: offset,
         platform: platform,
         blueprintId: blueprintId,
+        ordering: ordering,
       );
       allDevices.addAll(page);
       onPageLoaded?.call(allDevices.length);

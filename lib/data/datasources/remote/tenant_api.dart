@@ -21,12 +21,22 @@ class TenantApi {
   /// Fetches threat details from the tenant.
   Future<List<Threat>> getThreats({
     int? dateRange,
+    String? classification,
+    String? status,
+    String? deviceId,
+    String? sortBy,
+    String? term,
     int limit = 300,
     int offset = 0,
   }) async {
     try {
       final queryParams = <String, dynamic>{'limit': limit, 'offset': offset};
       if (dateRange != null) queryParams['date_range'] = dateRange.toString();
+      if (classification != null) queryParams['classification'] = classification;
+      if (status != null) queryParams['status'] = status;
+      if (deviceId != null) queryParams['device_id'] = deviceId;
+      if (sortBy != null) queryParams['sort_by'] = sortBy;
+      if (term != null) queryParams['term'] = term;
 
       final response = await dio.get<dynamic>(
         '/threat-details',
@@ -239,13 +249,26 @@ class TenantApi {
 
   /// Fetches behavioral detections.
   Future<List<BehavioralDetection>> getBehavioralDetections({
+    String? classification,
+    String? status,
+    String? dateRange,
+    String? deviceId,
+    String? sortBy,
+    String? term,
     int limit = 300,
     int offset = 0,
   }) async {
     try {
+      final queryParams = <String, dynamic>{'limit': limit, 'offset': offset};
+      if (classification != null) queryParams['classification'] = classification;
+      if (status != null) queryParams['status'] = status;
+      if (dateRange != null) queryParams['date_range'] = dateRange;
+      if (deviceId != null) queryParams['device_id'] = deviceId;
+      if (sortBy != null) queryParams['sort_by'] = sortBy;
+      if (term != null) queryParams['term'] = term;
       final response = await dio.get<dynamic>(
         '/behavioral-detections',
-        queryParameters: {'limit': limit, 'offset': offset},
+        queryParameters: queryParams,
       );
       return _extractListItems(
         response.data,

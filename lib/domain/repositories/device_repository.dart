@@ -29,6 +29,7 @@ abstract interface class DeviceRepository {
     required int offset,
     String? platform,
     String? blueprintId,
+    String? ordering,
   });
 
   /// Fetches a single device by [deviceId].

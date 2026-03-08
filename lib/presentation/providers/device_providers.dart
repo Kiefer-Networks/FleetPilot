@@ -54,6 +54,8 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
   Future<List<Device>> build() async {
     final platform = ref.watch(platformFilterProvider);
     final blueprintId = ref.watch(blueprintFilterProvider);
+    final sortAsc = ref.watch(deviceSortAscProvider);
+    final ordering = sortAsc ? 'device_name' : '-device_name';
 
     final repo = await ref.watch(deviceRepositoryProvider.future);
 
@@ -67,6 +69,7 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
       offset: 0,
       platform: platform,
       blueprintId: blueprintId,
+      ordering: ordering,
     );
 
     ref.read(devicesLoadingCountProvider.notifier).state = firstPage.length;
@@ -81,6 +84,7 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
     _fetchRemainingPages(
       platform: platform,
       blueprintId: blueprintId,
+      ordering: ordering,
       initialDevices: firstPage,
     );
 
@@ -92,6 +96,7 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
   Future<void> _fetchRemainingPages({
     String? platform,
     String? blueprintId,
+    String? ordering,
     required List<Device> initialDevices,
   }) async {
     final repo = await ref.read(deviceRepositoryProvider.future);
@@ -104,6 +109,7 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
           offset: offset,
           platform: platform,
           blueprintId: blueprintId,
+          ordering: ordering,
         );
 
         allDevices.addAll(page);

@@ -210,11 +210,14 @@ class BlueprintApi {
 
   /// Fetches library item activity.
   Future<List<LibraryItemActivity>> getLibraryItemActivity(
-    String itemId,
-  ) async {
+    String itemId, {
+    int limit = 300,
+    int offset = 0,
+  }) async {
     try {
       final response = await dio.get<dynamic>(
         '/library/library-items/$itemId/activity',
+        queryParameters: {'limit': limit, 'offset': offset},
       );
       final data = response.data;
       List<dynamic> items;
@@ -248,10 +251,15 @@ class BlueprintApi {
   }
 
   /// Fetches library item deployment status per device.
-  Future<List<LibraryItemStatus>> getLibraryItemStatus(String itemId) async {
+  Future<List<LibraryItemStatus>> getLibraryItemStatus(
+    String itemId, {
+    int limit = 300,
+    int offset = 0,
+  }) async {
     try {
       final response = await dio.get<dynamic>(
         '/library/library-items/$itemId/status',
+        queryParameters: {'limit': limit, 'offset': offset},
       );
       final data = response.data;
       List<dynamic> items;
@@ -299,14 +307,28 @@ class BlueprintApi {
     await Future.wait(
       categories.entries.map((entry) async {
         try {
-          final response = await dio.get<dynamic>(entry.value);
-          final items = _extractItems(response.data);
-          for (final item in items) {
-            if (item is Map<String, dynamic>) {
-              final id = item['id']?.toString();
-              if (id != null) {
-                result[id] = {...item, '_category': entry.key};
+          var page = 1;
+          while (true) {
+            final response = await dio.get<dynamic>(
+              entry.value,
+              queryParameters: {'page': page},
+            );
+            final items = _extractItems(response.data);
+            if (items.isEmpty) break;
+            for (final item in items) {
+              if (item is Map<String, dynamic>) {
+                final id = item['id']?.toString();
+                if (id != null) {
+                  result[id] = {...item, '_category': entry.key};
+                }
               }
+            }
+            // Check if there are more pages.
+            final data = response.data;
+            if (data is Map<String, dynamic> && data['next'] != null) {
+              page++;
+            } else {
+              break;
             }
           }
         } on DioException {
