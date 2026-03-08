@@ -17,6 +17,8 @@ class LibraryItemsPage extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final blueprintsAsync = ref.watch(blueprintsProvider);
+    // Pre-fetch library item details for type detection.
+    ref.watch(allLibraryItemDetailsProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.libraryItems)),
@@ -78,6 +80,7 @@ class _BlueprintLibrarySection extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final itemsAsync = ref.watch(blueprintLibraryItemsProvider(blueprintId));
+    final detailsLookup = ref.watch(allLibraryItemDetailsProvider).value ?? {};
 
     return itemsAsync.when(
       data: (items) {
@@ -113,7 +116,10 @@ class _BlueprintLibrarySection extends ConsumerWidget {
               child: Column(
                 children: [
                   for (var i = 0; i < items.length; i++) ...[
-                    _LibraryItemTile(item: items[i]),
+                    _LibraryItemTile(
+                      item: items[i],
+                      details: detailsLookup[items[i].id],
+                    ),
                     if (i < items.length - 1)
                       Divider(
                         height: 1,
@@ -134,9 +140,10 @@ class _BlueprintLibrarySection extends ConsumerWidget {
 }
 
 class _LibraryItemTile extends StatelessWidget {
-  const _LibraryItemTile({required this.item});
+  const _LibraryItemTile({required this.item, this.details});
 
   final LibraryItem item;
+  final Map<String, dynamic>? details;
 
   @override
   Widget build(BuildContext context) {
@@ -145,16 +152,20 @@ class _LibraryItemTile extends StatelessWidget {
 
     final id = item.id;
     final name = item.name ?? 'Unknown';
+    final category = details?['_category'] as String?;
+    final icon = _iconForCategory(category);
+    final color = _colorForCategory(category, colorScheme);
+    final subtitle = _displayCategory(category);
 
     return ListTile(
       leading: Container(
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-          color: colorScheme.primary.withValues(alpha: 0.12),
+          color: color.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(Icons.inventory_2, size: 18, color: colorScheme.primary),
+        child: Icon(icon, size: 18, color: color),
       ),
       title: Text(
         name,
@@ -162,6 +173,14 @@ class _LibraryItemTile extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+            )
+          : null,
       trailing: id != null
           ? Icon(
               Icons.chevron_right,
@@ -178,4 +197,42 @@ class _LibraryItemTile extends StatelessWidget {
     );
   }
 
+  static IconData _iconForCategory(String? category) {
+    switch (category) {
+      case 'custom-script':
+        return Icons.code;
+      case 'custom-app':
+        return Icons.apps;
+      case 'custom-profile':
+        return Icons.tune;
+      default:
+        return Icons.inventory_2;
+    }
+  }
+
+  static Color _colorForCategory(String? category, ColorScheme cs) {
+    switch (category) {
+      case 'custom-script':
+        return Colors.orange;
+      case 'custom-app':
+        return cs.tertiary;
+      case 'custom-profile':
+        return cs.primary;
+      default:
+        return cs.onSurfaceVariant;
+    }
+  }
+
+  static String? _displayCategory(String? category) {
+    switch (category) {
+      case 'custom-script':
+        return 'Custom Script';
+      case 'custom-app':
+        return 'Custom App';
+      case 'custom-profile':
+        return 'Custom Profile';
+      default:
+        return null;
+    }
+  }
 }

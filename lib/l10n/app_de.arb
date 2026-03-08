@@ -478,5 +478,6 @@
   "vulnCount": "{count} Schwachstellen",
   "assignTags": "Tags",
   "noTagsAvailableMessage": "Keine Tags verfügbar. Erstellen Sie zuerst Tags.",
-  "failedToLoadTags": "Tags konnten nicht geladen werden"
+  "failedToLoadTags": "Tags konnten nicht geladen werden",
+  "details": "Details"
 }

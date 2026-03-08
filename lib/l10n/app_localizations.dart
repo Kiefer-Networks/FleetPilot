@@ -2937,6 +2937,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to load tags'**
   String get failedToLoadTags;
+
+  /// No description provided for @details.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get details;
 }
 
 class _AppLocalizationsDelegate

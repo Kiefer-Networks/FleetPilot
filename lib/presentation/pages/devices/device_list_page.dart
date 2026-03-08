@@ -817,7 +817,7 @@ class _DeviceFilterBottomSheet extends StatelessWidget {
 
     return DraggableScrollableSheet(
       expand: false,
-      initialChildSize: 0.55,
+      initialChildSize: 0.7,
       minChildSize: 0.3,
       maxChildSize: 0.85,
       builder: (context, scrollController) {

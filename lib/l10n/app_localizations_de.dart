@@ -1586,4 +1586,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get failedToLoadTags => 'Tags konnten nicht geladen werden';
+
+  @override
+  String get details => 'Details';
 }

@@ -284,6 +284,50 @@ class BlueprintApi {
     }
   }
 
+  /// Fetches all library items across all categories with their details.
+  /// Returns a map of item ID → raw JSON data including a 'category' key.
+  Future<Map<String, Map<String, dynamic>>> getAllLibraryItemDetails() async {
+    final result = <String, Map<String, dynamic>>{};
+
+    final categories = <String, String>{
+      'custom-script': '/library/custom-scripts',
+      'custom-app': '/library/custom-apps',
+      'custom-profile': '/library/custom-profiles',
+    };
+
+    await Future.wait(
+      categories.entries.map((entry) async {
+        try {
+          final response = await dio.get<dynamic>(entry.value);
+          final items = _extractItems(response.data);
+          for (final item in items) {
+            if (item is Map<String, dynamic>) {
+              final id = item['id']?.toString();
+              if (id != null) {
+                result[id] = {...item, '_category': entry.key};
+              }
+            }
+          }
+        } on DioException {
+          // Endpoint may not exist — skip silently.
+        }
+      }),
+    );
+
+    return result;
+  }
+
+  List<dynamic> _extractItems(dynamic data) {
+    if (data is List) return data;
+    if (data is Map<String, dynamic>) {
+      for (final key in ['results', 'data', 'items']) {
+        final list = data[key];
+        if (list is List) return list;
+      }
+    }
+    return [];
+  }
+
   /// Fetches a single blueprint by [id].
   Future<Blueprint> getBlueprint(String id) async {
     try {

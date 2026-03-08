@@ -75,6 +75,14 @@ final blueprintTemplatesProvider = FutureProvider<List<BlueprintTemplate>>((
   return repo.getBlueprintTemplates();
 });
 
+/// All library item details across all categories (scripts, apps, profiles).
+/// Returns a map of item ID → raw data with '_category' key.
+final allLibraryItemDetailsProvider =
+    FutureProvider<Map<String, Map<String, dynamic>>>((ref) async {
+      final api = await ref.watch(blueprintApiProvider.future);
+      return api.getAllLibraryItemDetails();
+    });
+
 /// Library item activity log.
 final libraryItemActivityProvider =
     FutureProvider.family<List<LibraryItemActivity>, String>((

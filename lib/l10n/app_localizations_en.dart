@@ -1567,4 +1567,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failedToLoadTags => 'Failed to load tags';
+
+  @override
+  String get details => 'Details';
 }

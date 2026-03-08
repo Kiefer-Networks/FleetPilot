@@ -1587,4 +1587,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get failedToLoadTags => 'No se pudieron cargar las etiquetas';
+
+  @override
+  String get details => 'Detalles';
 }

@@ -478,5 +478,6 @@
   "vulnCount": "{count} vulnerabilidades",
   "assignTags": "Etiquetas",
   "noTagsAvailableMessage": "No hay etiquetas disponibles. Cree etiquetas primero.",
-  "failedToLoadTags": "No se pudieron cargar las etiquetas"
+  "failedToLoadTags": "No se pudieron cargar las etiquetas",
+  "details": "Detalles"
 }

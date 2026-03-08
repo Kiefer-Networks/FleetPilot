@@ -8,7 +8,7 @@ import '../../providers/blueprint_providers.dart';
 import '../../widgets/common/error_state_widget.dart';
 import '../../widgets/common/loading_widget.dart';
 
-/// Detail page showing activity and deployment status for a single library item.
+/// Detail page showing info, deployment status, and activity for a library item.
 class LibraryItemDetailPage extends ConsumerWidget {
   const LibraryItemDetailPage({
     super.key,
@@ -22,14 +22,31 @@ class LibraryItemDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final details = ref.watch(allLibraryItemDetailsProvider).value ?? {};
+    final itemDetails = details[itemId];
+    final category = itemDetails?['_category'] as String?;
+    final subtitle = _displayCategory(category);
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(itemName),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(itemName),
+              if (subtitle != null)
+                Text(
+                  subtitle,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+            ],
+          ),
           bottom: TabBar(
             tabs: [
+              Tab(text: l10n.details),
               Tab(text: l10n.libraryItemDeploymentStatus),
               Tab(text: l10n.libraryItemActivity),
             ],
@@ -37,12 +54,218 @@ class LibraryItemDetailPage extends ConsumerWidget {
         ),
         body: TabBarView(
           children: [
+            _InfoTab(itemId: itemId, itemDetails: itemDetails),
             _StatusTab(itemId: itemId),
             _ActivityTab(itemId: itemId),
           ],
         ),
       ),
     );
+  }
+
+  static String? _displayCategory(String? category) {
+    switch (category) {
+      case 'custom-script':
+        return 'Custom Script';
+      case 'custom-app':
+        return 'Custom App';
+      case 'custom-profile':
+        return 'Custom Profile';
+      default:
+        return null;
+    }
+  }
+}
+
+/// Info tab showing library item details based on its category.
+class _InfoTab extends StatelessWidget {
+  const _InfoTab({required this.itemId, this.itemDetails});
+
+  final String itemId;
+  final Map<String, dynamic>? itemDetails;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    if (itemDetails == null) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.info_outline,
+              size: 48,
+              color: colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Built-in library item',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Details available on Status tab',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: colorScheme.outline,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    final category = itemDetails!['_category'] as String?;
+    final active = itemDetails!['active'];
+
+    // Common fields
+    final rows = <_InfoRow>[];
+    if (active != null) {
+      rows.add(_InfoRow(
+        label: 'Active',
+        value: active == true ? 'Yes' : 'No',
+      ));
+    }
+
+    // Category-specific fields
+    switch (category) {
+      case 'custom-script':
+        _addIfPresent(rows, 'Execution', itemDetails!['execution_frequency']);
+        _addIfPresent(rows, 'Restart', itemDetails!['restart']);
+        _addIfPresent(rows, 'Self Service', itemDetails!['show_in_self_service']);
+        break;
+      case 'custom-app':
+        _addIfPresent(rows, 'Install Type', itemDetails!['install_type']);
+        _addIfPresent(rows, 'Enforcement', itemDetails!['install_enforcement']);
+        _addIfPresent(rows, 'Self Service', itemDetails!['show_in_self_service']);
+        break;
+      case 'custom-profile':
+        _addIfPresent(rows, 'Runs on Mac', itemDetails!['runs_on_mac']);
+        _addIfPresent(rows, 'Runs on iPhone', itemDetails!['runs_on_iphone']);
+        _addIfPresent(rows, 'Runs on iPad', itemDetails!['runs_on_ipad']);
+        break;
+    }
+
+    _addIfPresent(rows, 'Created', itemDetails!['created_at']);
+    _addIfPresent(rows, 'Updated', itemDetails!['updated_at']);
+
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        // Properties card
+        if (rows.isNotEmpty) ...[
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(children: rows),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+
+        // Show all raw fields as a reference
+        _RawFieldsCard(data: itemDetails!, category: category),
+      ],
+    );
+  }
+
+  void _addIfPresent(List<_InfoRow> rows, String label, dynamic value) {
+    if (value == null) return;
+    String display;
+    if (value is bool) {
+      display = value ? 'Yes' : 'No';
+    } else if (value is String && value.contains('T') && value.contains('-')) {
+      display = _formatDateTime(value);
+    } else {
+      display = value.toString();
+    }
+    rows.add(_InfoRow(label: label, value: display));
+  }
+}
+
+/// Shows all fields from the API response grouped logically.
+class _RawFieldsCard extends StatelessWidget {
+  const _RawFieldsCard({required this.data, this.category});
+
+  final Map<String, dynamic> data;
+  final String? category;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    // Filter out internal/empty fields
+    final entries = data.entries.where((e) {
+      if (e.key.startsWith('_')) return false;
+      if (e.value == null) return false;
+      if (e.value is String && (e.value as String).isEmpty) return false;
+      if (e.key == 'id' || e.key == 'name' || e.key == 'active') return false;
+      if (e.key == 'created_at' || e.key == 'updated_at') return false;
+      return true;
+    }).toList();
+
+    if (entries.isEmpty) return const SizedBox.shrink();
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'All Properties',
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: colorScheme.primary,
+              ),
+            ),
+            const SizedBox(height: 12),
+            for (final entry in entries)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _formatKey(entry.key),
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      _formatValue(entry.value),
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _formatKey(String key) {
+    return key
+        .replaceAll('_', ' ')
+        .replaceAllMapped(
+          RegExp(r'(^|\s)\w'),
+          (m) => m.group(0)!.toUpperCase(),
+        );
+  }
+
+  String _formatValue(dynamic value) {
+    if (value is bool) return value ? 'Yes' : 'No';
+    if (value is Map || value is List) return value.toString();
+    final str = value.toString();
+    if (str.contains('T') && str.contains('-') && str.length > 15) {
+      return _formatDateTime(str);
+    }
+    return str;
   }
 }
 
@@ -107,8 +330,6 @@ class _StatusTile extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final hasTapTarget = status.deviceId != null;
     final displayName = status.deviceName ?? status.deviceId ?? 'Unknown';
-
-    // First non-empty line of the audit log as description.
     final auditSummary = _firstLine(status.lastAuditLog);
 
     return Card(
@@ -256,9 +477,7 @@ class _ActivityTile extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final hasTapTarget = activity.deviceId != null;
-    final displayName = activity.deviceName ??
-        activity.userEmail ??
-        'Unknown';
+    final displayName = activity.deviceName ?? activity.userEmail ?? 'Unknown';
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -333,6 +552,33 @@ class _ActivityTile extends StatelessWidget {
   }
 }
 
+class _InfoRow extends StatelessWidget {
+  const _InfoRow({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          Text(value, style: theme.textTheme.bodyMedium),
+        ],
+      ),
+    );
+  }
+}
+
 class _StatusBadge extends StatelessWidget {
   const _StatusBadge({required this.status});
 
@@ -386,7 +632,6 @@ class _StatusBadge extends StatelessWidget {
   }
 }
 
-/// Returns the first non-empty line of a multi-line string, or null.
 String? _firstLine(String? text) {
   if (text == null || text.isEmpty) return null;
   for (final line in text.split('\n')) {
@@ -396,7 +641,6 @@ String? _firstLine(String? text) {
   return null;
 }
 
-/// Converts snake/kebab-case names to Title Case for display.
 String _formatAction(String action) {
   return action
       .replaceAll(RegExp(r'[_-]'), ' ')
