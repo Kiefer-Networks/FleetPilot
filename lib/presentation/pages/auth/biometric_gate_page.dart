@@ -7,7 +7,7 @@ import '../../../core/utils/biometric_service.dart';
 import '../../providers/security_providers.dart';
 import '../../widgets/pin_num_pad.dart';
 
-/// App lock gate shown on app launch.
+/// App lock gate shown on app launch and after session timeout.
 ///
 /// If no PIN is set, navigates directly to /devices.
 /// If PIN is set + biometric enabled, attempts biometric first.
@@ -39,7 +39,7 @@ class _BiometricGatePageState extends ConsumerState<BiometricGatePage> {
   Future<void> _checkAndAuth() async {
     final pinEnabled = ref.read(pinEnabledProvider);
     if (!pinEnabled) {
-      if (mounted) context.go('/devices');
+      _unlockAndNavigate();
       return;
     }
 
@@ -66,7 +66,7 @@ class _BiometricGatePageState extends ConsumerState<BiometricGatePage> {
     if (!mounted) return;
 
     if (success) {
-      context.go('/devices');
+      _unlockAndNavigate();
     } else {
       setState(() {
         _isAuthenticating = false;
@@ -100,13 +100,19 @@ class _BiometricGatePageState extends ConsumerState<BiometricGatePage> {
     if (!mounted) return;
 
     if (valid) {
-      context.go('/devices');
+      _unlockAndNavigate();
     } else {
       setState(() {
         _pinError = AppLocalizations.of(context).securityPinWrong;
         _pin = '';
       });
     }
+  }
+
+  /// Unlocks the session (if it was locked by timeout) and navigates to /devices.
+  void _unlockAndNavigate() {
+    ref.read(sessionLockedProvider.notifier).unlock();
+    if (mounted) context.go('/devices');
   }
 
   @override

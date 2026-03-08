@@ -380,5 +380,12 @@
   "editProfileTitle": "Verbindung bearbeiten",
   "editProfileSubtitle": "Aktualisieren Sie Ihre Tenant-Verbindungseinstellungen.",
   "apiTokenHintEdit": "Leer lassen, um vorhandenes Token beizubehalten",
-  "profileSwitched": "Zu {name} gewechselt."
+  "profileSwitched": "Zu {name} gewechselt.",
+  "securityAutoLock": "Automatische Sperre",
+  "securityAutoLockDescription": "Authentifizierung automatisch erfordern, nachdem die App im Hintergrund war.",
+  "timeoutImmediately": "Sofort",
+  "timeoutSeconds30": "Nach 30 Sekunden",
+  "timeoutSeconds60": "Nach 1 Minute",
+  "timeoutSeconds120": "Nach 2 Minuten",
+  "timeoutMinutes5": "Nach 5 Minuten"
 }

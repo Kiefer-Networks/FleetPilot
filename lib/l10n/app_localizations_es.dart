@@ -1262,4 +1262,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String profileSwitched(String name) {
     return 'Cambiado a $name.';
   }
+
+  @override
+  String get securityAutoLock => 'Bloqueo automático';
+
+  @override
+  String get securityAutoLockDescription =>
+      'Requerir autenticación automáticamente después de que la app estuvo en segundo plano.';
+
+  @override
+  String get timeoutImmediately => 'Inmediatamente';
+
+  @override
+  String get timeoutSeconds30 => 'Después de 30 segundos';
+
+  @override
+  String get timeoutSeconds60 => 'Después de 1 minuto';
+
+  @override
+  String get timeoutSeconds120 => 'Después de 2 minutos';
+
+  @override
+  String get timeoutMinutes5 => 'Después de 5 minutos';
 }

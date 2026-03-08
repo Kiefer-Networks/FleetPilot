@@ -2373,6 +2373,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switched to {name}.'**
   String profileSwitched(String name);
+
+  /// Title for session auto-lock timeout setting
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-Lock'**
+  String get securityAutoLock;
+
+  /// Description for auto-lock feature
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically require authentication after the app has been in the background.'**
+  String get securityAutoLockDescription;
+
+  /// Lock timeout option: immediately on background
+  ///
+  /// In en, this message translates to:
+  /// **'Immediately'**
+  String get timeoutImmediately;
+
+  /// Lock timeout option: 30 seconds
+  ///
+  /// In en, this message translates to:
+  /// **'After 30 seconds'**
+  String get timeoutSeconds30;
+
+  /// Lock timeout option: 60 seconds
+  ///
+  /// In en, this message translates to:
+  /// **'After 1 minute'**
+  String get timeoutSeconds60;
+
+  /// Lock timeout option: 120 seconds
+  ///
+  /// In en, this message translates to:
+  /// **'After 2 minutes'**
+  String get timeoutSeconds120;
+
+  /// Lock timeout option: 5 minutes
+  ///
+  /// In en, this message translates to:
+  /// **'After 5 minutes'**
+  String get timeoutMinutes5;
 }
 
 class _AppLocalizationsDelegate

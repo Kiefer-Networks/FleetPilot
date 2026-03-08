@@ -1276,5 +1276,33 @@
         "type": "String"
       }
     }
+  },
+  "securityAutoLock": "Auto-Lock",
+  "@securityAutoLock": {
+    "description": "Title for session auto-lock timeout setting"
+  },
+  "securityAutoLockDescription": "Automatically require authentication after the app has been in the background.",
+  "@securityAutoLockDescription": {
+    "description": "Description for auto-lock feature"
+  },
+  "timeoutImmediately": "Immediately",
+  "@timeoutImmediately": {
+    "description": "Lock timeout option: immediately on background"
+  },
+  "timeoutSeconds30": "After 30 seconds",
+  "@timeoutSeconds30": {
+    "description": "Lock timeout option: 30 seconds"
+  },
+  "timeoutSeconds60": "After 1 minute",
+  "@timeoutSeconds60": {
+    "description": "Lock timeout option: 60 seconds"
+  },
+  "timeoutSeconds120": "After 2 minutes",
+  "@timeoutSeconds120": {
+    "description": "Lock timeout option: 120 seconds"
+  },
+  "timeoutMinutes5": "After 5 minutes",
+  "@timeoutMinutes5": {
+    "description": "Lock timeout option: 5 minutes"
   }
 }

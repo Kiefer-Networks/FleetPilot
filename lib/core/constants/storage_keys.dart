@@ -26,4 +26,10 @@ abstract final class StorageKeys {
 
   /// Key for biometric authentication enabled flag.
   static const String biometricEnabled = 'fleetpilot_biometric_enabled';
+
+  /// Key for session lock timeout in seconds.
+  static const String lockTimeoutSeconds = 'fleetpilot_lock_timeout';
+
+  /// Key for the timestamp when the app was last backgrounded (epoch ms).
+  static const String lastBackgroundedAt = 'fleetpilot_last_backgrounded';
 }

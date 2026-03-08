@@ -380,5 +380,12 @@
   "editProfileTitle": "Editar conexión",
   "editProfileSubtitle": "Actualiza la configuración de conexión de tu tenant.",
   "apiTokenHintEdit": "Dejar vacío para conservar el token actual",
-  "profileSwitched": "Cambiado a {name}."
+  "profileSwitched": "Cambiado a {name}.",
+  "securityAutoLock": "Bloqueo automático",
+  "securityAutoLockDescription": "Requerir autenticación automáticamente después de que la app estuvo en segundo plano.",
+  "timeoutImmediately": "Inmediatamente",
+  "timeoutSeconds30": "Después de 30 segundos",
+  "timeoutSeconds60": "Después de 1 minuto",
+  "timeoutSeconds120": "Después de 2 minutos",
+  "timeoutMinutes5": "Después de 5 minutos"
 }

@@ -81,3 +81,101 @@ class BiometricEnabledNotifier extends StateNotifier<bool> {
     state = enabled;
   }
 }
+
+/// Predefined lock timeout options in seconds.
+/// 0 means "immediately" (lock on every background/resume cycle).
+enum LockTimeout {
+  immediately(0),
+  seconds30(30),
+  seconds60(60),
+  seconds120(120),
+  minutes5(300);
+
+  const LockTimeout(this.seconds);
+  final int seconds;
+
+  static LockTimeout fromSeconds(int s) {
+    return LockTimeout.values.firstWhere(
+      (t) => t.seconds == s,
+      orElse: () => LockTimeout.seconds60,
+    );
+  }
+}
+
+/// The configured session lock timeout.
+final lockTimeoutProvider =
+    StateNotifierProvider<LockTimeoutNotifier, LockTimeout>((ref) {
+      return LockTimeoutNotifier();
+    });
+
+class LockTimeoutNotifier extends StateNotifier<LockTimeout> {
+  LockTimeoutNotifier() : super(LockTimeout.seconds60) {
+    _load();
+  }
+
+  Future<void> _load() async {
+    final value = await _storage.read(key: StorageKeys.lockTimeoutSeconds);
+    if (value != null) {
+      final seconds = int.tryParse(value);
+      if (seconds != null) {
+        state = LockTimeout.fromSeconds(seconds);
+      }
+    }
+  }
+
+  Future<void> setTimeout(LockTimeout timeout) async {
+    await _storage.write(
+      key: StorageKeys.lockTimeoutSeconds,
+      value: timeout.seconds.toString(),
+    );
+    state = timeout;
+  }
+}
+
+/// Tracks whether the session is currently locked and needs re-authentication.
+///
+/// Set to `true` when the app resumes after the configured timeout has elapsed.
+/// Set to `false` after the user successfully authenticates.
+final sessionLockedProvider =
+    StateNotifierProvider<SessionLockedNotifier, bool>((ref) {
+      return SessionLockedNotifier();
+    });
+
+class SessionLockedNotifier extends StateNotifier<bool> {
+  SessionLockedNotifier() : super(false);
+
+  void lock() => state = true;
+
+  void unlock() => state = false;
+}
+
+/// Records and checks the backgrounded timestamp.
+class SessionTimeoutService {
+  const SessionTimeoutService();
+
+  Future<void> recordBackground() async {
+    await _storage.write(
+      key: StorageKeys.lastBackgroundedAt,
+      value: DateTime.now().millisecondsSinceEpoch.toString(),
+    );
+  }
+
+  /// Returns `true` if the elapsed background time exceeds [timeoutSeconds].
+  /// A timeout of 0 means "immediately" — always returns `true`.
+  Future<bool> hasTimedOut(int timeoutSeconds) async {
+    if (timeoutSeconds == 0) return true;
+
+    final stored = await _storage.read(key: StorageKeys.lastBackgroundedAt);
+    if (stored == null) return false;
+
+    final backgroundedAt = int.tryParse(stored);
+    if (backgroundedAt == null) return false;
+
+    final elapsed = DateTime.now().millisecondsSinceEpoch - backgroundedAt;
+    return elapsed >= timeoutSeconds * 1000;
+  }
+
+  Future<void> clear() async {
+    await _storage.delete(key: StorageKeys.lastBackgroundedAt);
+  }
+}

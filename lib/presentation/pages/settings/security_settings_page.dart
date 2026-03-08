@@ -74,6 +74,13 @@ class SecuritySettingsPage extends ConsumerWidget {
               ),
             ],
           ),
+
+          // Session Timeout section (only shown when PIN is enabled)
+          if (pinEnabled) ...[
+            const SizedBox(height: 16),
+            SectionHeader(title: l10n.securityAutoLock),
+            SettingsGroupCard(children: [_LockTimeoutTile()]),
+          ],
           const SizedBox(height: 16),
         ],
       ),
@@ -128,6 +135,76 @@ class _BiometricTile extends ConsumerWidget {
               ref.read(biometricEnabledProvider.notifier).setEnabled(v);
             }
           : null,
+    );
+  }
+}
+
+class _LockTimeoutTile extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final currentTimeout = ref.watch(lockTimeoutProvider);
+
+    return SettingsTile(
+      icon: Icons.timer_outlined,
+      iconColor: AppColors.iconOrange,
+      title: l10n.securityAutoLock,
+      subtitleText: _timeoutLabel(currentTimeout, l10n),
+      onTap: () async {
+        final selected = await showDialog<LockTimeout>(
+          context: context,
+          builder: (ctx) => SimpleDialog(
+            title: Text(l10n.securityAutoLock),
+            children: LockTimeout.values.map((timeout) {
+              return _TimeoutOption(
+                label: _timeoutLabel(timeout, l10n),
+                timeout: timeout,
+                isSelected: timeout == currentTimeout,
+                onTap: () => Navigator.of(ctx).pop(timeout),
+              );
+            }).toList(),
+          ),
+        );
+        if (selected != null) {
+          ref.read(lockTimeoutProvider.notifier).setTimeout(selected);
+        }
+      },
+    );
+  }
+
+  String _timeoutLabel(LockTimeout timeout, AppLocalizations l10n) {
+    return switch (timeout) {
+      LockTimeout.immediately => l10n.timeoutImmediately,
+      LockTimeout.seconds30 => l10n.timeoutSeconds30,
+      LockTimeout.seconds60 => l10n.timeoutSeconds60,
+      LockTimeout.seconds120 => l10n.timeoutSeconds120,
+      LockTimeout.minutes5 => l10n.timeoutMinutes5,
+    };
+  }
+}
+
+class _TimeoutOption extends StatelessWidget {
+  const _TimeoutOption({
+    required this.label,
+    required this.timeout,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final String label;
+  final LockTimeout timeout;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ListTile(
+      title: Text(label),
+      trailing: isSelected
+          ? Icon(Icons.check, color: theme.colorScheme.primary)
+          : null,
+      onTap: onTap,
     );
   }
 }

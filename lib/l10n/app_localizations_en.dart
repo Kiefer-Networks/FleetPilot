@@ -1248,4 +1248,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String profileSwitched(String name) {
     return 'Switched to $name.';
   }
+
+  @override
+  String get securityAutoLock => 'Auto-Lock';
+
+  @override
+  String get securityAutoLockDescription =>
+      'Automatically require authentication after the app has been in the background.';
+
+  @override
+  String get timeoutImmediately => 'Immediately';
+
+  @override
+  String get timeoutSeconds30 => 'After 30 seconds';
+
+  @override
+  String get timeoutSeconds60 => 'After 1 minute';
+
+  @override
+  String get timeoutSeconds120 => 'After 2 minutes';
+
+  @override
+  String get timeoutMinutes5 => 'After 5 minutes';
 }
