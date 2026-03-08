@@ -68,17 +68,19 @@ class BlueprintApi {
 
   /// Fetches library items assigned to a blueprint.
   Future<List<LibraryItem>> getBlueprintLibraryItems(String blueprintId) async {
+    final raw = await getBlueprintLibraryItemsRaw(blueprintId);
+    return raw.map(LibraryItem.fromJson).toList(growable: false);
+  }
+
+  /// Returns raw JSON maps for all library items in a blueprint.
+  Future<List<Map<String, dynamic>>> getBlueprintLibraryItemsRaw(
+    String blueprintId,
+  ) async {
     try {
       final response = await dio.get<dynamic>(
         '/blueprints/$blueprintId/list-library-items',
       );
       final data = response.data;
-
-      if (data is Map<String, dynamic>) {
-        log.d(
-          'BlueprintApi.getBlueprintLibraryItems keys: ${data.keys.toList()}',
-        );
-      }
 
       List<dynamic> items;
       if (data is List) {
@@ -93,17 +95,14 @@ class BlueprintApi {
         return [];
       }
 
-      return items
-          .cast<Map<String, dynamic>>()
-          .map(LibraryItem.fromJson)
-          .toList(growable: false);
+      return items.cast<Map<String, dynamic>>();
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
       rethrow;
     } catch (e, st) {
       log.e(
-        'BlueprintApi.getBlueprintLibraryItems parse error: $e',
+        'BlueprintApi.getBlueprintLibraryItemsRaw parse error: $e',
         error: e,
         stackTrace: st,
       );

@@ -77,9 +77,16 @@ final blueprintTemplatesProvider = FutureProvider<List<BlueprintTemplate>>((
 
 /// A library item with its associated blueprint names (deduplicated).
 class AggregatedLibraryItem {
-  AggregatedLibraryItem({required this.item, required this.blueprintNames});
+  AggregatedLibraryItem({
+    required this.item,
+    required this.blueprintNames,
+    this.rawData,
+  });
   final LibraryItem item;
   final List<String> blueprintNames;
+
+  /// Raw JSON from the list-library-items endpoint.
+  final Map<String, dynamic>? rawData;
 }
 
 /// Search query for library items list.
@@ -94,10 +101,10 @@ final aggregatedLibraryItemsProvider =
       final results = await Future.wait(
         blueprints.map((bp) async {
           try {
-            final items = await api.getBlueprintLibraryItems(bp.id);
-            return (blueprint: bp, items: items);
+            final rawItems = await api.getBlueprintLibraryItemsRaw(bp.id);
+            return (blueprint: bp, rawItems: rawItems);
           } catch (_) {
-            return (blueprint: bp, items: <LibraryItem>[]);
+            return (blueprint: bp, rawItems: <Map<String, dynamic>>[]);
           }
         }),
       );
@@ -106,7 +113,8 @@ final aggregatedLibraryItemsProvider =
       // blueprints/platforms. Fall back to id if name is missing.
       final map = <String, AggregatedLibraryItem>{};
       for (final result in results) {
-        for (final item in result.items) {
+        for (final raw in result.rawItems) {
+          final item = LibraryItem.fromJson(raw);
           final key = (item.name ?? item.id ?? '').toLowerCase();
           if (key.isEmpty) continue;
           if (map.containsKey(key)) {
@@ -117,6 +125,7 @@ final aggregatedLibraryItemsProvider =
             map[key] = AggregatedLibraryItem(
               item: item,
               blueprintNames: [result.blueprint.name],
+              rawData: raw,
             );
           }
         }
@@ -132,11 +141,28 @@ final aggregatedLibraryItemsProvider =
     });
 
 /// All library item details across all categories (scripts, apps, profiles).
-/// Returns a map of item ID → raw data with '_category' key.
+/// Merges data from category-specific endpoints with raw data from
+/// blueprint list-library-items for types without dedicated endpoints.
 final allLibraryItemDetailsProvider =
     FutureProvider<Map<String, Map<String, dynamic>>>((ref) async {
       final api = await ref.watch(blueprintApiProvider.future);
-      return api.getAllLibraryItemDetails();
+      final result = await api.getAllLibraryItemDetails();
+
+      // Also include raw data from aggregated items for types not covered
+      // by the dedicated endpoints (VPP apps, managed profiles, etc.)
+      final aggregated = await ref.watch(aggregatedLibraryItemsProvider.future);
+      for (final agg in aggregated) {
+        final id = agg.item.id;
+        if (id == null || result.containsKey(id)) continue;
+        if (agg.rawData != null) {
+          result[id] = {
+            ...agg.rawData!,
+            '_category': agg.item.type ?? '_built-in',
+          };
+        }
+      }
+
+      return result;
     });
 
 /// Full detail for a single library item (includes body/profile fields).

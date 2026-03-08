@@ -248,6 +248,44 @@ class _InfoTab extends ConsumerWidget {
             rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
         _addIfPresent(rows, l10n.installType, itemDetails!['install_type']);
         _addIfPresent(rows, l10n.enforcement, itemDetails!['install_enforcement']);
+      // VPP / automatic apps
+      case 'automatic-app':
+        _addIfPresent(rows, l10n.appName, itemDetails!['name']);
+        _addIfPresent(rows, 'Identifier', itemDetails!['identifier']);
+        _addIfPresent(rows, 'Bundle ID', itemDetails!['bundle_id']);
+        _addIfPresent(rows, l10n.appVersion, itemDetails!['version']);
+        _addIfPresent(rows, l10n.installType, itemDetails!['install_type']);
+        _addIfPresent(rows, l10n.enforcement, itemDetails!['install_enforcement']);
+        _addBoolIfPresent(
+            rows, l10n.selfServiceEnabled, itemDetails!['show_in_self_service'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
+      // Managed profiles
+      case 'profile':
+        _addIfPresent(rows, l10n.appName, itemDetails!['name']);
+        _addBoolIfPresent(
+            rows, l10n.selfServiceEnabled, itemDetails!['show_in_self_service'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
+      // Kandji setup, macOS release, threat policy — show common fields
+      case 'kandji-setup' || 'macos-release' || 'threat-security-policy':
+        _addIfPresent(rows, l10n.appName, itemDetails!['name']);
+        _addBoolIfPresent(
+            rows, l10n.selfServiceEnabled, itemDetails!['show_in_self_service'], l10n);
+      // Any other type — show whatever common fields exist
+      default:
+        _addIfPresent(rows, l10n.appName, itemDetails!['name']);
+        _addIfPresent(rows, 'Type', itemDetails!['type']);
+        _addBoolIfPresent(
+            rows, l10n.selfServiceEnabled, itemDetails!['show_in_self_service'], l10n);
     }
 
     _addDateTimeIfPresent(rows, l10n.created, itemDetails!['created_at']);
