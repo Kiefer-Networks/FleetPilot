@@ -19,9 +19,13 @@ class TenantApi {
   final Dio dio;
 
   /// Fetches threat details from the tenant.
-  Future<List<Threat>> getThreats({int? dateRange}) async {
+  Future<List<Threat>> getThreats({
+    int? dateRange,
+    int limit = 300,
+    int offset = 0,
+  }) async {
     try {
-      final queryParams = <String, dynamic>{};
+      final queryParams = <String, dynamic>{'limit': limit, 'offset': offset};
       if (dateRange != null) queryParams['date_range'] = dateRange.toString();
 
       final response = await dio.get<dynamic>(
@@ -137,13 +141,15 @@ class TenantApi {
 
   /// Fetches vulnerability detections.
   Future<List<VulnerabilityDetection>> getVulnerabilityDetections({
-    int page = 1,
     int size = 50,
+    String? after,
   }) async {
     try {
+      final queryParams = <String, dynamic>{'size': size};
+      if (after != null) queryParams['after'] = after;
       final response = await dio.get<dynamic>(
         '/vulnerability-management/detections',
-        queryParameters: {'page': page, 'size': size},
+        queryParameters: queryParams,
       );
       return _extractListItems(
         response.data,
@@ -233,13 +239,13 @@ class TenantApi {
 
   /// Fetches behavioral detections.
   Future<List<BehavioralDetection>> getBehavioralDetections({
-    int page = 1,
-    int size = 50,
+    int limit = 300,
+    int offset = 0,
   }) async {
     try {
       final response = await dio.get<dynamic>(
         '/behavioral-detections',
-        queryParameters: {'page': page, 'size': size},
+        queryParameters: {'limit': limit, 'offset': offset},
       );
       return _extractListItems(
         response.data,
@@ -385,6 +391,70 @@ class TenantApi {
     } catch (e, st) {
       log.e('TenantApi.getAdeDevices error: $e', error: e, stackTrace: st);
       throw UnexpectedFailure('Failed to parse ADE devices: $e');
+    }
+  }
+
+  /// Lists all ADE devices across all integrations.
+  Future<List<AdeDevice>> getAllAdeDevices({int? page}) async {
+    try {
+      final queryParams = <String, dynamic>{};
+      if (page != null) queryParams['page'] = page;
+      final response = await dio.get<dynamic>(
+        '/integrations/apple/ade/devices',
+        queryParameters: queryParams,
+      );
+      return _extractListItems(
+        response.data,
+      ).map(AdeDevice.fromJson).toList(growable: false);
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    } on Failure {
+      rethrow;
+    } catch (e, st) {
+      log.e('TenantApi.getAllAdeDevices error: $e', error: e, stackTrace: st);
+      throw UnexpectedFailure('Failed to parse all ADE devices: $e');
+    }
+  }
+
+  /// Gets a specific ADE device by ID.
+  Future<AdeDevice> getAdeDevice(String deviceId) async {
+    try {
+      final response = await dio.get<dynamic>(
+        '/integrations/apple/ade/devices/$deviceId',
+      );
+      final data = response.data;
+      if (data is Map<String, dynamic>) return AdeDevice.fromJson(data);
+      throw const UnexpectedFailure('Unexpected ADE device response');
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    } on Failure {
+      rethrow;
+    } catch (e, st) {
+      log.e('TenantApi.getAdeDevice error: $e', error: e, stackTrace: st);
+      throw UnexpectedFailure('Failed to parse ADE device: $e');
+    }
+  }
+
+  /// Updates a specific ADE device (blueprint, user, asset tag).
+  Future<AdeDevice> updateAdeDevice(
+    String deviceId,
+    Map<String, dynamic> body,
+  ) async {
+    try {
+      final response = await dio.patch<dynamic>(
+        '/integrations/apple/ade/devices/$deviceId',
+        data: body,
+      );
+      final data = response.data;
+      if (data is Map<String, dynamic>) return AdeDevice.fromJson(data);
+      throw const UnexpectedFailure('Unexpected ADE device update response');
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    } on Failure {
+      rethrow;
+    } catch (e, st) {
+      log.e('TenantApi.updateAdeDevice error: $e', error: e, stackTrace: st);
+      throw UnexpectedFailure('Failed to update ADE device: $e');
     }
   }
 

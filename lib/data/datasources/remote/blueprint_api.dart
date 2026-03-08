@@ -159,7 +159,7 @@ class BlueprintApi {
   /// Fetches blueprint templates.
   Future<List<BlueprintTemplate>> getBlueprintTemplates() async {
     try {
-      final response = await dio.get<dynamic>('/blueprints/templates');
+      final response = await dio.get<dynamic>('/blueprints/templates/');
       final data = response.data;
       List<dynamic> items;
       if (data is List) {

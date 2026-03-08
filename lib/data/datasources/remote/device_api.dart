@@ -442,9 +442,24 @@ class DeviceApi {
   }
 
   // ---------------------------------------------------------------------------
-  // Cancel Lost Mode
+  // Lost Mode
   // ---------------------------------------------------------------------------
 
+  /// Retrieves lost mode details for a device.
+  Future<Map<String, dynamic>> getLostModeDetails(String deviceId) async {
+    try {
+      final response = await dio.get<dynamic>(
+        '/devices/$deviceId/details/lostmode',
+      );
+      final data = response.data;
+      if (data is Map<String, dynamic>) return data;
+      return {};
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    }
+  }
+
+  /// Cancels lost mode for a device.
   Future<void> cancelLostMode(String deviceId) async {
     try {
       await dio.delete<dynamic>('/devices/$deviceId/details/lostmode');
@@ -454,12 +469,63 @@ class DeviceApi {
   }
 
   // ---------------------------------------------------------------------------
+  // Device Parameters & Library Items
+  // ---------------------------------------------------------------------------
+
+  /// Fetches device parameters.
+  Future<List<Map<String, dynamic>>> getDeviceParameters(
+    String deviceId,
+  ) async {
+    try {
+      final response = await dio.get<dynamic>('/devices/$deviceId/parameters');
+      return _extractList(response.data);
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    } on Failure {
+      rethrow;
+    } catch (e, st) {
+      log.e(
+        'DeviceApi.getDeviceParameters error: $e',
+        error: e,
+        stackTrace: st,
+      );
+      throw UnexpectedFailure('Failed to parse device parameters: $e');
+    }
+  }
+
+  /// Fetches library items installed on a device.
+  Future<List<Map<String, dynamic>>> getDeviceLibraryItems(
+    String deviceId,
+  ) async {
+    try {
+      final response = await dio.get<dynamic>(
+        '/devices/$deviceId/library-items',
+      );
+      return _extractList(response.data);
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    } on Failure {
+      rethrow;
+    } catch (e, st) {
+      log.e(
+        'DeviceApi.getDeviceLibraryItems error: $e',
+        error: e,
+        stackTrace: st,
+      );
+      throw UnexpectedFailure('Failed to parse device library items: $e');
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // Tags CRUD
   // ---------------------------------------------------------------------------
 
-  Future<List<Tag>> getTags() async {
+  Future<List<Tag>> getTags({String search = ''}) async {
     try {
-      final response = await dio.get<dynamic>('/tags');
+      final response = await dio.get<dynamic>(
+        '/tags',
+        queryParameters: {'search': search},
+      );
       final items = _extractList(response.data);
       return items.map(Tag.fromJson).toList(growable: false);
     } on DioException catch (e) {
