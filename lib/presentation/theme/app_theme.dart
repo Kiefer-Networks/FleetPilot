@@ -15,7 +15,7 @@ ThemeData buildLightTheme() {
     ),
     navigationRailTheme: NavigationRailThemeData(
       indicatorColor: lightColorScheme.secondaryContainer,
-      labelType: NavigationRailLabelType.selected,
+      labelType: NavigationRailLabelType.all,
     ),
     appBarTheme: AppBarTheme(
       centerTitle: false,
@@ -70,7 +70,7 @@ ThemeData buildDarkTheme() {
     ),
     navigationRailTheme: NavigationRailThemeData(
       indicatorColor: darkColorScheme.secondaryContainer,
-      labelType: NavigationRailLabelType.selected,
+      labelType: NavigationRailLabelType.all,
     ),
     appBarTheme: AppBarTheme(
       centerTitle: false,

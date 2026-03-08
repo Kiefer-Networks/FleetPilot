@@ -10,10 +10,21 @@ class RootShell extends StatelessWidget {
 
   final Widget child;
 
-  static int _indexFromLocation(String location) {
+  static int _indexFromLocation(String location, bool useRail) {
     if (location.startsWith('/blueprints')) return 1;
     if (location.startsWith('/users')) return 2;
-    if (location.startsWith('/more')) return 3;
+    if (useRail) {
+      // Extended rail destinations
+      if (location.startsWith('/more/library-items')) return 3;
+      if (location.startsWith('/more/vulnerabilities')) return 4;
+      if (location.startsWith('/more/threats') ||
+          location.startsWith('/more/behavioral-detections')) {
+        return 5;
+      }
+      if (location.startsWith('/more')) return 6;
+    } else {
+      if (location.startsWith('/more')) return 3;
+    }
     return 0;
   }
 
@@ -24,23 +35,35 @@ class RootShell extends StatelessWidget {
         blueprintsDetail.hasMatch(location);
   }
 
-  static void _onDestinationSelected(BuildContext context, int index) {
-    final path = switch (index) {
-      1 => '/blueprints',
-      2 => '/users',
-      3 => '/more',
-      _ => '/devices',
-    };
+  static void _onDestinationSelected(
+    BuildContext context,
+    int index, {
+    bool useRail = false,
+  }) {
+    final path = useRail
+        ? switch (index) {
+            1 => '/blueprints',
+            2 => '/users',
+            3 => '/more/library-items',
+            4 => '/more/vulnerabilities',
+            5 => '/more/threats',
+            6 => '/more',
+            _ => '/devices',
+          }
+        : switch (index) {
+            1 => '/blueprints',
+            2 => '/users',
+            3 => '/more',
+            _ => '/devices',
+          };
     context.go(path);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final location = GoRouterState.of(context).uri.path;
-    final selectedIndex = _indexFromLocation(location);
 
-    final destinations = [
+    final phoneDestinations = [
       NavigationDestination(
         icon: const Icon(Icons.devices_outlined),
         selectedIcon: const Icon(Icons.devices),
@@ -63,27 +86,56 @@ class RootShell extends StatelessWidget {
       ),
     ];
 
-    final railDestinations = destinations
-        .map(
-          (d) => NavigationRailDestination(
-            icon: d.icon,
-            selectedIcon: d.selectedIcon,
-            label: Text(d.label),
-          ),
-        )
-        .toList(growable: false);
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final useRail = constraints.maxWidth >= 600;
+        final location = GoRouterState.of(context).uri.path;
+        final selectedIndex = _indexFromLocation(location, useRail);
 
         if (useRail) {
+          final railDestinations = [
+            NavigationRailDestination(
+              icon: const Icon(Icons.devices_outlined),
+              selectedIcon: const Icon(Icons.devices),
+              label: Text(l10n.navDevices),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(Icons.layers_outlined),
+              selectedIcon: const Icon(Icons.layers),
+              label: Text(l10n.navBlueprints),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(Icons.people_outline),
+              selectedIcon: const Icon(Icons.people),
+              label: Text(l10n.navUsers),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(Icons.inventory_2_outlined),
+              selectedIcon: const Icon(Icons.inventory_2),
+              label: Text(l10n.libraryItems),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(Icons.shield_outlined),
+              selectedIcon: const Icon(Icons.shield),
+              label: Text(l10n.vulnerabilities),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(Icons.bug_report_outlined),
+              selectedIcon: const Icon(Icons.bug_report),
+              label: Text(l10n.threats),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(Icons.more_horiz_outlined),
+              selectedIcon: const Icon(Icons.more_horiz),
+              label: Text(l10n.navMore),
+            ),
+          ];
+
           final isDetail = _isDetailRoute(location);
-          final showSplit =
-              (selectedIndex == 0 || selectedIndex == 1) || isDetail;
 
           Widget body;
-          if (showSplit && (selectedIndex == 0 || selectedIndex == 1)) {
+          if ((selectedIndex == 0 || selectedIndex == 1) &&
+              (isDetail || !_isDetailRoute(location))) {
             body = _MasterDetailLayout(
               selectedIndex: selectedIndex,
               isDetail: isDetail,
@@ -100,8 +152,8 @@ class RootShell extends StatelessWidget {
                 NavigationRail(
                   selectedIndex: selectedIndex,
                   onDestinationSelected: (index) =>
-                      _onDestinationSelected(context, index),
-                  labelType: NavigationRailLabelType.selected,
+                      _onDestinationSelected(context, index, useRail: true),
+                  labelType: NavigationRailLabelType.all,
                   destinations: railDestinations,
                 ),
                 const VerticalDivider(thickness: 1, width: 1),
@@ -117,7 +169,7 @@ class RootShell extends StatelessWidget {
             selectedIndex: selectedIndex,
             onDestinationSelected: (index) =>
                 _onDestinationSelected(context, index),
-            destinations: destinations,
+            destinations: phoneDestinations,
           ),
         );
       },
