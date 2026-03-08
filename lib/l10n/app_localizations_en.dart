@@ -1570,4 +1570,117 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get details => 'Details';
+
+  @override
+  String get searchLibraryItems => 'Search library items...';
+
+  @override
+  String get categoryCustomScript => 'Custom Script';
+
+  @override
+  String get categoryCustomApp => 'Custom App';
+
+  @override
+  String get categoryCustomProfile => 'Custom Profile';
+
+  @override
+  String get categoryInHouseApp => 'In-House App';
+
+  @override
+  String get categoryBuiltIn => 'Built-in';
+
+  @override
+  String inBlueprints(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count blueprints',
+      one: '1 blueprint',
+    );
+    return 'In $_temp0';
+  }
+
+  @override
+  String get executionFrequencyOnce => 'Once';
+
+  @override
+  String get executionFrequencyEvery15Min => 'Every 15 minutes';
+
+  @override
+  String get executionFrequencyEveryDay => 'Daily';
+
+  @override
+  String get executionFrequencyNoEnforcement => 'No enforcement';
+
+  @override
+  String get scriptBody => 'Script';
+
+  @override
+  String get allProperties => 'All Properties';
+
+  @override
+  String get builtInLibraryItem => 'Built-in library item';
+
+  @override
+  String get builtInDetailsHint => 'Details available on Status tab';
+
+  @override
+  String get active => 'Active';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get execution => 'Execution';
+
+  @override
+  String get restart => 'Restart';
+
+  @override
+  String get selfService => 'Self Service';
+
+  @override
+  String get installType => 'Install Type';
+
+  @override
+  String get enforcement => 'Enforcement';
+
+  @override
+  String get runsOnMac => 'Runs on Mac';
+
+  @override
+  String get runsOnIphone => 'Runs on iPhone';
+
+  @override
+  String get runsOnIpad => 'Runs on iPad';
+
+  @override
+  String get appName => 'App Name';
+
+  @override
+  String get appVersion => 'App Version';
+
+  @override
+  String get minOsVersion => 'Min OS Version';
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get updated => 'Updated';
+
+  @override
+  String libraryItemCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+      zero: 'No items',
+    );
+    return '$_temp0';
+  }
 }

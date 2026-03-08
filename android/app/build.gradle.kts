@@ -30,7 +30,8 @@ android {
 
     defaultConfig {
         applicationId = "de.kiefer_networks.fleetpilot"
-        minSdk = flutter.minSdkVersion
+        // Last 3 major Android versions (14, 15, 16)
+        minSdk = 34
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

@@ -1590,4 +1590,117 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get details => 'Detalles';
+
+  @override
+  String get searchLibraryItems => 'Buscar elementos de biblioteca...';
+
+  @override
+  String get categoryCustomScript => 'Script personalizado';
+
+  @override
+  String get categoryCustomApp => 'App personalizada';
+
+  @override
+  String get categoryCustomProfile => 'Perfil personalizado';
+
+  @override
+  String get categoryInHouseApp => 'App interna';
+
+  @override
+  String get categoryBuiltIn => 'Integrado';
+
+  @override
+  String inBlueprints(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count blueprints',
+      one: '1 blueprint',
+    );
+    return 'En $_temp0';
+  }
+
+  @override
+  String get executionFrequencyOnce => 'Una vez';
+
+  @override
+  String get executionFrequencyEvery15Min => 'Cada 15 minutos';
+
+  @override
+  String get executionFrequencyEveryDay => 'Diario';
+
+  @override
+  String get executionFrequencyNoEnforcement => 'Sin aplicación';
+
+  @override
+  String get scriptBody => 'Script';
+
+  @override
+  String get allProperties => 'Todas las propiedades';
+
+  @override
+  String get builtInLibraryItem => 'Elemento de biblioteca integrado';
+
+  @override
+  String get builtInDetailsHint => 'Detalles disponibles en la pestaña Estado';
+
+  @override
+  String get active => 'Activo';
+
+  @override
+  String get yes => 'Sí';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get execution => 'Ejecución';
+
+  @override
+  String get restart => 'Reinicio';
+
+  @override
+  String get selfService => 'Self Service';
+
+  @override
+  String get installType => 'Tipo de instalación';
+
+  @override
+  String get enforcement => 'Aplicación';
+
+  @override
+  String get runsOnMac => 'Ejecuta en Mac';
+
+  @override
+  String get runsOnIphone => 'Ejecuta en iPhone';
+
+  @override
+  String get runsOnIpad => 'Ejecuta en iPad';
+
+  @override
+  String get appName => 'Nombre de app';
+
+  @override
+  String get appVersion => 'Versión de app';
+
+  @override
+  String get minOsVersion => 'Versión mín. del SO';
+
+  @override
+  String get created => 'Creado';
+
+  @override
+  String get updated => 'Actualizado';
+
+  @override
+  String libraryItemCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count elementos',
+      one: '1 elemento',
+      zero: 'Sin elementos',
+    );
+    return '$_temp0';
+  }
 }

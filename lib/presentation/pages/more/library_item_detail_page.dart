@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fleetpilot/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -25,7 +26,7 @@ class LibraryItemDetailPage extends ConsumerWidget {
     final details = ref.watch(allLibraryItemDetailsProvider).value ?? {};
     final itemDetails = details[itemId];
     final category = itemDetails?['_category'] as String?;
-    final subtitle = _displayCategory(category);
+    final subtitle = _displayCategory(category, l10n);
 
     return DefaultTabController(
       length: 3,
@@ -63,19 +64,14 @@ class LibraryItemDetailPage extends ConsumerWidget {
     );
   }
 
-  static String? _displayCategory(String? category) {
-    switch (category) {
-      case 'custom-script':
-        return 'Custom Script';
-      case 'custom-app':
-        return 'Custom App';
-      case 'custom-profile':
-        return 'Custom Profile';
-      case 'in-house-app':
-        return 'In-House App';
-      default:
-        return null;
-    }
+  static String? _displayCategory(String? category, AppLocalizations l10n) {
+    return switch (category) {
+      'custom-script' => l10n.categoryCustomScript,
+      'custom-app' => l10n.categoryCustomApp,
+      'custom-profile' => l10n.categoryCustomProfile,
+      'in-house-app' => l10n.categoryInHouseApp,
+      _ => null,
+    };
   }
 }
 
@@ -88,6 +84,7 @@ class _InfoTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
@@ -103,14 +100,14 @@ class _InfoTab extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Built-in library item',
+              l10n.builtInLibraryItem,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 4),
             Text(
-              'Details available on Status tab',
+              l10n.builtInDetailsHint,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.outline,
               ),
@@ -127,41 +124,50 @@ class _InfoTab extends StatelessWidget {
     final rows = <_InfoRow>[];
     if (active != null) {
       rows.add(_InfoRow(
-        label: 'Active',
-        value: active == true ? 'Yes' : 'No',
+        label: l10n.active,
+        value: active == true ? l10n.yes : l10n.no,
       ));
     }
 
     // Category-specific fields
     switch (category) {
       case 'custom-script':
-        _addIfPresent(rows, 'Execution', itemDetails!['execution_frequency']);
-        _addIfPresent(rows, 'Restart', itemDetails!['restart']);
-        _addIfPresent(rows, 'Self Service', itemDetails!['show_in_self_service']);
-        break;
+        _addFrequency(rows, l10n, itemDetails!['execution_frequency']);
+        _addBoolIfPresent(rows, l10n.restart, itemDetails!['restart'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
       case 'custom-app':
-        _addIfPresent(rows, 'Install Type', itemDetails!['install_type']);
-        _addIfPresent(rows, 'Enforcement', itemDetails!['install_enforcement']);
-        _addIfPresent(rows, 'Self Service', itemDetails!['show_in_self_service']);
-        break;
+        _addIfPresent(rows, l10n.installType, itemDetails!['install_type']);
+        _addIfPresent(rows, l10n.enforcement, itemDetails!['install_enforcement']);
+        _addBoolIfPresent(
+            rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
       case 'custom-profile':
-        _addIfPresent(rows, 'Runs on Mac', itemDetails!['runs_on_mac']);
-        _addIfPresent(rows, 'Runs on iPhone', itemDetails!['runs_on_iphone']);
-        _addIfPresent(rows, 'Runs on iPad', itemDetails!['runs_on_ipad']);
-        break;
+        _addBoolIfPresent(
+            rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
       case 'in-house-app':
-        _addIfPresent(rows, 'App Name', itemDetails!['app_name']);
-        _addIfPresent(rows, 'App Version', itemDetails!['app_version']);
+        _addIfPresent(rows, l10n.appName, itemDetails!['app_name']);
+        _addIfPresent(rows, l10n.appVersion, itemDetails!['app_version']);
         _addIfPresent(rows, 'Identifier', itemDetails!['app_identifier']);
-        _addIfPresent(rows, 'Min OS Version', itemDetails!['minimum_os_version']);
-        _addIfPresent(rows, 'Runs on iPhone', itemDetails!['runs_on_iphone']);
-        _addIfPresent(rows, 'Runs on iPad', itemDetails!['runs_on_ipad']);
-        _addIfPresent(rows, 'Runs on Mac', itemDetails!['runs_on_mac']);
-        break;
+        _addIfPresent(rows, l10n.minOsVersion, itemDetails!['minimum_os_version']);
+        _addBoolIfPresent(
+            rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
     }
 
-    _addIfPresent(rows, 'Created', itemDetails!['created_at']);
-    _addIfPresent(rows, 'Updated', itemDetails!['updated_at']);
+    _addDateTimeIfPresent(rows, l10n.created, itemDetails!['created_at']);
+    _addDateTimeIfPresent(rows, l10n.updated, itemDetails!['updated_at']);
+
+    // Script body for custom-script
+    final scriptBody = category == 'custom-script'
+        ? itemDetails!['body'] as String?
+        : null;
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -177,45 +183,328 @@ class _InfoTab extends StatelessWidget {
           const SizedBox(height: 16),
         ],
 
+        // Script viewer for custom scripts
+        if (scriptBody != null && scriptBody.isNotEmpty) ...[
+          _ScriptViewerCard(script: scriptBody, l10n: l10n),
+          const SizedBox(height: 16),
+        ],
+
         // Show all raw fields as a reference
-        _RawFieldsCard(data: itemDetails!, category: category),
+        _RawFieldsCard(data: itemDetails!, category: category, l10n: l10n),
       ],
     );
   }
 
   void _addIfPresent(List<_InfoRow> rows, String label, dynamic value) {
     if (value == null) return;
-    String display;
-    if (value is bool) {
-      display = value ? 'Yes' : 'No';
-    } else if (value is String && value.contains('T') && value.contains('-')) {
-      display = _formatDateTime(value);
-    } else {
-      display = value.toString();
-    }
-    rows.add(_InfoRow(label: label, value: display));
+    rows.add(_InfoRow(label: label, value: value.toString()));
   }
+
+  void _addBoolIfPresent(
+      List<_InfoRow> rows, String label, dynamic value, AppLocalizations l10n) {
+    if (value == null) return;
+    rows.add(_InfoRow(
+      label: label,
+      value: value == true ? l10n.yes : l10n.no,
+    ));
+  }
+
+  void _addDateTimeIfPresent(
+      List<_InfoRow> rows, String label, dynamic value) {
+    if (value == null) return;
+    if (value is String) {
+      rows.add(_InfoRow(label: label, value: _formatDateTime(value)));
+    }
+  }
+
+  void _addFrequency(
+      List<_InfoRow> rows, AppLocalizations l10n, dynamic value) {
+    if (value == null) return;
+    final display = _translateFrequency(value.toString(), l10n);
+    rows.add(_InfoRow(label: l10n.execution, value: display));
+  }
+}
+
+String _translateFrequency(String freq, AppLocalizations l10n) {
+  return switch (freq) {
+    'once' => l10n.executionFrequencyOnce,
+    'every_15_min' => l10n.executionFrequencyEvery15Min,
+    'every_day' => l10n.executionFrequencyEveryDay,
+    'no_enforcement' => l10n.executionFrequencyNoEnforcement,
+    _ => freq.replaceAll('_', ' '),
+  };
+}
+
+/// Dark code viewer for script bodies.
+class _ScriptViewerCard extends StatelessWidget {
+  const _ScriptViewerCard({required this.script, required this.l10n});
+
+  final String script;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final lines = script.split('\n');
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 8),
+          child: Row(
+            children: [
+              Icon(Icons.code, size: 16, color: theme.colorScheme.primary),
+              const SizedBox(width: 8),
+              Text(
+                l10n.scriptBody,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.copy, size: 18),
+                tooltip: l10n.tapToCopy,
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: script));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(l10n.secretCopied),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            width: double.infinity,
+            color: const Color(0xFF1E1E1E),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: MediaQuery.of(context).size.width - 64,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: SelectableText.rich(
+                    TextSpan(
+                      children: [
+                        for (var i = 0; i < lines.length; i++)
+                          TextSpan(
+                            children: [
+                              // Line number
+                              TextSpan(
+                                text: '${(i + 1).toString().padLeft(3)} ',
+                                style: const TextStyle(
+                                  color: Color(0xFF858585),
+                                  fontFamily: 'monospace',
+                                  fontSize: 13,
+                                  height: 1.5,
+                                ),
+                              ),
+                              // Line content with basic highlighting
+                              ..._highlightLine(lines[i]),
+                              if (i < lines.length - 1)
+                                const TextSpan(text: '\n'),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Basic syntax highlighting for shell/bash scripts.
+  List<TextSpan> _highlightLine(String line) {
+    const baseStyle = TextStyle(
+      color: Color(0xFFD4D4D4),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const commentStyle = TextStyle(
+      color: Color(0xFF6A9955),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const stringStyle = TextStyle(
+      color: Color(0xFFCE9178),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const keywordStyle = TextStyle(
+      color: Color(0xFF569CD6),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const varStyle = TextStyle(
+      color: Color(0xFF9CDCFE),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const shebangStyle = TextStyle(
+      color: Color(0xFFC586C0),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+
+    final trimmed = line.trimLeft();
+
+    // Shebang
+    if (trimmed.startsWith('#!')) {
+      return [TextSpan(text: line, style: shebangStyle)];
+    }
+
+    // Full line comment
+    if (trimmed.startsWith('#')) {
+      return [TextSpan(text: line, style: commentStyle)];
+    }
+
+    // Simple tokenization
+    final spans = <TextSpan>[];
+    final buffer = StringBuffer();
+    var i = 0;
+
+    void flushBuffer() {
+      if (buffer.isNotEmpty) {
+        final text = buffer.toString();
+        buffer.clear();
+        // Check for keywords
+        final words = text.split(RegExp(r'(?<=\s)|(?=\s)'));
+        for (final word in words) {
+          if (_shellKeywords.contains(word.trim())) {
+            spans.add(TextSpan(text: word, style: keywordStyle));
+          } else if (word.startsWith('\$')) {
+            spans.add(TextSpan(text: word, style: varStyle));
+          } else {
+            spans.add(TextSpan(text: word, style: baseStyle));
+          }
+        }
+      }
+    }
+
+    while (i < line.length) {
+      final ch = line[i];
+
+      // Inline comment
+      if (ch == '#' && (i == 0 || line[i - 1] != '\\')) {
+        flushBuffer();
+        spans.add(TextSpan(text: line.substring(i), style: commentStyle));
+        return spans;
+      }
+
+      // Double-quoted string
+      if (ch == '"') {
+        flushBuffer();
+        final end = line.indexOf('"', i + 1);
+        if (end == -1) {
+          spans.add(TextSpan(text: line.substring(i), style: stringStyle));
+          return spans;
+        }
+        spans.add(
+            TextSpan(text: line.substring(i, end + 1), style: stringStyle));
+        i = end + 1;
+        continue;
+      }
+
+      // Single-quoted string
+      if (ch == "'") {
+        flushBuffer();
+        final end = line.indexOf("'", i + 1);
+        if (end == -1) {
+          spans.add(TextSpan(text: line.substring(i), style: stringStyle));
+          return spans;
+        }
+        spans.add(
+            TextSpan(text: line.substring(i, end + 1), style: stringStyle));
+        i = end + 1;
+        continue;
+      }
+
+      // Variable
+      if (ch == '\$') {
+        flushBuffer();
+        if (i + 1 < line.length && line[i + 1] == '{') {
+          final end = line.indexOf('}', i + 2);
+          if (end != -1) {
+            spans.add(
+                TextSpan(text: line.substring(i, end + 1), style: varStyle));
+            i = end + 1;
+            continue;
+          }
+        }
+        // Simple $VAR
+        var j = i + 1;
+        while (j < line.length &&
+            (RegExp(r'[a-zA-Z0-9_]').hasMatch(line[j]))) {
+          j++;
+        }
+        spans.add(TextSpan(text: line.substring(i, j), style: varStyle));
+        i = j;
+        continue;
+      }
+
+      buffer.write(ch);
+      i++;
+    }
+
+    flushBuffer();
+    return spans.isEmpty ? [TextSpan(text: line, style: baseStyle)] : spans;
+  }
+
+  static const _shellKeywords = {
+    'if', 'then', 'else', 'elif', 'fi', 'for', 'while', 'do', 'done',
+    'case', 'esac', 'in', 'function', 'return', 'exit', 'echo', 'printf',
+    'export', 'local', 'readonly', 'declare', 'set', 'unset', 'shift',
+    'source', 'eval', 'exec', 'trap', 'wait', 'true', 'false',
+    'sudo', 'cd', 'ls', 'rm', 'cp', 'mv', 'mkdir', 'chmod', 'chown',
+    'cat', 'grep', 'sed', 'awk', 'curl', 'wget', 'python', 'python3',
+    'pip', 'brew', 'defaults', 'launchctl', 'systemctl',
+  };
 }
 
 /// Shows all fields from the API response grouped logically.
 class _RawFieldsCard extends StatelessWidget {
-  const _RawFieldsCard({required this.data, this.category});
+  const _RawFieldsCard({
+    required this.data,
+    this.category,
+    required this.l10n,
+  });
 
   final Map<String, dynamic> data;
   final String? category;
+  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    // Filter out internal/empty fields
+    // Filter out internal/empty/already-shown fields
     final entries = data.entries.where((e) {
       if (e.key.startsWith('_')) return false;
       if (e.value == null) return false;
       if (e.value is String && (e.value as String).isEmpty) return false;
       if (e.key == 'id' || e.key == 'name' || e.key == 'active') return false;
       if (e.key == 'created_at' || e.key == 'updated_at') return false;
+      if (e.key == 'body' && category == 'custom-script') return false;
       return true;
     }).toList();
 
@@ -228,7 +517,7 @@ class _RawFieldsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'All Properties',
+              l10n.allProperties,
               style: theme.textTheme.titleSmall?.copyWith(
                 color: colorScheme.primary,
               ),
@@ -248,7 +537,7 @@ class _RawFieldsCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      _formatValue(entry.value),
+                      _formatValue(entry.value, entry.key, l10n),
                       style: theme.textTheme.bodyMedium,
                     ),
                   ],
@@ -269,10 +558,13 @@ class _RawFieldsCard extends StatelessWidget {
         );
   }
 
-  String _formatValue(dynamic value) {
-    if (value is bool) return value ? 'Yes' : 'No';
+  String _formatValue(dynamic value, String key, AppLocalizations l10n) {
+    if (value is bool) return value ? l10n.yes : l10n.no;
     if (value is Map || value is List) return value.toString();
     final str = value.toString();
+    if (key == 'execution_frequency') {
+      return _translateFrequency(str, l10n);
+    }
     if (str.contains('T') && str.contains('-') && str.length > 15) {
       return _formatDateTime(str);
     }
@@ -635,9 +927,10 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         status,
-        style: Theme.of(
-          context,
-        ).textTheme.labelSmall?.copyWith(color: _foregroundColor(colorScheme)),
+        style: Theme.of(context)
+            .textTheme
+            .labelSmall
+            ?.copyWith(color: _foregroundColor(colorScheme)),
       ),
     );
   }

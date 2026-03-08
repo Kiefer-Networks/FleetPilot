@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fleetpilot/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../domain/entities/library_item.dart';
 import '../../providers/blueprint_providers.dart';
 import '../../widgets/common/error_state_widget.dart';
 import '../../widgets/common/loading_widget.dart';
 
-/// Page showing all library items across all blueprints.
+/// Page showing all library items across all blueprints, grouped by category.
+/// Items are deduplicated — each item appears once with its blueprint associations.
 class LibraryItemsPage extends ConsumerWidget {
   const LibraryItemsPage({super.key});
 
@@ -16,146 +16,206 @@ class LibraryItemsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final blueprintsAsync = ref.watch(blueprintsProvider);
-    // Pre-fetch library item details for type detection.
-    ref.watch(allLibraryItemDetailsProvider);
+    final itemsAsync = ref.watch(aggregatedLibraryItemsProvider);
+    final detailsLookup = ref.watch(allLibraryItemDetailsProvider).value ?? {};
+    final searchQuery = ref.watch(libraryItemSearchQueryProvider).toLowerCase();
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.libraryItems)),
-      body: blueprintsAsync.when(
-        data: (blueprints) {
-          if (blueprints.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.inventory_2_outlined,
-                    size: 48,
-                    color: theme.colorScheme.onSurfaceVariant,
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            title: Text(l10n.libraryItems),
+            floating: true,
+            snap: true,
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(64),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: SearchBar(
+                  hintText: l10n.searchLibraryItems,
+                  leading: const Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Icon(Icons.search),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'No library items found.',
-                    style: theme.textTheme.bodyLarge,
+                  onChanged: (value) => ref
+                      .read(libraryItemSearchQueryProvider.notifier)
+                      .state = value,
+                  elevation: WidgetStateProperty.all(0),
+                  backgroundColor: WidgetStateProperty.all(
+                    theme.colorScheme.surfaceContainerHigh,
                   ),
-                ],
+                ),
               ),
-            );
-          }
+            ),
+          ),
+        ],
+        body: itemsAsync.when(
+          data: (items) {
+            // Filter by search query
+            final filtered = searchQuery.isEmpty
+                ? items
+                : items.where((agg) {
+                    final name = (agg.item.name ?? '').toLowerCase();
+                    return name.contains(searchQuery);
+                  }).toList();
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(12),
-            itemCount: blueprints.length,
-            itemBuilder: (context, index) {
-              final bp = blueprints[index];
-              return _BlueprintLibrarySection(
-                blueprintName: bp.name,
-                blueprintId: bp.id,
+            if (filtered.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.inventory_2_outlined,
+                      size: 48,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.noLibraryItemsFound,
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
               );
-            },
-          );
-        },
-        loading: () => const LoadingWidget(),
-        error: (error, _) => ErrorStateWidget(
-          failure: error,
-          onRetry: () => ref.invalidate(blueprintsProvider),
+            }
+
+            // Group by category
+            final groups = <String, List<AggregatedLibraryItem>>{};
+            for (final agg in filtered) {
+              final details = detailsLookup[agg.item.id];
+              final category =
+                  (details?['_category'] as String?) ?? '_built-in';
+              groups.putIfAbsent(category, () => []).add(agg);
+            }
+
+            // Order: scripts, apps, profiles, in-house, built-in
+            final orderedKeys = [
+              'custom-script',
+              'custom-app',
+              'custom-profile',
+              'in-house-app',
+              '_built-in',
+            ];
+            final sortedGroups = orderedKeys
+                .where((k) => groups.containsKey(k))
+                .map((k) => MapEntry(k, groups[k]!))
+                .toList();
+
+            return ListView.builder(
+              padding: const EdgeInsets.all(12),
+              itemCount: sortedGroups.length,
+              itemBuilder: (context, index) {
+                final entry = sortedGroups[index];
+                return _CategorySection(
+                  category: entry.key,
+                  items: entry.value,
+                  detailsLookup: detailsLookup,
+                );
+              },
+            );
+          },
+          loading: () => const LoadingWidget(),
+          error: (error, _) => ErrorStateWidget(
+            failure: error,
+            onRetry: () => ref.invalidate(aggregatedLibraryItemsProvider),
+          ),
         ),
       ),
     );
   }
 }
 
-class _BlueprintLibrarySection extends ConsumerWidget {
-  const _BlueprintLibrarySection({
-    required this.blueprintName,
-    required this.blueprintId,
+class _CategorySection extends StatelessWidget {
+  const _CategorySection({
+    required this.category,
+    required this.items,
+    required this.detailsLookup,
   });
 
-  final String blueprintName;
-  final String blueprintId;
+  final String category;
+  final List<AggregatedLibraryItem> items;
+  final Map<String, Map<String, dynamic>> detailsLookup;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final itemsAsync = ref.watch(blueprintLibraryItemsProvider(blueprintId));
-    final detailsLookup = ref.watch(allLibraryItemDetailsProvider).value ?? {};
+    final icon = _iconForCategory(category);
+    final color = _colorForCategory(category, colorScheme);
+    final label = _displayCategory(category, l10n);
 
-    return itemsAsync.when(
-      data: (items) {
-        if (items.isEmpty) return const SizedBox.shrink();
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 12, 4, 8),
-              child: Row(
-                children: [
-                  Icon(Icons.layers, size: 18, color: colorScheme.primary),
-                  const SizedBox(width: 8),
-                  Text(
-                    blueprintName,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      color: colorScheme.primary,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '${items.length}',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(4, 12, 4, 8),
+          child: Row(
+            children: [
+              Icon(icon, size: 18, color: color),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: theme.textTheme.titleSmall?.copyWith(color: color),
               ),
-            ),
-            Card(
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                children: [
-                  for (var i = 0; i < items.length; i++) ...[
-                    _LibraryItemTile(
-                      item: items[i],
-                      details: detailsLookup[items[i].id],
-                    ),
-                    if (i < items.length - 1)
-                      Divider(
-                        height: 1,
-                        indent: 56,
-                        color: colorScheme.outlineVariant,
-                      ),
-                  ],
-                ],
+              const Spacer(),
+              Text(
+                l10n.libraryItemCount(items.length),
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
               ),
-            ),
-          ],
-        );
-      },
-      loading: () => const SizedBox.shrink(),
-      error: (_, _) => const SizedBox.shrink(),
+            ],
+          ),
+        ),
+        Card(
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            children: [
+              for (var i = 0; i < items.length; i++) ...[
+                _LibraryItemTile(
+                  agg: items[i],
+                  details: detailsLookup[items[i].item.id],
+                  category: category,
+                ),
+                if (i < items.length - 1)
+                  Divider(
+                    height: 1,
+                    indent: 56,
+                    color: colorScheme.outlineVariant,
+                  ),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
 
 class _LibraryItemTile extends StatelessWidget {
-  const _LibraryItemTile({required this.item, this.details});
+  const _LibraryItemTile({
+    required this.agg,
+    this.details,
+    required this.category,
+  });
 
-  final LibraryItem item;
+  final AggregatedLibraryItem agg;
   final Map<String, dynamic>? details;
+  final String category;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context);
 
-    final id = item.id;
-    final name = item.name ?? 'Unknown';
-    final category = details?['_category'] as String?;
+    final id = agg.item.id;
+    final name = agg.item.name ?? 'Unknown';
     final icon = _iconForCategory(category);
     final color = _colorForCategory(category, colorScheme);
-    final subtitle = _displayCategory(category);
+    final blueprintNames = agg.blueprintNames;
 
     return ListTile(
       leading: Container(
@@ -173,20 +233,49 @@ class _LibraryItemTile extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle,
-              style: theme.textTheme.bodySmall?.copyWith(
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 4),
+        child: Wrap(
+          spacing: 4,
+          runSpacing: 4,
+          children: [
+            Icon(Icons.layers_outlined, size: 12, color: colorScheme.outline),
+            Text(
+              l10n.inBlueprints(blueprintNames.length),
+              style: theme.textTheme.labelSmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
-            )
-          : null,
+            ),
+            for (final bp in blueprintNames.take(3))
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                decoration: BoxDecoration(
+                  color: colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  bp,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: colorScheme.onSecondaryContainer,
+                    fontSize: 10,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            if (blueprintNames.length > 3)
+              Text(
+                '+${blueprintNames.length - 3}',
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                  fontSize: 10,
+                ),
+              ),
+          ],
+        ),
+      ),
       trailing: id != null
-          ? Icon(
-              Icons.chevron_right,
-              color: colorScheme.onSurfaceVariant,
-              size: 20,
-            )
+          ? Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant, size: 20)
           : null,
       dense: true,
       onTap: id != null
@@ -196,49 +285,34 @@ class _LibraryItemTile extends StatelessWidget {
           : null,
     );
   }
+}
 
-  static IconData _iconForCategory(String? category) {
-    switch (category) {
-      case 'custom-script':
-        return Icons.code;
-      case 'custom-app':
-        return Icons.apps;
-      case 'custom-profile':
-        return Icons.tune;
-      case 'in-house-app':
-        return Icons.phone_iphone;
-      default:
-        return Icons.inventory_2;
-    }
-  }
+IconData _iconForCategory(String category) {
+  return switch (category) {
+    'custom-script' => Icons.code,
+    'custom-app' => Icons.apps,
+    'custom-profile' => Icons.tune,
+    'in-house-app' => Icons.phone_iphone,
+    _ => Icons.inventory_2,
+  };
+}
 
-  static Color _colorForCategory(String? category, ColorScheme cs) {
-    switch (category) {
-      case 'custom-script':
-        return Colors.orange;
-      case 'custom-app':
-        return cs.tertiary;
-      case 'custom-profile':
-        return cs.primary;
-      case 'in-house-app':
-        return Colors.teal;
-      default:
-        return cs.onSurfaceVariant;
-    }
-  }
+Color _colorForCategory(String category, ColorScheme cs) {
+  return switch (category) {
+    'custom-script' => Colors.orange,
+    'custom-app' => cs.tertiary,
+    'custom-profile' => cs.primary,
+    'in-house-app' => Colors.teal,
+    _ => cs.onSurfaceVariant,
+  };
+}
 
-  static String? _displayCategory(String? category) {
-    switch (category) {
-      case 'custom-script':
-        return 'Custom Script';
-      case 'custom-app':
-        return 'Custom App';
-      case 'custom-profile':
-        return 'Custom Profile';
-      case 'in-house-app':
-        return 'In-House App';
-      default:
-        return null;
-    }
-  }
+String _displayCategory(String category, AppLocalizations l10n) {
+  return switch (category) {
+    'custom-script' => l10n.categoryCustomScript,
+    'custom-app' => l10n.categoryCustomApp,
+    'custom-profile' => l10n.categoryCustomProfile,
+    'in-house-app' => l10n.categoryInHouseApp,
+    _ => l10n.categoryBuiltIn,
+  };
 }

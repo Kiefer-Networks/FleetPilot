@@ -75,6 +75,60 @@ final blueprintTemplatesProvider = FutureProvider<List<BlueprintTemplate>>((
   return repo.getBlueprintTemplates();
 });
 
+/// A library item with its associated blueprint names (deduplicated).
+class AggregatedLibraryItem {
+  AggregatedLibraryItem({required this.item, required this.blueprintNames});
+  final LibraryItem item;
+  final List<String> blueprintNames;
+}
+
+/// Search query for library items list.
+final libraryItemSearchQueryProvider = StateProvider<String>((ref) => '');
+
+/// All library items across all blueprints, deduplicated with blueprint associations.
+final aggregatedLibraryItemsProvider =
+    FutureProvider<List<AggregatedLibraryItem>>((ref) async {
+      final blueprints = await ref.watch(blueprintsProvider.future);
+      final api = await ref.watch(blueprintApiProvider.future);
+
+      final results = await Future.wait(
+        blueprints.map((bp) async {
+          try {
+            final items = await api.getBlueprintLibraryItems(bp.id);
+            return (blueprint: bp, items: items);
+          } catch (_) {
+            return (blueprint: bp, items: <LibraryItem>[]);
+          }
+        }),
+      );
+
+      final map = <String, AggregatedLibraryItem>{};
+      for (final result in results) {
+        for (final item in result.items) {
+          final id = item.id;
+          if (id == null) continue;
+          if (map.containsKey(id)) {
+            if (!map[id]!.blueprintNames.contains(result.blueprint.name)) {
+              map[id]!.blueprintNames.add(result.blueprint.name);
+            }
+          } else {
+            map[id] = AggregatedLibraryItem(
+              item: item,
+              blueprintNames: [result.blueprint.name],
+            );
+          }
+        }
+      }
+
+      final list = map.values.toList();
+      list.sort(
+        (a, b) => (a.item.name ?? '')
+            .toLowerCase()
+            .compareTo((b.item.name ?? '').toLowerCase()),
+      );
+      return list;
+    });
+
 /// All library item details across all categories (scripts, apps, profiles).
 /// Returns a map of item ID → raw data with '_category' key.
 final allLibraryItemDetailsProvider =

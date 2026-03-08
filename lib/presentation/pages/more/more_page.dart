@@ -8,10 +8,26 @@ import '../../widgets/settings/settings.dart';
 class MorePage extends StatelessWidget {
   const MorePage({super.key});
 
+  /// Same calculation as RootShell._extraItemCount.
+  static int _sidebarExtraItems(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    if (size.width < 600) return 0;
+    const coreItems = 4;
+    const itemHeight = 72.0;
+    const verticalPadding = 32.0;
+    final available = size.height - verticalPadding - (coreItems * itemHeight);
+    return (available / itemHeight).floor().clamp(0, 4);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
+    final extra = _sidebarExtraItems(context);
+    final showLibrary = extra < 1;
+    final showVulns = extra < 2;
+    final showThreats = extra < 3;
+    final showBehavioral = extra < 4;
 
     return Scaffold(
       body: NestedScrollView(
@@ -21,21 +37,58 @@ class MorePage extends StatelessWidget {
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           children: [
-            // Data section
+            // 1. Security section
             const SizedBox(height: 8),
-            SectionHeader(title: l10n.libraryItems),
+            SectionHeader(title: l10n.security),
             SettingsGroupCard(
               children: [
+                if (showThreats)
+                  SettingsCategoryTile(
+                    icon: Icons.shield_outlined,
+                    iconColor: AppColors.iconOrange,
+                    title: l10n.threats,
+                    onTap: () => context.push('/more/threats'),
+                  ),
+                if (showVulns)
+                  SettingsCategoryTile(
+                    icon: Icons.bug_report_outlined,
+                    iconColor: AppColors.iconRed,
+                    title: l10n.vulnerabilities,
+                    onTap: () => context.push('/more/vulnerabilities'),
+                  ),
+                if (showBehavioral)
+                  SettingsCategoryTile(
+                    icon: Icons.psychology_outlined,
+                    iconColor: AppColors.iconDeepOrange,
+                    title: l10n.behavioralDetections,
+                    onTap: () => context.push('/more/behavioral-detections'),
+                  ),
                 SettingsCategoryTile(
-                  icon: Icons.library_books_outlined,
-                  iconColor: AppColors.iconPurple,
-                  title: l10n.libraryItems,
-                  onTap: () => context.push('/more/library-items'),
+                  icon: Icons.history,
+                  iconColor: AppColors.iconIndigo,
+                  title: l10n.auditLog,
+                  onTap: () => context.push('/more/audit-log'),
                 ),
               ],
             ),
 
-            // Data section
+            // 2. Library section
+            if (showLibrary) ...[
+              const SizedBox(height: 16),
+              SectionHeader(title: l10n.libraryItems),
+              SettingsGroupCard(
+                children: [
+                  SettingsCategoryTile(
+                    icon: Icons.library_books_outlined,
+                    iconColor: AppColors.iconPurple,
+                    title: l10n.libraryItems,
+                    onTap: () => context.push('/more/library-items'),
+                  ),
+                ],
+              ),
+            ],
+
+            // 3. Tags section
             const SizedBox(height: 16),
             SectionHeader(title: l10n.manageTags),
             SettingsGroupCard(
@@ -49,7 +102,7 @@ class MorePage extends StatelessWidget {
               ],
             ),
 
-            // Integrations section
+            // 4. ADE Integrations section
             const SizedBox(height: 16),
             SectionHeader(title: l10n.adeIntegrations),
             SettingsGroupCard(
@@ -59,38 +112,6 @@ class MorePage extends StatelessWidget {
                   iconColor: AppColors.iconBlue,
                   title: l10n.adeIntegrations,
                   onTap: () => context.push('/more/ade-integrations'),
-                ),
-              ],
-            ),
-
-            // Security section
-            const SizedBox(height: 16),
-            SectionHeader(title: l10n.security),
-            SettingsGroupCard(
-              children: [
-                SettingsCategoryTile(
-                  icon: Icons.shield_outlined,
-                  iconColor: AppColors.iconOrange,
-                  title: l10n.threats,
-                  onTap: () => context.push('/more/threats'),
-                ),
-                SettingsCategoryTile(
-                  icon: Icons.bug_report_outlined,
-                  iconColor: AppColors.iconRed,
-                  title: l10n.vulnerabilities,
-                  onTap: () => context.push('/more/vulnerabilities'),
-                ),
-                SettingsCategoryTile(
-                  icon: Icons.psychology_outlined,
-                  iconColor: AppColors.iconDeepOrange,
-                  title: l10n.behavioralDetections,
-                  onTap: () => context.push('/more/behavioral-detections'),
-                ),
-                SettingsCategoryTile(
-                  icon: Icons.history,
-                  iconColor: AppColors.iconIndigo,
-                  title: l10n.auditLog,
-                  onTap: () => context.push('/more/audit-log'),
                 ),
               ],
             ),

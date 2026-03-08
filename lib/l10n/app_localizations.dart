@@ -2943,6 +2943,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Details'**
   String get details;
+
+  /// No description provided for @searchLibraryItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Search library items...'**
+  String get searchLibraryItems;
+
+  /// No description provided for @categoryCustomScript.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Script'**
+  String get categoryCustomScript;
+
+  /// No description provided for @categoryCustomApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom App'**
+  String get categoryCustomApp;
+
+  /// No description provided for @categoryCustomProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Profile'**
+  String get categoryCustomProfile;
+
+  /// No description provided for @categoryInHouseApp.
+  ///
+  /// In en, this message translates to:
+  /// **'In-House App'**
+  String get categoryInHouseApp;
+
+  /// No description provided for @categoryBuiltIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in'**
+  String get categoryBuiltIn;
+
+  /// No description provided for @inBlueprints.
+  ///
+  /// In en, this message translates to:
+  /// **'In {count, plural, =1{1 blueprint} other{{count} blueprints}}'**
+  String inBlueprints(int count);
+
+  /// No description provided for @executionFrequencyOnce.
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get executionFrequencyOnce;
+
+  /// No description provided for @executionFrequencyEvery15Min.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 15 minutes'**
+  String get executionFrequencyEvery15Min;
+
+  /// No description provided for @executionFrequencyEveryDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get executionFrequencyEveryDay;
+
+  /// No description provided for @executionFrequencyNoEnforcement.
+  ///
+  /// In en, this message translates to:
+  /// **'No enforcement'**
+  String get executionFrequencyNoEnforcement;
+
+  /// No description provided for @scriptBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Script'**
+  String get scriptBody;
+
+  /// No description provided for @allProperties.
+  ///
+  /// In en, this message translates to:
+  /// **'All Properties'**
+  String get allProperties;
+
+  /// No description provided for @builtInLibraryItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in library item'**
+  String get builtInLibraryItem;
+
+  /// No description provided for @builtInDetailsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Details available on Status tab'**
+  String get builtInDetailsHint;
+
+  /// No description provided for @active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @execution.
+  ///
+  /// In en, this message translates to:
+  /// **'Execution'**
+  String get execution;
+
+  /// No description provided for @restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get restart;
+
+  /// No description provided for @selfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Self Service'**
+  String get selfService;
+
+  /// No description provided for @installType.
+  ///
+  /// In en, this message translates to:
+  /// **'Install Type'**
+  String get installType;
+
+  /// No description provided for @enforcement.
+  ///
+  /// In en, this message translates to:
+  /// **'Enforcement'**
+  String get enforcement;
+
+  /// No description provided for @runsOnMac.
+  ///
+  /// In en, this message translates to:
+  /// **'Runs on Mac'**
+  String get runsOnMac;
+
+  /// No description provided for @runsOnIphone.
+  ///
+  /// In en, this message translates to:
+  /// **'Runs on iPhone'**
+  String get runsOnIphone;
+
+  /// No description provided for @runsOnIpad.
+  ///
+  /// In en, this message translates to:
+  /// **'Runs on iPad'**
+  String get runsOnIpad;
+
+  /// No description provided for @appName.
+  ///
+  /// In en, this message translates to:
+  /// **'App Name'**
+  String get appName;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'App Version'**
+  String get appVersion;
+
+  /// No description provided for @minOsVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Min OS Version'**
+  String get minOsVersion;
+
+  /// No description provided for @created.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// No description provided for @updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated'**
+  String get updated;
+
+  /// No description provided for @libraryItemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No items} =1{1 item} other{{count} items}}'**
+  String libraryItemCount(num count);
 }
 
 class _AppLocalizationsDelegate
