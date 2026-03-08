@@ -212,8 +212,11 @@ class _InfoTab extends ConsumerWidget {
       ));
     }
 
-    // Use full details if available (has body/script/profile fields)
-    final d = fullDetail ?? itemDetails!;
+    // Use full details if available (has body/script/profile fields).
+    // fullDetail can be {} for types without a dedicated API endpoint.
+    final d = (fullDetail != null && fullDetail.isNotEmpty)
+        ? fullDetail
+        : itemDetails!;
 
     // Category-specific fields
     switch (category) {
