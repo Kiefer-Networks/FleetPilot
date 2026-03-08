@@ -1009,6 +1009,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get affectedDevices => 'Dispositivos afectados';
 
   @override
+  String get noAffectedDevices =>
+      'No se encontraron dispositivos afectados. Los dispositivos anteriormente afectados pueden haber sido eliminados.';
+
+  @override
   String get affectedSoftware => 'Software afectado';
 
   @override
@@ -1486,4 +1490,97 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get onboardingReadySubtitle =>
       'Conecta tu tenant de Kandji para comenzar a gestionar tu flota de dispositivos Apple. A continuación, configurarás tu conexión API y PIN de seguridad.';
+
+  @override
+  String get searchTags => 'Buscar etiquetas';
+
+  @override
+  String tagDeviceCount(int count) {
+    return '$count dispositivos';
+  }
+
+  @override
+  String get sortTitle => 'Ordenar';
+
+  @override
+  String get sortDirection => 'Dirección de orden';
+
+  @override
+  String get ascending => 'Ascendente';
+
+  @override
+  String get descending => 'Descendente';
+
+  @override
+  String get filterSeverity => 'Severidad';
+
+  @override
+  String get filterSort => 'Filtrar y ordenar';
+
+  @override
+  String get statusQuarantined => 'En cuarentena';
+
+  @override
+  String get statusNotQuarantined => 'Sin cuarentena';
+
+  @override
+  String get statusDetected => 'Detectado';
+
+  @override
+  String get statusReleased => 'Liberado';
+
+  @override
+  String get severityCritical => 'Crítico';
+
+  @override
+  String get severityHigh => 'Alto';
+
+  @override
+  String get severityMedium => 'Medio';
+
+  @override
+  String get severityLow => 'Bajo';
+
+  @override
+  String threatCount(int count) {
+    return '$count amenazas';
+  }
+
+  @override
+  String behavioralDetectionCount(int count) {
+    return '$count detecciones';
+  }
+
+  @override
+  String get downloadPublicKey => 'Descargar';
+
+  @override
+  String get publicKeySaved => 'Clave pública guardada';
+
+  @override
+  String get sortBy => 'Ordenar por';
+
+  @override
+  String get sortByCvss => 'Puntuación CVSS';
+
+  @override
+  String get sortByDeviceCount => 'Dispositivos afectados';
+
+  @override
+  String get sortByCveId => 'ID de CVE';
+
+  @override
+  String vulnCount(int count) {
+    return '$count vulnerabilidades';
+  }
+
+  @override
+  String get assignTags => 'Etiquetas';
+
+  @override
+  String get noTagsAvailableMessage =>
+      'No hay etiquetas disponibles. Cree etiquetas primero.';
+
+  @override
+  String get failedToLoadTags => 'No se pudieron cargar las etiquetas';
 }

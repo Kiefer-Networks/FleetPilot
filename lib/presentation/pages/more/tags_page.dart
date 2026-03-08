@@ -8,27 +8,50 @@ import '../../providers/device_providers.dart';
 import '../../widgets/common/error_state_widget.dart';
 import '../../widgets/common/loading_widget.dart';
 
+/// Search query for tag list filtering.
+final _tagSearchQueryProvider = StateProvider<String>((ref) => '');
+
+/// Computes device counts per tag name from the full device list.
+final tagDeviceCountsProvider = Provider<Map<String, int>>((ref) {
+  final devicesAsync = ref.watch(devicesProvider);
+  return devicesAsync.maybeWhen(
+    data: (devices) {
+      final counts = <String, int>{};
+      for (final device in devices) {
+        for (final tagName in device.tags) {
+          counts[tagName] = (counts[tagName] ?? 0) + 1;
+        }
+      }
+      return counts;
+    },
+    orElse: () => <String, int>{},
+  );
+});
+
 /// Full-CRUD management page for tags.
-class TagsPage extends ConsumerWidget {
+class TagsPage extends ConsumerStatefulWidget {
   const TagsPage({super.key});
 
-  static const _colorPresets = <Color>[
-    Colors.red,
-    Colors.orange,
-    Colors.amber,
-    Colors.green,
-    Colors.teal,
-    Colors.blue,
-    Colors.indigo,
-    Colors.purple,
-    Colors.pink,
-    Colors.brown,
-  ];
+  @override
+  ConsumerState<TagsPage> createState() => _TagsPageState();
+}
+
+class _TagsPageState extends ConsumerState<TagsPage> {
+  final _searchController = SearchController();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
     final tagsAsync = ref.watch(tagsProvider);
+    final searchQuery = ref.watch(_tagSearchQueryProvider).toLowerCase();
+    final deviceCounts = ref.watch(tagDeviceCountsProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.manageTags)),
@@ -37,59 +60,102 @@ class TagsPage extends ConsumerWidget {
         tooltip: l10n.createTag,
         child: const Icon(Icons.add),
       ),
-      body: tagsAsync.when(
-        data: (tags) {
-          if (tags.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.label_off_outlined,
-                    size: 48,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+            child: SearchBar(
+              controller: _searchController,
+              hintText: l10n.searchTags,
+              leading: const Icon(Icons.search, size: 20),
+              trailing: [
+                if (_searchController.text.isNotEmpty)
+                  IconButton(
+                    icon: const Icon(Icons.clear, size: 20),
+                    tooltip: l10n.clearSearch,
+                    onPressed: () {
+                      _searchController.clear();
+                      ref.read(_tagSearchQueryProvider.notifier).state = '';
+                      setState(() {});
+                    },
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    l10n.noTagsFound,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
+              ],
+              onChanged: (query) {
+                ref.read(_tagSearchQueryProvider.notifier).state = query;
+                setState(() {});
+              },
+              padding: const WidgetStatePropertyAll(
+                EdgeInsets.symmetric(horizontal: 8),
               ),
-            );
-          }
-          return RefreshIndicator(
-            onRefresh: () async => ref.invalidate(tagsProvider),
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              itemCount: tags.length,
-              itemBuilder: (context, index) {
-                final tag = tags[index];
-                final color = _colorForTag(tag, index);
-                return _TagCard(
-                  tag: tag,
-                  color: color,
-                  onEdit: () =>
-                      _showCreateEditDialog(context, ref, existingTag: tag),
-                  onDelete: () => _confirmDelete(context, ref, tag),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Expanded(
+            child: tagsAsync.when(
+              data: (tags) {
+                final filtered = searchQuery.isEmpty
+                    ? tags
+                    : tags
+                          .where(
+                            (t) =>
+                                t.name.toLowerCase().contains(searchQuery),
+                          )
+                          .toList();
+
+                if (filtered.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.label_off_outlined,
+                          size: 48,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          l10n.noTagsFound,
+                          style: theme.textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return RefreshIndicator(
+                  onRefresh: () async => ref.invalidate(tagsProvider),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    itemCount: filtered.length,
+                    itemBuilder: (context, index) {
+                      final tag = filtered[index];
+                      final count = deviceCounts[tag.name];
+                      return _TagCard(
+                        tag: tag,
+                        deviceCount: count,
+                        onEdit: () => _showCreateEditDialog(
+                          context,
+                          ref,
+                          existingTag: tag,
+                        ),
+                        onDelete: () => _confirmDelete(context, ref, tag),
+                      );
+                    },
+                  ),
                 );
               },
+              loading: () => const LoadingWidget(),
+              error: (error, _) => ErrorStateWidget(
+                failure: error,
+                onRetry: () => ref.invalidate(tagsProvider),
+              ),
             ),
-          );
-        },
-        loading: () => const LoadingWidget(),
-        error: (error, _) => ErrorStateWidget(
-          failure: error,
-          onRetry: () => ref.invalidate(tagsProvider),
-        ),
+          ),
+        ],
       ),
     );
-  }
-
-  /// Assigns a deterministic color based on the tag name hash.
-  Color _colorForTag(Tag tag, int index) {
-    final hash = tag.name.hashCode.abs();
-    return _colorPresets[hash % _colorPresets.length];
   }
 
   /// Shows a dialog for creating or editing a tag.
@@ -231,30 +297,47 @@ class TagsPage extends ConsumerWidget {
 class _TagCard extends StatelessWidget {
   const _TagCard({
     required this.tag,
-    required this.color,
+    required this.deviceCount,
     required this.onEdit,
     required this.onDelete,
   });
 
   final Tag tag;
-  final Color color;
+  final int? deviceCount;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context);
+    final countText = deviceCount != null ? l10n.tagDeviceCount(deviceCount!) : '\u2014';
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
         child: ListTile(
-          leading: CircleAvatar(
-            radius: 16,
-            backgroundColor: color,
-            child: const SizedBox.shrink(),
+          leading: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: colorScheme.secondaryContainer,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(
+              Icons.label,
+              size: 20,
+              color: colorScheme.onSecondaryContainer,
+            ),
           ),
           title: Text(tag.name, style: theme.textTheme.titleSmall),
+          subtitle: Text(
+            countText,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -266,7 +349,7 @@ class _TagCard extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   Icons.delete_outlined,
-                  color: theme.colorScheme.error,
+                  color: colorScheme.error,
                 ),
                 onPressed: onDelete,
                 tooltip: AppLocalizations.of(context).deleteTag,

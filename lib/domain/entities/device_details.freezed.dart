@@ -1012,7 +1012,7 @@ as String?,
 /// @nodoc
 mixin _$DeviceSecurity {
 
-@JsonKey(name: 'encryption_status') String? get encryptionStatus;@JsonKey(name: 'device_posture') String? get devicePosture;@JsonKey(name: 'has_passcode') int? get hasPasscode;@JsonKey(name: 'is_encrypted') int? get isEncrypted;@JsonKey(name: 'has_google_play_protect') int? get hasGooglePlayProtect;@JsonKey(name: 'developer_mode_enabled') dynamic get developerModeEnabled;@JsonKey(name: 'android_debug_bridge_enabled') dynamic get androidDebugBridgeEnabled;@JsonKey(name: 'unknown_app_sources_enabled') dynamic get unknownAppSourcesEnabled;@JsonKey(name: 'activation_lock_enabled') dynamic get activationLockEnabled;
+@JsonKey(name: 'encryption_status') String? get encryptionStatus;@JsonKey(name: 'device_posture') String? get devicePosture;@JsonKey(name: 'has_passcode', fromJson: _toNullableInt) int? get hasPasscode;@JsonKey(name: 'is_encrypted', fromJson: _toNullableInt) int? get isEncrypted;@JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt) int? get hasGooglePlayProtect;@JsonKey(name: 'developer_mode_enabled') dynamic get developerModeEnabled;@JsonKey(name: 'android_debug_bridge_enabled') dynamic get androidDebugBridgeEnabled;@JsonKey(name: 'unknown_app_sources_enabled') dynamic get unknownAppSourcesEnabled;@JsonKey(name: 'activation_lock_enabled') dynamic get activationLockEnabled;
 /// Create a copy of DeviceSecurity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1045,7 +1045,7 @@ abstract mixin class $DeviceSecurityCopyWith<$Res>  {
   factory $DeviceSecurityCopyWith(DeviceSecurity value, $Res Function(DeviceSecurity) _then) = _$DeviceSecurityCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'encryption_status') String? encryptionStatus,@JsonKey(name: 'device_posture') String? devicePosture,@JsonKey(name: 'has_passcode') int? hasPasscode,@JsonKey(name: 'is_encrypted') int? isEncrypted,@JsonKey(name: 'has_google_play_protect') int? hasGooglePlayProtect,@JsonKey(name: 'developer_mode_enabled') dynamic developerModeEnabled,@JsonKey(name: 'android_debug_bridge_enabled') dynamic androidDebugBridgeEnabled,@JsonKey(name: 'unknown_app_sources_enabled') dynamic unknownAppSourcesEnabled,@JsonKey(name: 'activation_lock_enabled') dynamic activationLockEnabled
+@JsonKey(name: 'encryption_status') String? encryptionStatus,@JsonKey(name: 'device_posture') String? devicePosture,@JsonKey(name: 'has_passcode', fromJson: _toNullableInt) int? hasPasscode,@JsonKey(name: 'is_encrypted', fromJson: _toNullableInt) int? isEncrypted,@JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt) int? hasGooglePlayProtect,@JsonKey(name: 'developer_mode_enabled') dynamic developerModeEnabled,@JsonKey(name: 'android_debug_bridge_enabled') dynamic androidDebugBridgeEnabled,@JsonKey(name: 'unknown_app_sources_enabled') dynamic unknownAppSourcesEnabled,@JsonKey(name: 'activation_lock_enabled') dynamic activationLockEnabled
 });
 
 
@@ -1158,7 +1158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'encryption_status')  String? encryptionStatus, @JsonKey(name: 'device_posture')  String? devicePosture, @JsonKey(name: 'has_passcode')  int? hasPasscode, @JsonKey(name: 'is_encrypted')  int? isEncrypted, @JsonKey(name: 'has_google_play_protect')  int? hasGooglePlayProtect, @JsonKey(name: 'developer_mode_enabled')  dynamic developerModeEnabled, @JsonKey(name: 'android_debug_bridge_enabled')  dynamic androidDebugBridgeEnabled, @JsonKey(name: 'unknown_app_sources_enabled')  dynamic unknownAppSourcesEnabled, @JsonKey(name: 'activation_lock_enabled')  dynamic activationLockEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'encryption_status')  String? encryptionStatus, @JsonKey(name: 'device_posture')  String? devicePosture, @JsonKey(name: 'has_passcode', fromJson: _toNullableInt)  int? hasPasscode, @JsonKey(name: 'is_encrypted', fromJson: _toNullableInt)  int? isEncrypted, @JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt)  int? hasGooglePlayProtect, @JsonKey(name: 'developer_mode_enabled')  dynamic developerModeEnabled, @JsonKey(name: 'android_debug_bridge_enabled')  dynamic androidDebugBridgeEnabled, @JsonKey(name: 'unknown_app_sources_enabled')  dynamic unknownAppSourcesEnabled, @JsonKey(name: 'activation_lock_enabled')  dynamic activationLockEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DeviceSecurity() when $default != null:
 return $default(_that.encryptionStatus,_that.devicePosture,_that.hasPasscode,_that.isEncrypted,_that.hasGooglePlayProtect,_that.developerModeEnabled,_that.androidDebugBridgeEnabled,_that.unknownAppSourcesEnabled,_that.activationLockEnabled);case _:
@@ -1179,7 +1179,7 @@ return $default(_that.encryptionStatus,_that.devicePosture,_that.hasPasscode,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'encryption_status')  String? encryptionStatus, @JsonKey(name: 'device_posture')  String? devicePosture, @JsonKey(name: 'has_passcode')  int? hasPasscode, @JsonKey(name: 'is_encrypted')  int? isEncrypted, @JsonKey(name: 'has_google_play_protect')  int? hasGooglePlayProtect, @JsonKey(name: 'developer_mode_enabled')  dynamic developerModeEnabled, @JsonKey(name: 'android_debug_bridge_enabled')  dynamic androidDebugBridgeEnabled, @JsonKey(name: 'unknown_app_sources_enabled')  dynamic unknownAppSourcesEnabled, @JsonKey(name: 'activation_lock_enabled')  dynamic activationLockEnabled)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'encryption_status')  String? encryptionStatus, @JsonKey(name: 'device_posture')  String? devicePosture, @JsonKey(name: 'has_passcode', fromJson: _toNullableInt)  int? hasPasscode, @JsonKey(name: 'is_encrypted', fromJson: _toNullableInt)  int? isEncrypted, @JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt)  int? hasGooglePlayProtect, @JsonKey(name: 'developer_mode_enabled')  dynamic developerModeEnabled, @JsonKey(name: 'android_debug_bridge_enabled')  dynamic androidDebugBridgeEnabled, @JsonKey(name: 'unknown_app_sources_enabled')  dynamic unknownAppSourcesEnabled, @JsonKey(name: 'activation_lock_enabled')  dynamic activationLockEnabled)  $default,) {final _that = this;
 switch (_that) {
 case _DeviceSecurity():
 return $default(_that.encryptionStatus,_that.devicePosture,_that.hasPasscode,_that.isEncrypted,_that.hasGooglePlayProtect,_that.developerModeEnabled,_that.androidDebugBridgeEnabled,_that.unknownAppSourcesEnabled,_that.activationLockEnabled);case _:
@@ -1199,7 +1199,7 @@ return $default(_that.encryptionStatus,_that.devicePosture,_that.hasPasscode,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'encryption_status')  String? encryptionStatus, @JsonKey(name: 'device_posture')  String? devicePosture, @JsonKey(name: 'has_passcode')  int? hasPasscode, @JsonKey(name: 'is_encrypted')  int? isEncrypted, @JsonKey(name: 'has_google_play_protect')  int? hasGooglePlayProtect, @JsonKey(name: 'developer_mode_enabled')  dynamic developerModeEnabled, @JsonKey(name: 'android_debug_bridge_enabled')  dynamic androidDebugBridgeEnabled, @JsonKey(name: 'unknown_app_sources_enabled')  dynamic unknownAppSourcesEnabled, @JsonKey(name: 'activation_lock_enabled')  dynamic activationLockEnabled)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'encryption_status')  String? encryptionStatus, @JsonKey(name: 'device_posture')  String? devicePosture, @JsonKey(name: 'has_passcode', fromJson: _toNullableInt)  int? hasPasscode, @JsonKey(name: 'is_encrypted', fromJson: _toNullableInt)  int? isEncrypted, @JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt)  int? hasGooglePlayProtect, @JsonKey(name: 'developer_mode_enabled')  dynamic developerModeEnabled, @JsonKey(name: 'android_debug_bridge_enabled')  dynamic androidDebugBridgeEnabled, @JsonKey(name: 'unknown_app_sources_enabled')  dynamic unknownAppSourcesEnabled, @JsonKey(name: 'activation_lock_enabled')  dynamic activationLockEnabled)?  $default,) {final _that = this;
 switch (_that) {
 case _DeviceSecurity() when $default != null:
 return $default(_that.encryptionStatus,_that.devicePosture,_that.hasPasscode,_that.isEncrypted,_that.hasGooglePlayProtect,_that.developerModeEnabled,_that.androidDebugBridgeEnabled,_that.unknownAppSourcesEnabled,_that.activationLockEnabled);case _:
@@ -1214,14 +1214,14 @@ return $default(_that.encryptionStatus,_that.devicePosture,_that.hasPasscode,_th
 @JsonSerializable()
 
 class _DeviceSecurity implements DeviceSecurity {
-  const _DeviceSecurity({@JsonKey(name: 'encryption_status') this.encryptionStatus, @JsonKey(name: 'device_posture') this.devicePosture, @JsonKey(name: 'has_passcode') this.hasPasscode, @JsonKey(name: 'is_encrypted') this.isEncrypted, @JsonKey(name: 'has_google_play_protect') this.hasGooglePlayProtect, @JsonKey(name: 'developer_mode_enabled') this.developerModeEnabled, @JsonKey(name: 'android_debug_bridge_enabled') this.androidDebugBridgeEnabled, @JsonKey(name: 'unknown_app_sources_enabled') this.unknownAppSourcesEnabled, @JsonKey(name: 'activation_lock_enabled') this.activationLockEnabled});
+  const _DeviceSecurity({@JsonKey(name: 'encryption_status') this.encryptionStatus, @JsonKey(name: 'device_posture') this.devicePosture, @JsonKey(name: 'has_passcode', fromJson: _toNullableInt) this.hasPasscode, @JsonKey(name: 'is_encrypted', fromJson: _toNullableInt) this.isEncrypted, @JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt) this.hasGooglePlayProtect, @JsonKey(name: 'developer_mode_enabled') this.developerModeEnabled, @JsonKey(name: 'android_debug_bridge_enabled') this.androidDebugBridgeEnabled, @JsonKey(name: 'unknown_app_sources_enabled') this.unknownAppSourcesEnabled, @JsonKey(name: 'activation_lock_enabled') this.activationLockEnabled});
   factory _DeviceSecurity.fromJson(Map<String, dynamic> json) => _$DeviceSecurityFromJson(json);
 
 @override@JsonKey(name: 'encryption_status') final  String? encryptionStatus;
 @override@JsonKey(name: 'device_posture') final  String? devicePosture;
-@override@JsonKey(name: 'has_passcode') final  int? hasPasscode;
-@override@JsonKey(name: 'is_encrypted') final  int? isEncrypted;
-@override@JsonKey(name: 'has_google_play_protect') final  int? hasGooglePlayProtect;
+@override@JsonKey(name: 'has_passcode', fromJson: _toNullableInt) final  int? hasPasscode;
+@override@JsonKey(name: 'is_encrypted', fromJson: _toNullableInt) final  int? isEncrypted;
+@override@JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt) final  int? hasGooglePlayProtect;
 @override@JsonKey(name: 'developer_mode_enabled') final  dynamic developerModeEnabled;
 @override@JsonKey(name: 'android_debug_bridge_enabled') final  dynamic androidDebugBridgeEnabled;
 @override@JsonKey(name: 'unknown_app_sources_enabled') final  dynamic unknownAppSourcesEnabled;
@@ -1260,7 +1260,7 @@ abstract mixin class _$DeviceSecurityCopyWith<$Res> implements $DeviceSecurityCo
   factory _$DeviceSecurityCopyWith(_DeviceSecurity value, $Res Function(_DeviceSecurity) _then) = __$DeviceSecurityCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'encryption_status') String? encryptionStatus,@JsonKey(name: 'device_posture') String? devicePosture,@JsonKey(name: 'has_passcode') int? hasPasscode,@JsonKey(name: 'is_encrypted') int? isEncrypted,@JsonKey(name: 'has_google_play_protect') int? hasGooglePlayProtect,@JsonKey(name: 'developer_mode_enabled') dynamic developerModeEnabled,@JsonKey(name: 'android_debug_bridge_enabled') dynamic androidDebugBridgeEnabled,@JsonKey(name: 'unknown_app_sources_enabled') dynamic unknownAppSourcesEnabled,@JsonKey(name: 'activation_lock_enabled') dynamic activationLockEnabled
+@JsonKey(name: 'encryption_status') String? encryptionStatus,@JsonKey(name: 'device_posture') String? devicePosture,@JsonKey(name: 'has_passcode', fromJson: _toNullableInt) int? hasPasscode,@JsonKey(name: 'is_encrypted', fromJson: _toNullableInt) int? isEncrypted,@JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt) int? hasGooglePlayProtect,@JsonKey(name: 'developer_mode_enabled') dynamic developerModeEnabled,@JsonKey(name: 'android_debug_bridge_enabled') dynamic androidDebugBridgeEnabled,@JsonKey(name: 'unknown_app_sources_enabled') dynamic unknownAppSourcesEnabled,@JsonKey(name: 'activation_lock_enabled') dynamic activationLockEnabled
 });
 
 

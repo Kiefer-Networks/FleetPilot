@@ -1163,6 +1163,7 @@
   "filterMedium": "Medium",
   "filterLow": "Low",
   "filterClearAll": "Clear All",
+  "filterAll": "All",
   "filterTitle": "Filters",
   "filterApply": "Apply",
   "filterPlatform": "Platform",
@@ -1185,6 +1186,7 @@
   "noBehavioralDetections": "No behavioral detections found.",
   "searchBehavioralDetections": "Search detections...",
   "affectedDevices": "Affected Devices",
+  "noAffectedDevices": "No affected devices found. Previously affected devices may have been removed.",
   "affectedSoftware": "Affected Software",
   "blueprintTemplates": "Blueprint Templates",
   "noTemplatesFound": "No templates found.",
@@ -1560,5 +1562,46 @@
   "onboardingReadySubtitle": "Connect your Kandji tenant to start managing your Apple device fleet. You'll set up your API connection and security PIN next.",
   "@onboardingReadySubtitle": {
     "description": "Subtitle on the final onboarding page"
-  }
+  },
+
+  "searchTags": "Search tags",
+  "tagDeviceCount": "{count} devices",
+  "@tagDeviceCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "sortTitle": "Sort",
+  "sortDirection": "Sort Direction",
+  "ascending": "Ascending",
+  "descending": "Descending",
+  "filterSeverity": "Severity",
+  "filterSort": "Filter & Sort",
+  "statusQuarantined": "Quarantined",
+  "statusNotQuarantined": "Not Quarantined",
+  "statusDetected": "Detected",
+  "statusReleased": "Released",
+  "severityCritical": "Critical",
+  "severityHigh": "High",
+  "severityMedium": "Medium",
+  "severityLow": "Low",
+  "threatCount": "{count} threats",
+  "@threatCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "behavioralDetectionCount": "{count} detections",
+  "@behavioralDetectionCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "downloadPublicKey": "Download",
+  "publicKeySaved": "Public key saved",
+  "sortBy": "Sort by",
+  "sortByCvss": "CVSS Score",
+  "sortByDeviceCount": "Affected devices",
+  "sortByCveId": "CVE ID",
+  "vulnCount": "{count} vulnerabilities",
+  "@vulnCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "assignTags": "Tags",
+  "noTagsAvailableMessage": "No tags available. Create tags first.",
+  "failedToLoadTags": "Failed to load tags"
 }

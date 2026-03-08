@@ -71,15 +71,27 @@ final adeDevicesProvider = FutureProvider.family<List<AdeDevice>, String>((
 /// Search query for behavioral detections.
 final behavioralSearchQueryProvider = StateProvider<String>((ref) => '');
 
+/// Severity filter for behavioral detections (Critical, High, Medium, Low).
+final behavioralSeverityFilterProvider = StateProvider<String?>((ref) => null);
+
+/// Sort direction for behavioral detections (true = A-Z, false = Z-A).
+final behavioralSortAscProvider = StateProvider<bool>((ref) => true);
+
 /// Filtered behavioral detections.
 final filteredBehavioralDetectionsProvider =
     Provider<AsyncValue<List<BehavioralDetection>>>((ref) {
       final detectionsAsync = ref.watch(behavioralDetectionsProvider);
       final query = ref.watch(behavioralSearchQueryProvider).toLowerCase();
+      final severityFilter = ref.watch(behavioralSeverityFilterProvider);
+      final sortAsc = ref.watch(behavioralSortAscProvider);
 
       return detectionsAsync.whenData((detections) {
-        if (query.isEmpty) return detections;
-        return detections.where((d) {
+        final filtered = detections.where((d) {
+          if (severityFilter != null &&
+              d.severity?.toLowerCase() != severityFilter.toLowerCase()) {
+            return false;
+          }
+          if (query.isEmpty) return true;
           final name = d.threatName?.toLowerCase() ?? '';
           final device = d.deviceName?.toLowerCase() ?? '';
           final process = d.processName?.toLowerCase() ?? '';
@@ -89,6 +101,14 @@ final filteredBehavioralDetectionsProvider =
               process.contains(query) ||
               classification.contains(query);
         }).toList();
+
+        filtered.sort((a, b) {
+          final nameA = (a.threatName ?? '').toLowerCase();
+          final nameB = (b.threatName ?? '').toLowerCase();
+          return sortAsc ? nameA.compareTo(nameB) : nameB.compareTo(nameA);
+        });
+
+        return filtered;
       });
     });
 
@@ -98,12 +118,23 @@ final vulnSearchQueryProvider = StateProvider<String>((ref) => '');
 /// Severity filter for vulnerabilities.
 final vulnSeverityFilterProvider = StateProvider<String?>((ref) => null);
 
-/// Filtered vulnerabilities.
+/// Sort field for vulnerability list.
+enum VulnSortField { cvss, deviceCount, cveId }
+
+final vulnSortFieldProvider =
+    StateProvider<VulnSortField>((ref) => VulnSortField.cvss);
+
+/// Sort ascending for vulnerability list.
+final vulnSortAscProvider = StateProvider<bool>((ref) => false);
+
+/// Filtered and sorted vulnerabilities.
 final filteredVulnerabilitiesProvider =
     Provider<AsyncValue<List<Vulnerability>>>((ref) {
       final vulnsAsync = ref.watch(vulnerabilitiesProvider);
       final query = ref.watch(vulnSearchQueryProvider).toLowerCase();
       final severityFilter = ref.watch(vulnSeverityFilterProvider);
+      final sortField = ref.watch(vulnSortFieldProvider);
+      final sortAsc = ref.watch(vulnSortAscProvider);
 
       return vulnsAsync.whenData((vulns) {
         final filtered = vulns.where((v) {
@@ -115,22 +146,48 @@ final filteredVulnerabilitiesProvider =
           final cve = v.cveId?.toLowerCase() ?? '';
           final sw = v.software?.toLowerCase() ?? '';
           return cve.contains(query) || sw.contains(query);
+        }).toList();
+
+        filtered.sort((a, b) {
+          int cmp;
+          switch (sortField) {
+            case VulnSortField.cvss:
+              cmp = (a.cvssScore ?? 0).compareTo(b.cvssScore ?? 0);
+            case VulnSortField.deviceCount:
+              cmp = (a.deviceCount ?? 0).compareTo(b.deviceCount ?? 0);
+            case VulnSortField.cveId:
+              cmp = (a.cveId ?? '').compareTo(b.cveId ?? '');
+          }
+          return sortAsc ? cmp : -cmp;
         });
-        return filtered.toList();
+
+        return filtered;
       });
     });
 
 /// Search query for threat list.
 final threatSearchQueryProvider = StateProvider<String>((ref) => '');
 
+/// Status filter for threats (Quarantined, Not Quarantined, Detected, Released).
+final threatStatusFilterProvider = StateProvider<String?>((ref) => null);
+
+/// Sort direction for threats (true = A-Z, false = Z-A).
+final threatSortAscProvider = StateProvider<bool>((ref) => true);
+
 /// Filtered threats.
 final filteredThreatsProvider = Provider<AsyncValue<List<Threat>>>((ref) {
   final threatsAsync = ref.watch(threatsProvider);
   final query = ref.watch(threatSearchQueryProvider).toLowerCase();
+  final statusFilter = ref.watch(threatStatusFilterProvider);
+  final sortAsc = ref.watch(threatSortAscProvider);
 
   return threatsAsync.whenData((threats) {
-    if (query.isEmpty) return threats;
-    return threats.where((t) {
+    final filtered = threats.where((t) {
+      if (statusFilter != null &&
+          t.status?.toLowerCase() != statusFilter.toLowerCase()) {
+        return false;
+      }
+      if (query.isEmpty) return true;
       final name = t.threatName?.toLowerCase() ?? '';
       final device = t.deviceName?.toLowerCase() ?? '';
       final file = t.fileName?.toLowerCase() ?? '';
@@ -138,6 +195,14 @@ final filteredThreatsProvider = Provider<AsyncValue<List<Threat>>>((ref) {
           device.contains(query) ||
           file.contains(query);
     }).toList();
+
+    filtered.sort((a, b) {
+      final nameA = (a.threatName ?? a.fileName ?? '').toLowerCase();
+      final nameB = (b.threatName ?? b.fileName ?? '').toLowerCase();
+      return sortAsc ? nameA.compareTo(nameB) : nameB.compareTo(nameA);
+    });
+
+    return filtered;
   });
 });
 
@@ -181,14 +246,16 @@ final filteredAuditEventsProvider = Provider<AsyncValue<List<AuditEvent>>>((
   return eventsAsync.whenData((events) {
     if (query.isEmpty) return events;
     return events.where((e) {
-      final desc = e.eventDescription?.toLowerCase() ?? '';
-      final action = e.eventAction?.toLowerCase() ?? '';
-      final admin = e.adminName?.toLowerCase() ?? '';
-      final device = e.deviceName?.toLowerCase() ?? '';
-      return desc.contains(query) ||
-          action.contains(query) ||
-          admin.contains(query) ||
-          device.contains(query);
+      final action = e.action?.toLowerCase() ?? '';
+      final actor = e.actorId?.toLowerCase() ?? '';
+      final targetType = e.targetType?.toLowerCase() ?? '';
+      final component = e.targetComponent?.toLowerCase() ?? '';
+      final state = e.newState?.toLowerCase() ?? '';
+      return action.contains(query) ||
+          actor.contains(query) ||
+          targetType.contains(query) ||
+          component.contains(query) ||
+          state.contains(query);
     }).toList();
   });
 });

@@ -82,9 +82,9 @@ _DeviceSecurity _$DeviceSecurityFromJson(Map<String, dynamic> json) =>
     _DeviceSecurity(
       encryptionStatus: json['encryption_status'] as String?,
       devicePosture: json['device_posture'] as String?,
-      hasPasscode: (json['has_passcode'] as num?)?.toInt(),
-      isEncrypted: (json['is_encrypted'] as num?)?.toInt(),
-      hasGooglePlayProtect: (json['has_google_play_protect'] as num?)?.toInt(),
+      hasPasscode: _toNullableInt(json['has_passcode']),
+      isEncrypted: _toNullableInt(json['is_encrypted']),
+      hasGooglePlayProtect: _toNullableInt(json['has_google_play_protect']),
       developerModeEnabled: json['developer_mode_enabled'],
       androidDebugBridgeEnabled: json['android_debug_bridge_enabled'],
       unknownAppSourcesEnabled: json['unknown_app_sources_enabled'],

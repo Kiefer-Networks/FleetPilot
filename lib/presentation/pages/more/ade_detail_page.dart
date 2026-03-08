@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -212,6 +214,13 @@ class _AdeDetailScaffold extends ConsumerWidget {
                             style: theme.textTheme.titleSmall,
                           ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
                         OutlinedButton.icon(
                           onPressed: () async {
                             try {
@@ -222,7 +231,9 @@ class _AdeDetailScaffold extends ConsumerWidget {
                               if (context.mounted) {
                                 Clipboard.setData(ClipboardData(text: key));
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(l10n.publicKeyCopied)),
+                                  SnackBar(
+                                    content: Text(l10n.publicKeyCopied),
+                                  ),
                                 );
                               }
                             } catch (_) {
@@ -235,6 +246,40 @@ class _AdeDetailScaffold extends ConsumerWidget {
                           },
                           icon: const Icon(Icons.copy, size: 18),
                           label: Text(l10n.tapToCopy),
+                        ),
+                        OutlinedButton.icon(
+                          onPressed: () async {
+                            try {
+                              final api = await ref.read(
+                                tenantApiProvider.future,
+                              );
+                              final key = await api.getAdePublicKey();
+                              final result =
+                                  await FilePicker.platform.saveFile(
+                                dialogTitle: l10n.downloadPublicKey,
+                                fileName: 'ade_public_key.pem',
+                                bytes:
+                                    Uint8List.fromList(utf8.encode(key)),
+                              );
+                              if (result != null && context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(l10n.publicKeySaved),
+                                  ),
+                                );
+                              }
+                            } catch (_) {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(l10n.actionFailed),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          icon: const Icon(Icons.download, size: 18),
+                          label: Text(l10n.downloadPublicKey),
                         ),
                       ],
                     ),
@@ -559,7 +604,8 @@ class _AdeDetailScaffold extends ConsumerWidget {
                     FilledButton.tonalIcon(
                       onPressed: () async {
                         final result = await FilePicker.platform.pickFiles(
-                          type: FileType.any,
+                          type: FileType.custom,
+                          allowedExtensions: ['p7m'],
                         );
                         if (result != null &&
                             result.files.single.path != null) {

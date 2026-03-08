@@ -1942,6 +1942,12 @@ abstract class AppLocalizations {
   /// **'Affected Devices'**
   String get affectedDevices;
 
+  /// No description provided for @noAffectedDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'No affected devices found. Previously affected devices may have been removed.'**
+  String get noAffectedDevices;
+
   /// No description provided for @affectedSoftware.
   ///
   /// In en, this message translates to:
@@ -2757,6 +2763,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connect your Kandji tenant to start managing your Apple device fleet. You\'ll set up your API connection and security PIN next.'**
   String get onboardingReadySubtitle;
+
+  /// No description provided for @searchTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Search tags'**
+  String get searchTags;
+
+  /// No description provided for @tagDeviceCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} devices'**
+  String tagDeviceCount(int count);
+
+  /// No description provided for @sortTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get sortTitle;
+
+  /// No description provided for @sortDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort Direction'**
+  String get sortDirection;
+
+  /// No description provided for @ascending.
+  ///
+  /// In en, this message translates to:
+  /// **'Ascending'**
+  String get ascending;
+
+  /// No description provided for @descending.
+  ///
+  /// In en, this message translates to:
+  /// **'Descending'**
+  String get descending;
+
+  /// No description provided for @filterSeverity.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get filterSeverity;
+
+  /// No description provided for @filterSort.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter & Sort'**
+  String get filterSort;
+
+  /// No description provided for @statusQuarantined.
+  ///
+  /// In en, this message translates to:
+  /// **'Quarantined'**
+  String get statusQuarantined;
+
+  /// No description provided for @statusNotQuarantined.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Quarantined'**
+  String get statusNotQuarantined;
+
+  /// No description provided for @statusDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected'**
+  String get statusDetected;
+
+  /// No description provided for @statusReleased.
+  ///
+  /// In en, this message translates to:
+  /// **'Released'**
+  String get statusReleased;
+
+  /// No description provided for @severityCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get severityCritical;
+
+  /// No description provided for @severityHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get severityHigh;
+
+  /// No description provided for @severityMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get severityMedium;
+
+  /// No description provided for @severityLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get severityLow;
+
+  /// No description provided for @threatCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} threats'**
+  String threatCount(int count);
+
+  /// No description provided for @behavioralDetectionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} detections'**
+  String behavioralDetectionCount(int count);
+
+  /// No description provided for @downloadPublicKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get downloadPublicKey;
+
+  /// No description provided for @publicKeySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Public key saved'**
+  String get publicKeySaved;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get sortBy;
+
+  /// No description provided for @sortByCvss.
+  ///
+  /// In en, this message translates to:
+  /// **'CVSS Score'**
+  String get sortByCvss;
+
+  /// No description provided for @sortByDeviceCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Affected devices'**
+  String get sortByDeviceCount;
+
+  /// No description provided for @sortByCveId.
+  ///
+  /// In en, this message translates to:
+  /// **'CVE ID'**
+  String get sortByCveId;
+
+  /// No description provided for @vulnCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} vulnerabilities'**
+  String vulnCount(int count);
+
+  /// No description provided for @assignTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get assignTags;
+
+  /// No description provided for @noTagsAvailableMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No tags available. Create tags first.'**
+  String get noTagsAvailableMessage;
+
+  /// No description provided for @failedToLoadTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load tags'**
+  String get failedToLoadTags;
 }
 
 class _AppLocalizationsDelegate

@@ -15,7 +15,15 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuditEvent {
 
- String? get id;@JsonKey(name: 'event_type') String? get eventType;@JsonKey(name: 'event_action') String? get eventAction;@JsonKey(name: 'event_description') String? get eventDescription;@JsonKey(name: 'event_date') String? get eventDate;@JsonKey(name: 'admin_email') String? get adminEmail;@JsonKey(name: 'admin_name') String? get adminName;@JsonKey(name: 'device_name') String? get deviceName;@JsonKey(name: 'device_serial_number') String? get deviceSerialNumber;@JsonKey(name: 'blueprint_name') String? get blueprintName;@JsonKey(name: 'user_email') String? get userEmail;
+@JsonKey(fromJson: _toNullableString) String? get id;/// The action performed, e.g. "create", "update", "delete", "detect".
+@JsonKey(fromJson: _toNullableString) String? get action;/// ISO-8601 timestamp when the event occurred.
+@JsonKey(name: 'occurred_at') String? get occurredAt;/// ID of the actor (admin user or system component).
+@JsonKey(name: 'actor_id', fromJson: _toNullableString) String? get actorId;/// Type of actor, e.g. "admin", "kandji".
+@JsonKey(name: 'actor_type', fromJson: _toNullableString) String? get actorType;/// ID of the target object.
+@JsonKey(name: 'target_id', fromJson: _toNullableString) String? get targetId;/// Type of target, e.g. "device", "blueprint", "user".
+@JsonKey(name: 'target_type', fromJson: _toNullableString) String? get targetType;/// Component category, e.g. "library_item", "vulnerability".
+@JsonKey(name: 'target_component', fromJson: _toNullableString) String? get targetComponent;/// State details — may be a nested object. Extracted as description.
+@JsonKey(name: 'new_state', fromJson: _descriptionFromNewState) String? get newState;
 /// Create a copy of AuditEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +36,16 @@ $AuditEventCopyWith<AuditEvent> get copyWith => _$AuditEventCopyWithImpl<AuditEv
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuditEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.eventAction, eventAction) || other.eventAction == eventAction)&&(identical(other.eventDescription, eventDescription) || other.eventDescription == eventDescription)&&(identical(other.eventDate, eventDate) || other.eventDate == eventDate)&&(identical(other.adminEmail, adminEmail) || other.adminEmail == adminEmail)&&(identical(other.adminName, adminName) || other.adminName == adminName)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.deviceSerialNumber, deviceSerialNumber) || other.deviceSerialNumber == deviceSerialNumber)&&(identical(other.blueprintName, blueprintName) || other.blueprintName == blueprintName)&&(identical(other.userEmail, userEmail) || other.userEmail == userEmail));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuditEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.occurredAt, occurredAt) || other.occurredAt == occurredAt)&&(identical(other.actorId, actorId) || other.actorId == actorId)&&(identical(other.actorType, actorType) || other.actorType == actorType)&&(identical(other.targetId, targetId) || other.targetId == targetId)&&(identical(other.targetType, targetType) || other.targetType == targetType)&&(identical(other.targetComponent, targetComponent) || other.targetComponent == targetComponent)&&(identical(other.newState, newState) || other.newState == newState));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,eventType,eventAction,eventDescription,eventDate,adminEmail,adminName,deviceName,deviceSerialNumber,blueprintName,userEmail);
+int get hashCode => Object.hash(runtimeType,id,action,occurredAt,actorId,actorType,targetId,targetType,targetComponent,newState);
 
 @override
 String toString() {
-  return 'AuditEvent(id: $id, eventType: $eventType, eventAction: $eventAction, eventDescription: $eventDescription, eventDate: $eventDate, adminEmail: $adminEmail, adminName: $adminName, deviceName: $deviceName, deviceSerialNumber: $deviceSerialNumber, blueprintName: $blueprintName, userEmail: $userEmail)';
+  return 'AuditEvent(id: $id, action: $action, occurredAt: $occurredAt, actorId: $actorId, actorType: $actorType, targetId: $targetId, targetType: $targetType, targetComponent: $targetComponent, newState: $newState)';
 }
 
 
@@ -48,7 +56,7 @@ abstract mixin class $AuditEventCopyWith<$Res>  {
   factory $AuditEventCopyWith(AuditEvent value, $Res Function(AuditEvent) _then) = _$AuditEventCopyWithImpl;
 @useResult
 $Res call({
- String? id,@JsonKey(name: 'event_type') String? eventType,@JsonKey(name: 'event_action') String? eventAction,@JsonKey(name: 'event_description') String? eventDescription,@JsonKey(name: 'event_date') String? eventDate,@JsonKey(name: 'admin_email') String? adminEmail,@JsonKey(name: 'admin_name') String? adminName,@JsonKey(name: 'device_name') String? deviceName,@JsonKey(name: 'device_serial_number') String? deviceSerialNumber,@JsonKey(name: 'blueprint_name') String? blueprintName,@JsonKey(name: 'user_email') String? userEmail
+@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(fromJson: _toNullableString) String? action,@JsonKey(name: 'occurred_at') String? occurredAt,@JsonKey(name: 'actor_id', fromJson: _toNullableString) String? actorId,@JsonKey(name: 'actor_type', fromJson: _toNullableString) String? actorType,@JsonKey(name: 'target_id', fromJson: _toNullableString) String? targetId,@JsonKey(name: 'target_type', fromJson: _toNullableString) String? targetType,@JsonKey(name: 'target_component', fromJson: _toNullableString) String? targetComponent,@JsonKey(name: 'new_state', fromJson: _descriptionFromNewState) String? newState
 });
 
 
@@ -65,19 +73,17 @@ class _$AuditEventCopyWithImpl<$Res>
 
 /// Create a copy of AuditEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? eventType = freezed,Object? eventAction = freezed,Object? eventDescription = freezed,Object? eventDate = freezed,Object? adminEmail = freezed,Object? adminName = freezed,Object? deviceName = freezed,Object? deviceSerialNumber = freezed,Object? blueprintName = freezed,Object? userEmail = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? action = freezed,Object? occurredAt = freezed,Object? actorId = freezed,Object? actorType = freezed,Object? targetId = freezed,Object? targetType = freezed,Object? targetComponent = freezed,Object? newState = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,eventType: freezed == eventType ? _self.eventType : eventType // ignore: cast_nullable_to_non_nullable
-as String?,eventAction: freezed == eventAction ? _self.eventAction : eventAction // ignore: cast_nullable_to_non_nullable
-as String?,eventDescription: freezed == eventDescription ? _self.eventDescription : eventDescription // ignore: cast_nullable_to_non_nullable
-as String?,eventDate: freezed == eventDate ? _self.eventDate : eventDate // ignore: cast_nullable_to_non_nullable
-as String?,adminEmail: freezed == adminEmail ? _self.adminEmail : adminEmail // ignore: cast_nullable_to_non_nullable
-as String?,adminName: freezed == adminName ? _self.adminName : adminName // ignore: cast_nullable_to_non_nullable
-as String?,deviceName: freezed == deviceName ? _self.deviceName : deviceName // ignore: cast_nullable_to_non_nullable
-as String?,deviceSerialNumber: freezed == deviceSerialNumber ? _self.deviceSerialNumber : deviceSerialNumber // ignore: cast_nullable_to_non_nullable
-as String?,blueprintName: freezed == blueprintName ? _self.blueprintName : blueprintName // ignore: cast_nullable_to_non_nullable
-as String?,userEmail: freezed == userEmail ? _self.userEmail : userEmail // ignore: cast_nullable_to_non_nullable
+as String?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
+as String?,occurredAt: freezed == occurredAt ? _self.occurredAt : occurredAt // ignore: cast_nullable_to_non_nullable
+as String?,actorId: freezed == actorId ? _self.actorId : actorId // ignore: cast_nullable_to_non_nullable
+as String?,actorType: freezed == actorType ? _self.actorType : actorType // ignore: cast_nullable_to_non_nullable
+as String?,targetId: freezed == targetId ? _self.targetId : targetId // ignore: cast_nullable_to_non_nullable
+as String?,targetType: freezed == targetType ? _self.targetType : targetType // ignore: cast_nullable_to_non_nullable
+as String?,targetComponent: freezed == targetComponent ? _self.targetComponent : targetComponent // ignore: cast_nullable_to_non_nullable
+as String?,newState: freezed == newState ? _self.newState : newState // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -163,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id, @JsonKey(name: 'event_type')  String? eventType, @JsonKey(name: 'event_action')  String? eventAction, @JsonKey(name: 'event_description')  String? eventDescription, @JsonKey(name: 'event_date')  String? eventDate, @JsonKey(name: 'admin_email')  String? adminEmail, @JsonKey(name: 'admin_name')  String? adminName, @JsonKey(name: 'device_name')  String? deviceName, @JsonKey(name: 'device_serial_number')  String? deviceSerialNumber, @JsonKey(name: 'blueprint_name')  String? blueprintName, @JsonKey(name: 'user_email')  String? userEmail)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(fromJson: _toNullableString)  String? action, @JsonKey(name: 'occurred_at')  String? occurredAt, @JsonKey(name: 'actor_id', fromJson: _toNullableString)  String? actorId, @JsonKey(name: 'actor_type', fromJson: _toNullableString)  String? actorType, @JsonKey(name: 'target_id', fromJson: _toNullableString)  String? targetId, @JsonKey(name: 'target_type', fromJson: _toNullableString)  String? targetType, @JsonKey(name: 'target_component', fromJson: _toNullableString)  String? targetComponent, @JsonKey(name: 'new_state', fromJson: _descriptionFromNewState)  String? newState)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuditEvent() when $default != null:
-return $default(_that.id,_that.eventType,_that.eventAction,_that.eventDescription,_that.eventDate,_that.adminEmail,_that.adminName,_that.deviceName,_that.deviceSerialNumber,_that.blueprintName,_that.userEmail);case _:
+return $default(_that.id,_that.action,_that.occurredAt,_that.actorId,_that.actorType,_that.targetId,_that.targetType,_that.targetComponent,_that.newState);case _:
   return orElse();
 
 }
@@ -184,10 +190,10 @@ return $default(_that.id,_that.eventType,_that.eventAction,_that.eventDescriptio
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id, @JsonKey(name: 'event_type')  String? eventType, @JsonKey(name: 'event_action')  String? eventAction, @JsonKey(name: 'event_description')  String? eventDescription, @JsonKey(name: 'event_date')  String? eventDate, @JsonKey(name: 'admin_email')  String? adminEmail, @JsonKey(name: 'admin_name')  String? adminName, @JsonKey(name: 'device_name')  String? deviceName, @JsonKey(name: 'device_serial_number')  String? deviceSerialNumber, @JsonKey(name: 'blueprint_name')  String? blueprintName, @JsonKey(name: 'user_email')  String? userEmail)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(fromJson: _toNullableString)  String? action, @JsonKey(name: 'occurred_at')  String? occurredAt, @JsonKey(name: 'actor_id', fromJson: _toNullableString)  String? actorId, @JsonKey(name: 'actor_type', fromJson: _toNullableString)  String? actorType, @JsonKey(name: 'target_id', fromJson: _toNullableString)  String? targetId, @JsonKey(name: 'target_type', fromJson: _toNullableString)  String? targetType, @JsonKey(name: 'target_component', fromJson: _toNullableString)  String? targetComponent, @JsonKey(name: 'new_state', fromJson: _descriptionFromNewState)  String? newState)  $default,) {final _that = this;
 switch (_that) {
 case _AuditEvent():
-return $default(_that.id,_that.eventType,_that.eventAction,_that.eventDescription,_that.eventDate,_that.adminEmail,_that.adminName,_that.deviceName,_that.deviceSerialNumber,_that.blueprintName,_that.userEmail);case _:
+return $default(_that.id,_that.action,_that.occurredAt,_that.actorId,_that.actorType,_that.targetId,_that.targetType,_that.targetComponent,_that.newState);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +210,10 @@ return $default(_that.id,_that.eventType,_that.eventAction,_that.eventDescriptio
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id, @JsonKey(name: 'event_type')  String? eventType, @JsonKey(name: 'event_action')  String? eventAction, @JsonKey(name: 'event_description')  String? eventDescription, @JsonKey(name: 'event_date')  String? eventDate, @JsonKey(name: 'admin_email')  String? adminEmail, @JsonKey(name: 'admin_name')  String? adminName, @JsonKey(name: 'device_name')  String? deviceName, @JsonKey(name: 'device_serial_number')  String? deviceSerialNumber, @JsonKey(name: 'blueprint_name')  String? blueprintName, @JsonKey(name: 'user_email')  String? userEmail)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(fromJson: _toNullableString)  String? action, @JsonKey(name: 'occurred_at')  String? occurredAt, @JsonKey(name: 'actor_id', fromJson: _toNullableString)  String? actorId, @JsonKey(name: 'actor_type', fromJson: _toNullableString)  String? actorType, @JsonKey(name: 'target_id', fromJson: _toNullableString)  String? targetId, @JsonKey(name: 'target_type', fromJson: _toNullableString)  String? targetType, @JsonKey(name: 'target_component', fromJson: _toNullableString)  String? targetComponent, @JsonKey(name: 'new_state', fromJson: _descriptionFromNewState)  String? newState)?  $default,) {final _that = this;
 switch (_that) {
 case _AuditEvent() when $default != null:
-return $default(_that.id,_that.eventType,_that.eventAction,_that.eventDescription,_that.eventDate,_that.adminEmail,_that.adminName,_that.deviceName,_that.deviceSerialNumber,_that.blueprintName,_that.userEmail);case _:
+return $default(_that.id,_that.action,_that.occurredAt,_that.actorId,_that.actorType,_that.targetId,_that.targetType,_that.targetComponent,_that.newState);case _:
   return null;
 
 }
@@ -219,20 +225,26 @@ return $default(_that.id,_that.eventType,_that.eventAction,_that.eventDescriptio
 @JsonSerializable()
 
 class _AuditEvent implements AuditEvent {
-  const _AuditEvent({this.id, @JsonKey(name: 'event_type') this.eventType, @JsonKey(name: 'event_action') this.eventAction, @JsonKey(name: 'event_description') this.eventDescription, @JsonKey(name: 'event_date') this.eventDate, @JsonKey(name: 'admin_email') this.adminEmail, @JsonKey(name: 'admin_name') this.adminName, @JsonKey(name: 'device_name') this.deviceName, @JsonKey(name: 'device_serial_number') this.deviceSerialNumber, @JsonKey(name: 'blueprint_name') this.blueprintName, @JsonKey(name: 'user_email') this.userEmail});
+  const _AuditEvent({@JsonKey(fromJson: _toNullableString) this.id, @JsonKey(fromJson: _toNullableString) this.action, @JsonKey(name: 'occurred_at') this.occurredAt, @JsonKey(name: 'actor_id', fromJson: _toNullableString) this.actorId, @JsonKey(name: 'actor_type', fromJson: _toNullableString) this.actorType, @JsonKey(name: 'target_id', fromJson: _toNullableString) this.targetId, @JsonKey(name: 'target_type', fromJson: _toNullableString) this.targetType, @JsonKey(name: 'target_component', fromJson: _toNullableString) this.targetComponent, @JsonKey(name: 'new_state', fromJson: _descriptionFromNewState) this.newState});
   factory _AuditEvent.fromJson(Map<String, dynamic> json) => _$AuditEventFromJson(json);
 
-@override final  String? id;
-@override@JsonKey(name: 'event_type') final  String? eventType;
-@override@JsonKey(name: 'event_action') final  String? eventAction;
-@override@JsonKey(name: 'event_description') final  String? eventDescription;
-@override@JsonKey(name: 'event_date') final  String? eventDate;
-@override@JsonKey(name: 'admin_email') final  String? adminEmail;
-@override@JsonKey(name: 'admin_name') final  String? adminName;
-@override@JsonKey(name: 'device_name') final  String? deviceName;
-@override@JsonKey(name: 'device_serial_number') final  String? deviceSerialNumber;
-@override@JsonKey(name: 'blueprint_name') final  String? blueprintName;
-@override@JsonKey(name: 'user_email') final  String? userEmail;
+@override@JsonKey(fromJson: _toNullableString) final  String? id;
+/// The action performed, e.g. "create", "update", "delete", "detect".
+@override@JsonKey(fromJson: _toNullableString) final  String? action;
+/// ISO-8601 timestamp when the event occurred.
+@override@JsonKey(name: 'occurred_at') final  String? occurredAt;
+/// ID of the actor (admin user or system component).
+@override@JsonKey(name: 'actor_id', fromJson: _toNullableString) final  String? actorId;
+/// Type of actor, e.g. "admin", "kandji".
+@override@JsonKey(name: 'actor_type', fromJson: _toNullableString) final  String? actorType;
+/// ID of the target object.
+@override@JsonKey(name: 'target_id', fromJson: _toNullableString) final  String? targetId;
+/// Type of target, e.g. "device", "blueprint", "user".
+@override@JsonKey(name: 'target_type', fromJson: _toNullableString) final  String? targetType;
+/// Component category, e.g. "library_item", "vulnerability".
+@override@JsonKey(name: 'target_component', fromJson: _toNullableString) final  String? targetComponent;
+/// State details — may be a nested object. Extracted as description.
+@override@JsonKey(name: 'new_state', fromJson: _descriptionFromNewState) final  String? newState;
 
 /// Create a copy of AuditEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -247,16 +259,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuditEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.eventAction, eventAction) || other.eventAction == eventAction)&&(identical(other.eventDescription, eventDescription) || other.eventDescription == eventDescription)&&(identical(other.eventDate, eventDate) || other.eventDate == eventDate)&&(identical(other.adminEmail, adminEmail) || other.adminEmail == adminEmail)&&(identical(other.adminName, adminName) || other.adminName == adminName)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.deviceSerialNumber, deviceSerialNumber) || other.deviceSerialNumber == deviceSerialNumber)&&(identical(other.blueprintName, blueprintName) || other.blueprintName == blueprintName)&&(identical(other.userEmail, userEmail) || other.userEmail == userEmail));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuditEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.occurredAt, occurredAt) || other.occurredAt == occurredAt)&&(identical(other.actorId, actorId) || other.actorId == actorId)&&(identical(other.actorType, actorType) || other.actorType == actorType)&&(identical(other.targetId, targetId) || other.targetId == targetId)&&(identical(other.targetType, targetType) || other.targetType == targetType)&&(identical(other.targetComponent, targetComponent) || other.targetComponent == targetComponent)&&(identical(other.newState, newState) || other.newState == newState));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,eventType,eventAction,eventDescription,eventDate,adminEmail,adminName,deviceName,deviceSerialNumber,blueprintName,userEmail);
+int get hashCode => Object.hash(runtimeType,id,action,occurredAt,actorId,actorType,targetId,targetType,targetComponent,newState);
 
 @override
 String toString() {
-  return 'AuditEvent(id: $id, eventType: $eventType, eventAction: $eventAction, eventDescription: $eventDescription, eventDate: $eventDate, adminEmail: $adminEmail, adminName: $adminName, deviceName: $deviceName, deviceSerialNumber: $deviceSerialNumber, blueprintName: $blueprintName, userEmail: $userEmail)';
+  return 'AuditEvent(id: $id, action: $action, occurredAt: $occurredAt, actorId: $actorId, actorType: $actorType, targetId: $targetId, targetType: $targetType, targetComponent: $targetComponent, newState: $newState)';
 }
 
 
@@ -267,7 +279,7 @@ abstract mixin class _$AuditEventCopyWith<$Res> implements $AuditEventCopyWith<$
   factory _$AuditEventCopyWith(_AuditEvent value, $Res Function(_AuditEvent) _then) = __$AuditEventCopyWithImpl;
 @override @useResult
 $Res call({
- String? id,@JsonKey(name: 'event_type') String? eventType,@JsonKey(name: 'event_action') String? eventAction,@JsonKey(name: 'event_description') String? eventDescription,@JsonKey(name: 'event_date') String? eventDate,@JsonKey(name: 'admin_email') String? adminEmail,@JsonKey(name: 'admin_name') String? adminName,@JsonKey(name: 'device_name') String? deviceName,@JsonKey(name: 'device_serial_number') String? deviceSerialNumber,@JsonKey(name: 'blueprint_name') String? blueprintName,@JsonKey(name: 'user_email') String? userEmail
+@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(fromJson: _toNullableString) String? action,@JsonKey(name: 'occurred_at') String? occurredAt,@JsonKey(name: 'actor_id', fromJson: _toNullableString) String? actorId,@JsonKey(name: 'actor_type', fromJson: _toNullableString) String? actorType,@JsonKey(name: 'target_id', fromJson: _toNullableString) String? targetId,@JsonKey(name: 'target_type', fromJson: _toNullableString) String? targetType,@JsonKey(name: 'target_component', fromJson: _toNullableString) String? targetComponent,@JsonKey(name: 'new_state', fromJson: _descriptionFromNewState) String? newState
 });
 
 
@@ -284,19 +296,17 @@ class __$AuditEventCopyWithImpl<$Res>
 
 /// Create a copy of AuditEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? eventType = freezed,Object? eventAction = freezed,Object? eventDescription = freezed,Object? eventDate = freezed,Object? adminEmail = freezed,Object? adminName = freezed,Object? deviceName = freezed,Object? deviceSerialNumber = freezed,Object? blueprintName = freezed,Object? userEmail = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? action = freezed,Object? occurredAt = freezed,Object? actorId = freezed,Object? actorType = freezed,Object? targetId = freezed,Object? targetType = freezed,Object? targetComponent = freezed,Object? newState = freezed,}) {
   return _then(_AuditEvent(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,eventType: freezed == eventType ? _self.eventType : eventType // ignore: cast_nullable_to_non_nullable
-as String?,eventAction: freezed == eventAction ? _self.eventAction : eventAction // ignore: cast_nullable_to_non_nullable
-as String?,eventDescription: freezed == eventDescription ? _self.eventDescription : eventDescription // ignore: cast_nullable_to_non_nullable
-as String?,eventDate: freezed == eventDate ? _self.eventDate : eventDate // ignore: cast_nullable_to_non_nullable
-as String?,adminEmail: freezed == adminEmail ? _self.adminEmail : adminEmail // ignore: cast_nullable_to_non_nullable
-as String?,adminName: freezed == adminName ? _self.adminName : adminName // ignore: cast_nullable_to_non_nullable
-as String?,deviceName: freezed == deviceName ? _self.deviceName : deviceName // ignore: cast_nullable_to_non_nullable
-as String?,deviceSerialNumber: freezed == deviceSerialNumber ? _self.deviceSerialNumber : deviceSerialNumber // ignore: cast_nullable_to_non_nullable
-as String?,blueprintName: freezed == blueprintName ? _self.blueprintName : blueprintName // ignore: cast_nullable_to_non_nullable
-as String?,userEmail: freezed == userEmail ? _self.userEmail : userEmail // ignore: cast_nullable_to_non_nullable
+as String?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
+as String?,occurredAt: freezed == occurredAt ? _self.occurredAt : occurredAt // ignore: cast_nullable_to_non_nullable
+as String?,actorId: freezed == actorId ? _self.actorId : actorId // ignore: cast_nullable_to_non_nullable
+as String?,actorType: freezed == actorType ? _self.actorType : actorType // ignore: cast_nullable_to_non_nullable
+as String?,targetId: freezed == targetId ? _self.targetId : targetId // ignore: cast_nullable_to_non_nullable
+as String?,targetType: freezed == targetType ? _self.targetType : targetType // ignore: cast_nullable_to_non_nullable
+as String?,targetComponent: freezed == targetComponent ? _self.targetComponent : targetComponent // ignore: cast_nullable_to_non_nullable
+as String?,newState: freezed == newState ? _self.newState : newState // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

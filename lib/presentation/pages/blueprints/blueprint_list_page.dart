@@ -98,12 +98,21 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
     }
   }
 
+  Future<void> _showFilterSheet() async {
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (_) => _BlueprintFilterBottomSheet(ref: ref),
+    );
+    if (result == true) setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final blueprintsAsync = ref.watch(sortedBlueprintsProvider);
-    final sortAsc = ref.watch(blueprintSortAscProvider);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -121,54 +130,47 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
         ],
         body: Column(
           children: [
-            // Search bar
+            // Search bar + filter button
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SearchBar(
-                controller: _searchController,
-                hintText: l10n.searchBlueprints,
-                leading: const Icon(Icons.search, size: 20),
-                trailing: [
-                  if (_searchController.text.isNotEmpty)
-                    IconButton(
-                      icon: const Icon(Icons.clear, size: 20),
-                      tooltip: l10n.clearSearch,
-                      onPressed: () {
-                        _searchController.clear();
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SearchBar(
+                      controller: _searchController,
+                      hintText: l10n.searchBlueprints,
+                      leading: const Icon(Icons.search, size: 20),
+                      trailing: [
+                        if (_searchController.text.isNotEmpty)
+                          IconButton(
+                            icon: const Icon(Icons.clear, size: 20),
+                            tooltip: l10n.clearSearch,
+                            onPressed: () {
+                              _searchController.clear();
+                              ref
+                                  .read(
+                                    blueprintSearchQueryProvider.notifier,
+                                  )
+                                  .state = '';
+                              setState(() {});
+                            },
+                          ),
+                      ],
+                      onChanged: (query) {
                         ref.read(blueprintSearchQueryProvider.notifier).state =
-                            '';
+                            query;
                         setState(() {});
                       },
+                      padding: const WidgetStatePropertyAll(
+                        EdgeInsets.symmetric(horizontal: 8),
+                      ),
                     ),
-                ],
-                onChanged: (query) {
-                  ref.read(blueprintSearchQueryProvider.notifier).state = query;
-                  setState(() {});
-                },
-                padding: const WidgetStatePropertyAll(
-                  EdgeInsets.symmetric(horizontal: 8),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            // Sort chip
-            SizedBox(
-              height: 40,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: [
-                  FilterChip(
-                    avatar: Icon(
-                      sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
-                      size: 16,
-                    ),
-                    label: Text(sortAsc ? l10n.sortAZ : l10n.sortZA),
-                    selected: false,
-                    onSelected: (_) =>
-                        ref.read(blueprintSortAscProvider.notifier).state =
-                            !sortAsc,
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    icon: const Icon(Icons.tune),
+                    tooltip: l10n.filterTitle,
+                    onPressed: _showFilterSheet,
                   ),
                 ],
               ),
@@ -344,6 +346,134 @@ class _BlueprintListTile extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Bottom sheet for blueprint filters and sort.
+class _BlueprintFilterBottomSheet extends StatelessWidget {
+  const _BlueprintFilterBottomSheet({required this.ref});
+
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+
+    return DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.35,
+      minChildSize: 0.25,
+      maxChildSize: 0.6,
+      builder: (context, scrollController) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            final sortAsc = ref.read(blueprintSortAscProvider);
+
+            return Column(
+              children: [
+                // Handle
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Container(
+                    width: 32,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.4,
+                      ),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+
+                // Title
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(l10n.filterTitle, style: theme.textTheme.titleLarge),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          ref.read(blueprintSortAscProvider.notifier).state =
+                              true;
+                          setSheetState(() {});
+                        },
+                        child: Text(l10n.filterClearAll),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // Content
+                Expanded(
+                  child: ListView(
+                    controller: scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    children: [
+                      // Sort section
+                      Text(
+                        l10n.sortTitle,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        children: [
+                          FilterChip(
+                            avatar: const Icon(
+                              Icons.arrow_downward,
+                              size: 16,
+                            ),
+                            label: Text(l10n.sortAZ),
+                            selected: sortAsc,
+                            onSelected: (_) {
+                              ref
+                                  .read(blueprintSortAscProvider.notifier)
+                                  .state = true;
+                              setSheetState(() {});
+                            },
+                          ),
+                          FilterChip(
+                            avatar: const Icon(
+                              Icons.arrow_upward,
+                              size: 16,
+                            ),
+                            label: Text(l10n.sortZA),
+                            selected: !sortAsc,
+                            onSelected: (_) {
+                              ref
+                                  .read(blueprintSortAscProvider.notifier)
+                                  .state = false;
+                              setSheetState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+
+                // Apply button
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: Text(l10n.filterApply),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

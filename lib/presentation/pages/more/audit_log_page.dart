@@ -115,9 +115,12 @@ class _AuditEventTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final icon = _iconForType(event.eventType);
-    final description = event.eventDescription ?? event.eventAction ?? '';
-    final actor = event.adminName ?? event.adminEmail ?? '';
+    final icon = _iconForAction(event.action);
+    // Build a human-readable description from available fields.
+    final description = _buildDescription(event);
+    final actor = event.actorId ?? '';
+    final actorLabel =
+        event.actorType != null ? '${event.actorType}: $actor' : actor;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
@@ -153,7 +156,7 @@ class _AuditEventTile extends StatelessWidget {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      if (actor.isNotEmpty) ...[
+                      if (actorLabel.isNotEmpty) ...[
                         Icon(
                           Icons.person_outline,
                           size: 14,
@@ -162,7 +165,7 @@ class _AuditEventTile extends StatelessWidget {
                         const SizedBox(width: 4),
                         Flexible(
                           child: Text(
-                            actor,
+                            actorLabel,
                             style: theme.textTheme.labelSmall?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
@@ -172,7 +175,7 @@ class _AuditEventTile extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                       ],
-                      if (event.eventDate != null) ...[
+                      if (event.occurredAt != null) ...[
                         Icon(
                           Icons.schedule,
                           size: 14,
@@ -180,7 +183,7 @@ class _AuditEventTile extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          _formatDateTime(event.eventDate!),
+                          _formatDateTime(event.occurredAt!),
                           style: theme.textTheme.labelSmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),
@@ -188,19 +191,21 @@ class _AuditEventTile extends StatelessWidget {
                       ],
                     ],
                   ),
-                  if (event.deviceName != null) ...[
+                  if (event.targetType != null) ...[
                     const SizedBox(height: 2),
                     Row(
                       children: [
                         Icon(
-                          Icons.devices,
+                          _iconForTargetType(event.targetType),
                           size: 14,
                           color: colorScheme.onSurfaceVariant,
                         ),
                         const SizedBox(width: 4),
                         Flexible(
                           child: Text(
-                            event.deviceName!,
+                            event.targetComponent != null
+                                ? '${event.targetType} (${event.targetComponent})'
+                                : event.targetType!,
                             style: theme.textTheme.labelSmall?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
@@ -220,17 +225,41 @@ class _AuditEventTile extends StatelessWidget {
     );
   }
 
-  IconData _iconForType(String? type) {
+  /// Build a human-readable description line from the event.
+  String _buildDescription(AuditEvent e) {
+    final parts = <String>[];
+    if (e.action != null) parts.add(e.action!);
+    if (e.targetType != null) parts.add(e.targetType!);
+    if (e.newState != null && e.newState!.isNotEmpty) {
+      parts.add('— ${e.newState}');
+    }
+    if (parts.isEmpty) return e.id ?? '';
+    return parts.join(' ');
+  }
+
+  IconData _iconForAction(String? action) {
+    return switch (action?.toLowerCase()) {
+      'create' => Icons.add_circle_outline,
+      'update' || 'modify' => Icons.edit_outlined,
+      'delete' || 'remove' => Icons.delete_outline,
+      'detect' => Icons.security,
+      'enroll' => Icons.devices,
+      'lock' => Icons.lock_outline,
+      'wipe' || 'erase' => Icons.cleaning_services,
+      'assign' || 'reassign' => Icons.assignment_outlined,
+      _ => Icons.history,
+    };
+  }
+
+  IconData _iconForTargetType(String? type) {
     return switch (type?.toLowerCase()) {
       'device' => Icons.devices,
       'blueprint' => Icons.layers,
       'library_item' || 'library-item' => Icons.library_books,
       'user' => Icons.person,
       'admin' => Icons.admin_panel_settings,
-      'secret' || 'sensitive_data' => Icons.key,
-      'token' => Icons.vpn_key,
       'vulnerability' || 'edr' => Icons.security,
-      _ => Icons.history,
+      _ => Icons.label_outline,
     };
   }
 

@@ -25,45 +25,132 @@ class _BehavioralDetectionsPageState
     super.dispose();
   }
 
+  int _countActiveFilters() {
+    var count = 0;
+    if (ref.read(behavioralSeverityFilterProvider) != null) count++;
+    return count;
+  }
+
+  void _clearAllFilters() {
+    _searchController.clear();
+    ref.read(behavioralSearchQueryProvider.notifier).state = '';
+    ref.read(behavioralSeverityFilterProvider.notifier).state = null;
+    ref.read(behavioralSortAscProvider.notifier).state = true;
+    setState(() {});
+  }
+
+  Future<void> _showFilterSheet() async {
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (_) => _BehavioralFilterBottomSheet(ref: ref),
+    );
+    if (result == true) setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final filteredDetections = ref.watch(filteredBehavioralDetectionsProvider);
+    final severityFilter = ref.watch(behavioralSeverityFilterProvider);
+    final activeFilterCount = _countActiveFilters();
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.behavioralDetections)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => ref.invalidate(behavioralDetectionsProvider),
+        tooltip: l10n.refresh,
+        child: const Icon(Icons.refresh),
+      ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: SearchBar(
-              controller: _searchController,
-              hintText: l10n.searchBehavioralDetections,
-              leading: const Icon(Icons.search, size: 20),
-              trailing: [
-                if (_searchController.text.isNotEmpty)
-                  IconButton(
-                    icon: const Icon(Icons.clear, size: 20),
-                    tooltip: l10n.clearSearch,
-                    onPressed: () {
-                      _searchController.clear();
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SearchBar(
+                    controller: _searchController,
+                    hintText: l10n.searchBehavioralDetections,
+                    leading: const Icon(Icons.search, size: 20),
+                    trailing: [
+                      if (_searchController.text.isNotEmpty)
+                        IconButton(
+                          icon: const Icon(Icons.clear, size: 20),
+                          tooltip: l10n.clearSearch,
+                          onPressed: () {
+                            _searchController.clear();
+                            ref
+                                .read(
+                                  behavioralSearchQueryProvider.notifier,
+                                )
+                                .state = '';
+                            setState(() {});
+                          },
+                        ),
+                    ],
+                    onChanged: (query) {
                       ref.read(behavioralSearchQueryProvider.notifier).state =
-                          '';
+                          query;
                       setState(() {});
                     },
+                    padding: const WidgetStatePropertyAll(
+                      EdgeInsets.symmetric(horizontal: 8),
+                    ),
                   ),
+                ),
+                const SizedBox(width: 8),
+                Badge(
+                  isLabelVisible: activeFilterCount > 0,
+                  label: Text('$activeFilterCount'),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.tune,
+                      color: activeFilterCount > 0
+                          ? theme.colorScheme.primary
+                          : null,
+                    ),
+                    tooltip: l10n.filterTitle,
+                    onPressed: _showFilterSheet,
+                  ),
+                ),
               ],
-              onChanged: (query) {
-                ref.read(behavioralSearchQueryProvider.notifier).state = query;
-                setState(() {});
-              },
-              padding: const WidgetStatePropertyAll(
-                EdgeInsets.symmetric(horizontal: 8),
-              ),
             ),
           ),
-          const SizedBox(height: 12),
+
+          // Active filter chips
+          if (activeFilterCount > 0) ...[
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 36,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  if (severityFilter != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: InputChip(
+                        label: Text(severityFilter),
+                        onDeleted: () => ref
+                            .read(behavioralSeverityFilterProvider.notifier)
+                            .state = null,
+                      ),
+                    ),
+                  ActionChip(
+                    label: Text(l10n.filterClearAll),
+                    avatar: const Icon(Icons.clear_all, size: 16),
+                    onPressed: _clearAllFilters,
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+          const SizedBox(height: 8),
+
           Expanded(
             child: filteredDetections.when(
               data: (detections) {
@@ -90,10 +177,28 @@ class _BehavioralDetectionsPageState
                   onRefresh: () async =>
                       ref.invalidate(behavioralDetectionsProvider),
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    itemCount: detections.length,
-                    itemBuilder: (context, index) =>
-                        _BehavioralDetectionTile(detection: detections[index]),
+                    padding: const EdgeInsets.only(
+                      left: 12,
+                      right: 12,
+                      bottom: 80,
+                    ),
+                    itemCount: detections.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+                          child: Text(
+                            l10n.behavioralDetectionCount(detections.length),
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        );
+                      }
+                      return _BehavioralDetectionTile(
+                        detection: detections[index - 1],
+                      );
+                    },
                   ),
                 );
               },
@@ -106,6 +211,180 @@ class _BehavioralDetectionsPageState
           ),
         ],
       ),
+    );
+  }
+}
+
+class _BehavioralFilterBottomSheet extends StatelessWidget {
+  const _BehavioralFilterBottomSheet({required this.ref});
+
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    final severityOptions = {
+      'Critical': l10n.severityCritical,
+      'High': l10n.severityHigh,
+      'Medium': l10n.severityMedium,
+      'Low': l10n.severityLow,
+    };
+
+    return DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.45,
+      minChildSize: 0.3,
+      maxChildSize: 0.65,
+      builder: (context, scrollController) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            final severity = ref.read(behavioralSeverityFilterProvider);
+            final sortAsc = ref.read(behavioralSortAscProvider);
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Container(
+                    width: 32,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.4,
+                      ),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(l10n.filterTitle, style: theme.textTheme.titleLarge),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          ref
+                              .read(
+                                behavioralSeverityFilterProvider.notifier,
+                              )
+                              .state = null;
+                          ref.read(behavioralSortAscProvider.notifier).state =
+                              true;
+                          setSheetState(() {});
+                        },
+                        child: Text(l10n.filterClearAll),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: ListView(
+                    controller: scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    children: [
+                      Text(
+                        l10n.filterSeverity,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          FilterChip(
+                            label: Text(l10n.filterAll),
+                            selected: severity == null,
+                            onSelected: (_) {
+                              ref
+                                  .read(
+                                    behavioralSeverityFilterProvider.notifier,
+                                  )
+                                  .state = null;
+                              setSheetState(() {});
+                            },
+                          ),
+                          for (final entry in severityOptions.entries)
+                            FilterChip(
+                              label: Text(entry.value),
+                              selected: severity?.toLowerCase() ==
+                                  entry.key.toLowerCase(),
+                              onSelected: (_) {
+                                ref
+                                    .read(
+                                      behavioralSeverityFilterProvider.notifier,
+                                    )
+                                    .state = severity?.toLowerCase() ==
+                                        entry.key.toLowerCase()
+                                    ? null
+                                    : entry.key;
+                                setSheetState(() {});
+                              },
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.sortTitle,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          FilterChip(
+                            avatar: const Icon(
+                              Icons.arrow_downward,
+                              size: 16,
+                            ),
+                            label: Text(l10n.sortAZ),
+                            selected: sortAsc,
+                            onSelected: (_) {
+                              ref
+                                  .read(behavioralSortAscProvider.notifier)
+                                  .state = true;
+                              setSheetState(() {});
+                            },
+                          ),
+                          FilterChip(
+                            avatar: const Icon(
+                              Icons.arrow_upward,
+                              size: 16,
+                            ),
+                            label: Text(l10n.sortZA),
+                            selected: !sortAsc,
+                            onSelected: (_) {
+                              ref
+                                  .read(behavioralSortAscProvider.notifier)
+                                  .state = false;
+                              setSheetState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: Text(l10n.filterApply),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

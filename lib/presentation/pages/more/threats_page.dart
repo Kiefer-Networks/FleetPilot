@@ -23,44 +23,130 @@ class _ThreatsPageState extends ConsumerState<ThreatsPage> {
     super.dispose();
   }
 
+  int _countActiveFilters() {
+    var count = 0;
+    if (ref.read(threatStatusFilterProvider) != null) count++;
+    return count;
+  }
+
+  void _clearAllFilters() {
+    _searchController.clear();
+    ref.read(threatSearchQueryProvider.notifier).state = '';
+    ref.read(threatStatusFilterProvider.notifier).state = null;
+    ref.read(threatSortAscProvider.notifier).state = true;
+    setState(() {});
+  }
+
+  Future<void> _showFilterSheet() async {
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (_) => _ThreatFilterBottomSheet(ref: ref),
+    );
+    if (result == true) setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final filteredThreats = ref.watch(filteredThreatsProvider);
+    final statusFilter = ref.watch(threatStatusFilterProvider);
+    final activeFilterCount = _countActiveFilters();
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.threats)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => ref.invalidate(threatsProvider),
+        tooltip: l10n.refresh,
+        child: const Icon(Icons.refresh),
+      ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: SearchBar(
-              controller: _searchController,
-              hintText: l10n.searchThreats,
-              leading: const Icon(Icons.search, size: 20),
-              trailing: [
-                if (_searchController.text.isNotEmpty)
-                  IconButton(
-                    icon: const Icon(Icons.clear, size: 20),
-                    tooltip: l10n.clearSearch,
-                    onPressed: () {
-                      _searchController.clear();
-                      ref.read(threatSearchQueryProvider.notifier).state = '';
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SearchBar(
+                    controller: _searchController,
+                    hintText: l10n.searchThreats,
+                    leading: const Icon(Icons.search, size: 20),
+                    trailing: [
+                      if (_searchController.text.isNotEmpty)
+                        IconButton(
+                          icon: const Icon(Icons.clear, size: 20),
+                          tooltip: l10n.clearSearch,
+                          onPressed: () {
+                            _searchController.clear();
+                            ref
+                                .read(threatSearchQueryProvider.notifier)
+                                .state = '';
+                            setState(() {});
+                          },
+                        ),
+                    ],
+                    onChanged: (query) {
+                      ref.read(threatSearchQueryProvider.notifier).state =
+                          query;
                       setState(() {});
                     },
+                    padding: const WidgetStatePropertyAll(
+                      EdgeInsets.symmetric(horizontal: 8),
+                    ),
                   ),
+                ),
+                const SizedBox(width: 8),
+                Badge(
+                  isLabelVisible: activeFilterCount > 0,
+                  label: Text('$activeFilterCount'),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.tune,
+                      color: activeFilterCount > 0
+                          ? theme.colorScheme.primary
+                          : null,
+                    ),
+                    tooltip: l10n.filterTitle,
+                    onPressed: _showFilterSheet,
+                  ),
+                ),
               ],
-              onChanged: (query) {
-                ref.read(threatSearchQueryProvider.notifier).state = query;
-                setState(() {});
-              },
-              padding: const WidgetStatePropertyAll(
-                EdgeInsets.symmetric(horizontal: 8),
-              ),
             ),
           ),
-          const SizedBox(height: 12),
+
+          // Active filter chips
+          if (activeFilterCount > 0) ...[
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 36,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  if (statusFilter != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: InputChip(
+                        label: Text(statusFilter),
+                        onDeleted: () => ref
+                            .read(threatStatusFilterProvider.notifier)
+                            .state = null,
+                      ),
+                    ),
+                  ActionChip(
+                    label: Text(l10n.filterClearAll),
+                    avatar: const Icon(Icons.clear_all, size: 16),
+                    onPressed: _clearAllFilters,
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+          const SizedBox(height: 8),
+
           Expanded(
             child: filteredThreats.when(
               data: (threats) {
@@ -86,10 +172,26 @@ class _ThreatsPageState extends ConsumerState<ThreatsPage> {
                 return RefreshIndicator(
                   onRefresh: () async => ref.invalidate(threatsProvider),
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    itemCount: threats.length,
-                    itemBuilder: (context, index) =>
-                        _ThreatTile(threat: threats[index]),
+                    padding: const EdgeInsets.only(
+                      left: 12,
+                      right: 12,
+                      bottom: 80,
+                    ),
+                    itemCount: threats.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+                          child: Text(
+                            l10n.threatCount(threats.length),
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        );
+                      }
+                      return _ThreatTile(threat: threats[index - 1]);
+                    },
                   ),
                 );
               },
@@ -102,6 +204,170 @@ class _ThreatsPageState extends ConsumerState<ThreatsPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ThreatFilterBottomSheet extends StatelessWidget {
+  const _ThreatFilterBottomSheet({required this.ref});
+
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    final statusOptions = {
+      'Quarantined': l10n.statusQuarantined,
+      'Not Quarantined': l10n.statusNotQuarantined,
+      'Detected': l10n.statusDetected,
+      'Released': l10n.statusReleased,
+    };
+
+    return DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.45,
+      minChildSize: 0.3,
+      maxChildSize: 0.65,
+      builder: (context, scrollController) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            final status = ref.read(threatStatusFilterProvider);
+            final sortAsc = ref.read(threatSortAscProvider);
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Container(
+                    width: 32,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.4,
+                      ),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(l10n.filterTitle, style: theme.textTheme.titleLarge),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          ref.read(threatStatusFilterProvider.notifier).state =
+                              null;
+                          ref.read(threatSortAscProvider.notifier).state = true;
+                          setSheetState(() {});
+                        },
+                        child: Text(l10n.filterClearAll),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: ListView(
+                    controller: scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    children: [
+                      Text(
+                        l10n.filterStatus,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          FilterChip(
+                            label: Text(l10n.filterAll),
+                            selected: status == null,
+                            onSelected: (_) {
+                              ref
+                                  .read(threatStatusFilterProvider.notifier)
+                                  .state = null;
+                              setSheetState(() {});
+                            },
+                          ),
+                          for (final entry in statusOptions.entries)
+                            FilterChip(
+                              label: Text(entry.value),
+                              selected: status?.toLowerCase() ==
+                                  entry.key.toLowerCase(),
+                              onSelected: (_) {
+                                ref
+                                    .read(threatStatusFilterProvider.notifier)
+                                    .state = status?.toLowerCase() ==
+                                        entry.key.toLowerCase()
+                                    ? null
+                                    : entry.key;
+                                setSheetState(() {});
+                              },
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.sortTitle,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          FilterChip(
+                            avatar: const Icon(
+                              Icons.arrow_downward,
+                              size: 16,
+                            ),
+                            label: Text(l10n.sortAZ),
+                            selected: sortAsc,
+                            onSelected: (_) {
+                              ref.read(threatSortAscProvider.notifier).state =
+                                  true;
+                              setSheetState(() {});
+                            },
+                          ),
+                          FilterChip(
+                            avatar: const Icon(
+                              Icons.arrow_upward,
+                              size: 16,
+                            ),
+                            label: Text(l10n.sortZA),
+                            selected: !sortAsc,
+                            onSelected: (_) {
+                              ref.read(threatSortAscProvider.notifier).state =
+                                  false;
+                              setSheetState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: Text(l10n.filterApply),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

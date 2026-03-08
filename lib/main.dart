@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/constants/storage_keys.dart';
+import 'core/network/certificate_pinner.dart';
 import 'core/routing/app_router.dart';
 import 'presentation/providers/security_providers.dart';
 import 'presentation/providers/settings_providers.dart';
@@ -20,6 +21,8 @@ void main() async {
       accessibility: KeychainAccessibility.unlocked_this_device,
     ),
   );
+
+  await CertificatePinner.initialize();
 
   final activeId = await storage.read(key: StorageKeys.activeProfileId);
   final hasProfile = activeId != null && activeId.isNotEmpty;

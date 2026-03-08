@@ -8,8 +8,8 @@ part of 'library_item_status.dart';
 
 _LibraryItemStatus _$LibraryItemStatusFromJson(Map<String, dynamic> json) =>
     _LibraryItemStatus(
-      deviceId: json['device_id'] as String?,
-      deviceName: json['device_name'] as String?,
+      deviceId: _readDeviceId(json, 'device_id') as String?,
+      deviceName: _readDeviceName(json, 'device_name') as String?,
       serialNumber: json['serial_number'] as String?,
       status: json['status'] as String?,
       lastRun: json['last_run'] as String?,
@@ -28,14 +28,14 @@ Map<String, dynamic> _$LibraryItemStatusToJson(_LibraryItemStatus instance) =>
 
 _LibraryItemActivity _$LibraryItemActivityFromJson(Map<String, dynamic> json) =>
     _LibraryItemActivity(
-      id: json['id'] as String?,
-      deviceId: json['device_id'] as String?,
-      deviceName: json['device_name'] as String?,
+      id: _toNullableString(json['id']),
+      deviceId: _readDeviceId(json, 'device_id') as String?,
+      deviceName: _readDeviceName(json, 'device_name') as String?,
       serialNumber: json['serial_number'] as String?,
       action: json['action'] as String?,
       status: json['status'] as String?,
       createdAt: json['created_at'] as String?,
-      details: json['details'] as String?,
+      details: _toNullableString(json['details']),
     );
 
 Map<String, dynamic> _$LibraryItemActivityToJson(

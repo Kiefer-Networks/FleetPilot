@@ -751,60 +751,117 @@ class _DeviceDetailScaffold extends ConsumerWidget {
 // ---------------------------------------------------------------------------
 // Edit Device Dialog
 // ---------------------------------------------------------------------------
-class _EditDeviceDialog extends StatefulWidget {
+class _EditDeviceDialog extends ConsumerStatefulWidget {
   const _EditDeviceDialog({required this.device, required this.l10n});
 
   final Device device;
   final AppLocalizations l10n;
 
   @override
-  State<_EditDeviceDialog> createState() => _EditDeviceDialogState();
+  ConsumerState<_EditDeviceDialog> createState() => _EditDeviceDialogState();
 }
 
-class _EditDeviceDialogState extends State<_EditDeviceDialog> {
+class _EditDeviceDialogState extends ConsumerState<_EditDeviceDialog> {
   late final TextEditingController _assetTagCtl;
-  late final TextEditingController _tagsCtl;
+  late final Set<String> _selectedTags;
 
   @override
   void initState() {
     super.initState();
     _assetTagCtl = TextEditingController(text: widget.device.assetTag ?? '');
-    _tagsCtl = TextEditingController(text: widget.device.tags.join(', '));
+    _selectedTags = {...widget.device.tags};
   }
 
   @override
   void dispose() {
     _assetTagCtl.dispose();
-    _tagsCtl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
+    final theme = Theme.of(context);
+    final availableTagsAsync = ref.watch(tagsProvider);
+
     return AlertDialog(
       title: Text(l10n.editDevice),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _assetTagCtl,
-              decoration: InputDecoration(
-                labelText: l10n.assetTag,
-                border: const OutlineInputBorder(),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: _assetTagCtl,
+                decoration: InputDecoration(
+                  labelText: l10n.assetTag,
+                  border: const OutlineInputBorder(),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _tagsCtl,
-              decoration: InputDecoration(
-                labelText: l10n.tags,
-                helperText: 'tag1, tag2, tag3',
-                border: const OutlineInputBorder(),
+              const SizedBox(height: 16),
+              Text(
+                l10n.assignTags,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 8),
+              availableTagsAsync.when(
+                data: (availableTags) {
+                  if (availableTags.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        l10n.noTagsAvailableMessage,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    );
+                  }
+                  return Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    children: availableTags.map((tag) {
+                      final isSelected = _selectedTags.contains(tag.name);
+                      return FilterChip(
+                        label: Text(tag.name),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          setState(() {
+                            if (selected) {
+                              _selectedTags.add(tag.name);
+                            } else {
+                              _selectedTags.remove(tag.name);
+                            }
+                          });
+                        },
+                      );
+                    }).toList(),
+                  );
+                },
+                loading: () => const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                ),
+                error: (_, _) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    l10n.failedToLoadTags,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.error,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
@@ -819,12 +876,9 @@ class _EditDeviceDialogState extends State<_EditDeviceDialog> {
             if (newAssetTag != (widget.device.assetTag ?? '')) {
               body['asset_tag'] = newAssetTag.isEmpty ? null : newAssetTag;
             }
-            final newTags = _tagsCtl.text
-                .split(',')
-                .map((t) => t.trim())
-                .where((t) => t.isNotEmpty)
-                .toList();
-            if (newTags.join(',') != widget.device.tags.join(',')) {
+            final newTags = _selectedTags.toList()..sort();
+            final oldTags = [...widget.device.tags]..sort();
+            if (newTags.join(',') != oldTags.join(',')) {
               body['tags'] = newTags;
             }
             if (body.isEmpty) {
@@ -1825,6 +1879,9 @@ class _ActivityTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final status = _deriveStatus(activity.actionType);
+    final statusColor = _statusBadgeColor(status, colorScheme);
+    final iconColor = _statusIconColor(status, colorScheme);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -1835,16 +1892,16 @@ class _ActivityTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 36,
-                height: 36,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
-                  color: _activityColor(activity.actionType, colorScheme),
-                  borderRadius: BorderRadius.circular(10),
+                  color: iconColor.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   _activityIcon(activity.actionType),
-                  size: 18,
-                  color: colorScheme.onTertiaryContainer,
+                  size: 20,
+                  color: iconColor,
                 ),
               ),
               const SizedBox(width: 12),
@@ -1852,14 +1909,40 @@ class _ActivityTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      _formatActionType(activity.actionType),
-                      style: theme.textTheme.titleSmall,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            _formatActionType(activity.actionType),
+                            style: theme.textTheme.titleSmall,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 3,
+                          ),
+                          decoration: BoxDecoration(
+                            color: statusColor.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            status,
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: statusColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     if (activity.details != null &&
                         activity.details!.isNotEmpty)
                       Padding(
-                        padding: const EdgeInsets.only(top: 2),
+                        padding: const EdgeInsets.only(top: 4),
                         child: Text(
                           activity.details!,
                           style: theme.textTheme.bodySmall?.copyWith(
@@ -1871,12 +1954,22 @@ class _ActivityTile extends StatelessWidget {
                       ),
                     if (activity.createdAt != null)
                       Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Text(
-                          _formatTimestamp(activity.createdAt!),
-                          style: theme.textTheme.labelSmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                        padding: const EdgeInsets.only(top: 6),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.schedule,
+                              size: 14,
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              _formatTimestamp(activity.createdAt!),
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                   ],
@@ -1889,10 +1982,37 @@ class _ActivityTile extends StatelessWidget {
     );
   }
 
+  /// Derives a status label from the action type string.
+  String _deriveStatus(String? type) {
+    final t = type?.toLowerCase() ?? '';
+    if (t.contains('fail') || t.contains('error')) return 'Failed';
+    if (t.contains('success') || t.contains('completed')) return 'Success';
+    if (t.contains('pending') || t.contains('queued')) return 'Pending';
+    return 'Info';
+  }
+
+  /// Badge color mapped to status: Success=primary, Failed=error, Pending=tertiary.
+  Color _statusBadgeColor(String status, ColorScheme cs) => switch (status) {
+    'Success' => cs.primary,
+    'Failed' => cs.error,
+    'Pending' => cs.tertiary,
+    _ => cs.onSurfaceVariant,
+  };
+
+  /// Icon circle color mapped to status.
+  Color _statusIconColor(String status, ColorScheme cs) => switch (status) {
+    'Success' => cs.primary,
+    'Failed' => cs.error,
+    'Pending' => cs.tertiary,
+    _ => cs.tertiary,
+  };
+
   String _formatTimestamp(String dateStr) {
     final parsed = DateTime.tryParse(dateStr);
     if (parsed == null) return dateStr;
-    return parsed.relativeTime;
+    final local = parsed.toLocal();
+    return '${local.year}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')} '
+        '${local.hour.toString().padLeft(2, '0')}:${local.minute.toString().padLeft(2, '0')}';
   }
 
   String _formatActionType(String? type) {
@@ -1911,18 +2031,19 @@ class _ActivityTile extends StatelessWidget {
     if (t.contains('completed') || t.contains('success')) {
       return Icons.check_circle_outline;
     }
-    if (t.contains('command')) return Icons.terminal;
+    if (t.contains('command') || t.contains('mdm')) return Icons.terminal;
     if (t.contains('lock')) return Icons.lock_outline;
-    return Icons.history;
-  }
-
-  Color _activityColor(String? type, ColorScheme cs) {
-    final t = type?.toLowerCase() ?? '';
-    if (t.contains('failed') || t.contains('error')) return cs.errorContainer;
-    if (t.contains('completed') || t.contains('success')) {
-      return cs.primaryContainer;
+    if (t.contains('install')) return Icons.install_desktop;
+    if (t.contains('update') || t.contains('sync')) return Icons.sync;
+    if (t.contains('restart') || t.contains('shutdown')) {
+      return Icons.restart_alt;
     }
-    return cs.tertiaryContainer;
+    if (t.contains('erase') || t.contains('wipe') || t.contains('delete')) {
+      return Icons.delete_forever;
+    }
+    if (t.contains('push') || t.contains('send')) return Icons.send_outlined;
+    if (t.contains('checkin') || t.contains('check_in')) return Icons.today;
+    return Icons.history;
   }
 }
 

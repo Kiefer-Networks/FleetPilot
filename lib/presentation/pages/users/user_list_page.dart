@@ -56,7 +56,6 @@ class _UserListPageState extends ConsumerState<UserListPage> {
     final theme = Theme.of(context);
     final filteredUsers = ref.watch(filteredUsersProvider);
     final showArchived = ref.watch(showArchivedUsersProvider);
-    final sortAsc = ref.watch(userSortAscProvider);
     final loadingCount = ref.watch(usersLoadingCountProvider);
     final activeFilterCount = _countActiveFilters();
 
@@ -155,27 +154,6 @@ class _UserListPageState extends ConsumerState<UserListPage> {
               ),
             ],
 
-            // Sort chip row
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 40,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: [
-                  FilterChip(
-                    avatar: Icon(
-                      sortAsc ? Icons.arrow_downward : Icons.arrow_upward,
-                      size: 16,
-                    ),
-                    label: Text(sortAsc ? l10n.sortAZ : l10n.sortZA),
-                    selected: false,
-                    onSelected: (_) =>
-                        ref.read(userSortAscProvider.notifier).state = !sortAsc,
-                  ),
-                ],
-              ),
-            ),
             const SizedBox(height: 8),
 
             // Loading progress
@@ -366,6 +344,7 @@ class _UserFilterBottomSheet extends StatelessWidget {
         return StatefulBuilder(
           builder: (context, setSheetState) {
             final showArchived = ref.read(showArchivedUsersProvider);
+            final sortAsc = ref.read(userSortAscProvider);
 
             return Column(
               children: [
@@ -395,6 +374,7 @@ class _UserFilterBottomSheet extends StatelessWidget {
                         onPressed: () {
                           ref.read(showArchivedUsersProvider.notifier).state =
                               false;
+                          ref.read(userSortAscProvider.notifier).state = true;
                           setSheetState(() {});
                         },
                         child: Text(l10n.filterClearAll),
@@ -423,6 +403,44 @@ class _UserFilterBottomSheet extends StatelessWidget {
                               !showArchived;
                           setSheetState(() {});
                         },
+                      ),
+                      const SizedBox(height: 16),
+                      // Sort section
+                      Text(
+                        l10n.sortTitle,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        children: [
+                          FilterChip(
+                            avatar: const Icon(
+                              Icons.arrow_downward,
+                              size: 16,
+                            ),
+                            label: Text(l10n.sortAZ),
+                            selected: sortAsc,
+                            onSelected: (_) {
+                              ref.read(userSortAscProvider.notifier).state =
+                                  true;
+                              setSheetState(() {});
+                            },
+                          ),
+                          FilterChip(
+                            avatar: const Icon(
+                              Icons.arrow_upward,
+                              size: 16,
+                            ),
+                            label: Text(l10n.sortZA),
+                            selected: !sortAsc,
+                            onSelected: (_) {
+                              ref.read(userSortAscProvider.notifier).state =
+                                  false;
+                              setSheetState(() {});
+                            },
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 24),
                     ],

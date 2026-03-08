@@ -521,9 +521,15 @@ class TenantApi {
         'results',
         'data',
         'devices',
+        'affected_devices',
+        'device_records',
+        'records',
+        'items',
         'detections',
         'integrations',
         'events',
+        'software',
+        'vulnerabilities',
       ]) {
         final list = data[key];
         if (list is List) return list.cast<Map<String, dynamic>>();

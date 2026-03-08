@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fleetpilot/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/library_item_status.dart';
 import '../../providers/blueprint_providers.dart';
@@ -106,61 +107,89 @@ class _ActivityTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final hasTapTarget = activity.deviceId != null;
+    final displayName =
+        activity.deviceName ?? activity.serialNumber ?? 'Unknown';
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: colorScheme.secondaryContainer,
-                borderRadius: BorderRadius.circular(10),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: hasTapTarget
+            ? () => context.push('/devices/${activity.deviceId}')
+            : null,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.play_arrow_outlined,
+                  color: colorScheme.onSecondaryContainer,
+                  size: 20,
+                ),
               ),
-              child: Icon(
-                Icons.play_arrow_outlined,
-                color: colorScheme.onSecondaryContainer,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    activity.action ?? 'Unknown',
-                    style: theme.textTheme.bodyMedium,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (activity.deviceName != null) ...[
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      activity.action ?? 'Unknown',
+                      style: theme.textTheme.bodyMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     const SizedBox(height: 2),
                     Text(
-                      activity.deviceName!,
+                      displayName,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ],
-                  if (activity.createdAt != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      activity.createdAt!,
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
+                    if (activity.serialNumber != null &&
+                        activity.deviceName != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        activity.serialNumber!,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
+                    ],
+                    if (activity.createdAt != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        _formatDateTime(activity.createdAt!),
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
-            ),
-            if (activity.status != null) _StatusBadge(status: activity.status!),
-          ],
+              if (activity.status != null)
+                _StatusBadge(status: activity.status!),
+              if (hasTapTarget) ...[
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.chevron_right,
+                  color: colorScheme.onSurfaceVariant,
+                  size: 20,
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );
@@ -228,50 +257,78 @@ class _StatusTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final hasTapTarget = status.deviceId != null;
+    final displayName = status.deviceName ?? status.serialNumber ?? 'Unknown';
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: colorScheme.secondaryContainer,
-                borderRadius: BorderRadius.circular(10),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: hasTapTarget
+            ? () => context.push('/devices/${status.deviceId}')
+            : null,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.devices_outlined,
+                  color: colorScheme.onSecondaryContainer,
+                  size: 20,
+                ),
               ),
-              child: Icon(
-                Icons.devices_outlined,
-                color: colorScheme.onSecondaryContainer,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    status.deviceName ?? 'Unknown',
-                    style: theme.textTheme.bodyMedium,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (status.lastRun != null) ...[
-                    const SizedBox(height: 2),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      status.lastRun!,
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      displayName,
+                      style: theme.textTheme.bodyMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
+                    if (status.serialNumber != null &&
+                        status.deviceName != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        status.serialNumber!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                    if (status.lastRun != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        _formatDateTime(status.lastRun!),
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
-            ),
-            if (status.status != null) _StatusBadge(status: status.status!),
-          ],
+              if (status.status != null) _StatusBadge(status: status.status!),
+              if (hasTapTarget) ...[
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.chevron_right,
+                  color: colorScheme.onSurfaceVariant,
+                  size: 20,
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );
@@ -329,4 +386,12 @@ class _StatusBadge extends StatelessWidget {
       ),
     );
   }
+}
+
+String _formatDateTime(String dateStr) {
+  final parsed = DateTime.tryParse(dateStr);
+  if (parsed == null) return dateStr;
+  final local = parsed.toLocal();
+  return '${local.year}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')} '
+      '${local.hour.toString().padLeft(2, '0')}:${local.minute.toString().padLeft(2, '0')}';
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
@@ -10,7 +12,7 @@ import 'rate_limit_interceptor.dart';
 /// Factory for creating configured [Dio] instances.
 ///
 /// Each instance enforces TLS, applies auth headers, rate limiting,
-/// certificate pinning, and sanitized logging.
+/// CA-based certificate pinning, and sanitized logging.
 abstract final class ApiClientFactory {
   /// Creates a [Dio] instance configured for the given API base URL.
   ///
@@ -38,9 +40,16 @@ abstract final class ApiClientFactory {
       ),
     );
 
-    dio.httpClientAdapter = IOHttpClientAdapter(
-      validateCertificate: CertificatePinner.validate,
-    );
+    // CA-based certificate pinning: use a SecurityContext that only
+    // trusts the Let's Encrypt chain (ISRG Root X1 + intermediates).
+    final pinnedContext = CertificatePinner.securityContext;
+    if (pinnedContext != null) {
+      dio.httpClientAdapter = IOHttpClientAdapter(
+        createHttpClient: () {
+          return HttpClient(context: pinnedContext);
+        },
+      );
+    }
 
     rateLimitInterceptor.dio = dio;
 

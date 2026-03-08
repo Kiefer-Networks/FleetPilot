@@ -7,8 +7,9 @@ part 'library_item_status.g.dart';
 @freezed
 abstract class LibraryItemStatus with _$LibraryItemStatus {
   const factory LibraryItemStatus({
-    @JsonKey(name: 'device_id') String? deviceId,
-    @JsonKey(name: 'device_name') String? deviceName,
+    @JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,
+    @JsonKey(name: 'device_name', readValue: _readDeviceName)
+    String? deviceName,
     @JsonKey(name: 'serial_number') String? serialNumber,
     String? status,
     @JsonKey(name: 'last_run') String? lastRun,
@@ -23,16 +24,27 @@ abstract class LibraryItemStatus with _$LibraryItemStatus {
 @freezed
 abstract class LibraryItemActivity with _$LibraryItemActivity {
   const factory LibraryItemActivity({
-    String? id,
-    @JsonKey(name: 'device_id') String? deviceId,
-    @JsonKey(name: 'device_name') String? deviceName,
+    @JsonKey(fromJson: _toNullableString) String? id,
+    @JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,
+    @JsonKey(name: 'device_name', readValue: _readDeviceName)
+    String? deviceName,
     @JsonKey(name: 'serial_number') String? serialNumber,
     String? action,
     String? status,
     @JsonKey(name: 'created_at') String? createdAt,
-    String? details,
+    @JsonKey(fromJson: _toNullableString) String? details,
   }) = _LibraryItemActivity;
 
   factory LibraryItemActivity.fromJson(Map<String, dynamic> json) =>
       _$LibraryItemActivityFromJson(json);
 }
+
+String? _toNullableString(dynamic value) => value?.toString();
+
+/// Reads device_id with fallback to computer_id (Kandji API uses both).
+Object? _readDeviceId(Map<dynamic, dynamic> json, String key) =>
+    json['device_id'] ?? json['computer_id'];
+
+/// Reads device_name with fallback to computer_name.
+Object? _readDeviceName(Map<dynamic, dynamic> json, String key) =>
+    json['device_name'] ?? json['computer_name'];

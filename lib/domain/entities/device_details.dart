@@ -128,9 +128,10 @@ abstract class DeviceSecurity with _$DeviceSecurity {
   const factory DeviceSecurity({
     @JsonKey(name: 'encryption_status') String? encryptionStatus,
     @JsonKey(name: 'device_posture') String? devicePosture,
-    @JsonKey(name: 'has_passcode') int? hasPasscode,
-    @JsonKey(name: 'is_encrypted') int? isEncrypted,
-    @JsonKey(name: 'has_google_play_protect') int? hasGooglePlayProtect,
+    @JsonKey(name: 'has_passcode', fromJson: _toNullableInt) int? hasPasscode,
+    @JsonKey(name: 'is_encrypted', fromJson: _toNullableInt) int? isEncrypted,
+    @JsonKey(name: 'has_google_play_protect', fromJson: _toNullableInt)
+    int? hasGooglePlayProtect,
     @JsonKey(name: 'developer_mode_enabled') dynamic developerModeEnabled,
     @JsonKey(name: 'android_debug_bridge_enabled')
     dynamic androidDebugBridgeEnabled,
@@ -183,4 +184,12 @@ abstract class DeviceLostMode with _$DeviceLostMode {
     if (v is String) return double.tryParse(v);
     return null;
   }
+}
+
+/// Converts dynamic values (num, String, bool) to nullable int.
+int? _toNullableInt(dynamic value) {
+  if (value is num) return value.toInt();
+  if (value is String) return int.tryParse(value);
+  if (value is bool) return value ? 1 : 0;
+  return null;
 }
