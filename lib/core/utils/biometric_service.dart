@@ -23,13 +23,7 @@ class BiometricService {
   /// Returns `true` if authenticated, `false` otherwise.
   Future<bool> authenticate({required String reason}) async {
     try {
-      return await _auth.authenticate(
-        localizedReason: reason,
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-          biometricOnly: false,
-        ),
-      );
+      return await _auth.authenticate(localizedReason: reason);
     } catch (_) {
       return false;
     }

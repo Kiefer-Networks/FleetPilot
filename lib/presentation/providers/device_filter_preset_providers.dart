@@ -26,14 +26,14 @@ class DeviceFilterPresetsNotifier
   }
 
   Future<void> add(DeviceFilterPreset preset) async {
-    final current = state.valueOrNull ?? [];
+    final current = state.value ?? [];
     final updated = [...current, preset];
     await _persist(updated);
     state = AsyncData(updated);
   }
 
   Future<void> remove(String id) async {
-    final current = state.valueOrNull ?? [];
+    final current = state.value ?? [];
     final updated = current.where((p) => p.id != id).toList();
     await _persist(updated);
     state = AsyncData(updated);

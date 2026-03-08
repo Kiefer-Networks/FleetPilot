@@ -62,7 +62,7 @@ class _DeviceDetailScaffold extends ConsumerWidget {
     final isMobile = !isMac;
     final tabCount = isMobile ? 8 : 7;
     final detailsAsync = ref.watch(deviceDetailsProvider(device.deviceId));
-    final isLostMode = detailsAsync.valueOrNull?.lostMode?.isEnabled ?? false;
+    final isLostMode = detailsAsync.value?.lostMode?.isEnabled ?? false;
 
     return DefaultTabController(
       length: tabCount,

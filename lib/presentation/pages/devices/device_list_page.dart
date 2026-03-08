@@ -185,7 +185,7 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
 
   Future<void> _bulkAssignTag(List<Device> selectedDevices) async {
     final tagsAsync = ref.read(tagsProvider);
-    final tags = tagsAsync.valueOrNull ?? <Tag>[];
+    final tags = tagsAsync.value ?? <Tag>[];
 
     final selectedTag = await showDialog<Tag>(
       context: context,
@@ -210,7 +210,7 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
 
   Future<void> _bulkAssignBlueprint(List<Device> selectedDevices) async {
     final blueprintsAsync = ref.read(blueprintsProvider);
-    final blueprints = blueprintsAsync.valueOrNull ?? <Blueprint>[];
+    final blueprints = blueprintsAsync.value ?? <Blueprint>[];
 
     final selectedBlueprint = await showDialog<Blueprint>(
       context: context,
@@ -329,7 +329,7 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
             ? FloatingActionButton.extended(
                 onPressed: () {
                   final devicesAsync = ref.read(filteredDevicesProvider);
-                  final devices = devicesAsync.valueOrNull ?? [];
+                  final devices = devicesAsync.value ?? [];
                   _showBulkActionSheet(devices);
                 },
                 icon: const Icon(Icons.playlist_play),
@@ -358,7 +358,7 @@ class _DeviceListPageState extends ConsumerState<DeviceListPage> {
                     tooltip: l10n.selectAll,
                     onPressed: () {
                       final devicesAsync = ref.read(filteredDevicesProvider);
-                      final devices = devicesAsync.valueOrNull ?? [];
+                      final devices = devicesAsync.value ?? [];
                       ref
                           .read(selectedDeviceIdsProvider.notifier)
                           .selectAll(devices.map((d) => d.deviceId).toList());

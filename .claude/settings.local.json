@@ -47,7 +47,10 @@
       "Bash(# Get intermediate cert validity separately\nopenssl s_client -connect api.eu.kandji.io:443 -servername api.eu.kandji.io -showcerts 2>/dev/null | awk 'BEGIN{n=0} /BEGIN CERT/{n++} n==2{print} /END CERT/&&n==2{print; exit}' | openssl x509 -noout -dates -subject 2>/dev/null)",
       "Bash(wc:*)",
       "Bash(do echo:*)",
-      "Bash(gh run:*)"
+      "Bash(gh run:*)",
+      "Bash(gh release:*)",
+      "WebFetch(domain:riverpod.dev)",
+      "WebFetch(domain:pub.dev)"
     ]
   }
 }

@@ -81,7 +81,7 @@ class _ProfileSwitcherContent extends ConsumerWidget {
                     );
                   }
 
-                  final activeId = activeIdAsync.valueOrNull;
+                  final activeId = activeIdAsync.value;
 
                   return ListView.builder(
                     controller: scrollController,

@@ -41,7 +41,7 @@ class SettingsPage extends ConsumerWidget {
                     );
                   }
 
-                  final activeId = activeIdAsync.valueOrNull;
+                  final activeId = activeIdAsync.value;
                   final activeProfile = profiles
                       .where((p) => p.id == activeId)
                       .firstOrNull;

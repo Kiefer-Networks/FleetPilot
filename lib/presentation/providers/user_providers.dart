@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import '../../core/di/providers.dart';
 import '../../domain/entities/device.dart';
@@ -38,7 +39,7 @@ class UsersNotifier extends AsyncNotifier<List<MdmUser>> {
 
   /// Silently refresh: keep showing old data while fetching new.
   Future<void> refresh() async {
-    final previousData = state.valueOrNull;
+    final previousData = state.value;
     // Don't set to loading — keep showing cached data
     try {
       final repo = await ref.read(userRepositoryProvider.future);
@@ -106,7 +107,7 @@ final userDevicesProvider = Provider.family<AsyncValue<List<Device>>, String>((
   final userAsync = ref.watch(userDetailProvider(userId));
 
   return devicesAsync.whenData((devices) {
-    final userEmail = userAsync.valueOrNull?.email?.toLowerCase();
+    final userEmail = userAsync.value?.email?.toLowerCase();
     if (userEmail == null || userEmail.isEmpty) return <Device>[];
     return devices
         .where((d) => d.user?.email?.toLowerCase() == userEmail)
