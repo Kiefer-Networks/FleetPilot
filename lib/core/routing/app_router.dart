@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../presentation/pages/auth/add_profile_page.dart';
 import '../../presentation/pages/auth/biometric_gate_page.dart';
+import '../../presentation/pages/auth/edit_profile_page.dart';
 import '../../presentation/pages/auth/mandatory_pin_setup_page.dart';
 import '../../presentation/pages/blueprints/blueprint_detail_page.dart';
 import '../../presentation/pages/blueprints/blueprint_list_page.dart';
@@ -113,6 +114,13 @@ GoRouter createRouter({required bool hasProfile, required bool hasPinLock}) {
                   GoRoute(
                     path: 'security',
                     builder: (context, state) => const SecuritySettingsPage(),
+                  ),
+                  GoRoute(
+                    path: 'edit-profile/:profileId',
+                    builder: (context, state) {
+                      final profileId = state.pathParameters['profileId']!;
+                      return EditProfilePage(profileId: profileId);
+                    },
                   ),
                 ],
               ),

@@ -42,6 +42,21 @@ class ProfileActionsNotifier extends AsyncNotifier<void> {
     });
   }
 
+  /// Updates an existing profile and optionally its token.
+  Future<void> updateProfile({
+    required ConnectionProfile profile,
+    String? token,
+  }) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final repo = ref.read(profileRepositoryProvider);
+      await repo.updateProfile(profile, token: token);
+      ref.invalidate(profilesProvider);
+      ref.invalidate(activeProfileIdProvider);
+      ref.invalidate(activeProfileProvider);
+    });
+  }
+
   /// Deletes a profile and clears state if it was active.
   Future<void> deleteProfile(String id) async {
     state = const AsyncLoading();

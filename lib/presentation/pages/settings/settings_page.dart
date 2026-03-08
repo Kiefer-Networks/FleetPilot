@@ -7,6 +7,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../providers/profile_providers.dart';
 import '../../providers/security_providers.dart';
 import '../../providers/settings_providers.dart';
+import '../../widgets/settings/profile_switcher_sheet.dart';
 import '../../widgets/settings/settings.dart';
 
 class SettingsPage extends ConsumerWidget {
@@ -16,6 +17,7 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final profilesAsync = ref.watch(profilesProvider);
+    final activeIdAsync = ref.watch(activeProfileIdProvider);
     final currentLocale = ref.watch(localeProvider);
 
     return Scaffold(
@@ -39,27 +41,21 @@ class SettingsPage extends ConsumerWidget {
                     );
                   }
 
+                  final activeId = activeIdAsync.valueOrNull;
+                  final activeProfile = profiles
+                      .where((p) => p.id == activeId)
+                      .firstOrNull;
+
                   return Column(
                     children: [
-                      ...profiles.map(
-                        (profile) => SettingsTile(
-                          icon: Icons.business,
-                          iconColor: AppColors.iconIndigo,
-                          title: profile.displayName,
-                          subtitleText:
-                              '${profile.subdomain} (${profile.region.label})',
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete_outline),
-                            onPressed: () =>
-                                _confirmDelete(context, ref, profile.id, l10n),
-                          ),
-                        ),
-                      ),
                       SettingsTile(
-                        icon: Icons.add,
-                        iconColor: AppColors.iconGreen,
-                        title: l10n.addProfile,
-                        onTap: () => context.push('/auth/setup'),
+                        icon: Icons.swap_horiz,
+                        iconColor: AppColors.iconIndigo,
+                        title: l10n.switchProfile,
+                        subtitleText: activeProfile != null
+                            ? l10n.activeProfile(activeProfile.displayName)
+                            : l10n.noProfiles,
+                        onTap: () => showProfileSwitcherSheet(context),
                       ),
                     ],
                   );
@@ -146,34 +142,6 @@ class SettingsPage extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  Future<void> _confirmDelete(
-    BuildContext context,
-    WidgetRef ref,
-    String profileId,
-    AppLocalizations l10n,
-  ) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.deleteProfile),
-        content: Text(l10n.deleteProfileConfirm),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
-    );
-    if (confirmed == true) {
-      await ref.read(profileActionsProvider.notifier).deleteProfile(profileId);
-    }
   }
 
   String _languageLabel(Locale? locale, AppLocalizations l10n) {
