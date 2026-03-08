@@ -15,9 +15,25 @@ class BlueprintApi {
   final Dio dio;
 
   /// Fetches all blueprints.
-  Future<List<Blueprint>> getBlueprints() async {
+  Future<List<Blueprint>> getBlueprints({
+    String? id,
+    String? idIn,
+    String? name,
+    int? limit,
+    int? offset,
+  }) async {
     try {
-      final response = await dio.get<dynamic>('/blueprints');
+      final queryParams = <String, dynamic>{};
+      if (id != null) queryParams['id'] = id;
+      if (idIn != null) queryParams['id__in'] = idIn;
+      if (name != null) queryParams['name'] = name;
+      if (limit != null) queryParams['limit'] = limit;
+      if (offset != null) queryParams['offset'] = offset;
+
+      final response = await dio.get<dynamic>(
+        '/blueprints',
+        queryParameters: queryParams.isNotEmpty ? queryParams : null,
+      );
       final data = response.data;
 
       if (data is List) {
@@ -213,11 +229,21 @@ class BlueprintApi {
     String itemId, {
     int limit = 300,
     int offset = 0,
+    String? activityType,
+    String? userId,
+    String? userEmail,
   }) async {
     try {
+      final queryParams = <String, dynamic>{
+        'limit': limit,
+        'offset': offset,
+      };
+      if (activityType != null) queryParams['activity_type'] = activityType;
+      if (userId != null) queryParams['user_id'] = userId;
+      if (userEmail != null) queryParams['user_email'] = userEmail;
       final response = await dio.get<dynamic>(
         '/library/library-items/$itemId/activity',
-        queryParameters: {'limit': limit, 'offset': offset},
+        queryParameters: queryParams,
       );
       final data = response.data;
       List<dynamic> items;
@@ -255,11 +281,17 @@ class BlueprintApi {
     String itemId, {
     int limit = 300,
     int offset = 0,
+    String? computerId,
   }) async {
     try {
+      final queryParams = <String, dynamic>{
+        'limit': limit,
+        'offset': offset,
+      };
+      if (computerId != null) queryParams['computer_id'] = computerId;
       final response = await dio.get<dynamic>(
         '/library/library-items/$itemId/status',
-        queryParameters: {'limit': limit, 'offset': offset},
+        queryParameters: queryParams,
       );
       final data = response.data;
       List<dynamic> items;

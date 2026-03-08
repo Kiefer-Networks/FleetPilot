@@ -442,10 +442,16 @@ class TenantApi {
   }
 
   /// Lists ADE devices for a specific integration.
-  Future<List<AdeDevice>> getAdeDevices(String integrationId) async {
+  Future<List<AdeDevice>> getAdeDevices(
+    String integrationId, {
+    int? page,
+  }) async {
     try {
+      final queryParams = <String, dynamic>{};
+      if (page != null) queryParams['page'] = page;
       final response = await dio.get<dynamic>(
         '/integrations/apple/ade/$integrationId/devices',
+        queryParameters: queryParams.isNotEmpty ? queryParams : null,
       );
       return _extractListItems(
         response.data,
@@ -464,8 +470,11 @@ class TenantApi {
   Future<List<AdeDevice>> getAllAdeDevices({
     int? page,
     String? blueprintId,
+    String? userId,
+    String? depAccount,
     String? deviceFamily,
     String? model,
+    String? os,
     String? profileStatus,
     String? serialNumber,
   }) async {
@@ -473,8 +482,11 @@ class TenantApi {
       final queryParams = <String, dynamic>{};
       if (page != null) queryParams['page'] = page;
       if (blueprintId != null) queryParams['blueprint_id'] = blueprintId;
+      if (userId != null) queryParams['user_id'] = userId;
+      if (depAccount != null) queryParams['dep_account'] = depAccount;
       if (deviceFamily != null) queryParams['device_family'] = deviceFamily;
       if (model != null) queryParams['model'] = model;
+      if (os != null) queryParams['os'] = os;
       if (profileStatus != null) queryParams['profile_status'] = profileStatus;
       if (serialNumber != null) queryParams['serial_number'] = serialNumber;
       final response = await dio.get<dynamic>(
@@ -558,10 +570,16 @@ class TenantApi {
     String integrationId, {
     required String filePath,
     required String fileName,
+    required String phone,
+    required String email,
+    String? blueprintId,
   }) async {
     try {
       final formData = FormData.fromMap({
         'file': await MultipartFile.fromFile(filePath, filename: fileName),
+        'phone': phone,
+        'email': email,
+        if (blueprintId != null) 'blueprint_id': blueprintId,
       });
       await dio.post<dynamic>(
         '/integrations/apple/ade/$integrationId/renew',
@@ -811,6 +829,18 @@ class TenantApi {
   Future<void> deleteCustomProfile(String id) async {
     try {
       await dio.delete<dynamic>('/library/custom-profiles/$id');
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    }
+  }
+
+  /// Gets a single custom app by ID.
+  Future<Map<String, dynamic>> getCustomApp(String id) async {
+    try {
+      final response = await dio.get<dynamic>('/library/custom-apps/$id');
+      final data = response.data;
+      if (data is Map<String, dynamic>) return data;
+      return {};
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     }

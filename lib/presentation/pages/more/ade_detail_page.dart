@@ -547,6 +547,12 @@ class _AdeDetailScaffold extends ConsumerWidget {
     String? filePath;
     String? fileName;
     bool uploading = false;
+    final phoneController = TextEditingController(
+      text: integration.orgPhone ?? '',
+    );
+    final emailController = TextEditingController(
+      text: integration.orgEmail ?? '',
+    );
 
     showDialog<void>(
       context: context,
@@ -555,62 +561,82 @@ class _AdeDetailScaffold extends ConsumerWidget {
           builder: (dialogContext, setDialogState) {
             return AlertDialog(
               title: Text(l10n.renewToken),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.renewTokenDescription,
-                    style: theme.textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 16),
-                  if (fileName != null)
-                    Card(
-                      color: colorScheme.primaryContainer,
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.insert_drive_file,
-                          color: colorScheme.onPrimaryContainer,
-                        ),
-                        title: Text(
-                          fileName!,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onPrimaryContainer,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            color: colorScheme.onPrimaryContainer,
-                          ),
-                          onPressed: () => setDialogState(() {
-                            filePath = null;
-                            fileName = null;
-                          }),
-                        ),
-                      ),
-                    )
-                  else
-                    FilledButton.tonalIcon(
-                      onPressed: () async {
-                        final result = await FilePicker.platform.pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: ['p7m'],
-                        );
-                        if (result != null &&
-                            result.files.single.path != null) {
-                          setDialogState(() {
-                            filePath = result.files.single.path;
-                            fileName = result.files.single.name;
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.file_open_outlined),
-                      label: Text(l10n.selectTokenFile),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.renewTokenDescription,
+                      style: theme.textTheme.bodyMedium,
                     ),
-                ],
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: phoneController,
+                      decoration: InputDecoration(
+                        labelText: l10n.phone,
+                        prefixIcon: const Icon(Icons.phone_outlined),
+                      ),
+                      keyboardType: TextInputType.phone,
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        labelText: l10n.email,
+                        prefixIcon: const Icon(Icons.email_outlined),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(height: 16),
+                    if (fileName != null)
+                      Card(
+                        color: colorScheme.primaryContainer,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.insert_drive_file,
+                            color: colorScheme.onPrimaryContainer,
+                          ),
+                          title: Text(
+                            fileName!,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onPrimaryContainer,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: colorScheme.onPrimaryContainer,
+                            ),
+                            onPressed: () => setDialogState(() {
+                              filePath = null;
+                              fileName = null;
+                            }),
+                          ),
+                        ),
+                      )
+                    else
+                      FilledButton.tonalIcon(
+                        onPressed: () async {
+                          final result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['p7m'],
+                          );
+                          if (result != null &&
+                              result.files.single.path != null) {
+                            setDialogState(() {
+                              filePath = result.files.single.path;
+                              fileName = result.files.single.name;
+                            });
+                          }
+                        },
+                        icon: const Icon(Icons.file_open_outlined),
+                        label: Text(l10n.selectTokenFile),
+                      ),
+                  ],
+                ),
               ),
               actions: [
                 TextButton(
@@ -618,7 +644,10 @@ class _AdeDetailScaffold extends ConsumerWidget {
                   child: Text(l10n.cancel),
                 ),
                 FilledButton(
-                  onPressed: filePath != null && !uploading
+                  onPressed: filePath != null &&
+                          phoneController.text.isNotEmpty &&
+                          emailController.text.isNotEmpty &&
+                          !uploading
                       ? () async {
                           setDialogState(() => uploading = true);
                           try {
@@ -629,6 +658,8 @@ class _AdeDetailScaffold extends ConsumerWidget {
                               integration.id!,
                               filePath: filePath!,
                               fileName: fileName ?? 'token.p7m',
+                              phone: phoneController.text,
+                              email: emailController.text,
                             );
                             ref.invalidate(adeIntegrationsProvider);
                             if (dialogContext.mounted) {

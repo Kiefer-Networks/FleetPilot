@@ -13,6 +13,10 @@ class UserApi {
 
   /// Fetches all users using cursor-based pagination.
   Future<List<MdmUser>> getAllUsers({
+    String? email,
+    String? id,
+    String? integrationId,
+    bool? archived,
     void Function(int loadedCount)? onPageLoaded,
   }) async {
     final allUsers = <MdmUser>[];
@@ -22,6 +26,12 @@ class UserApi {
       while (true) {
         final queryParams = <String, dynamic>{};
         if (cursor != null) queryParams['cursor'] = cursor;
+        if (email != null) queryParams['email'] = email;
+        if (id != null) queryParams['id'] = id;
+        if (integrationId != null) {
+          queryParams['integration_id'] = integrationId;
+        }
+        if (archived != null) queryParams['archived'] = archived.toString();
 
         final response = await dio.get<dynamic>(
           '/users',
