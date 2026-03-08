@@ -102,17 +102,19 @@ final aggregatedLibraryItemsProvider =
         }),
       );
 
+      // Deduplicate by name (case-insensitive) to merge same item across
+      // blueprints/platforms. Fall back to id if name is missing.
       final map = <String, AggregatedLibraryItem>{};
       for (final result in results) {
         for (final item in result.items) {
-          final id = item.id;
-          if (id == null) continue;
-          if (map.containsKey(id)) {
-            if (!map[id]!.blueprintNames.contains(result.blueprint.name)) {
-              map[id]!.blueprintNames.add(result.blueprint.name);
+          final key = (item.name ?? item.id ?? '').toLowerCase();
+          if (key.isEmpty) continue;
+          if (map.containsKey(key)) {
+            if (!map[key]!.blueprintNames.contains(result.blueprint.name)) {
+              map[key]!.blueprintNames.add(result.blueprint.name);
             }
           } else {
-            map[id] = AggregatedLibraryItem(
+            map[key] = AggregatedLibraryItem(
               item: item,
               blueprintNames: [result.blueprint.name],
             );

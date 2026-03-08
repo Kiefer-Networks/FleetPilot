@@ -16,12 +16,11 @@ abstract class DeviceDetails with _$DeviceDetails {
     DeviceLostMode? lostMode,
     DeviceMdm? mdm,
     DeviceNetwork? network,
+    @Default([]) List<DeviceVolume> volumes,
+    DeviceUsers? users,
   }) = _DeviceDetails;
 
-  /// Custom fromJson that normalizes Kandji's platform-specific response:
-  /// - Apple returns `hardware_overview` instead of `hardware`
-  /// - Apple returns `activation_lock`, `filevault` etc. for security info
-  /// Custom fromJson that normalizes Kandji's platform-specific keys.
+  /// Custom fromJson that normalizes Kandji's platform-specific response.
   factory DeviceDetails.fromJson(Map<String, dynamic> json) {
     // Apple: hardware_overview → hardware
     final hwJson = json['hardware'] ?? json['hardware_overview'];
@@ -51,6 +50,24 @@ abstract class DeviceDetails with _$DeviceDetails {
       if (secMap.isNotEmpty) secJson = secMap;
     }
 
+    // Parse volumes array
+    final volumesList = <DeviceVolume>[];
+    final rawVolumes = json['volumes'];
+    if (rawVolumes is List) {
+      for (final v in rawVolumes) {
+        if (v is Map<String, dynamic>) {
+          volumesList.add(DeviceVolume.fromJson(v));
+        }
+      }
+    }
+
+    // Parse users section
+    DeviceUsers? users;
+    final rawUsers = json['users'];
+    if (rawUsers is Map<String, dynamic>) {
+      users = DeviceUsers.fromJson(rawUsers);
+    }
+
     return DeviceDetails(
       general: json['general'] is Map<String, dynamic>
           ? DeviceGeneral.fromJson(json['general'] as Map<String, dynamic>)
@@ -71,6 +88,8 @@ abstract class DeviceDetails with _$DeviceDetails {
       network: json['network'] is Map<String, dynamic>
           ? DeviceNetwork.fromJson(json['network'] as Map<String, dynamic>)
           : null,
+      volumes: volumesList,
+      users: users,
     );
   }
 }
@@ -94,6 +113,9 @@ abstract class DeviceGeneral with _$DeviceGeneral {
     @JsonKey(name: 'security_patch_level') String? securityPatchLevel,
     String? manufacturer,
     @JsonKey(name: 'enterprise_id') String? enterpriseId,
+    @JsonKey(name: 'boot_volume') String? bootVolume,
+    @JsonKey(name: 'last_user') String? lastUser,
+    @JsonKey(name: 'battery_level') String? batteryLevel,
   }) = _DeviceGeneral;
 
   factory DeviceGeneral.fromJson(Map<String, dynamic> json) =>
@@ -119,6 +141,10 @@ abstract class DeviceHardware with _$DeviceHardware {
     @JsonKey(name: 'serial_number') String? serialNumber,
     @JsonKey(name: 'hardware_uuid') String? hardwareUuid,
     @JsonKey(name: 'provisioning_udid') String? provisioningUdid,
+    // CPU details
+    @JsonKey(name: 'processor_name') String? processorName,
+    @JsonKey(name: 'number_of_processors') String? numberOfProcessors,
+    @JsonKey(name: 'total_number_of_cores') String? totalNumberOfCores,
   }) = _DeviceHardware;
 
   factory DeviceHardware.fromJson(Map<String, dynamic> json) =>
@@ -128,7 +154,8 @@ abstract class DeviceHardware with _$DeviceHardware {
   String? get resolvedRam => totalRam ?? memory;
 
   /// Resolved processor.
-  String? get resolvedProcessor => processorType ?? chip;
+  String? get resolvedProcessor =>
+      processorName ?? processorType ?? chip;
 }
 
 @freezed
@@ -216,10 +243,71 @@ abstract class DeviceNetwork with _$DeviceNetwork {
     @JsonKey(name: 'ip_address') String? ipAddress,
     @JsonKey(name: 'wifi_network') String? wifiNetwork,
     @JsonKey(name: 'bluetooth_mac_address') String? bluetoothMacAddress,
+    @JsonKey(name: 'local_hostname') String? localHostname,
+    @JsonKey(name: 'mac_address') String? macAddress,
+    @JsonKey(name: 'public_ip') String? publicIp,
   }) = _DeviceNetwork;
 
   factory DeviceNetwork.fromJson(Map<String, dynamic> json) =>
       _$DeviceNetworkFromJson(json);
+}
+
+/// A storage volume on the device.
+@freezed
+abstract class DeviceVolume with _$DeviceVolume {
+  const factory DeviceVolume({
+    String? name,
+    String? identifier,
+    @JsonKey(name: 'file_system') String? fileSystem,
+    String? capacity,
+    String? available,
+    @JsonKey(name: 'percent_used') String? percentUsed,
+    @JsonKey(name: 'encrypted', fromJson: _toNullableBool) bool? encrypted,
+  }) = _DeviceVolume;
+
+  factory DeviceVolume.fromJson(Map<String, dynamic> json) =>
+      _$DeviceVolumeFromJson(json);
+}
+
+/// Local users on the device.
+@freezed
+abstract class DeviceUsers with _$DeviceUsers {
+  const factory DeviceUsers({
+    @JsonKey(name: 'regular_users') @Default([]) List<DeviceLocalUser> regularUsers,
+    @JsonKey(name: 'system_users') @Default([]) List<DeviceLocalUser> systemUsers,
+  }) = _DeviceUsers;
+
+  factory DeviceUsers.fromJson(Map<String, dynamic> json) {
+    final regular = <DeviceLocalUser>[];
+    final system = <DeviceLocalUser>[];
+    final rawRegular = json['regular_users'];
+    if (rawRegular is List) {
+      for (final u in rawRegular) {
+        if (u is Map<String, dynamic>) regular.add(DeviceLocalUser.fromJson(u));
+      }
+    }
+    final rawSystem = json['system_users'];
+    if (rawSystem is List) {
+      for (final u in rawSystem) {
+        if (u is Map<String, dynamic>) system.add(DeviceLocalUser.fromJson(u));
+      }
+    }
+    return DeviceUsers(regularUsers: regular, systemUsers: system);
+  }
+}
+
+/// A single local user account on the device.
+@freezed
+abstract class DeviceLocalUser with _$DeviceLocalUser {
+  const factory DeviceLocalUser({
+    String? username,
+    String? uid,
+    String? home,
+    @JsonKey(fromJson: _toNullableBool) bool? admin,
+  }) = _DeviceLocalUser;
+
+  factory DeviceLocalUser.fromJson(Map<String, dynamic> json) =>
+      _$DeviceLocalUserFromJson(json);
 }
 
 /// Converts dynamic values (bool, String "Yes"/"No"/"true"/"false") to nullable bool.

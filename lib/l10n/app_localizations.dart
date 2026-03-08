@@ -3465,6 +3465,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'User-Approved Enrollment'**
   String get userApprovedEnrollment;
+
+  /// No description provided for @hostname.
+  ///
+  /// In en, this message translates to:
+  /// **'Hostname'**
+  String get hostname;
+
+  /// No description provided for @macAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'MAC Address'**
+  String get macAddress;
+
+  /// No description provided for @publicIp.
+  ///
+  /// In en, this message translates to:
+  /// **'Public IP'**
+  String get publicIp;
+
+  /// No description provided for @volumes.
+  ///
+  /// In en, this message translates to:
+  /// **'Volumes'**
+  String get volumes;
+
+  /// No description provided for @volumeUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% used'**
+  String volumeUsed(String percent);
+
+  /// No description provided for @volumeAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'{available} available of {total}'**
+  String volumeAvailable(String available, String total);
+
+  /// No description provided for @encrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted'**
+  String get encrypted;
+
+  /// No description provided for @cpuInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'CPU'**
+  String get cpuInfo;
+
+  /// No description provided for @processorCores.
+  ///
+  /// In en, this message translates to:
+  /// **'{cores} Cores'**
+  String processorCores(String cores);
+
+  /// No description provided for @processors.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Processors'**
+  String processors(String count);
+
+  /// No description provided for @batteryLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Level'**
+  String get batteryLevel;
+
+  /// No description provided for @lastUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Last User'**
+  String get lastUser;
+
+  /// No description provided for @bootVolume.
+  ///
+  /// In en, this message translates to:
+  /// **'Boot Volume'**
+  String get bootVolume;
+
+  /// No description provided for @localUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Users'**
+  String get localUsers;
+
+  /// No description provided for @regularUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular Users'**
+  String get regularUsers;
+
+  /// No description provided for @systemUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'System Users'**
+  String get systemUsers;
+
+  /// No description provided for @admin.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get admin;
+
+  /// No description provided for @assignToBlueprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign to Blueprint'**
+  String get assignToBlueprint;
+
+  /// No description provided for @installOnDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Install on Device'**
+  String get installOnDevice;
+
+  /// No description provided for @selectBlueprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Blueprint'**
+  String get selectBlueprint;
+
+  /// No description provided for @selectDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Device'**
+  String get selectDevice;
+
+  /// No description provided for @selfServiceEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Self-Service'**
+  String get selfServiceEnabled;
+
+  /// No description provided for @vppLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'VPP Licenses'**
+  String get vppLicenses;
 }
 
 class _AppLocalizationsDelegate

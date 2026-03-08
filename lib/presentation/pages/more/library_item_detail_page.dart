@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fleetpilot/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/di/providers.dart';
 import '../../../domain/entities/library_item_status.dart';
 import '../../providers/blueprint_providers.dart';
 import '../../widgets/common/error_state_widget.dart';
@@ -47,6 +48,13 @@ class LibraryItemDetailPage extends ConsumerWidget {
                 ),
             ],
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.add_link),
+              tooltip: l10n.assignToBlueprint,
+              onPressed: () => _showAssignDialog(context, ref),
+            ),
+          ],
           bottom: TabBar(
             tabs: [
               Tab(text: l10n.details),
@@ -64,6 +72,68 @@ class LibraryItemDetailPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _showAssignDialog(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final blueprintsAsync = ref.read(blueprintsProvider);
+    final blueprints = blueprintsAsync.whenOrNull(data: (d) => d) ?? [];
+
+    if (!context.mounted) return;
+
+    final selectedBpId = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.assignToBlueprint),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: blueprints.isEmpty
+              ? Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(l10n.noBlueprintsFound),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: blueprints.length,
+                  itemBuilder: (_, i) {
+                    final bp = blueprints[i];
+                    return ListTile(
+                      leading: const Icon(Icons.layers_outlined),
+                      title: Text(bp.name),
+                      onTap: () => Navigator.of(ctx).pop(bp.id),
+                    );
+                  },
+                ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(l10n.cancel),
+          ),
+        ],
+      ),
+    );
+    if (selectedBpId == null || !context.mounted) return;
+
+    try {
+      final api = await ref.read(blueprintApiProvider.future);
+      await api.assignLibraryItem(
+        selectedBpId,
+        {'library_item_id': itemId},
+      );
+      ref.invalidate(aggregatedLibraryItemsProvider);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.libraryItemAssigned)),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
+    }
   }
 
   static String? _displayCategory(String? category, AppLocalizations l10n) {

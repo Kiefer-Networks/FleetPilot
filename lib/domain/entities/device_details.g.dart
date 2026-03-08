@@ -24,6 +24,9 @@ _DeviceGeneral _$DeviceGeneralFromJson(Map<String, dynamic> json) =>
       securityPatchLevel: json['security_patch_level'] as String?,
       manufacturer: json['manufacturer'] as String?,
       enterpriseId: json['enterprise_id'] as String?,
+      bootVolume: json['boot_volume'] as String?,
+      lastUser: json['last_user'] as String?,
+      batteryLevel: json['battery_level'] as String?,
     );
 
 Map<String, dynamic> _$DeviceGeneralToJson(_DeviceGeneral instance) =>
@@ -44,6 +47,9 @@ Map<String, dynamic> _$DeviceGeneralToJson(_DeviceGeneral instance) =>
       'security_patch_level': instance.securityPatchLevel,
       'manufacturer': instance.manufacturer,
       'enterprise_id': instance.enterpriseId,
+      'boot_volume': instance.bootVolume,
+      'last_user': instance.lastUser,
+      'battery_level': instance.batteryLevel,
     };
 
 _DeviceHardware _$DeviceHardwareFromJson(Map<String, dynamic> json) =>
@@ -60,6 +66,9 @@ _DeviceHardware _$DeviceHardwareFromJson(Map<String, dynamic> json) =>
       serialNumber: json['serial_number'] as String?,
       hardwareUuid: json['hardware_uuid'] as String?,
       provisioningUdid: json['provisioning_udid'] as String?,
+      processorName: json['processor_name'] as String?,
+      numberOfProcessors: json['number_of_processors'] as String?,
+      totalNumberOfCores: json['total_number_of_cores'] as String?,
     );
 
 Map<String, dynamic> _$DeviceHardwareToJson(_DeviceHardware instance) =>
@@ -76,6 +85,9 @@ Map<String, dynamic> _$DeviceHardwareToJson(_DeviceHardware instance) =>
       'serial_number': instance.serialNumber,
       'hardware_uuid': instance.hardwareUuid,
       'provisioning_udid': instance.provisioningUdid,
+      'processor_name': instance.processorName,
+      'number_of_processors': instance.numberOfProcessors,
+      'total_number_of_cores': instance.totalNumberOfCores,
     };
 
 _DeviceSecurity _$DeviceSecurityFromJson(Map<String, dynamic> json) =>
@@ -155,6 +167,9 @@ _DeviceNetwork _$DeviceNetworkFromJson(Map<String, dynamic> json) =>
       ipAddress: json['ip_address'] as String?,
       wifiNetwork: json['wifi_network'] as String?,
       bluetoothMacAddress: json['bluetooth_mac_address'] as String?,
+      localHostname: json['local_hostname'] as String?,
+      macAddress: json['mac_address'] as String?,
+      publicIp: json['public_ip'] as String?,
     );
 
 Map<String, dynamic> _$DeviceNetworkToJson(_DeviceNetwork instance) =>
@@ -162,4 +177,45 @@ Map<String, dynamic> _$DeviceNetworkToJson(_DeviceNetwork instance) =>
       'ip_address': instance.ipAddress,
       'wifi_network': instance.wifiNetwork,
       'bluetooth_mac_address': instance.bluetoothMacAddress,
+      'local_hostname': instance.localHostname,
+      'mac_address': instance.macAddress,
+      'public_ip': instance.publicIp,
+    };
+
+_DeviceVolume _$DeviceVolumeFromJson(Map<String, dynamic> json) =>
+    _DeviceVolume(
+      name: json['name'] as String?,
+      identifier: json['identifier'] as String?,
+      fileSystem: json['file_system'] as String?,
+      capacity: json['capacity'] as String?,
+      available: json['available'] as String?,
+      percentUsed: json['percent_used'] as String?,
+      encrypted: _toNullableBool(json['encrypted']),
+    );
+
+Map<String, dynamic> _$DeviceVolumeToJson(_DeviceVolume instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'identifier': instance.identifier,
+      'file_system': instance.fileSystem,
+      'capacity': instance.capacity,
+      'available': instance.available,
+      'percent_used': instance.percentUsed,
+      'encrypted': instance.encrypted,
+    };
+
+_DeviceLocalUser _$DeviceLocalUserFromJson(Map<String, dynamic> json) =>
+    _DeviceLocalUser(
+      username: json['username'] as String?,
+      uid: json['uid'] as String?,
+      home: json['home'] as String?,
+      admin: _toNullableBool(json['admin']),
+    );
+
+Map<String, dynamic> _$DeviceLocalUserToJson(_DeviceLocalUser instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+      'uid': instance.uid,
+      'home': instance.home,
+      'admin': instance.admin,
     };

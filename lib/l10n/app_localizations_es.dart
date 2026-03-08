@@ -1871,4 +1871,81 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get userApprovedEnrollment => 'Inscripción aprobada por usuario';
+
+  @override
+  String get hostname => 'Nombre del host';
+
+  @override
+  String get macAddress => 'Dirección MAC';
+
+  @override
+  String get publicIp => 'IP pública';
+
+  @override
+  String get volumes => 'Volúmenes';
+
+  @override
+  String volumeUsed(String percent) {
+    return '$percent% usado';
+  }
+
+  @override
+  String volumeAvailable(String available, String total) {
+    return '$available disponible de $total';
+  }
+
+  @override
+  String get encrypted => 'Cifrado';
+
+  @override
+  String get cpuInfo => 'CPU';
+
+  @override
+  String processorCores(String cores) {
+    return '$cores Núcleos';
+  }
+
+  @override
+  String processors(String count) {
+    return '$count Procesadores';
+  }
+
+  @override
+  String get batteryLevel => 'Nivel de batería';
+
+  @override
+  String get lastUser => 'Último usuario';
+
+  @override
+  String get bootVolume => 'Volumen de arranque';
+
+  @override
+  String get localUsers => 'Usuarios locales';
+
+  @override
+  String get regularUsers => 'Usuarios regulares';
+
+  @override
+  String get systemUsers => 'Usuarios del sistema';
+
+  @override
+  String get admin => 'Admin';
+
+  @override
+  String get assignToBlueprint => 'Asignar a plano';
+
+  @override
+  String get installOnDevice => 'Instalar en dispositivo';
+
+  @override
+  String get selectBlueprint => 'Seleccionar plano';
+
+  @override
+  String get selectDevice => 'Seleccionar dispositivo';
+
+  @override
+  String get selfServiceEnabled => 'Autoservicio';
+
+  @override
+  String get vppLicenses => 'Licencias VPP';
 }

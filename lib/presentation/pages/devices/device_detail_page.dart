@@ -1402,6 +1402,14 @@ class _OverviewTab extends ConsumerWidget {
                       ),
                     ],
                   ),
+                  if (details.volumes.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    _VolumesCard(volumes: details.volumes, l10n: l10n),
+                  ],
+                  if (details.users != null) ...[
+                    const SizedBox(height: 12),
+                    _UsersCard(users: details.users!, l10n: l10n),
+                  ],
                 ],
               );
             }
@@ -1414,6 +1422,14 @@ class _OverviewTab extends ConsumerWidget {
                 _NetworkCard(details: details, l10n: l10n),
                 const SizedBox(height: 12),
                 _MdmCard(details: details, l10n: l10n),
+                if (details.volumes.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  _VolumesCard(volumes: details.volumes, l10n: l10n),
+                ],
+                if (details.users != null) ...[
+                  const SizedBox(height: 12),
+                  _UsersCard(users: details.users!, l10n: l10n),
+                ],
               ],
             );
           },
@@ -1451,9 +1467,14 @@ class _HardwareCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final hw = details.hardware;
     final cell = details.cellular;
     final general = details.general;
+
+    // Battery level parsing
+    final batteryPct = _parseBatteryLevel(general?.batteryLevel);
 
     return _SectionCard(
       children: [
@@ -1469,16 +1490,79 @@ class _HardwareCard extends StatelessWidget {
           label: l10n.manufacturer,
           value: general?.manufacturer,
         ),
+        // CPU section
         _InfoTile(
           icon: Icons.memory,
           label: l10n.processor,
           value: hw?.resolvedProcessor,
         ),
+        if (hw?.numberOfProcessors != null)
+          _InfoTile(
+            icon: Icons.memory,
+            label: l10n.processors(hw!.numberOfProcessors!),
+            value: hw.numberOfProcessors,
+          ),
+        if (hw?.totalNumberOfCores != null)
+          _InfoTile(
+            icon: Icons.memory,
+            label: l10n.cpuInfo,
+            value: l10n.processorCores(hw!.totalNumberOfCores!),
+          ),
         _InfoTile(
           icon: Icons.memory,
           label: l10n.totalRam,
           value: hw?.resolvedRam,
         ),
+        // Battery level with progress bar
+        if (batteryPct != null) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Row(
+              children: [
+                Icon(
+                  batteryPct > 20 ? Icons.battery_std : Icons.battery_alert,
+                  size: 20,
+                  color: batteryPct > 20 ? colorScheme.primary : colorScheme.error,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            l10n.batteryLevel,
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                          Text(
+                            '${batteryPct.round()}%',
+                            style: theme.textTheme.labelSmall,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: batteryPct / 100,
+                          backgroundColor: colorScheme.surfaceContainerHighest,
+                          color: batteryPct > 20
+                              ? colorScheme.primary
+                              : colorScheme.error,
+                          minHeight: 6,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
         _InfoTile(
           icon: Icons.storage,
           label: l10n.totalStorage,
@@ -1509,6 +1593,16 @@ class _HardwareCard extends StatelessWidget {
           label: l10n.osBuild,
           value: general?.osBuild,
         ),
+        _InfoTile(
+          icon: Icons.disc_full_outlined,
+          label: l10n.bootVolume,
+          value: general?.bootVolume,
+        ),
+        _InfoTile(
+          icon: Icons.person_outline,
+          label: l10n.lastUser,
+          value: general?.lastUser,
+        ),
         if (cell != null) ...[
           _InfoTile(
             icon: Icons.sim_card_outlined,
@@ -1523,6 +1617,12 @@ class _HardwareCard extends StatelessWidget {
         ],
       ],
     );
+  }
+
+  double? _parseBatteryLevel(String? value) {
+    if (value == null) return null;
+    final cleaned = value.replaceAll('%', '').trim();
+    return double.tryParse(cleaned);
   }
 }
 
@@ -1608,7 +1708,10 @@ class _NetworkCard extends StatelessWidget {
     // Hide card if all fields are null
     if (net.ipAddress == null &&
         net.wifiNetwork == null &&
-        net.bluetoothMacAddress == null) {
+        net.bluetoothMacAddress == null &&
+        net.localHostname == null &&
+        net.macAddress == null &&
+        net.publicIp == null) {
       return const SizedBox.shrink();
     }
 
@@ -1616,14 +1719,29 @@ class _NetworkCard extends StatelessWidget {
       children: [
         _SectionTitle(title: l10n.network),
         _InfoTile(
+          icon: Icons.dns_outlined,
+          label: l10n.hostname,
+          value: net.localHostname,
+        ),
+        _InfoTile(
           icon: Icons.language,
           label: l10n.ipAddress,
           value: net.ipAddress,
         ),
         _InfoTile(
+          icon: Icons.public,
+          label: l10n.publicIp,
+          value: net.publicIp,
+        ),
+        _InfoTile(
           icon: Icons.wifi,
           label: l10n.wifiNetwork,
           value: net.wifiNetwork,
+        ),
+        _InfoTile(
+          icon: Icons.settings_ethernet,
+          label: l10n.macAddress,
+          value: net.macAddress,
         ),
         _InfoTile(
           icon: Icons.bluetooth,
@@ -1677,6 +1795,246 @@ class _MdmCard extends StatelessWidget {
             isActive: mdm.userApprovedMdm!,
           ),
       ],
+    );
+  }
+}
+
+class _VolumesCard extends StatelessWidget {
+  const _VolumesCard({required this.volumes, required this.l10n});
+
+  final List<DeviceVolume> volumes;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return _SectionCard(
+      children: [
+        _SectionTitle(title: l10n.volumes),
+        for (var i = 0; i < volumes.length; i++) ...[
+          if (i > 0) const SizedBox(height: 12),
+          _VolumeRow(volume: volumes[i], theme: theme, colorScheme: colorScheme, l10n: l10n),
+        ],
+      ],
+    );
+  }
+}
+
+class _VolumeRow extends StatelessWidget {
+  const _VolumeRow({
+    required this.volume,
+    required this.theme,
+    required this.colorScheme,
+    required this.l10n,
+  });
+
+  final DeviceVolume volume;
+  final ThemeData theme;
+  final ColorScheme colorScheme;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final pct = _parsePercent(volume.percentUsed);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.storage, size: 18, color: colorScheme.onSurfaceVariant),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                volume.name ?? volume.identifier ?? 'Volume',
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+            if (volume.encrypted == true)
+              Padding(
+                padding: const EdgeInsets.only(left: 6),
+                child: Icon(Icons.lock, size: 14, color: colorScheme.primary),
+              ),
+          ],
+        ),
+        if (pct != null) ...[
+          const SizedBox(height: 6),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: pct / 100,
+              backgroundColor: colorScheme.surfaceContainerHighest,
+              color: pct > 90
+                  ? colorScheme.error
+                  : pct > 75
+                      ? Colors.orange
+                      : colorScheme.primary,
+              minHeight: 8,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                l10n.volumeUsed(pct.toStringAsFixed(1)),
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              if (volume.available != null && volume.capacity != null)
+                Text(
+                  l10n.volumeAvailable(volume.available!, volume.capacity!),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+            ],
+          ),
+        ] else ...[
+          if (volume.capacity != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(
+                volume.capacity!,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+        ],
+        if (volume.fileSystem != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Text(
+              volume.fileSystem!,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: colorScheme.outline,
+                fontSize: 10,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  double? _parsePercent(String? value) {
+    if (value == null) return null;
+    final cleaned = value.replaceAll('%', '').trim();
+    return double.tryParse(cleaned);
+  }
+}
+
+class _UsersCard extends StatelessWidget {
+  const _UsersCard({required this.users, required this.l10n});
+
+  final DeviceUsers users;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    if (users.regularUsers.isEmpty && users.systemUsers.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return _SectionCard(
+      children: [
+        _SectionTitle(title: l10n.localUsers),
+        if (users.regularUsers.isNotEmpty) ...[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Text(
+              l10n.regularUsers,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+          for (final user in users.regularUsers)
+            _UserRow(user: user, theme: theme, colorScheme: colorScheme, l10n: l10n),
+        ],
+        if (users.systemUsers.isNotEmpty) ...[
+          if (users.regularUsers.isNotEmpty) const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Text(
+              l10n.systemUsers,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+          for (final user in users.systemUsers)
+            _UserRow(user: user, theme: theme, colorScheme: colorScheme, l10n: l10n),
+        ],
+      ],
+    );
+  }
+}
+
+class _UserRow extends StatelessWidget {
+  const _UserRow({
+    required this.user,
+    required this.theme,
+    required this.colorScheme,
+    required this.l10n,
+  });
+
+  final DeviceLocalUser user;
+  final ThemeData theme;
+  final ColorScheme colorScheme;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        children: [
+          Icon(
+            Icons.person_outline,
+            size: 18,
+            color: colorScheme.onSurfaceVariant,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              user.username ?? '-',
+              style: theme.textTheme.bodyMedium,
+            ),
+          ),
+          if (user.uid != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Text(
+                'UID ${user.uid}',
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: colorScheme.outline,
+                ),
+              ),
+            ),
+          if (user.admin == true)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+              decoration: BoxDecoration(
+                color: colorScheme.tertiaryContainer,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                l10n.admin,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: colorScheme.onTertiaryContainer,
+                  fontSize: 10,
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
