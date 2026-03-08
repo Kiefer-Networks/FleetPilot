@@ -205,6 +205,8 @@ class _LibraryItemTile extends StatelessWidget {
         return Icons.apps;
       case 'custom-profile':
         return Icons.tune;
+      case 'in-house-app':
+        return Icons.phone_iphone;
       default:
         return Icons.inventory_2;
     }
@@ -218,6 +220,8 @@ class _LibraryItemTile extends StatelessWidget {
         return cs.tertiary;
       case 'custom-profile':
         return cs.primary;
+      case 'in-house-app':
+        return Colors.teal;
       default:
         return cs.onSurfaceVariant;
     }
@@ -231,6 +235,8 @@ class _LibraryItemTile extends StatelessWidget {
         return 'Custom App';
       case 'custom-profile':
         return 'Custom Profile';
+      case 'in-house-app':
+        return 'In-House App';
       default:
         return null;
     }

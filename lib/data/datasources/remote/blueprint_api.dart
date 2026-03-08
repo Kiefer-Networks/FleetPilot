@@ -293,6 +293,7 @@ class BlueprintApi {
       'custom-script': '/library/custom-scripts',
       'custom-app': '/library/custom-apps',
       'custom-profile': '/library/custom-profiles',
+      'in-house-app': '/library/ipa-apps',
     };
 
     await Future.wait(

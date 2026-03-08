@@ -71,6 +71,8 @@ class LibraryItemDetailPage extends ConsumerWidget {
         return 'Custom App';
       case 'custom-profile':
         return 'Custom Profile';
+      case 'in-house-app':
+        return 'In-House App';
       default:
         return null;
     }
@@ -146,6 +148,15 @@ class _InfoTab extends StatelessWidget {
         _addIfPresent(rows, 'Runs on Mac', itemDetails!['runs_on_mac']);
         _addIfPresent(rows, 'Runs on iPhone', itemDetails!['runs_on_iphone']);
         _addIfPresent(rows, 'Runs on iPad', itemDetails!['runs_on_ipad']);
+        break;
+      case 'in-house-app':
+        _addIfPresent(rows, 'App Name', itemDetails!['app_name']);
+        _addIfPresent(rows, 'App Version', itemDetails!['app_version']);
+        _addIfPresent(rows, 'Identifier', itemDetails!['app_identifier']);
+        _addIfPresent(rows, 'Min OS Version', itemDetails!['minimum_os_version']);
+        _addIfPresent(rows, 'Runs on iPhone', itemDetails!['runs_on_iphone']);
+        _addIfPresent(rows, 'Runs on iPad', itemDetails!['runs_on_ipad']);
+        _addIfPresent(rows, 'Runs on Mac', itemDetails!['runs_on_mac']);
         break;
     }
 
