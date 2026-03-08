@@ -85,16 +85,23 @@ class LibraryItemsPage extends ConsumerWidget {
             for (final agg in filtered) {
               final details = detailsLookup[agg.item.id];
               final category =
-                  (details?['_category'] as String?) ?? '_built-in';
+                  (details?['_category'] as String?) ??
+                  agg.item.type ??
+                  '_built-in';
               groups.putIfAbsent(category, () => []).add(agg);
             }
 
-            // Order: scripts, apps, profiles, in-house, built-in
+            // Order: scripts, apps, profiles, in-house, VPP, managed, etc.
             final orderedKeys = [
               'custom-script',
               'custom-app',
               'custom-profile',
               'in-house-app',
+              'automatic-app',
+              'profile',
+              'kandji-setup',
+              'macos-release',
+              'threat-security-policy',
               '_built-in',
             ];
             final sortedGroups = orderedKeys
@@ -279,9 +286,17 @@ class _LibraryItemTile extends StatelessWidget {
           : null,
       dense: true,
       onTap: id != null
-          ? () => context.push(
-                '/more/library-items/$id?name=${Uri.encodeComponent(name)}',
-              )
+          ? () {
+              final params = <String, String>{
+                'name': Uri.encodeComponent(name),
+                if (agg.item.type != null)
+                  'type': Uri.encodeComponent(agg.item.type!),
+              };
+              final query = params.entries
+                  .map((e) => '${e.key}=${e.value}')
+                  .join('&');
+              context.push('/more/library-items/$id?$query');
+            }
           : null,
     );
   }
@@ -293,6 +308,11 @@ IconData _iconForCategory(String category) {
     'custom-app' => Icons.apps,
     'custom-profile' => Icons.tune,
     'in-house-app' => Icons.phone_iphone,
+    'automatic-app' => Icons.shopping_bag_outlined,
+    'profile' => Icons.settings_applications,
+    'kandji-setup' => Icons.rocket_launch_outlined,
+    'macos-release' => Icons.system_update,
+    'threat-security-policy' => Icons.security,
     _ => Icons.inventory_2,
   };
 }
@@ -303,6 +323,11 @@ Color _colorForCategory(String category, ColorScheme cs) {
     'custom-app' => cs.tertiary,
     'custom-profile' => cs.primary,
     'in-house-app' => Colors.teal,
+    'automatic-app' => Colors.blue,
+    'profile' => Colors.indigo,
+    'kandji-setup' => Colors.deepPurple,
+    'macos-release' => Colors.green,
+    'threat-security-policy' => Colors.red,
     _ => cs.onSurfaceVariant,
   };
 }
@@ -313,6 +338,11 @@ String _displayCategory(String category, AppLocalizations l10n) {
     'custom-app' => l10n.categoryCustomApp,
     'custom-profile' => l10n.categoryCustomProfile,
     'in-house-app' => l10n.categoryInHouseApp,
+    'automatic-app' => l10n.categoryVppApps,
+    'profile' => l10n.categoryManagedProfiles,
+    'kandji-setup' => l10n.categoryKandjiSetup,
+    'macos-release' => l10n.categoryMacosRelease,
+    'threat-security-policy' => l10n.categoryThreatPolicy,
     _ => l10n.categoryBuiltIn,
   };
 }

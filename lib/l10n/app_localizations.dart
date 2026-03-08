@@ -2980,6 +2980,36 @@ abstract class AppLocalizations {
   /// **'Built-in'**
   String get categoryBuiltIn;
 
+  /// No description provided for @categoryVppApps.
+  ///
+  /// In en, this message translates to:
+  /// **'VPP / App Store Apps'**
+  String get categoryVppApps;
+
+  /// No description provided for @categoryManagedProfiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Managed Profiles'**
+  String get categoryManagedProfiles;
+
+  /// No description provided for @categoryKandjiSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Kandji Setup'**
+  String get categoryKandjiSetup;
+
+  /// No description provided for @categoryMacosRelease.
+  ///
+  /// In en, this message translates to:
+  /// **'macOS Updates'**
+  String get categoryMacosRelease;
+
+  /// No description provided for @categoryThreatPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Policies'**
+  String get categoryThreatPolicy;
+
   /// No description provided for @inBlueprints.
   ///
   /// In en, this message translates to:
@@ -3015,6 +3045,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Script'**
   String get scriptBody;
+
+  /// No description provided for @remediationScript.
+  ///
+  /// In en, this message translates to:
+  /// **'Remediation Script'**
+  String get remediationScript;
 
   /// No description provided for @allProperties.
   ///
@@ -3297,6 +3333,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Classification'**
   String get classification;
+
+  /// No description provided for @mdmEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'MDM Enabled'**
+  String get mdmEnabled;
+
+  /// No description provided for @enrolledViaDep.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrolled via DEP'**
+  String get enrolledViaDep;
+
+  /// No description provided for @userApprovedMdm.
+  ///
+  /// In en, this message translates to:
+  /// **'User-Approved MDM'**
+  String get userApprovedMdm;
+
+  /// No description provided for @network.
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get network;
+
+  /// No description provided for @ipAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'IP Address'**
+  String get ipAddress;
+
+  /// No description provided for @wifiNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi Network'**
+  String get wifiNetwork;
+
+  /// No description provided for @bluetoothMac.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth MAC'**
+  String get bluetoothMac;
+
+  /// No description provided for @activationLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Activation Lock'**
+  String get activationLock;
+
+  /// No description provided for @googlePlayProtect.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play Protect'**
+  String get googlePlayProtect;
+
+  /// No description provided for @developerMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer Mode'**
+  String get developerMode;
+
+  /// No description provided for @adbEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'ADB Enabled'**
+  String get adbEnabled;
+
+  /// No description provided for @unknownSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Sources'**
+  String get unknownSources;
+
+  /// No description provided for @securityPatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Patch'**
+  String get securityPatch;
+
+  /// No description provided for @provisioningUdid.
+  ///
+  /// In en, this message translates to:
+  /// **'Provisioning UDID'**
+  String get provisioningUdid;
+
+  /// No description provided for @meid.
+  ///
+  /// In en, this message translates to:
+  /// **'MEID'**
+  String get meid;
+
+  /// No description provided for @mdmInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'MDM Info'**
+  String get mdmInfo;
+
+  /// No description provided for @lastEnrollment.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Enrollment'**
+  String get lastEnrollment;
+
+  /// No description provided for @enterpriseId.
+  ///
+  /// In en, this message translates to:
+  /// **'Enterprise ID'**
+  String get enterpriseId;
+
+  /// No description provided for @manufacturer.
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturer'**
+  String get manufacturer;
+
+  /// No description provided for @generalStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'General Status'**
+  String get generalStatus;
+
+  /// No description provided for @apiLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'API Level'**
+  String get apiLevel;
+
+  /// No description provided for @userApprovedEnrollment.
+  ///
+  /// In en, this message translates to:
+  /// **'User-Approved Enrollment'**
+  String get userApprovedEnrollment;
 }
 
 class _AppLocalizationsDelegate

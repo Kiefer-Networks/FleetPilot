@@ -1616,6 +1616,11 @@
   "categoryCustomProfile": "Custom Profile",
   "categoryInHouseApp": "In-House App",
   "categoryBuiltIn": "Built-in",
+  "categoryVppApps": "VPP / App Store Apps",
+  "categoryManagedProfiles": "Managed Profiles",
+  "categoryKandjiSetup": "Kandji Setup",
+  "categoryMacosRelease": "macOS Updates",
+  "categoryThreatPolicy": "Security Policies",
   "inBlueprints": "In {count, plural, =1{1 blueprint} other{{count} blueprints}}",
   "@inBlueprints": {
     "placeholders": { "count": { "type": "int" } }
@@ -1676,5 +1681,28 @@
 
   "profileBody": "Profile XML",
   "customProfile": "Custom Profile",
-  "classification": "Classification"
+  "classification": "Classification",
+
+  "mdmEnabled": "MDM Enabled",
+  "enrolledViaDep": "Enrolled via DEP",
+  "userApprovedMdm": "User-Approved MDM",
+  "network": "Network",
+  "ipAddress": "IP Address",
+  "wifiNetwork": "WiFi Network",
+  "bluetoothMac": "Bluetooth MAC",
+  "activationLock": "Activation Lock",
+  "googlePlayProtect": "Google Play Protect",
+  "developerMode": "Developer Mode",
+  "adbEnabled": "ADB Enabled",
+  "unknownSources": "Unknown Sources",
+  "securityPatch": "Security Patch",
+  "provisioningUdid": "Provisioning UDID",
+  "meid": "MEID",
+  "mdmInfo": "MDM Info",
+  "lastEnrollment": "Last Enrollment",
+  "enterpriseId": "Enterprise ID",
+  "manufacturer": "Manufacturer",
+  "generalStatus": "General Status",
+  "apiLevel": "API Level",
+  "userApprovedEnrollment": "User-Approved Enrollment"
 }

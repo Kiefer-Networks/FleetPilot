@@ -150,9 +150,11 @@ GoRouter createRouter({
                   final itemId = state.pathParameters['itemId']!;
                   final itemName =
                       state.uri.queryParameters['name'] ?? 'Library Item';
+                  final itemType = state.uri.queryParameters['type'];
                   return LibraryItemDetailPage(
                     itemId: itemId,
                     itemName: itemName,
+                    itemType: itemType,
                   );
                 },
               ),

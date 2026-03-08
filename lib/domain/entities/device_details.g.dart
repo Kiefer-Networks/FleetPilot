@@ -134,3 +134,32 @@ Map<String, dynamic> _$DeviceLostModeToJson(_DeviceLostMode instance) =>
       'last_location': instance.lastLocation,
       'last_location_at': instance.lastLocationAt,
     };
+
+_DeviceMdm _$DeviceMdmFromJson(Map<String, dynamic> json) => _DeviceMdm(
+  mdmEnabled: json['mdm_enabled'] as bool?,
+  enrolledViaDep: json['enrolled_via_dep'] as bool?,
+  userApprovedEnrollment: json['user_approved_enrollment'] as bool?,
+  userApprovedMdm: json['user_approved_mdm'] as bool?,
+);
+
+Map<String, dynamic> _$DeviceMdmToJson(_DeviceMdm instance) =>
+    <String, dynamic>{
+      'mdm_enabled': instance.mdmEnabled,
+      'enrolled_via_dep': instance.enrolledViaDep,
+      'user_approved_enrollment': instance.userApprovedEnrollment,
+      'user_approved_mdm': instance.userApprovedMdm,
+    };
+
+_DeviceNetwork _$DeviceNetworkFromJson(Map<String, dynamic> json) =>
+    _DeviceNetwork(
+      ipAddress: json['ip_address'] as String?,
+      wifiNetwork: json['wifi_network'] as String?,
+      bluetoothMacAddress: json['bluetooth_mac_address'] as String?,
+    );
+
+Map<String, dynamic> _$DeviceNetworkToJson(_DeviceNetwork instance) =>
+    <String, dynamic>{
+      'ip_address': instance.ipAddress,
+      'wifi_network': instance.wifiNetwork,
+      'bluetooth_mac_address': instance.bluetoothMacAddress,
+    };

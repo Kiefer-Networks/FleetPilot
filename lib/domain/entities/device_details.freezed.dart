@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DeviceDetails {
 
- DeviceGeneral? get general; DeviceHardware? get hardware; DeviceSecurity? get security; DeviceCellular? get cellular; DeviceLostMode? get lostMode;
+ DeviceGeneral? get general; DeviceHardware? get hardware; DeviceSecurity? get security; DeviceCellular? get cellular; DeviceLostMode? get lostMode; DeviceMdm? get mdm; DeviceNetwork? get network;
 /// Create a copy of DeviceDetails
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $DeviceDetailsCopyWith<DeviceDetails> get copyWith => _$DeviceDetailsCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceDetails&&(identical(other.general, general) || other.general == general)&&(identical(other.hardware, hardware) || other.hardware == hardware)&&(identical(other.security, security) || other.security == security)&&(identical(other.cellular, cellular) || other.cellular == cellular)&&(identical(other.lostMode, lostMode) || other.lostMode == lostMode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceDetails&&(identical(other.general, general) || other.general == general)&&(identical(other.hardware, hardware) || other.hardware == hardware)&&(identical(other.security, security) || other.security == security)&&(identical(other.cellular, cellular) || other.cellular == cellular)&&(identical(other.lostMode, lostMode) || other.lostMode == lostMode)&&(identical(other.mdm, mdm) || other.mdm == mdm)&&(identical(other.network, network) || other.network == network));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,general,hardware,security,cellular,lostMode);
+int get hashCode => Object.hash(runtimeType,general,hardware,security,cellular,lostMode,mdm,network);
 
 @override
 String toString() {
-  return 'DeviceDetails(general: $general, hardware: $hardware, security: $security, cellular: $cellular, lostMode: $lostMode)';
+  return 'DeviceDetails(general: $general, hardware: $hardware, security: $security, cellular: $cellular, lostMode: $lostMode, mdm: $mdm, network: $network)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $DeviceDetailsCopyWith<$Res>  {
   factory $DeviceDetailsCopyWith(DeviceDetails value, $Res Function(DeviceDetails) _then) = _$DeviceDetailsCopyWithImpl;
 @useResult
 $Res call({
- DeviceGeneral? general, DeviceHardware? hardware, DeviceSecurity? security, DeviceCellular? cellular, DeviceLostMode? lostMode
+ DeviceGeneral? general, DeviceHardware? hardware, DeviceSecurity? security, DeviceCellular? cellular, DeviceLostMode? lostMode, DeviceMdm? mdm, DeviceNetwork? network
 });
 
 
-$DeviceGeneralCopyWith<$Res>? get general;$DeviceHardwareCopyWith<$Res>? get hardware;$DeviceSecurityCopyWith<$Res>? get security;$DeviceCellularCopyWith<$Res>? get cellular;$DeviceLostModeCopyWith<$Res>? get lostMode;
+$DeviceGeneralCopyWith<$Res>? get general;$DeviceHardwareCopyWith<$Res>? get hardware;$DeviceSecurityCopyWith<$Res>? get security;$DeviceCellularCopyWith<$Res>? get cellular;$DeviceLostModeCopyWith<$Res>? get lostMode;$DeviceMdmCopyWith<$Res>? get mdm;$DeviceNetworkCopyWith<$Res>? get network;
 
 }
 /// @nodoc
@@ -62,14 +62,16 @@ class _$DeviceDetailsCopyWithImpl<$Res>
 
 /// Create a copy of DeviceDetails
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? general = freezed,Object? hardware = freezed,Object? security = freezed,Object? cellular = freezed,Object? lostMode = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? general = freezed,Object? hardware = freezed,Object? security = freezed,Object? cellular = freezed,Object? lostMode = freezed,Object? mdm = freezed,Object? network = freezed,}) {
   return _then(_self.copyWith(
 general: freezed == general ? _self.general : general // ignore: cast_nullable_to_non_nullable
 as DeviceGeneral?,hardware: freezed == hardware ? _self.hardware : hardware // ignore: cast_nullable_to_non_nullable
 as DeviceHardware?,security: freezed == security ? _self.security : security // ignore: cast_nullable_to_non_nullable
 as DeviceSecurity?,cellular: freezed == cellular ? _self.cellular : cellular // ignore: cast_nullable_to_non_nullable
 as DeviceCellular?,lostMode: freezed == lostMode ? _self.lostMode : lostMode // ignore: cast_nullable_to_non_nullable
-as DeviceLostMode?,
+as DeviceLostMode?,mdm: freezed == mdm ? _self.mdm : mdm // ignore: cast_nullable_to_non_nullable
+as DeviceMdm?,network: freezed == network ? _self.network : network // ignore: cast_nullable_to_non_nullable
+as DeviceNetwork?,
   ));
 }
 /// Create a copy of DeviceDetails
@@ -131,6 +133,30 @@ $DeviceLostModeCopyWith<$Res>? get lostMode {
 
   return $DeviceLostModeCopyWith<$Res>(_self.lostMode!, (value) {
     return _then(_self.copyWith(lostMode: value));
+  });
+}/// Create a copy of DeviceDetails
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DeviceMdmCopyWith<$Res>? get mdm {
+    if (_self.mdm == null) {
+    return null;
+  }
+
+  return $DeviceMdmCopyWith<$Res>(_self.mdm!, (value) {
+    return _then(_self.copyWith(mdm: value));
+  });
+}/// Create a copy of DeviceDetails
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DeviceNetworkCopyWith<$Res>? get network {
+    if (_self.network == null) {
+    return null;
+  }
+
+  return $DeviceNetworkCopyWith<$Res>(_self.network!, (value) {
+    return _then(_self.copyWith(network: value));
   });
 }
 }
@@ -214,10 +240,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DeviceGeneral? general,  DeviceHardware? hardware,  DeviceSecurity? security,  DeviceCellular? cellular,  DeviceLostMode? lostMode)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DeviceGeneral? general,  DeviceHardware? hardware,  DeviceSecurity? security,  DeviceCellular? cellular,  DeviceLostMode? lostMode,  DeviceMdm? mdm,  DeviceNetwork? network)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DeviceDetails() when $default != null:
-return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that.lostMode);case _:
+return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that.lostMode,_that.mdm,_that.network);case _:
   return orElse();
 
 }
@@ -235,10 +261,10 @@ return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DeviceGeneral? general,  DeviceHardware? hardware,  DeviceSecurity? security,  DeviceCellular? cellular,  DeviceLostMode? lostMode)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DeviceGeneral? general,  DeviceHardware? hardware,  DeviceSecurity? security,  DeviceCellular? cellular,  DeviceLostMode? lostMode,  DeviceMdm? mdm,  DeviceNetwork? network)  $default,) {final _that = this;
 switch (_that) {
 case _DeviceDetails():
-return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that.lostMode);case _:
+return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that.lostMode,_that.mdm,_that.network);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -255,10 +281,10 @@ return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DeviceGeneral? general,  DeviceHardware? hardware,  DeviceSecurity? security,  DeviceCellular? cellular,  DeviceLostMode? lostMode)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DeviceGeneral? general,  DeviceHardware? hardware,  DeviceSecurity? security,  DeviceCellular? cellular,  DeviceLostMode? lostMode,  DeviceMdm? mdm,  DeviceNetwork? network)?  $default,) {final _that = this;
 switch (_that) {
 case _DeviceDetails() when $default != null:
-return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that.lostMode);case _:
+return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that.lostMode,_that.mdm,_that.network);case _:
   return null;
 
 }
@@ -270,7 +296,7 @@ return $default(_that.general,_that.hardware,_that.security,_that.cellular,_that
 
 
 class _DeviceDetails extends DeviceDetails {
-  const _DeviceDetails({this.general, this.hardware, this.security, this.cellular, this.lostMode}): super._();
+  const _DeviceDetails({this.general, this.hardware, this.security, this.cellular, this.lostMode, this.mdm, this.network}): super._();
   
 
 @override final  DeviceGeneral? general;
@@ -278,6 +304,8 @@ class _DeviceDetails extends DeviceDetails {
 @override final  DeviceSecurity? security;
 @override final  DeviceCellular? cellular;
 @override final  DeviceLostMode? lostMode;
+@override final  DeviceMdm? mdm;
+@override final  DeviceNetwork? network;
 
 /// Create a copy of DeviceDetails
 /// with the given fields replaced by the non-null parameter values.
@@ -289,16 +317,16 @@ _$DeviceDetailsCopyWith<_DeviceDetails> get copyWith => __$DeviceDetailsCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceDetails&&(identical(other.general, general) || other.general == general)&&(identical(other.hardware, hardware) || other.hardware == hardware)&&(identical(other.security, security) || other.security == security)&&(identical(other.cellular, cellular) || other.cellular == cellular)&&(identical(other.lostMode, lostMode) || other.lostMode == lostMode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceDetails&&(identical(other.general, general) || other.general == general)&&(identical(other.hardware, hardware) || other.hardware == hardware)&&(identical(other.security, security) || other.security == security)&&(identical(other.cellular, cellular) || other.cellular == cellular)&&(identical(other.lostMode, lostMode) || other.lostMode == lostMode)&&(identical(other.mdm, mdm) || other.mdm == mdm)&&(identical(other.network, network) || other.network == network));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,general,hardware,security,cellular,lostMode);
+int get hashCode => Object.hash(runtimeType,general,hardware,security,cellular,lostMode,mdm,network);
 
 @override
 String toString() {
-  return 'DeviceDetails(general: $general, hardware: $hardware, security: $security, cellular: $cellular, lostMode: $lostMode)';
+  return 'DeviceDetails(general: $general, hardware: $hardware, security: $security, cellular: $cellular, lostMode: $lostMode, mdm: $mdm, network: $network)';
 }
 
 
@@ -309,11 +337,11 @@ abstract mixin class _$DeviceDetailsCopyWith<$Res> implements $DeviceDetailsCopy
   factory _$DeviceDetailsCopyWith(_DeviceDetails value, $Res Function(_DeviceDetails) _then) = __$DeviceDetailsCopyWithImpl;
 @override @useResult
 $Res call({
- DeviceGeneral? general, DeviceHardware? hardware, DeviceSecurity? security, DeviceCellular? cellular, DeviceLostMode? lostMode
+ DeviceGeneral? general, DeviceHardware? hardware, DeviceSecurity? security, DeviceCellular? cellular, DeviceLostMode? lostMode, DeviceMdm? mdm, DeviceNetwork? network
 });
 
 
-@override $DeviceGeneralCopyWith<$Res>? get general;@override $DeviceHardwareCopyWith<$Res>? get hardware;@override $DeviceSecurityCopyWith<$Res>? get security;@override $DeviceCellularCopyWith<$Res>? get cellular;@override $DeviceLostModeCopyWith<$Res>? get lostMode;
+@override $DeviceGeneralCopyWith<$Res>? get general;@override $DeviceHardwareCopyWith<$Res>? get hardware;@override $DeviceSecurityCopyWith<$Res>? get security;@override $DeviceCellularCopyWith<$Res>? get cellular;@override $DeviceLostModeCopyWith<$Res>? get lostMode;@override $DeviceMdmCopyWith<$Res>? get mdm;@override $DeviceNetworkCopyWith<$Res>? get network;
 
 }
 /// @nodoc
@@ -326,14 +354,16 @@ class __$DeviceDetailsCopyWithImpl<$Res>
 
 /// Create a copy of DeviceDetails
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? general = freezed,Object? hardware = freezed,Object? security = freezed,Object? cellular = freezed,Object? lostMode = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? general = freezed,Object? hardware = freezed,Object? security = freezed,Object? cellular = freezed,Object? lostMode = freezed,Object? mdm = freezed,Object? network = freezed,}) {
   return _then(_DeviceDetails(
 general: freezed == general ? _self.general : general // ignore: cast_nullable_to_non_nullable
 as DeviceGeneral?,hardware: freezed == hardware ? _self.hardware : hardware // ignore: cast_nullable_to_non_nullable
 as DeviceHardware?,security: freezed == security ? _self.security : security // ignore: cast_nullable_to_non_nullable
 as DeviceSecurity?,cellular: freezed == cellular ? _self.cellular : cellular // ignore: cast_nullable_to_non_nullable
 as DeviceCellular?,lostMode: freezed == lostMode ? _self.lostMode : lostMode // ignore: cast_nullable_to_non_nullable
-as DeviceLostMode?,
+as DeviceLostMode?,mdm: freezed == mdm ? _self.mdm : mdm // ignore: cast_nullable_to_non_nullable
+as DeviceMdm?,network: freezed == network ? _self.network : network // ignore: cast_nullable_to_non_nullable
+as DeviceNetwork?,
   ));
 }
 
@@ -396,6 +426,30 @@ $DeviceLostModeCopyWith<$Res>? get lostMode {
 
   return $DeviceLostModeCopyWith<$Res>(_self.lostMode!, (value) {
     return _then(_self.copyWith(lostMode: value));
+  });
+}/// Create a copy of DeviceDetails
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DeviceMdmCopyWith<$Res>? get mdm {
+    if (_self.mdm == null) {
+    return null;
+  }
+
+  return $DeviceMdmCopyWith<$Res>(_self.mdm!, (value) {
+    return _then(_self.copyWith(mdm: value));
+  });
+}/// Create a copy of DeviceDetails
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DeviceNetworkCopyWith<$Res>? get network {
+    if (_self.network == null) {
+    return null;
+  }
+
+  return $DeviceNetworkCopyWith<$Res>(_self.network!, (value) {
+    return _then(_self.copyWith(network: value));
   });
 }
 }
@@ -1843,6 +1897,547 @@ as String?,lockScreenMessage: freezed == lockScreenMessage ? _self.lockScreenMes
 as String?,lockScreenPhoneNumber: freezed == lockScreenPhoneNumber ? _self.lockScreenPhoneNumber : lockScreenPhoneNumber // ignore: cast_nullable_to_non_nullable
 as String?,lastLocation: freezed == lastLocation ? _self._lastLocation : lastLocation // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,lastLocationAt: freezed == lastLocationAt ? _self.lastLocationAt : lastLocationAt // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$DeviceMdm {
+
+@JsonKey(name: 'mdm_enabled') bool? get mdmEnabled;@JsonKey(name: 'enrolled_via_dep') bool? get enrolledViaDep;@JsonKey(name: 'user_approved_enrollment') bool? get userApprovedEnrollment;@JsonKey(name: 'user_approved_mdm') bool? get userApprovedMdm;
+/// Create a copy of DeviceMdm
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DeviceMdmCopyWith<DeviceMdm> get copyWith => _$DeviceMdmCopyWithImpl<DeviceMdm>(this as DeviceMdm, _$identity);
+
+  /// Serializes this DeviceMdm to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceMdm&&(identical(other.mdmEnabled, mdmEnabled) || other.mdmEnabled == mdmEnabled)&&(identical(other.enrolledViaDep, enrolledViaDep) || other.enrolledViaDep == enrolledViaDep)&&(identical(other.userApprovedEnrollment, userApprovedEnrollment) || other.userApprovedEnrollment == userApprovedEnrollment)&&(identical(other.userApprovedMdm, userApprovedMdm) || other.userApprovedMdm == userApprovedMdm));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,mdmEnabled,enrolledViaDep,userApprovedEnrollment,userApprovedMdm);
+
+@override
+String toString() {
+  return 'DeviceMdm(mdmEnabled: $mdmEnabled, enrolledViaDep: $enrolledViaDep, userApprovedEnrollment: $userApprovedEnrollment, userApprovedMdm: $userApprovedMdm)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DeviceMdmCopyWith<$Res>  {
+  factory $DeviceMdmCopyWith(DeviceMdm value, $Res Function(DeviceMdm) _then) = _$DeviceMdmCopyWithImpl;
+@useResult
+$Res call({
+@JsonKey(name: 'mdm_enabled') bool? mdmEnabled,@JsonKey(name: 'enrolled_via_dep') bool? enrolledViaDep,@JsonKey(name: 'user_approved_enrollment') bool? userApprovedEnrollment,@JsonKey(name: 'user_approved_mdm') bool? userApprovedMdm
+});
+
+
+
+
+}
+/// @nodoc
+class _$DeviceMdmCopyWithImpl<$Res>
+    implements $DeviceMdmCopyWith<$Res> {
+  _$DeviceMdmCopyWithImpl(this._self, this._then);
+
+  final DeviceMdm _self;
+  final $Res Function(DeviceMdm) _then;
+
+/// Create a copy of DeviceMdm
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? mdmEnabled = freezed,Object? enrolledViaDep = freezed,Object? userApprovedEnrollment = freezed,Object? userApprovedMdm = freezed,}) {
+  return _then(_self.copyWith(
+mdmEnabled: freezed == mdmEnabled ? _self.mdmEnabled : mdmEnabled // ignore: cast_nullable_to_non_nullable
+as bool?,enrolledViaDep: freezed == enrolledViaDep ? _self.enrolledViaDep : enrolledViaDep // ignore: cast_nullable_to_non_nullable
+as bool?,userApprovedEnrollment: freezed == userApprovedEnrollment ? _self.userApprovedEnrollment : userApprovedEnrollment // ignore: cast_nullable_to_non_nullable
+as bool?,userApprovedMdm: freezed == userApprovedMdm ? _self.userApprovedMdm : userApprovedMdm // ignore: cast_nullable_to_non_nullable
+as bool?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [DeviceMdm].
+extension DeviceMdmPatterns on DeviceMdm {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DeviceMdm value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _DeviceMdm() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DeviceMdm value)  $default,){
+final _that = this;
+switch (_that) {
+case _DeviceMdm():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DeviceMdm value)?  $default,){
+final _that = this;
+switch (_that) {
+case _DeviceMdm() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'mdm_enabled')  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep')  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment')  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm')  bool? userApprovedMdm)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _DeviceMdm() when $default != null:
+return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollment,_that.userApprovedMdm);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'mdm_enabled')  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep')  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment')  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm')  bool? userApprovedMdm)  $default,) {final _that = this;
+switch (_that) {
+case _DeviceMdm():
+return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollment,_that.userApprovedMdm);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'mdm_enabled')  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep')  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment')  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm')  bool? userApprovedMdm)?  $default,) {final _that = this;
+switch (_that) {
+case _DeviceMdm() when $default != null:
+return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollment,_that.userApprovedMdm);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _DeviceMdm implements DeviceMdm {
+  const _DeviceMdm({@JsonKey(name: 'mdm_enabled') this.mdmEnabled, @JsonKey(name: 'enrolled_via_dep') this.enrolledViaDep, @JsonKey(name: 'user_approved_enrollment') this.userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm') this.userApprovedMdm});
+  factory _DeviceMdm.fromJson(Map<String, dynamic> json) => _$DeviceMdmFromJson(json);
+
+@override@JsonKey(name: 'mdm_enabled') final  bool? mdmEnabled;
+@override@JsonKey(name: 'enrolled_via_dep') final  bool? enrolledViaDep;
+@override@JsonKey(name: 'user_approved_enrollment') final  bool? userApprovedEnrollment;
+@override@JsonKey(name: 'user_approved_mdm') final  bool? userApprovedMdm;
+
+/// Create a copy of DeviceMdm
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeviceMdmCopyWith<_DeviceMdm> get copyWith => __$DeviceMdmCopyWithImpl<_DeviceMdm>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$DeviceMdmToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceMdm&&(identical(other.mdmEnabled, mdmEnabled) || other.mdmEnabled == mdmEnabled)&&(identical(other.enrolledViaDep, enrolledViaDep) || other.enrolledViaDep == enrolledViaDep)&&(identical(other.userApprovedEnrollment, userApprovedEnrollment) || other.userApprovedEnrollment == userApprovedEnrollment)&&(identical(other.userApprovedMdm, userApprovedMdm) || other.userApprovedMdm == userApprovedMdm));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,mdmEnabled,enrolledViaDep,userApprovedEnrollment,userApprovedMdm);
+
+@override
+String toString() {
+  return 'DeviceMdm(mdmEnabled: $mdmEnabled, enrolledViaDep: $enrolledViaDep, userApprovedEnrollment: $userApprovedEnrollment, userApprovedMdm: $userApprovedMdm)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeviceMdmCopyWith<$Res> implements $DeviceMdmCopyWith<$Res> {
+  factory _$DeviceMdmCopyWith(_DeviceMdm value, $Res Function(_DeviceMdm) _then) = __$DeviceMdmCopyWithImpl;
+@override @useResult
+$Res call({
+@JsonKey(name: 'mdm_enabled') bool? mdmEnabled,@JsonKey(name: 'enrolled_via_dep') bool? enrolledViaDep,@JsonKey(name: 'user_approved_enrollment') bool? userApprovedEnrollment,@JsonKey(name: 'user_approved_mdm') bool? userApprovedMdm
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeviceMdmCopyWithImpl<$Res>
+    implements _$DeviceMdmCopyWith<$Res> {
+  __$DeviceMdmCopyWithImpl(this._self, this._then);
+
+  final _DeviceMdm _self;
+  final $Res Function(_DeviceMdm) _then;
+
+/// Create a copy of DeviceMdm
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? mdmEnabled = freezed,Object? enrolledViaDep = freezed,Object? userApprovedEnrollment = freezed,Object? userApprovedMdm = freezed,}) {
+  return _then(_DeviceMdm(
+mdmEnabled: freezed == mdmEnabled ? _self.mdmEnabled : mdmEnabled // ignore: cast_nullable_to_non_nullable
+as bool?,enrolledViaDep: freezed == enrolledViaDep ? _self.enrolledViaDep : enrolledViaDep // ignore: cast_nullable_to_non_nullable
+as bool?,userApprovedEnrollment: freezed == userApprovedEnrollment ? _self.userApprovedEnrollment : userApprovedEnrollment // ignore: cast_nullable_to_non_nullable
+as bool?,userApprovedMdm: freezed == userApprovedMdm ? _self.userApprovedMdm : userApprovedMdm // ignore: cast_nullable_to_non_nullable
+as bool?,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$DeviceNetwork {
+
+@JsonKey(name: 'ip_address') String? get ipAddress;@JsonKey(name: 'wifi_network') String? get wifiNetwork;@JsonKey(name: 'bluetooth_mac_address') String? get bluetoothMacAddress;
+/// Create a copy of DeviceNetwork
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DeviceNetworkCopyWith<DeviceNetwork> get copyWith => _$DeviceNetworkCopyWithImpl<DeviceNetwork>(this as DeviceNetwork, _$identity);
+
+  /// Serializes this DeviceNetwork to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceNetwork&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress)&&(identical(other.wifiNetwork, wifiNetwork) || other.wifiNetwork == wifiNetwork)&&(identical(other.bluetoothMacAddress, bluetoothMacAddress) || other.bluetoothMacAddress == bluetoothMacAddress));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,ipAddress,wifiNetwork,bluetoothMacAddress);
+
+@override
+String toString() {
+  return 'DeviceNetwork(ipAddress: $ipAddress, wifiNetwork: $wifiNetwork, bluetoothMacAddress: $bluetoothMacAddress)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DeviceNetworkCopyWith<$Res>  {
+  factory $DeviceNetworkCopyWith(DeviceNetwork value, $Res Function(DeviceNetwork) _then) = _$DeviceNetworkCopyWithImpl;
+@useResult
+$Res call({
+@JsonKey(name: 'ip_address') String? ipAddress,@JsonKey(name: 'wifi_network') String? wifiNetwork,@JsonKey(name: 'bluetooth_mac_address') String? bluetoothMacAddress
+});
+
+
+
+
+}
+/// @nodoc
+class _$DeviceNetworkCopyWithImpl<$Res>
+    implements $DeviceNetworkCopyWith<$Res> {
+  _$DeviceNetworkCopyWithImpl(this._self, this._then);
+
+  final DeviceNetwork _self;
+  final $Res Function(DeviceNetwork) _then;
+
+/// Create a copy of DeviceNetwork
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? ipAddress = freezed,Object? wifiNetwork = freezed,Object? bluetoothMacAddress = freezed,}) {
+  return _then(_self.copyWith(
+ipAddress: freezed == ipAddress ? _self.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
+as String?,wifiNetwork: freezed == wifiNetwork ? _self.wifiNetwork : wifiNetwork // ignore: cast_nullable_to_non_nullable
+as String?,bluetoothMacAddress: freezed == bluetoothMacAddress ? _self.bluetoothMacAddress : bluetoothMacAddress // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [DeviceNetwork].
+extension DeviceNetworkPatterns on DeviceNetwork {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DeviceNetwork value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _DeviceNetwork() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DeviceNetwork value)  $default,){
+final _that = this;
+switch (_that) {
+case _DeviceNetwork():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DeviceNetwork value)?  $default,){
+final _that = this;
+switch (_that) {
+case _DeviceNetwork() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'ip_address')  String? ipAddress, @JsonKey(name: 'wifi_network')  String? wifiNetwork, @JsonKey(name: 'bluetooth_mac_address')  String? bluetoothMacAddress)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _DeviceNetwork() when $default != null:
+return $default(_that.ipAddress,_that.wifiNetwork,_that.bluetoothMacAddress);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'ip_address')  String? ipAddress, @JsonKey(name: 'wifi_network')  String? wifiNetwork, @JsonKey(name: 'bluetooth_mac_address')  String? bluetoothMacAddress)  $default,) {final _that = this;
+switch (_that) {
+case _DeviceNetwork():
+return $default(_that.ipAddress,_that.wifiNetwork,_that.bluetoothMacAddress);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'ip_address')  String? ipAddress, @JsonKey(name: 'wifi_network')  String? wifiNetwork, @JsonKey(name: 'bluetooth_mac_address')  String? bluetoothMacAddress)?  $default,) {final _that = this;
+switch (_that) {
+case _DeviceNetwork() when $default != null:
+return $default(_that.ipAddress,_that.wifiNetwork,_that.bluetoothMacAddress);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _DeviceNetwork implements DeviceNetwork {
+  const _DeviceNetwork({@JsonKey(name: 'ip_address') this.ipAddress, @JsonKey(name: 'wifi_network') this.wifiNetwork, @JsonKey(name: 'bluetooth_mac_address') this.bluetoothMacAddress});
+  factory _DeviceNetwork.fromJson(Map<String, dynamic> json) => _$DeviceNetworkFromJson(json);
+
+@override@JsonKey(name: 'ip_address') final  String? ipAddress;
+@override@JsonKey(name: 'wifi_network') final  String? wifiNetwork;
+@override@JsonKey(name: 'bluetooth_mac_address') final  String? bluetoothMacAddress;
+
+/// Create a copy of DeviceNetwork
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeviceNetworkCopyWith<_DeviceNetwork> get copyWith => __$DeviceNetworkCopyWithImpl<_DeviceNetwork>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$DeviceNetworkToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceNetwork&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress)&&(identical(other.wifiNetwork, wifiNetwork) || other.wifiNetwork == wifiNetwork)&&(identical(other.bluetoothMacAddress, bluetoothMacAddress) || other.bluetoothMacAddress == bluetoothMacAddress));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,ipAddress,wifiNetwork,bluetoothMacAddress);
+
+@override
+String toString() {
+  return 'DeviceNetwork(ipAddress: $ipAddress, wifiNetwork: $wifiNetwork, bluetoothMacAddress: $bluetoothMacAddress)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeviceNetworkCopyWith<$Res> implements $DeviceNetworkCopyWith<$Res> {
+  factory _$DeviceNetworkCopyWith(_DeviceNetwork value, $Res Function(_DeviceNetwork) _then) = __$DeviceNetworkCopyWithImpl;
+@override @useResult
+$Res call({
+@JsonKey(name: 'ip_address') String? ipAddress,@JsonKey(name: 'wifi_network') String? wifiNetwork,@JsonKey(name: 'bluetooth_mac_address') String? bluetoothMacAddress
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeviceNetworkCopyWithImpl<$Res>
+    implements _$DeviceNetworkCopyWith<$Res> {
+  __$DeviceNetworkCopyWithImpl(this._self, this._then);
+
+  final _DeviceNetwork _self;
+  final $Res Function(_DeviceNetwork) _then;
+
+/// Create a copy of DeviceNetwork
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? ipAddress = freezed,Object? wifiNetwork = freezed,Object? bluetoothMacAddress = freezed,}) {
+  return _then(_DeviceNetwork(
+ipAddress: freezed == ipAddress ? _self.ipAddress : ipAddress // ignore: cast_nullable_to_non_nullable
+as String?,wifiNetwork: freezed == wifiNetwork ? _self.wifiNetwork : wifiNetwork // ignore: cast_nullable_to_non_nullable
+as String?,bluetoothMacAddress: freezed == bluetoothMacAddress ? _self.bluetoothMacAddress : bluetoothMacAddress // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

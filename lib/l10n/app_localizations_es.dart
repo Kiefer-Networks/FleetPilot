@@ -1610,6 +1610,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryBuiltIn => 'Integrado';
 
   @override
+  String get categoryVppApps => 'Apps VPP / App Store';
+
+  @override
+  String get categoryManagedProfiles => 'Perfiles administrados';
+
+  @override
+  String get categoryKandjiSetup => 'Configuración Kandji';
+
+  @override
+  String get categoryMacosRelease => 'Actualizaciones macOS';
+
+  @override
+  String get categoryThreatPolicy => 'Políticas de seguridad';
+
+  @override
   String inBlueprints(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -1634,6 +1649,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get scriptBody => 'Script';
+
+  @override
+  String get remediationScript => 'Script de corrección';
 
   @override
   String get allProperties => 'Todas las propiedades';
@@ -1787,4 +1805,70 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get classification => 'Clasificación';
+
+  @override
+  String get mdmEnabled => 'MDM activado';
+
+  @override
+  String get enrolledViaDep => 'Registrado via DEP';
+
+  @override
+  String get userApprovedMdm => 'MDM aprobado por usuario';
+
+  @override
+  String get network => 'Red';
+
+  @override
+  String get ipAddress => 'Dirección IP';
+
+  @override
+  String get wifiNetwork => 'Red WiFi';
+
+  @override
+  String get bluetoothMac => 'Bluetooth MAC';
+
+  @override
+  String get activationLock => 'Bloqueo de activación';
+
+  @override
+  String get googlePlayProtect => 'Google Play Protect';
+
+  @override
+  String get developerMode => 'Modo desarrollador';
+
+  @override
+  String get adbEnabled => 'ADB activado';
+
+  @override
+  String get unknownSources => 'Fuentes desconocidas';
+
+  @override
+  String get securityPatch => 'Parche de seguridad';
+
+  @override
+  String get provisioningUdid => 'UDID de provisión';
+
+  @override
+  String get meid => 'MEID';
+
+  @override
+  String get mdmInfo => 'Info MDM';
+
+  @override
+  String get lastEnrollment => 'Última inscripción';
+
+  @override
+  String get enterpriseId => 'ID empresarial';
+
+  @override
+  String get manufacturer => 'Fabricante';
+
+  @override
+  String get generalStatus => 'Estado general';
+
+  @override
+  String get apiLevel => 'Nivel de API';
+
+  @override
+  String get userApprovedEnrollment => 'Inscripción aprobada por usuario';
 }

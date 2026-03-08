@@ -1590,6 +1590,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryBuiltIn => 'Built-in';
 
   @override
+  String get categoryVppApps => 'VPP / App Store Apps';
+
+  @override
+  String get categoryManagedProfiles => 'Managed Profiles';
+
+  @override
+  String get categoryKandjiSetup => 'Kandji Setup';
+
+  @override
+  String get categoryMacosRelease => 'macOS Updates';
+
+  @override
+  String get categoryThreatPolicy => 'Security Policies';
+
+  @override
   String inBlueprints(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -1614,6 +1629,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scriptBody => 'Script';
+
+  @override
+  String get remediationScript => 'Remediation Script';
 
   @override
   String get allProperties => 'All Properties';
@@ -1766,4 +1784,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get classification => 'Classification';
+
+  @override
+  String get mdmEnabled => 'MDM Enabled';
+
+  @override
+  String get enrolledViaDep => 'Enrolled via DEP';
+
+  @override
+  String get userApprovedMdm => 'User-Approved MDM';
+
+  @override
+  String get network => 'Network';
+
+  @override
+  String get ipAddress => 'IP Address';
+
+  @override
+  String get wifiNetwork => 'WiFi Network';
+
+  @override
+  String get bluetoothMac => 'Bluetooth MAC';
+
+  @override
+  String get activationLock => 'Activation Lock';
+
+  @override
+  String get googlePlayProtect => 'Google Play Protect';
+
+  @override
+  String get developerMode => 'Developer Mode';
+
+  @override
+  String get adbEnabled => 'ADB Enabled';
+
+  @override
+  String get unknownSources => 'Unknown Sources';
+
+  @override
+  String get securityPatch => 'Security Patch';
+
+  @override
+  String get provisioningUdid => 'Provisioning UDID';
+
+  @override
+  String get meid => 'MEID';
+
+  @override
+  String get mdmInfo => 'MDM Info';
+
+  @override
+  String get lastEnrollment => 'Last Enrollment';
+
+  @override
+  String get enterpriseId => 'Enterprise ID';
+
+  @override
+  String get manufacturer => 'Manufacturer';
+
+  @override
+  String get generalStatus => 'General Status';
+
+  @override
+  String get apiLevel => 'API Level';
+
+  @override
+  String get userApprovedEnrollment => 'User-Approved Enrollment';
 }

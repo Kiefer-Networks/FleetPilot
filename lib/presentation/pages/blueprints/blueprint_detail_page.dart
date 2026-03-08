@@ -312,8 +312,16 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
                             final id = item.itemId ?? item.id;
                             final name = item.name ?? 'Unknown';
                             if (id != null) {
+                              final params = <String, String>{
+                                'name': Uri.encodeComponent(name),
+                                if (item.type != null)
+                                  'type': Uri.encodeComponent(item.type!),
+                              };
+                              final query = params.entries
+                                  .map((e) => '${e.key}=${e.value}')
+                                  .join('&');
                               context.push(
-                                '/more/library-items/$id?name=${Uri.encodeComponent(name)}',
+                                '/more/library-items/$id?$query',
                               );
                             }
                           },

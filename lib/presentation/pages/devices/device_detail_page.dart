@@ -1227,6 +1227,33 @@ class _OverviewTab extends ConsumerWidget {
               label: l10n.agent,
               value: device.agentVersion,
             ),
+            // Extra management fields from details
+            ...detailsAsync.whenOrNull(
+                  data: (details) {
+                    final general = details.general;
+                    return <Widget>[
+                      if (general?.lastEnrollment != null)
+                        _InfoTile(
+                          icon: Icons.event_repeat,
+                          label: l10n.lastEnrollment,
+                          value: _formatDate(general!.lastEnrollment),
+                        ),
+                      if (general?.apiLevel != null)
+                        _InfoTile(
+                          icon: Icons.api,
+                          label: l10n.apiLevel,
+                          value: general!.apiLevel,
+                        ),
+                      if (general?.enterpriseId != null)
+                        _InfoTile(
+                          icon: Icons.business,
+                          label: l10n.enterpriseId,
+                          value: general!.enterpriseId,
+                        ),
+                    ];
+                  },
+                ) ??
+                [],
             if (device.tags.isNotEmpty) ...[
               const Divider(height: 16),
               Padding(
@@ -1283,7 +1310,17 @@ class _OverviewTab extends ConsumerWidget {
                       label: l10n.statusRemoved,
                       isActive: device.isRemoved,
                     ),
+                    _StatusRow(
+                      label: l10n.supervised,
+                      isActive: device.isSupervised,
+                    ),
                     _StatusRow(label: l10n.lostModeEnabled, isActive: isLost),
+                    if (device.generalStatus != null)
+                      _InfoTile(
+                        icon: Icons.info_outline,
+                        label: l10n.generalStatus,
+                        value: device.generalStatus,
+                      ),
                     if (isLost && lostMode != null) ...[
                       const SizedBox(height: 4),
                       if (lostMode.lockScreenMessage != null)
@@ -1326,6 +1363,10 @@ class _OverviewTab extends ConsumerWidget {
                   label: l10n.statusRemoved,
                   isActive: device.isRemoved,
                 ),
+                _StatusRow(
+                  label: l10n.supervised,
+                  isActive: device.isSupervised,
+                ),
               ],
             ),
         const SizedBox(height: 12),
@@ -1334,15 +1375,32 @@ class _OverviewTab extends ConsumerWidget {
         detailsAsync.when(
           data: (details) {
             if (isWide) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              return Column(
                 children: [
-                  Expanded(
-                    child: _HardwareCard(details: details, l10n: l10n),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _HardwareCard(details: details, l10n: l10n),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _SecurityCard(details: details, l10n: l10n),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _SecurityCard(details: details, l10n: l10n),
+                  const SizedBox(height: 12),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _NetworkCard(details: details, l10n: l10n),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _MdmCard(details: details, l10n: l10n),
+                      ),
+                    ],
                   ),
                 ],
               );
@@ -1352,6 +1410,10 @@ class _OverviewTab extends ConsumerWidget {
                 _HardwareCard(details: details, l10n: l10n),
                 const SizedBox(height: 12),
                 _SecurityCard(details: details, l10n: l10n),
+                const SizedBox(height: 12),
+                _NetworkCard(details: details, l10n: l10n),
+                const SizedBox(height: 12),
+                _MdmCard(details: details, l10n: l10n),
               ],
             );
           },
@@ -1403,6 +1465,11 @@ class _HardwareCard extends StatelessWidget {
           value: hw?.modelIdentifier,
         ),
         _InfoTile(
+          icon: Icons.factory_outlined,
+          label: l10n.manufacturer,
+          value: general?.manufacturer,
+        ),
+        _InfoTile(
           icon: Icons.memory,
           label: l10n.processor,
           value: hw?.resolvedProcessor,
@@ -1433,6 +1500,11 @@ class _HardwareCard extends StatelessWidget {
           value: hw?.hardwareUuid,
         ),
         _InfoTile(
+          icon: Icons.badge_outlined,
+          label: l10n.provisioningUdid,
+          value: hw?.provisioningUdid,
+        ),
+        _InfoTile(
           icon: Icons.build_outlined,
           label: l10n.osBuild,
           value: general?.osBuild,
@@ -1442,6 +1514,11 @@ class _HardwareCard extends StatelessWidget {
             icon: Icons.sim_card_outlined,
             label: l10n.imei,
             value: cell.imei,
+          ),
+          _InfoTile(
+            icon: Icons.sim_card_outlined,
+            label: l10n.meid,
+            value: cell.meid,
           ),
         ],
       ],
@@ -1473,8 +1550,132 @@ class _SecurityCard extends StatelessWidget {
           label: l10n.devicePosture,
           value: sec.devicePosture,
         ),
+        if (details.general?.securityPatchLevel != null)
+          _InfoTile(
+            icon: Icons.security_update,
+            label: l10n.securityPatch,
+            value: details.general!.securityPatchLevel,
+          ),
         _StatusRow(label: l10n.passcode, isActive: sec.hasPasscode == 1),
         _StatusRow(label: l10n.encryption, isActive: sec.isEncrypted == 1),
+        _StatusRow(
+          label: l10n.activationLock,
+          isActive: _dynamicToBool(sec.activationLockEnabled),
+        ),
+        _StatusRow(
+          label: l10n.googlePlayProtect,
+          isActive: sec.hasGooglePlayProtect == 1,
+        ),
+        _StatusRow(
+          label: l10n.developerMode,
+          isActive: _dynamicToBool(sec.developerModeEnabled),
+        ),
+        _StatusRow(
+          label: l10n.adbEnabled,
+          isActive: _dynamicToBool(sec.androidDebugBridgeEnabled),
+        ),
+        _StatusRow(
+          label: l10n.unknownSources,
+          isActive: _dynamicToBool(sec.unknownAppSourcesEnabled),
+        ),
+      ],
+    );
+  }
+
+  /// Converts dynamic (bool, int, String) to bool for StatusRow display.
+  bool _dynamicToBool(dynamic value) {
+    if (value == null) return false;
+    if (value is bool) return value;
+    if (value is num) return value != 0;
+    if (value is String) {
+      final lower = value.toLowerCase();
+      return lower == 'true' || lower == '1' || lower == 'yes';
+    }
+    return false;
+  }
+}
+
+class _NetworkCard extends StatelessWidget {
+  const _NetworkCard({required this.details, required this.l10n});
+
+  final DeviceDetails details;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final net = details.network;
+    if (net == null) return const SizedBox.shrink();
+    // Hide card if all fields are null
+    if (net.ipAddress == null &&
+        net.wifiNetwork == null &&
+        net.bluetoothMacAddress == null) {
+      return const SizedBox.shrink();
+    }
+
+    return _SectionCard(
+      children: [
+        _SectionTitle(title: l10n.network),
+        _InfoTile(
+          icon: Icons.language,
+          label: l10n.ipAddress,
+          value: net.ipAddress,
+        ),
+        _InfoTile(
+          icon: Icons.wifi,
+          label: l10n.wifiNetwork,
+          value: net.wifiNetwork,
+        ),
+        _InfoTile(
+          icon: Icons.bluetooth,
+          label: l10n.bluetoothMac,
+          value: net.bluetoothMacAddress,
+        ),
+      ],
+    );
+  }
+}
+
+class _MdmCard extends StatelessWidget {
+  const _MdmCard({required this.details, required this.l10n});
+
+  final DeviceDetails details;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final mdm = details.mdm;
+    if (mdm == null) return const SizedBox.shrink();
+    // Hide card if all fields are null
+    if (mdm.mdmEnabled == null &&
+        mdm.enrolledViaDep == null &&
+        mdm.userApprovedEnrollment == null &&
+        mdm.userApprovedMdm == null) {
+      return const SizedBox.shrink();
+    }
+
+    return _SectionCard(
+      children: [
+        _SectionTitle(title: l10n.mdmInfo),
+        if (mdm.mdmEnabled != null)
+          _StatusRow(
+            label: l10n.mdmEnabled,
+            isActive: mdm.mdmEnabled!,
+          ),
+        if (mdm.enrolledViaDep != null)
+          _StatusRow(
+            label: l10n.enrolledViaDep,
+            isActive: mdm.enrolledViaDep!,
+          ),
+        if (mdm.userApprovedEnrollment != null)
+          _StatusRow(
+            label: l10n.userApprovedEnrollment,
+            isActive: mdm.userApprovedEnrollment!,
+          ),
+        if (mdm.userApprovedMdm != null)
+          _StatusRow(
+            label: l10n.userApprovedMdm,
+            isActive: mdm.userApprovedMdm!,
+          ),
       ],
     );
   }

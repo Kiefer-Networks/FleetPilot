@@ -1609,6 +1609,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get categoryBuiltIn => 'Integriert';
 
   @override
+  String get categoryVppApps => 'VPP / App Store Apps';
+
+  @override
+  String get categoryManagedProfiles => 'Verwaltete Profile';
+
+  @override
+  String get categoryKandjiSetup => 'Kandji-Einrichtung';
+
+  @override
+  String get categoryMacosRelease => 'macOS-Updates';
+
+  @override
+  String get categoryThreatPolicy => 'Sicherheitsrichtlinien';
+
+  @override
   String inBlueprints(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -1633,6 +1648,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get scriptBody => 'Skript';
+
+  @override
+  String get remediationScript => 'Korrektur-Skript';
 
   @override
   String get allProperties => 'Alle Eigenschaften';
@@ -1786,4 +1804,70 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get classification => 'Klassifizierung';
+
+  @override
+  String get mdmEnabled => 'MDM aktiviert';
+
+  @override
+  String get enrolledViaDep => 'Über DEP registriert';
+
+  @override
+  String get userApprovedMdm => 'Benutzer-genehmigtes MDM';
+
+  @override
+  String get network => 'Netzwerk';
+
+  @override
+  String get ipAddress => 'IP-Adresse';
+
+  @override
+  String get wifiNetwork => 'WLAN-Netzwerk';
+
+  @override
+  String get bluetoothMac => 'Bluetooth MAC';
+
+  @override
+  String get activationLock => 'Aktivierungssperre';
+
+  @override
+  String get googlePlayProtect => 'Google Play Protect';
+
+  @override
+  String get developerMode => 'Entwicklermodus';
+
+  @override
+  String get adbEnabled => 'ADB aktiviert';
+
+  @override
+  String get unknownSources => 'Unbekannte Quellen';
+
+  @override
+  String get securityPatch => 'Sicherheits-Patch';
+
+  @override
+  String get provisioningUdid => 'Provisioning UDID';
+
+  @override
+  String get meid => 'MEID';
+
+  @override
+  String get mdmInfo => 'MDM-Info';
+
+  @override
+  String get lastEnrollment => 'Letzte Registrierung';
+
+  @override
+  String get enterpriseId => 'Enterprise-ID';
+
+  @override
+  String get manufacturer => 'Hersteller';
+
+  @override
+  String get generalStatus => 'Allgemeiner Status';
+
+  @override
+  String get apiLevel => 'API-Level';
+
+  @override
+  String get userApprovedEnrollment => 'Benutzer-genehmigte Registrierung';
 }

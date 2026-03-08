@@ -15,17 +15,19 @@ class LibraryItemDetailPage extends ConsumerWidget {
     super.key,
     required this.itemId,
     required this.itemName,
+    this.itemType,
   });
 
   final String itemId;
   final String itemName;
+  final String? itemType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final details = ref.watch(allLibraryItemDetailsProvider).value ?? {};
     final itemDetails = details[itemId];
-    final category = itemDetails?['_category'] as String?;
+    final category = (itemDetails?['_category'] as String?) ?? itemType;
     final subtitle = _displayCategory(category, l10n);
 
     return DefaultTabController(
@@ -70,6 +72,11 @@ class LibraryItemDetailPage extends ConsumerWidget {
       'custom-app' => l10n.categoryCustomApp,
       'custom-profile' => l10n.categoryCustomProfile,
       'in-house-app' => l10n.categoryInHouseApp,
+      'automatic-app' => l10n.categoryVppApps,
+      'profile' => l10n.categoryManagedProfiles,
+      'kandji-setup' => l10n.categoryKandjiSetup,
+      'macos-release' => l10n.categoryMacosRelease,
+      'threat-security-policy' => l10n.categoryThreatPolicy,
       _ => null,
     };
   }

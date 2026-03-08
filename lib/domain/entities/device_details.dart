@@ -14,6 +14,8 @@ abstract class DeviceDetails with _$DeviceDetails {
     DeviceSecurity? security,
     DeviceCellular? cellular,
     DeviceLostMode? lostMode,
+    DeviceMdm? mdm,
+    DeviceNetwork? network,
   }) = _DeviceDetails;
 
   /// Custom fromJson that normalizes Kandji's platform-specific response:
@@ -62,6 +64,12 @@ abstract class DeviceDetails with _$DeviceDetails {
           : null,
       lostMode: json['lost_mode'] is Map<String, dynamic>
           ? DeviceLostMode.fromJson(json['lost_mode'] as Map<String, dynamic>)
+          : null,
+      mdm: json['mdm'] is Map<String, dynamic>
+          ? DeviceMdm.fromJson(json['mdm'] as Map<String, dynamic>)
+          : null,
+      network: json['network'] is Map<String, dynamic>
+          ? DeviceNetwork.fromJson(json['network'] as Map<String, dynamic>)
           : null,
     );
   }
@@ -184,6 +192,31 @@ abstract class DeviceLostMode with _$DeviceLostMode {
     if (v is String) return double.tryParse(v);
     return null;
   }
+}
+
+@freezed
+abstract class DeviceMdm with _$DeviceMdm {
+  const factory DeviceMdm({
+    @JsonKey(name: 'mdm_enabled') bool? mdmEnabled,
+    @JsonKey(name: 'enrolled_via_dep') bool? enrolledViaDep,
+    @JsonKey(name: 'user_approved_enrollment') bool? userApprovedEnrollment,
+    @JsonKey(name: 'user_approved_mdm') bool? userApprovedMdm,
+  }) = _DeviceMdm;
+
+  factory DeviceMdm.fromJson(Map<String, dynamic> json) =>
+      _$DeviceMdmFromJson(json);
+}
+
+@freezed
+abstract class DeviceNetwork with _$DeviceNetwork {
+  const factory DeviceNetwork({
+    @JsonKey(name: 'ip_address') String? ipAddress,
+    @JsonKey(name: 'wifi_network') String? wifiNetwork,
+    @JsonKey(name: 'bluetooth_mac_address') String? bluetoothMacAddress,
+  }) = _DeviceNetwork;
+
+  factory DeviceNetwork.fromJson(Map<String, dynamic> json) =>
+      _$DeviceNetworkFromJson(json);
 }
 
 /// Converts dynamic values (num, String, bool) to nullable int.
