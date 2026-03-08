@@ -28,6 +28,8 @@ class _BehavioralDetectionsPageState
   int _countActiveFilters() {
     var count = 0;
     if (ref.read(behavioralSeverityFilterProvider) != null) count++;
+    if (ref.read(behavioralClassificationFilterProvider) != null) count++;
+    if (ref.read(behavioralMgmtStateFilterProvider) != null) count++;
     return count;
   }
 
@@ -35,6 +37,8 @@ class _BehavioralDetectionsPageState
     _searchController.clear();
     ref.read(behavioralSearchQueryProvider.notifier).state = '';
     ref.read(behavioralSeverityFilterProvider.notifier).state = null;
+    ref.read(behavioralClassificationFilterProvider.notifier).state = null;
+    ref.read(behavioralMgmtStateFilterProvider.notifier).state = null;
     ref.read(behavioralSortAscProvider.notifier).state = true;
     setState(() {});
   }
@@ -56,6 +60,8 @@ class _BehavioralDetectionsPageState
     final theme = Theme.of(context);
     final filteredDetections = ref.watch(filteredBehavioralDetectionsProvider);
     final severityFilter = ref.watch(behavioralSeverityFilterProvider);
+    final classFilter = ref.watch(behavioralClassificationFilterProvider);
+    final mgmtFilter = ref.watch(behavioralMgmtStateFilterProvider);
     final activeFilterCount = _countActiveFilters();
 
     return Scaffold(
@@ -140,6 +146,35 @@ class _BehavioralDetectionsPageState
                             ref
                                     .read(
                                       behavioralSeverityFilterProvider.notifier,
+                                    )
+                                    .state =
+                                null,
+                      ),
+                    ),
+                  if (classFilter != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: InputChip(
+                        label: Text(classFilter),
+                        onDeleted: () =>
+                            ref
+                                    .read(
+                                      behavioralClassificationFilterProvider
+                                          .notifier,
+                                    )
+                                    .state =
+                                null,
+                      ),
+                    ),
+                  if (mgmtFilter != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: InputChip(
+                        label: Text(mgmtFilter),
+                        onDeleted: () =>
+                            ref
+                                    .read(
+                                      behavioralMgmtStateFilterProvider.notifier,
                                     )
                                     .state =
                                 null,
@@ -232,21 +267,36 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     final severityOptions = {
-      'Critical': l10n.severityCritical,
-      'High': l10n.severityHigh,
-      'Medium': l10n.severityMedium,
-      'Low': l10n.severityLow,
+      'critical': l10n.severityCritical,
+      'high': l10n.severityHigh,
+      'medium': l10n.severityMedium,
+      'low': l10n.severityLow,
+      'informational': l10n.severityInformational,
+    };
+
+    final classOptions = {
+      'mal': l10n.classificationMal,
+      'pup': l10n.classificationPup,
+      'sus': l10n.classificationSus,
+    };
+
+    final mgmtOptions = {
+      'open': l10n.managementStateOpen,
+      'closed': l10n.managementStateClosed,
     };
 
     return DraggableScrollableSheet(
       expand: false,
-      initialChildSize: 0.45,
+      initialChildSize: 0.55,
       minChildSize: 0.3,
-      maxChildSize: 0.65,
+      maxChildSize: 0.85,
       builder: (context, scrollController) {
         return StatefulBuilder(
           builder: (context, setSheetState) {
             final severity = ref.read(behavioralSeverityFilterProvider);
+            final classification =
+                ref.read(behavioralClassificationFilterProvider);
+            final mgmt = ref.read(behavioralMgmtStateFilterProvider);
             final sortAsc = ref.read(behavioralSortAscProvider);
 
             return Column(
@@ -265,6 +315,19 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                                   )
                                   .state =
                               null;
+                          ref
+                                  .read(
+                                    behavioralClassificationFilterProvider
+                                        .notifier,
+                                  )
+                                  .state =
+                              null;
+                          ref
+                                  .read(
+                                    behavioralMgmtStateFilterProvider.notifier,
+                                  )
+                                  .state =
+                              null;
                           ref.read(behavioralSortAscProvider.notifier).state =
                               true;
                           setSheetState(() {});
@@ -280,6 +343,7 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                     controller: scrollController,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     children: [
+                      // Severity
                       Text(
                         l10n.filterSeverity,
                         style: theme.textTheme.titleSmall,
@@ -306,9 +370,7 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                           for (final entry in severityOptions.entries)
                             FilterChip(
                               label: Text(entry.value),
-                              selected:
-                                  severity?.toLowerCase() ==
-                                  entry.key.toLowerCase(),
+                              selected: severity == entry.key,
                               onSelected: (_) {
                                 ref
                                         .read(
@@ -316,15 +378,102 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                                               .notifier,
                                         )
                                         .state =
-                                    severity?.toLowerCase() ==
-                                        entry.key.toLowerCase()
-                                    ? null
-                                    : entry.key;
+                                    severity == entry.key ? null : entry.key;
                                 setSheetState(() {});
                               },
                             ),
                         ],
                       ),
+
+                      // Classification
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.classification,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          FilterChip(
+                            label: Text(l10n.filterAll),
+                            selected: classification == null,
+                            onSelected: (_) {
+                              ref
+                                      .read(
+                                        behavioralClassificationFilterProvider
+                                            .notifier,
+                                      )
+                                      .state =
+                                  null;
+                              setSheetState(() {});
+                            },
+                          ),
+                          for (final entry in classOptions.entries)
+                            FilterChip(
+                              label: Text(entry.value),
+                              selected: classification == entry.key,
+                              onSelected: (_) {
+                                ref
+                                        .read(
+                                          behavioralClassificationFilterProvider
+                                              .notifier,
+                                        )
+                                        .state =
+                                    classification == entry.key
+                                        ? null
+                                        : entry.key;
+                                setSheetState(() {});
+                              },
+                            ),
+                        ],
+                      ),
+
+                      // Management state
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.managementState,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        children: [
+                          FilterChip(
+                            label: Text(l10n.filterAll),
+                            selected: mgmt == null,
+                            onSelected: (_) {
+                              ref
+                                      .read(
+                                        behavioralMgmtStateFilterProvider
+                                            .notifier,
+                                      )
+                                      .state =
+                                  null;
+                              setSheetState(() {});
+                            },
+                          ),
+                          for (final entry in mgmtOptions.entries)
+                            FilterChip(
+                              label: Text(entry.value),
+                              selected: mgmt == entry.key,
+                              onSelected: (_) {
+                                ref
+                                        .read(
+                                          behavioralMgmtStateFilterProvider
+                                              .notifier,
+                                        )
+                                        .state =
+                                    mgmt == entry.key ? null : entry.key;
+                                setSheetState(() {});
+                              },
+                            ),
+                        ],
+                      ),
+
+                      // Sort
                       const SizedBox(height: 16),
                       Text(l10n.sortTitle, style: theme.textTheme.titleSmall),
                       const SizedBox(height: 8),

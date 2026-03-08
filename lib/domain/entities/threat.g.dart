@@ -18,6 +18,9 @@ _Threat _$ThreatFromJson(Map<String, dynamic> json) => _Threat(
   status: json['status'] as String?,
   threatId: json['threat_id'] as String?,
   threatName: json['threat_name'] as String?,
+  severity: json['severity'] as String?,
+  managementState: json['management_state'] as String?,
+  tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
 );
 
 Map<String, dynamic> _$ThreatToJson(_Threat instance) => <String, dynamic>{
@@ -32,4 +35,7 @@ Map<String, dynamic> _$ThreatToJson(_Threat instance) => <String, dynamic>{
   'status': instance.status,
   'threat_id': instance.threatId,
   'threat_name': instance.threatName,
+  'severity': instance.severity,
+  'management_state': instance.managementState,
+  'tags': instance.tags,
 };

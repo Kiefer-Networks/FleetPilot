@@ -1703,4 +1703,88 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get statusResolved => 'Resuelto';
+
+  @override
+  String get severityInformational => 'Informativo';
+
+  @override
+  String get managementState => 'Estado de gestión';
+
+  @override
+  String get managementStateOpen => 'Abierto';
+
+  @override
+  String get managementStateClosed => 'Cerrado';
+
+  @override
+  String get classificationMalware => 'Malware';
+
+  @override
+  String get classificationPup => 'PUP';
+
+  @override
+  String get classificationSus => 'Sospechoso';
+
+  @override
+  String get classificationMal => 'Malicioso';
+
+  @override
+  String get blueprintRouting => 'Enrutamiento de Blueprint';
+
+  @override
+  String get blueprintRoutingDesc =>
+      'Código de inscripción y enrutamiento para inscripción manual / Android Work Profile';
+
+  @override
+  String get enrollmentCodeActive => 'Activo';
+
+  @override
+  String get enrollmentCodeInactive => 'Inactivo';
+
+  @override
+  String get routingActivity => 'Actividad de enrutamiento';
+
+  @override
+  String get noRoutingActivity => 'No se encontró actividad de enrutamiento.';
+
+  @override
+  String get selfServiceCategories => 'Categorías de autoservicio';
+
+  @override
+  String get selfServiceDesc =>
+      'Administrar categorías de autoservicio para sus usuarios';
+
+  @override
+  String get addCategory => 'Añadir categoría';
+
+  @override
+  String get categoryName => 'Nombre de categoría';
+
+  @override
+  String get deleteCategory => 'Eliminar categoría';
+
+  @override
+  String get deleteCategoryConfirm =>
+      '¿Está seguro de que desea eliminar esta categoría?';
+
+  @override
+  String get noCategoriesFound => 'No se encontraron categorías.';
+
+  @override
+  String get categoryCreated => 'Categoría creada';
+
+  @override
+  String get categoryDeleted => 'Categoría eliminada';
+
+  @override
+  String get profileBody => 'XML del perfil';
+
+  @override
+  String get customProfile => 'Perfil personalizado';
+
+  @override
+  String get classification => 'Clasificación';
 }

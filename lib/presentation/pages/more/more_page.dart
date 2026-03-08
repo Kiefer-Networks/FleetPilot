@@ -84,6 +84,12 @@ class MorePage extends StatelessWidget {
                     title: l10n.libraryItems,
                     onTap: () => context.push('/more/library-items'),
                   ),
+                  SettingsCategoryTile(
+                    icon: Icons.app_shortcut,
+                    iconColor: AppColors.iconCyan,
+                    title: l10n.selfServiceCategories,
+                    onTap: () => context.push('/more/self-service'),
+                  ),
                 ],
               ),
             ],
@@ -112,6 +118,20 @@ class MorePage extends StatelessWidget {
                   iconColor: AppColors.iconBlue,
                   title: l10n.adeIntegrations,
                   onTap: () => context.push('/more/ade-integrations'),
+                ),
+              ],
+            ),
+
+            // 5. Blueprints section
+            const SizedBox(height: 16),
+            SectionHeader(title: l10n.blueprintRouting),
+            SettingsGroupCard(
+              children: [
+                SettingsCategoryTile(
+                  icon: Icons.route_outlined,
+                  iconColor: AppColors.iconGreen,
+                  title: l10n.blueprintRouting,
+                  onTap: () => context.push('/more/blueprint-routing'),
                 ),
               ],
             ),

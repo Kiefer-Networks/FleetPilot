@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'behavioral_detection.freezed.dart';
 part 'behavioral_detection.g.dart';
 
-/// A behavioral detection event from Kandji.
+/// A behavioral detection event from Kandji v2.
 @freezed
 abstract class BehavioralDetection with _$BehavioralDetection {
   const factory BehavioralDetection({
@@ -19,6 +19,9 @@ abstract class BehavioralDetection with _$BehavioralDetection {
     @JsonKey(name: 'file_path') String? filePath,
     @JsonKey(name: 'process_name') String? processName,
     @JsonKey(name: 'parent_process') String? parentProcess,
+    // v2 fields
+    @JsonKey(name: 'management_state') String? managementState,
+    List<String>? tags,
   }) = _BehavioralDetection;
 
   factory BehavioralDetection.fromJson(Map<String, dynamic> json) =>

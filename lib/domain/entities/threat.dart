@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'threat.freezed.dart';
 part 'threat.g.dart';
 
-/// A threat detection from the Kandji threat-details endpoint.
+/// A threat detection from the Kandji v2 threat-details endpoint.
 @freezed
 abstract class Threat with _$Threat {
   const factory Threat({
@@ -18,6 +18,10 @@ abstract class Threat with _$Threat {
     String? status,
     @JsonKey(name: 'threat_id') String? threatId,
     @JsonKey(name: 'threat_name') String? threatName,
+    // v2 fields
+    String? severity,
+    @JsonKey(name: 'management_state') String? managementState,
+    List<String>? tags,
   }) = _Threat;
 
   factory Threat.fromJson(Map<String, dynamic> json) => _$ThreatFromJson(json);

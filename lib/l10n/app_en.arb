@@ -1644,5 +1644,36 @@
   "minOsVersion": "Min OS Version",
   "created": "Created",
   "updated": "Updated",
-  "libraryItemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}"
+  "libraryItemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
+
+  "statusResolved": "Resolved",
+  "severityInformational": "Informational",
+  "managementState": "Management State",
+  "managementStateOpen": "Open",
+  "managementStateClosed": "Closed",
+  "classificationMalware": "Malware",
+  "classificationPup": "PUP",
+  "classificationSus": "Suspicious",
+  "classificationMal": "Malicious",
+
+  "blueprintRouting": "Blueprint Routing",
+  "blueprintRoutingDesc": "Enrollment code and routing for Manual / Android Work Profile enrollment",
+  "enrollmentCodeActive": "Active",
+  "enrollmentCodeInactive": "Inactive",
+  "routingActivity": "Routing Activity",
+  "noRoutingActivity": "No routing activity found.",
+
+  "selfServiceCategories": "Self Service Categories",
+  "selfServiceDesc": "Manage Self Service categories for your users",
+  "addCategory": "Add Category",
+  "categoryName": "Category Name",
+  "deleteCategory": "Delete Category",
+  "deleteCategoryConfirm": "Are you sure you want to delete this category?",
+  "noCategoriesFound": "No categories found.",
+  "categoryCreated": "Category created",
+  "categoryDeleted": "Category deleted",
+
+  "profileBody": "Profile XML",
+  "customProfile": "Custom Profile",
+  "classification": "Classification"
 }

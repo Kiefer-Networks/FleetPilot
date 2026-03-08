@@ -20,6 +20,8 @@ _BehavioralDetection _$BehavioralDetectionFromJson(Map<String, dynamic> json) =>
       filePath: json['file_path'] as String?,
       processName: json['process_name'] as String?,
       parentProcess: json['parent_process'] as String?,
+      managementState: json['management_state'] as String?,
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$BehavioralDetectionToJson(
@@ -37,4 +39,6 @@ Map<String, dynamic> _$BehavioralDetectionToJson(
   'file_path': instance.filePath,
   'process_name': instance.processName,
   'parent_process': instance.parentProcess,
+  'management_state': instance.managementState,
+  'tags': instance.tags,
 };

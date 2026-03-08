@@ -20,6 +20,11 @@ abstract final class ApiConstants {
     };
   }
 
+  /// Derives the v2 base URL from a v1 base URL.
+  /// E.g. `https://sub.api.kandji.io/api/v1` → `https://sub.api.kandji.io/api/v2`
+  static String v2BaseUrl(String v1BaseUrl) =>
+      v1BaseUrl.replaceFirst('/api/v1', '/api/v2');
+
   /// Constructs a display-friendly API URL preview.
   static String urlPreview({
     required String subdomain,

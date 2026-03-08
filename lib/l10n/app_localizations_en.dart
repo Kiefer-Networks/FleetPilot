@@ -1683,4 +1683,87 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get statusResolved => 'Resolved';
+
+  @override
+  String get severityInformational => 'Informational';
+
+  @override
+  String get managementState => 'Management State';
+
+  @override
+  String get managementStateOpen => 'Open';
+
+  @override
+  String get managementStateClosed => 'Closed';
+
+  @override
+  String get classificationMalware => 'Malware';
+
+  @override
+  String get classificationPup => 'PUP';
+
+  @override
+  String get classificationSus => 'Suspicious';
+
+  @override
+  String get classificationMal => 'Malicious';
+
+  @override
+  String get blueprintRouting => 'Blueprint Routing';
+
+  @override
+  String get blueprintRoutingDesc =>
+      'Enrollment code and routing for Manual / Android Work Profile enrollment';
+
+  @override
+  String get enrollmentCodeActive => 'Active';
+
+  @override
+  String get enrollmentCodeInactive => 'Inactive';
+
+  @override
+  String get routingActivity => 'Routing Activity';
+
+  @override
+  String get noRoutingActivity => 'No routing activity found.';
+
+  @override
+  String get selfServiceCategories => 'Self Service Categories';
+
+  @override
+  String get selfServiceDesc => 'Manage Self Service categories for your users';
+
+  @override
+  String get addCategory => 'Add Category';
+
+  @override
+  String get categoryName => 'Category Name';
+
+  @override
+  String get deleteCategory => 'Delete Category';
+
+  @override
+  String get deleteCategoryConfirm =>
+      'Are you sure you want to delete this category?';
+
+  @override
+  String get noCategoriesFound => 'No categories found.';
+
+  @override
+  String get categoryCreated => 'Category created';
+
+  @override
+  String get categoryDeleted => 'Category deleted';
+
+  @override
+  String get profileBody => 'Profile XML';
+
+  @override
+  String get customProfile => 'Custom Profile';
+
+  @override
+  String get classification => 'Classification';
 }

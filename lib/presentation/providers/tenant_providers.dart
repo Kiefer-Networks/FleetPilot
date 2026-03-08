@@ -72,8 +72,16 @@ final adeDevicesProvider = FutureProvider.family<List<AdeDevice>, String>((
 /// Search query for behavioral detections.
 final behavioralSearchQueryProvider = StateProvider<String>((ref) => '');
 
-/// Severity filter for behavioral detections (Critical, High, Medium, Low).
+/// Severity filter for behavioral detections.
 final behavioralSeverityFilterProvider = StateProvider<String?>((ref) => null);
+
+/// Classification filter for behavioral detections (mal, pup, sus).
+final behavioralClassificationFilterProvider =
+    StateProvider<String?>((ref) => null);
+
+/// Management state filter for behavioral detections (open, closed).
+final behavioralMgmtStateFilterProvider =
+    StateProvider<String?>((ref) => null);
 
 /// Sort direction for behavioral detections (true = A-Z, false = Z-A).
 final behavioralSortAscProvider = StateProvider<bool>((ref) => true);
@@ -84,12 +92,22 @@ final filteredBehavioralDetectionsProvider =
       final detectionsAsync = ref.watch(behavioralDetectionsProvider);
       final query = ref.watch(behavioralSearchQueryProvider).toLowerCase();
       final severityFilter = ref.watch(behavioralSeverityFilterProvider);
+      final classFilter = ref.watch(behavioralClassificationFilterProvider);
+      final mgmtFilter = ref.watch(behavioralMgmtStateFilterProvider);
       final sortAsc = ref.watch(behavioralSortAscProvider);
 
       return detectionsAsync.whenData((detections) {
         final filtered = detections.where((d) {
           if (severityFilter != null &&
               d.severity?.toLowerCase() != severityFilter.toLowerCase()) {
+            return false;
+          }
+          if (classFilter != null &&
+              d.classification?.toLowerCase() != classFilter.toLowerCase()) {
+            return false;
+          }
+          if (mgmtFilter != null &&
+              d.managementState?.toLowerCase() != mgmtFilter.toLowerCase()) {
             return false;
           }
           if (query.isEmpty) return true;
@@ -170,8 +188,14 @@ final filteredVulnerabilitiesProvider =
 /// Search query for threat list.
 final threatSearchQueryProvider = StateProvider<String>((ref) => '');
 
-/// Status filter for threats (Quarantined, Not Quarantined, Detected, Released).
+/// Status filter for threats (quarantined, not_quarantined, released, resolved).
 final threatStatusFilterProvider = StateProvider<String?>((ref) => null);
+
+/// Severity filter for threats (informational, low, medium, high, critical).
+final threatSeverityFilterProvider = StateProvider<String?>((ref) => null);
+
+/// Management state filter for threats (open, closed).
+final threatManagementStateFilterProvider = StateProvider<String?>((ref) => null);
 
 /// Sort direction for threats (true = A-Z, false = Z-A).
 final threatSortAscProvider = StateProvider<bool>((ref) => true);
@@ -181,12 +205,22 @@ final filteredThreatsProvider = Provider<AsyncValue<List<Threat>>>((ref) {
   final threatsAsync = ref.watch(threatsProvider);
   final query = ref.watch(threatSearchQueryProvider).toLowerCase();
   final statusFilter = ref.watch(threatStatusFilterProvider);
+  final severityFilter = ref.watch(threatSeverityFilterProvider);
+  final mgmtFilter = ref.watch(threatManagementStateFilterProvider);
   final sortAsc = ref.watch(threatSortAscProvider);
 
   return threatsAsync.whenData((threats) {
     final filtered = threats.where((t) {
       if (statusFilter != null &&
           t.status?.toLowerCase() != statusFilter.toLowerCase()) {
+        return false;
+      }
+      if (severityFilter != null &&
+          t.severity?.toLowerCase() != severityFilter.toLowerCase()) {
+        return false;
+      }
+      if (mgmtFilter != null &&
+          t.managementState?.toLowerCase() != mgmtFilter.toLowerCase()) {
         return false;
       }
       if (query.isEmpty) return true;
@@ -261,3 +295,32 @@ final filteredAuditEventsProvider = Provider<AsyncValue<List<AuditEvent>>>((
     }).toList();
   });
 });
+
+// ---------------------------------------------------------------------------
+// Blueprint Routing
+// ---------------------------------------------------------------------------
+
+/// Provider for blueprint routing config.
+final blueprintRoutingProvider =
+    FutureProvider<Map<String, dynamic>>((ref) async {
+      final api = await ref.watch(tenantApiProvider.future);
+      return api.getBlueprintRouting();
+    });
+
+/// Provider for blueprint routing activity.
+final blueprintRoutingActivityProvider =
+    FutureProvider<List<Map<String, dynamic>>>((ref) async {
+      final api = await ref.watch(tenantApiProvider.future);
+      return api.getBlueprintRoutingActivity();
+    });
+
+// ---------------------------------------------------------------------------
+// Self Service Categories
+// ---------------------------------------------------------------------------
+
+/// Provider for self-service categories.
+final selfServiceCategoriesProvider =
+    FutureProvider<List<Map<String, dynamic>>>((ref) async {
+      final api = await ref.watch(tenantApiProvider.future);
+      return api.getSelfServiceCategories();
+    });

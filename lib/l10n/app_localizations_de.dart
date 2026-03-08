@@ -1702,4 +1702,88 @@ class AppLocalizationsDe extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get statusResolved => 'Behoben';
+
+  @override
+  String get severityInformational => 'Informativ';
+
+  @override
+  String get managementState => 'Verwaltungsstatus';
+
+  @override
+  String get managementStateOpen => 'Offen';
+
+  @override
+  String get managementStateClosed => 'Geschlossen';
+
+  @override
+  String get classificationMalware => 'Malware';
+
+  @override
+  String get classificationPup => 'PUP';
+
+  @override
+  String get classificationSus => 'Verdächtig';
+
+  @override
+  String get classificationMal => 'Schädlich';
+
+  @override
+  String get blueprintRouting => 'Blueprint-Routing';
+
+  @override
+  String get blueprintRoutingDesc =>
+      'Registrierungscode und Routing für manuelle / Android Work Profile-Registrierung';
+
+  @override
+  String get enrollmentCodeActive => 'Aktiv';
+
+  @override
+  String get enrollmentCodeInactive => 'Inaktiv';
+
+  @override
+  String get routingActivity => 'Routing-Aktivität';
+
+  @override
+  String get noRoutingActivity => 'Keine Routing-Aktivität gefunden.';
+
+  @override
+  String get selfServiceCategories => 'Self-Service-Kategorien';
+
+  @override
+  String get selfServiceDesc =>
+      'Self-Service-Kategorien für Ihre Benutzer verwalten';
+
+  @override
+  String get addCategory => 'Kategorie hinzufügen';
+
+  @override
+  String get categoryName => 'Kategoriename';
+
+  @override
+  String get deleteCategory => 'Kategorie löschen';
+
+  @override
+  String get deleteCategoryConfirm =>
+      'Möchten Sie diese Kategorie wirklich löschen?';
+
+  @override
+  String get noCategoriesFound => 'Keine Kategorien gefunden.';
+
+  @override
+  String get categoryCreated => 'Kategorie erstellt';
+
+  @override
+  String get categoryDeleted => 'Kategorie gelöscht';
+
+  @override
+  String get profileBody => 'Profil-XML';
+
+  @override
+  String get customProfile => 'Benutzerdefiniertes Profil';
+
+  @override
+  String get classification => 'Klassifizierung';
 }

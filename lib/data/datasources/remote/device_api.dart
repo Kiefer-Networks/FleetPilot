@@ -27,6 +27,22 @@ class DeviceApi {
     String? platform,
     String? blueprintId,
     String? ordering,
+    String? assetTag,
+    String? deviceName,
+    bool? filevaultEnabled,
+    String? macAddress,
+    String? model,
+    String? osVersion,
+    String? serialNumber,
+    String? tagName,
+    String? tagNameIn,
+    String? tagId,
+    String? tagIdIn,
+    String? user,
+    String? userEmail,
+    String? userEmailExact,
+    String? userId,
+    String? userName,
   }) async {
     try {
       final queryParams = <String, dynamic>{
@@ -36,6 +52,26 @@ class DeviceApi {
       if (platform != null) queryParams['platform'] = platform;
       if (blueprintId != null) queryParams['blueprint_id'] = blueprintId;
       if (ordering != null) queryParams['ordering'] = ordering;
+      if (assetTag != null) queryParams['asset_tag'] = assetTag;
+      if (deviceName != null) queryParams['device_name'] = deviceName;
+      if (filevaultEnabled != null) {
+        queryParams['filevault_enabled'] = filevaultEnabled.toString();
+      }
+      if (macAddress != null) queryParams['mac_address'] = macAddress;
+      if (model != null) queryParams['model'] = model;
+      if (osVersion != null) queryParams['os_version'] = osVersion;
+      if (serialNumber != null) queryParams['serial_number'] = serialNumber;
+      if (tagName != null) queryParams['tag_name'] = tagName;
+      if (tagNameIn != null) queryParams['tag_name_in'] = tagNameIn;
+      if (tagId != null) queryParams['tag_id'] = tagId;
+      if (tagIdIn != null) queryParams['tag_id_in'] = tagIdIn;
+      if (user != null) queryParams['user'] = user;
+      if (userEmail != null) queryParams['user_email'] = userEmail;
+      if (userEmailExact != null) {
+        queryParams['user_email_exact'] = userEmailExact;
+      }
+      if (userId != null) queryParams['user_id'] = userId;
+      if (userName != null) queryParams['user_name'] = userName;
 
       final response = await dio.get<dynamic>(
         '/devices',

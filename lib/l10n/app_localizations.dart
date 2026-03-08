@@ -3135,6 +3135,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =0{No items} =1{1 item} other{{count} items}}'**
   String libraryItemCount(num count);
+
+  /// No description provided for @statusResolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get statusResolved;
+
+  /// No description provided for @severityInformational.
+  ///
+  /// In en, this message translates to:
+  /// **'Informational'**
+  String get severityInformational;
+
+  /// No description provided for @managementState.
+  ///
+  /// In en, this message translates to:
+  /// **'Management State'**
+  String get managementState;
+
+  /// No description provided for @managementStateOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get managementStateOpen;
+
+  /// No description provided for @managementStateClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get managementStateClosed;
+
+  /// No description provided for @classificationMalware.
+  ///
+  /// In en, this message translates to:
+  /// **'Malware'**
+  String get classificationMalware;
+
+  /// No description provided for @classificationPup.
+  ///
+  /// In en, this message translates to:
+  /// **'PUP'**
+  String get classificationPup;
+
+  /// No description provided for @classificationSus.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspicious'**
+  String get classificationSus;
+
+  /// No description provided for @classificationMal.
+  ///
+  /// In en, this message translates to:
+  /// **'Malicious'**
+  String get classificationMal;
+
+  /// No description provided for @blueprintRouting.
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint Routing'**
+  String get blueprintRouting;
+
+  /// No description provided for @blueprintRoutingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrollment code and routing for Manual / Android Work Profile enrollment'**
+  String get blueprintRoutingDesc;
+
+  /// No description provided for @enrollmentCodeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get enrollmentCodeActive;
+
+  /// No description provided for @enrollmentCodeInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get enrollmentCodeInactive;
+
+  /// No description provided for @routingActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Routing Activity'**
+  String get routingActivity;
+
+  /// No description provided for @noRoutingActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'No routing activity found.'**
+  String get noRoutingActivity;
+
+  /// No description provided for @selfServiceCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Self Service Categories'**
+  String get selfServiceCategories;
+
+  /// No description provided for @selfServiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Self Service categories for your users'**
+  String get selfServiceDesc;
+
+  /// No description provided for @addCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Category'**
+  String get addCategory;
+
+  /// No description provided for @categoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Name'**
+  String get categoryName;
+
+  /// No description provided for @deleteCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Category'**
+  String get deleteCategory;
+
+  /// No description provided for @deleteCategoryConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this category?'**
+  String get deleteCategoryConfirm;
+
+  /// No description provided for @noCategoriesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories found.'**
+  String get noCategoriesFound;
+
+  /// No description provided for @categoryCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Category created'**
+  String get categoryCreated;
+
+  /// No description provided for @categoryDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Category deleted'**
+  String get categoryDeleted;
+
+  /// No description provided for @profileBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile XML'**
+  String get profileBody;
+
+  /// No description provided for @customProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Profile'**
+  String get customProfile;
+
+  /// No description provided for @classification.
+  ///
+  /// In en, this message translates to:
+  /// **'Classification'**
+  String get classification;
 }
 
 class _AppLocalizationsDelegate

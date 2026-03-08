@@ -148,6 +148,8 @@ class _InfoTab extends StatelessWidget {
             rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
         _addBoolIfPresent(
             rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
       case 'in-house-app':
         _addIfPresent(rows, l10n.appName, itemDetails!['app_name']);
         _addIfPresent(rows, l10n.appVersion, itemDetails!['app_version']);
@@ -159,6 +161,10 @@ class _InfoTab extends StatelessWidget {
             rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
         _addBoolIfPresent(
             rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
+        _addBoolIfPresent(
+            rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
+        _addIfPresent(rows, l10n.installType, itemDetails!['install_type']);
+        _addIfPresent(rows, l10n.enforcement, itemDetails!['install_enforcement']);
     }
 
     _addDateTimeIfPresent(rows, l10n.created, itemDetails!['created_at']);
@@ -167,6 +173,11 @@ class _InfoTab extends StatelessWidget {
     // Script body for custom-script
     final scriptBody = category == 'custom-script'
         ? itemDetails!['body'] as String?
+        : null;
+
+    // Profile XML for custom-profile
+    final profileBody = category == 'custom-profile'
+        ? itemDetails!['profile'] as String?
         : null;
 
     return ListView(
@@ -186,6 +197,12 @@ class _InfoTab extends StatelessWidget {
         // Script viewer for custom scripts
         if (scriptBody != null && scriptBody.isNotEmpty) ...[
           _ScriptViewerCard(script: scriptBody, l10n: l10n),
+          const SizedBox(height: 16),
+        ],
+
+        // Profile XML viewer for custom profiles
+        if (profileBody != null && profileBody.isNotEmpty) ...[
+          _ProfileViewerCard(profile: profileBody, l10n: l10n),
           const SizedBox(height: 16),
         ],
 
@@ -480,6 +497,194 @@ class _ScriptViewerCard extends StatelessWidget {
   };
 }
 
+/// Dark code viewer for custom profile XML.
+class _ProfileViewerCard extends StatelessWidget {
+  const _ProfileViewerCard({required this.profile, required this.l10n});
+
+  final String profile;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final lines = profile.split('\n');
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 8),
+          child: Row(
+            children: [
+              Icon(Icons.description, size: 16, color: theme.colorScheme.primary),
+              const SizedBox(width: 8),
+              Text(
+                l10n.profileBody,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.copy, size: 18),
+                tooltip: l10n.tapToCopy,
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: profile));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(l10n.secretCopied),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            width: double.infinity,
+            color: const Color(0xFF1E1E1E),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: MediaQuery.of(context).size.width - 64,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: SelectableText.rich(
+                    TextSpan(
+                      children: [
+                        for (var i = 0; i < lines.length; i++)
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '${(i + 1).toString().padLeft(3)} ',
+                                style: const TextStyle(
+                                  color: Color(0xFF858585),
+                                  fontFamily: 'monospace',
+                                  fontSize: 13,
+                                  height: 1.5,
+                                ),
+                              ),
+                              ..._highlightXmlLine(lines[i]),
+                              if (i < lines.length - 1)
+                                const TextSpan(text: '\n'),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Basic XML syntax highlighting.
+  List<TextSpan> _highlightXmlLine(String line) {
+    const baseStyle = TextStyle(
+      color: Color(0xFFD4D4D4),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const tagStyle = TextStyle(
+      color: Color(0xFF569CD6),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const attrNameStyle = TextStyle(
+      color: Color(0xFF9CDCFE),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const attrValueStyle = TextStyle(
+      color: Color(0xFFCE9178),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+    const commentStyle = TextStyle(
+      color: Color(0xFF6A9955),
+      fontFamily: 'monospace',
+      fontSize: 13,
+      height: 1.5,
+    );
+
+    final spans = <TextSpan>[];
+    var i = 0;
+
+    while (i < line.length) {
+      // Comment
+      if (line.startsWith('<!--', i)) {
+        final end = line.indexOf('-->', i);
+        if (end != -1) {
+          spans.add(TextSpan(text: line.substring(i, end + 3), style: commentStyle));
+          i = end + 3;
+          continue;
+        }
+        spans.add(TextSpan(text: line.substring(i), style: commentStyle));
+        return spans;
+      }
+
+      // Processing instruction or tag
+      if (line[i] == '<') {
+        final end = line.indexOf('>', i);
+        if (end != -1) {
+          final tag = line.substring(i, end + 1);
+          // Highlight tag brackets and name in blue, attrs differently
+          final attrMatch = RegExp(r'^(</?[\w:.-]+)(.*)$').firstMatch(tag);
+          if (attrMatch != null) {
+            spans.add(TextSpan(text: attrMatch.group(1), style: tagStyle));
+            final rest = attrMatch.group(2)!;
+            // Highlight attribute="value" pairs
+            var j = 0;
+            while (j < rest.length) {
+              final attrPair = RegExp(r'''(\s+)([\w:.-]+)(=)(".*?"|'.*?')''')
+                  .matchAsPrefix(rest, j);
+              if (attrPair != null) {
+                spans.add(TextSpan(text: attrPair.group(1), style: baseStyle));
+                spans.add(TextSpan(text: attrPair.group(2), style: attrNameStyle));
+                spans.add(TextSpan(text: attrPair.group(3), style: baseStyle));
+                spans.add(TextSpan(text: attrPair.group(4), style: attrValueStyle));
+                j = attrPair.end;
+              } else {
+                spans.add(TextSpan(text: rest[j], style: tagStyle));
+                j++;
+              }
+            }
+          } else {
+            spans.add(TextSpan(text: tag, style: tagStyle));
+          }
+          i = end + 1;
+          continue;
+        }
+      }
+
+      // Plain text content
+      final nextTag = line.indexOf('<', i);
+      if (nextTag == -1) {
+        spans.add(TextSpan(text: line.substring(i), style: baseStyle));
+        break;
+      }
+      if (nextTag > i) {
+        spans.add(TextSpan(text: line.substring(i, nextTag), style: baseStyle));
+      }
+      i = nextTag;
+    }
+
+    return spans.isEmpty ? [TextSpan(text: line, style: baseStyle)] : spans;
+  }
+}
+
 /// Shows all fields from the API response grouped logically.
 class _RawFieldsCard extends StatelessWidget {
   const _RawFieldsCard({
@@ -505,6 +710,7 @@ class _RawFieldsCard extends StatelessWidget {
       if (e.key == 'id' || e.key == 'name' || e.key == 'active') return false;
       if (e.key == 'created_at' || e.key == 'updated_at') return false;
       if (e.key == 'body' && category == 'custom-script') return false;
+      if (e.key == 'profile' && category == 'custom-profile') return false;
       return true;
     }).toList();
 
