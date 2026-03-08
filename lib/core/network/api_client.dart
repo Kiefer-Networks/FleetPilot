@@ -1,14 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 
 import '../constants/api_constants.dart';
 import 'auth_interceptor.dart';
+import 'certificate_pinner.dart';
 import 'logging_interceptor.dart';
 import 'rate_limit_interceptor.dart';
 
 /// Factory for creating configured [Dio] instances.
 ///
 /// Each instance enforces TLS, applies auth headers, rate limiting,
-/// and sanitized logging.
+/// certificate pinning, and sanitized logging.
 abstract final class ApiClientFactory {
   /// Creates a [Dio] instance configured for the given API base URL.
   ///
@@ -34,6 +36,10 @@ abstract final class ApiClientFactory {
           'Content-Type': 'application/json',
         },
       ),
+    );
+
+    dio.httpClientAdapter = IOHttpClientAdapter(
+      validateCertificate: CertificatePinner.validate,
     );
 
     rateLimitInterceptor.dio = dio;
