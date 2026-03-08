@@ -566,6 +566,115 @@ class TenantApi {
   }
 
   // ---------------------------------------------------------------------------
+  // Blueprint Routing
+  // ---------------------------------------------------------------------------
+
+  /// Gets blueprint routing enrollment code and status.
+  Future<Map<String, dynamic>> getBlueprintRouting() async {
+    try {
+      final response = await dio.get<dynamic>('/blueprint-routing/');
+      final data = response.data;
+      if (data is Map<String, dynamic>) return data;
+      return {};
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    }
+  }
+
+  /// Updates blueprint routing enrollment code and status.
+  Future<Map<String, dynamic>> updateBlueprintRouting(
+    Map<String, dynamic> body,
+  ) async {
+    try {
+      final response = await dio.patch<dynamic>(
+        '/blueprint-routing/',
+        data: body,
+      );
+      final data = response.data;
+      if (data is Map<String, dynamic>) return data;
+      return {};
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    }
+  }
+
+  /// Gets blueprint routing activity events.
+  Future<List<Map<String, dynamic>>> getBlueprintRoutingActivity({
+    int limit = 300,
+    int offset = 0,
+  }) async {
+    try {
+      final response = await dio.get<dynamic>(
+        '/blueprint-routing/activity',
+        queryParameters: {'limit': limit, 'offset': offset},
+      );
+      return _extractListItems(response.data);
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    } on Failure {
+      rethrow;
+    } catch (e, st) {
+      log.e(
+        'TenantApi.getBlueprintRoutingActivity error: $e',
+        error: e,
+        stackTrace: st,
+      );
+      throw UnexpectedFailure(
+        'Failed to parse blueprint routing activity: $e',
+      );
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Self Service Categories
+  // ---------------------------------------------------------------------------
+
+  /// Lists self-service categories.
+  Future<List<Map<String, dynamic>>> getSelfServiceCategories() async {
+    try {
+      final response = await dio.get<dynamic>('/self-service/categories');
+      return _extractListItems(response.data);
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    } on Failure {
+      rethrow;
+    } catch (e, st) {
+      log.e(
+        'TenantApi.getSelfServiceCategories error: $e',
+        error: e,
+        stackTrace: st,
+      );
+      throw UnexpectedFailure('Failed to parse self-service categories: $e');
+    }
+  }
+
+  /// Creates a self-service category.
+  Future<Map<String, dynamic>> createSelfServiceCategory(
+    Map<String, dynamic> body,
+  ) async {
+    try {
+      final response = await dio.post<dynamic>(
+        '/self-service/categories',
+        data: body,
+      );
+      final data = response.data;
+      if (data is Map<String, dynamic>) return data;
+      return {};
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    }
+  }
+
+  /// Deletes a self-service category.
+  Future<void> deleteSelfServiceCategory(String id) async {
+    try {
+      await dio.delete<dynamic>('/self-service/categories/$id');
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // Library Items CRUD
   // ---------------------------------------------------------------------------
 

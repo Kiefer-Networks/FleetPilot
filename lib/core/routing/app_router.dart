@@ -19,6 +19,8 @@ import '../../presentation/pages/more/ade_create_page.dart';
 import '../../presentation/pages/more/ade_detail_page.dart';
 import '../../presentation/pages/more/ade_integrations_page.dart';
 import '../../presentation/pages/more/behavioral_detections_page.dart';
+import '../../presentation/pages/more/blueprint_routing_page.dart';
+import '../../presentation/pages/more/self_service_page.dart';
 import '../../presentation/pages/more/vulnerabilities_page.dart';
 import '../../presentation/pages/more/vulnerability_detail_page.dart';
 import '../../presentation/pages/onboarding/onboarding_page.dart';
@@ -200,6 +202,14 @@ GoRouter createRouter({
               GoRoute(
                 path: 'tags',
                 builder: (context, state) => const TagsPage(),
+              ),
+              GoRoute(
+                path: 'blueprint-routing',
+                builder: (context, state) => const BlueprintRoutingPage(),
+              ),
+              GoRoute(
+                path: 'self-service',
+                builder: (context, state) => const SelfServicePage(),
               ),
             ],
           ),

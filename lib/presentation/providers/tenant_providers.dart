@@ -296,3 +296,31 @@ final filteredAuditEventsProvider = Provider<AsyncValue<List<AuditEvent>>>((
   });
 });
 
+// ---------------------------------------------------------------------------
+// Blueprint Routing
+// ---------------------------------------------------------------------------
+
+/// Provider for blueprint routing config.
+final blueprintRoutingProvider =
+    FutureProvider<Map<String, dynamic>>((ref) async {
+      final api = await ref.watch(tenantApiProvider.future);
+      return api.getBlueprintRouting();
+    });
+
+/// Provider for blueprint routing activity.
+final blueprintRoutingActivityProvider =
+    FutureProvider<List<Map<String, dynamic>>>((ref) async {
+      final api = await ref.watch(tenantApiProvider.future);
+      return api.getBlueprintRoutingActivity();
+    });
+
+// ---------------------------------------------------------------------------
+// Self Service Categories
+// ---------------------------------------------------------------------------
+
+/// Provider for self-service categories.
+final selfServiceCategoriesProvider =
+    FutureProvider<List<Map<String, dynamic>>>((ref) async {
+      final api = await ref.watch(tenantApiProvider.future);
+      return api.getSelfServiceCategories();
+    });
