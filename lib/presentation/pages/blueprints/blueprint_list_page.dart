@@ -11,7 +11,9 @@ import '../../widgets/common/error_state_widget.dart';
 import '../../widgets/common/loading_widget.dart';
 
 class BlueprintListPage extends ConsumerStatefulWidget {
-  const BlueprintListPage({super.key});
+  const BlueprintListPage({super.key, this.isEmbedded = false});
+
+  final bool isEmbedded;
 
   @override
   ConsumerState<BlueprintListPage> createState() => _BlueprintListPageState();
@@ -106,6 +108,7 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createBlueprint(context, ref),
+        tooltip: l10n.createBlueprint,
         child: const Icon(Icons.add),
       ),
       body: NestedScrollView(
@@ -129,6 +132,7 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
                   if (_searchController.text.isNotEmpty)
                     IconButton(
                       icon: const Icon(Icons.clear, size: 20),
+                      tooltip: l10n.clearSearch,
                       onPressed: () {
                         _searchController.clear();
                         ref.read(blueprintSearchQueryProvider.notifier).state =
@@ -201,7 +205,10 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
                           );
                         }
                         final bp = blueprints[index - 1];
-                        return _BlueprintListTile(blueprint: bp);
+                        return _BlueprintListTile(
+                          blueprint: bp,
+                          isEmbedded: widget.isEmbedded,
+                        );
                       },
                     ),
                   );
@@ -221,9 +228,10 @@ class _BlueprintListPageState extends ConsumerState<BlueprintListPage> {
 }
 
 class _BlueprintListTile extends ConsumerWidget {
-  const _BlueprintListTile({required this.blueprint});
+  const _BlueprintListTile({required this.blueprint, this.isEmbedded = false});
 
   final Blueprint blueprint;
+  final bool isEmbedded;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -237,7 +245,13 @@ class _BlueprintListTile extends ConsumerWidget {
       child: Card(
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: () => context.push('/blueprints/${blueprint.id}'),
+          onTap: () {
+            if (isEmbedded) {
+              context.go('/blueprints/${blueprint.id}');
+            } else {
+              context.push('/blueprints/${blueprint.id}');
+            }
+          },
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(

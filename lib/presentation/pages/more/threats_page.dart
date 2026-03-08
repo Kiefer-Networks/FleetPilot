@@ -43,6 +43,7 @@ class _ThreatsPageState extends ConsumerState<ThreatsPage> {
                 if (_searchController.text.isNotEmpty)
                   IconButton(
                     icon: const Icon(Icons.clear, size: 20),
+                    tooltip: l10n.clearSearch,
                     onPressed: () {
                       _searchController.clear();
                       ref.read(threatSearchQueryProvider.notifier).state = '';

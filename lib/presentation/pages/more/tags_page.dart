@@ -34,6 +34,7 @@ class TagsPage extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n.manageTags)),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showCreateEditDialog(context, ref),
+        tooltip: l10n.createTag,
         child: const Icon(Icons.add),
       ),
       body: tagsAsync.when(

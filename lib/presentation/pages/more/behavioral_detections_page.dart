@@ -45,6 +45,7 @@ class _BehavioralDetectionsPageState
                 if (_searchController.text.isNotEmpty)
                   IconButton(
                     icon: const Icon(Icons.clear, size: 20),
+                    tooltip: l10n.clearSearch,
                     onPressed: () {
                       _searchController.clear();
                       ref.read(behavioralSearchQueryProvider.notifier).state =

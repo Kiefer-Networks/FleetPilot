@@ -83,6 +83,7 @@ class _DeviceDetailScaffold extends ConsumerWidget {
                 ),
                 PopupMenuButton<String>(
                   icon: const Icon(Icons.more_vert),
+                  tooltip: l10n.moreActions,
                   onSelected: (value) {
                     if (value == '_delete_device') {
                       _deleteDevice(context, ref);
@@ -2796,6 +2797,7 @@ class _NotesTabState extends ConsumerState<_NotesTab> {
                 ),
           floatingActionButton: FloatingActionButton(
             onPressed: _addNote,
+            tooltip: l10n.addNote,
             child: const Icon(Icons.add),
           ),
         );

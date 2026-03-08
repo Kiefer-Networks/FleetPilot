@@ -79,6 +79,7 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
                 onPressed: () => _editBlueprint(context, ref),
               ),
               PopupMenuButton<String>(
+                tooltip: l10n.moreActions,
                 onSelected: (value) {
                   if (value == 'delete') {
                     _deleteBlueprint(context, ref);

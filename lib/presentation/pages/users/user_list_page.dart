@@ -63,6 +63,7 @@ class _UserListPageState extends ConsumerState<UserListPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => ref.read(usersProvider.notifier).refresh(),
+        tooltip: l10n.refresh,
         child: const Icon(Icons.refresh),
       ),
       body: NestedScrollView(
@@ -85,6 +86,7 @@ class _UserListPageState extends ConsumerState<UserListPage> {
                         if (_searchController.text.isNotEmpty)
                           IconButton(
                             icon: const Icon(Icons.clear, size: 20),
+                            tooltip: l10n.clearSearch,
                             onPressed: () {
                               _searchController.clear();
                               ref.read(userSearchQueryProvider.notifier).state =
@@ -114,6 +116,7 @@ class _UserListPageState extends ConsumerState<UserListPage> {
                             ? theme.colorScheme.primary
                             : null,
                       ),
+                      tooltip: l10n.filterTitle,
                       onPressed: _showFilterSheet,
                     ),
                   ),

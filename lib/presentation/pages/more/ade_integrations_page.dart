@@ -22,6 +22,7 @@ class AdeIntegrationsPage extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n.adeIntegrations)),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/more/ade-integrations/create'),
+        tooltip: l10n.adeIntegrations,
         child: const Icon(Icons.add),
       ),
       body: integrationsAsync.when(
