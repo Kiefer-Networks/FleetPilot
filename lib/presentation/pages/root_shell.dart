@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fleetpilot/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
-/// Root scaffold with adaptive navigation (NavigationBar on phone,
-/// NavigationRail on iPad landscape >= 600dp).
-///
-/// Uses [IndexedStack] to preserve scroll positions across destinations.
+import '../pages/blueprints/blueprint_list_page.dart';
+import '../pages/devices/device_list_page.dart';
+
 class RootShell extends StatelessWidget {
   const RootShell({super.key, required this.child});
 
@@ -16,6 +15,13 @@ class RootShell extends StatelessWidget {
     if (location.startsWith('/users')) return 2;
     if (location.startsWith('/more')) return 3;
     return 0;
+  }
+
+  static bool _isDetailRoute(String location) {
+    final devicesDetail = RegExp(r'^/devices/[^/]+$');
+    final blueprintsDetail = RegExp(r'^/blueprints/[^/]+$');
+    return devicesDetail.hasMatch(location) ||
+        blueprintsDetail.hasMatch(location);
   }
 
   static void _onDestinationSelected(BuildContext context, int index) {
@@ -72,6 +78,22 @@ class RootShell extends StatelessWidget {
         final useRail = constraints.maxWidth >= 600;
 
         if (useRail) {
+          final isDetail = _isDetailRoute(location);
+          final showSplit =
+              (selectedIndex == 0 || selectedIndex == 1) || isDetail;
+
+          Widget body;
+          if (showSplit && (selectedIndex == 0 || selectedIndex == 1)) {
+            body = _MasterDetailLayout(
+              selectedIndex: selectedIndex,
+              isDetail: isDetail,
+              detailChild: child,
+              location: location,
+            );
+          } else {
+            body = child;
+          }
+
           return Scaffold(
             body: Row(
               children: [
@@ -83,7 +105,7 @@ class RootShell extends StatelessWidget {
                   destinations: railDestinations,
                 ),
                 const VerticalDivider(thickness: 1, width: 1),
-                Expanded(child: child),
+                Expanded(child: body),
               ],
             ),
           );
@@ -99,6 +121,68 @@ class RootShell extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _MasterDetailLayout extends StatelessWidget {
+  const _MasterDetailLayout({
+    required this.selectedIndex,
+    required this.isDetail,
+    required this.detailChild,
+    required this.location,
+  });
+
+  final int selectedIndex;
+  final bool isDetail;
+  final Widget detailChild;
+  final String location;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+
+    final Widget listPane;
+    if (selectedIndex == 0) {
+      listPane = const DeviceListPage(isEmbedded: true);
+    } else {
+      listPane = const BlueprintListPage(isEmbedded: true);
+    }
+
+    final Widget detailPane;
+    if (isDetail) {
+      detailPane = detailChild;
+    } else {
+      final message = selectedIndex == 0
+          ? l10n.selectADevice
+          : l10n.selectABlueprint;
+      final icon = selectedIndex == 0
+          ? Icons.devices_outlined
+          : Icons.layers_outlined;
+      detailPane = Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 64, color: theme.colorScheme.onSurfaceVariant),
+            const SizedBox(height: 16),
+            Text(
+              message,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Row(
+      children: [
+        SizedBox(width: 360, child: listPane),
+        const VerticalDivider(thickness: 1, width: 1),
+        Expanded(child: detailPane),
+      ],
     );
   }
 }

@@ -13,6 +13,9 @@ final blueprintSortAscProvider = StateProvider<bool>((ref) => true);
 /// Search query for blueprint list.
 final blueprintSearchQueryProvider = StateProvider<String>((ref) => '');
 
+/// Selected blueprint ID for master-detail layout on wide screens.
+final selectedBlueprintIdProvider = StateProvider<String?>((ref) => null);
+
 /// Provider for the full blueprint list.
 final blueprintsProvider = FutureProvider<List<Blueprint>>((ref) async {
   final repo = await ref.watch(blueprintRepositoryProvider.future);

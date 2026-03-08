@@ -30,6 +30,9 @@ final supervisedFilterProvider = StateProvider<bool?>((ref) => null);
 /// Filter by lost mode: true = only lost mode devices.
 final lostModeFilterProvider = StateProvider<bool>((ref) => false);
 
+/// Selected device ID for master-detail layout on wide screens.
+final selectedDeviceIdProvider = StateProvider<String?>((ref) => null);
+
 /// Number of devices loaded so far during pagination.
 final devicesLoadingCountProvider = StateProvider<int>((ref) => 0);
 
