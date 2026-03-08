@@ -76,14 +76,14 @@ class LibraryItemDetailPage extends ConsumerWidget {
 }
 
 /// Info tab showing library item details based on its category.
-class _InfoTab extends StatelessWidget {
+class _InfoTab extends ConsumerWidget {
   const _InfoTab({required this.itemId, this.itemDetails});
 
   final String itemId;
   final Map<String, dynamic>? itemDetails;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -119,6 +119,12 @@ class _InfoTab extends StatelessWidget {
 
     final category = itemDetails!['_category'] as String?;
     final active = itemDetails!['active'];
+
+    // Fetch full item details (includes body/profile) if category is known.
+    final fullDetailAsync = category != null
+        ? ref.watch(libraryItemFullDetailProvider('$category:$itemId'))
+        : null;
+    final fullDetail = fullDetailAsync?.whenOrNull(data: (d) => d);
 
     // Common fields
     final rows = <_InfoRow>[];
@@ -170,15 +176,19 @@ class _InfoTab extends StatelessWidget {
     _addDateTimeIfPresent(rows, l10n.created, itemDetails!['created_at']);
     _addDateTimeIfPresent(rows, l10n.updated, itemDetails!['updated_at']);
 
-    // Script body for custom-script
+    // Script body for custom-script (from full detail endpoint)
     final scriptBody = category == 'custom-script'
-        ? itemDetails!['body'] as String?
+        ? (fullDetail?['body'] as String?) ?? (itemDetails!['body'] as String?)
         : null;
 
-    // Profile XML for custom-profile
+    // Profile XML for custom-profile (from full detail endpoint)
     final profileBody = category == 'custom-profile'
-        ? itemDetails!['profile'] as String?
+        ? (fullDetail?['profile'] as String?) ??
+            (itemDetails!['profile'] as String?)
         : null;
+
+    // Show loading indicator while fetching full detail
+    final isLoadingDetail = fullDetailAsync != null && fullDetailAsync.isLoading;
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -194,20 +204,25 @@ class _InfoTab extends StatelessWidget {
           const SizedBox(height: 16),
         ],
 
-        // Script viewer for custom scripts
-        if (scriptBody != null && scriptBody.isNotEmpty) ...[
-          _ScriptViewerCard(script: scriptBody, l10n: l10n),
-          const SizedBox(height: 16),
-        ],
-
-        // Profile XML viewer for custom profiles
-        if (profileBody != null && profileBody.isNotEmpty) ...[
-          _ProfileViewerCard(profile: profileBody, l10n: l10n),
-          const SizedBox(height: 16),
-        ],
-
         // Show all raw fields as a reference
         _RawFieldsCard(data: itemDetails!, category: category, l10n: l10n),
+
+        // Script viewer for custom scripts (last card)
+        if (isLoadingDetail &&
+            (category == 'custom-script' || category == 'custom-profile')) ...[
+          const SizedBox(height: 16),
+          const Center(child: CircularProgressIndicator()),
+        ],
+        if (scriptBody != null && scriptBody.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _ScriptViewerCard(script: scriptBody, l10n: l10n),
+        ],
+
+        // Profile XML viewer for custom profiles (last card)
+        if (profileBody != null && profileBody.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _ProfileViewerCard(profile: profileBody, l10n: l10n),
+        ],
       ],
     );
   }

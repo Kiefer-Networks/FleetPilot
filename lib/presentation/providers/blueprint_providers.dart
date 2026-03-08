@@ -137,6 +137,24 @@ final allLibraryItemDetailsProvider =
       return api.getAllLibraryItemDetails();
     });
 
+/// Full detail for a single library item (includes body/profile fields).
+/// Parameter format: "category:itemId" (e.g. "custom-script:abc123").
+final libraryItemFullDetailProvider =
+    FutureProvider.family<Map<String, dynamic>, String>((ref, param) async {
+      final parts = param.split(':');
+      if (parts.length < 2) return {};
+      final category = parts[0];
+      final itemId = parts.sublist(1).join(':');
+      final api = await ref.watch(tenantApiProvider.future);
+      return switch (category) {
+        'custom-script' => api.getCustomScript(itemId),
+        'custom-profile' => api.getCustomProfile(itemId),
+        'custom-app' => api.getCustomApp(itemId),
+        'in-house-app' => api.getIpaApp(itemId),
+        _ => <String, dynamic>{},
+      };
+    });
+
 /// Library item activity log.
 final libraryItemActivityProvider =
     FutureProvider.family<List<LibraryItemActivity>, String>((

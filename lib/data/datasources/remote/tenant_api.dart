@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
-import '../../../core/constants/api_constants.dart';
 import '../../../core/errors/api_exception_mapper.dart';
 import '../../../core/errors/failures.dart';
 import '../../../core/utils/logger_service.dart';
@@ -21,51 +20,27 @@ class TenantApi {
 
   final Dio dio;
 
-  /// Builds an absolute v2 URL from the current Dio base URL.
-  String _v2(String path) =>
-      '${ApiConstants.v2BaseUrl(dio.options.baseUrl)}$path';
-
-  /// Fetches threat details via v2 endpoint.
+  /// Fetches threat details (v1 endpoint with v2 query params where supported).
   Future<List<Threat>> getThreats({
-    String statuses = 'quarantined,not_quarantined,released,resolved',
     String? classification,
-    String? severities,
-    String? managementState,
-    String? tags,
-    String? deviceId,
-    String? term,
-    String? detectionDateFrom,
-    String? detectionDateTo,
-    int? dateRange,
+    String? dateRange,
     String? sortBy,
+    String? term,
     int limit = 1000,
     int offset = 0,
   }) async {
     try {
       final queryParams = <String, dynamic>{
-        'statuses': statuses,
         'limit': limit,
         'offset': offset,
       };
       if (classification != null) queryParams['classification'] = classification;
-      if (severities != null) queryParams['severities'] = severities;
-      if (managementState != null) {
-        queryParams['management_state'] = managementState;
-      }
-      if (tags != null) queryParams['tags'] = tags;
-      if (deviceId != null) queryParams['device_id'] = deviceId;
       if (term != null) queryParams['term'] = term;
-      if (detectionDateFrom != null) {
-        queryParams['detection_date_from'] = detectionDateFrom;
-      }
-      if (detectionDateTo != null) {
-        queryParams['detection_date_to'] = detectionDateTo;
-      }
       if (dateRange != null) queryParams['date_range'] = dateRange;
       if (sortBy != null) queryParams['sort_by'] = sortBy;
 
       final response = await dio.get<dynamic>(
-        _v2('/threat/threat-details'),
+        '/threat-details',
         queryParameters: queryParams,
       );
 
@@ -271,19 +246,11 @@ class TenantApi {
     }
   }
 
-  /// Fetches behavioral detections via v2 endpoint.
-  /// Note: v2 requires [deviceId]. Without it we fetch from all devices
-  /// by iterating; pass null to fetch a global list via a wrapper.
+  /// Fetches behavioral detections (v1 endpoint).
   Future<List<BehavioralDetection>> getBehavioralDetections({
-    String? deviceId,
-    String? classifications,
-    String? statuses,
-    String? severities,
-    String? managementState,
-    String? tags,
-    String? searchTerm,
-    String? detectionFrom,
-    String? detectionTo,
+    String? classification,
+    String? status,
+    String? dateRange,
     String? sortBy,
     int limit = 1000,
     int offset = 0,
@@ -293,24 +260,13 @@ class TenantApi {
         'limit': limit,
         'offset': offset,
       };
-      // v2 requires device_id but we make it optional in our layer
-      if (deviceId != null) queryParams['device_id'] = deviceId;
-      if (classifications != null) {
-        queryParams['classifications'] = classifications;
-      }
-      if (statuses != null) queryParams['statuses'] = statuses;
-      if (severities != null) queryParams['severities'] = severities;
-      if (managementState != null) {
-        queryParams['management_state'] = managementState;
-      }
-      if (tags != null) queryParams['tags'] = tags;
-      if (searchTerm != null) queryParams['search_term'] = searchTerm;
-      if (detectionFrom != null) queryParams['detection_from'] = detectionFrom;
-      if (detectionTo != null) queryParams['detection_to'] = detectionTo;
+      if (classification != null) queryParams['classification'] = classification;
+      if (status != null) queryParams['status'] = status;
+      if (dateRange != null) queryParams['date_range'] = dateRange;
       if (sortBy != null) queryParams['sort_by'] = sortBy;
 
       final response = await dio.get<dynamic>(
-        _v2('/threat/behavioral-detections/events'),
+        '/behavioral-detections',
         queryParameters: queryParams,
       );
       return _extractListItems(
