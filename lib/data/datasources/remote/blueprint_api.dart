@@ -229,6 +229,9 @@ class BlueprintApi {
       } else {
         return [];
       }
+      if (items.isNotEmpty) {
+        log.d('LibraryItemActivity sample: ${items.first}');
+      }
       return items
           .cast<Map<String, dynamic>>()
           .map(LibraryItemActivity.fromJson)
@@ -265,6 +268,9 @@ class BlueprintApi {
             [];
       } else {
         return [];
+      }
+      if (items.isNotEmpty) {
+        log.d('LibraryItemStatus sample: ${items.first}');
       }
       return items
           .cast<Map<String, dynamic>>()

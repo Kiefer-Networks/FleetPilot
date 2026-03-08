@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LibraryItemStatus {
 
-@JsonKey(name: 'device_id', readValue: _readDeviceId) String? get deviceId;@JsonKey(name: 'device_name', readValue: _readDeviceName) String? get deviceName;@JsonKey(name: 'serial_number') String? get serialNumber; String? get status;@JsonKey(name: 'last_run') String? get lastRun;@JsonKey(name: 'completed_at') String? get completedAt;
+@JsonKey(name: 'device_id', readValue: _readDeviceId) String? get deviceId;@JsonKey(name: 'device_name', readValue: _readDeviceName) String? get deviceName;@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? get serialNumber;@JsonKey(readValue: _readStatus) String? get status;@JsonKey(name: 'last_run', readValue: _readLastRun) String? get lastRun;@JsonKey(name: 'completed_at') String? get completedAt;
 /// Create a copy of LibraryItemStatus
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $LibraryItemStatusCopyWith<$Res>  {
   factory $LibraryItemStatusCopyWith(LibraryItemStatus value, $Res Function(LibraryItemStatus) _then) = _$LibraryItemStatusCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number') String? serialNumber, String? status,@JsonKey(name: 'last_run') String? lastRun,@JsonKey(name: 'completed_at') String? completedAt
+@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? serialNumber,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'last_run', readValue: _readLastRun) String? lastRun,@JsonKey(name: 'completed_at') String? completedAt
 });
 
 
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number')  String? serialNumber,  String? status, @JsonKey(name: 'last_run')  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'last_run', readValue: _readLastRun)  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LibraryItemStatus() when $default != null:
 return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,_that.lastRun,_that.completedAt);case _:
@@ -179,7 +179,7 @@ return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number')  String? serialNumber,  String? status, @JsonKey(name: 'last_run')  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'last_run', readValue: _readLastRun)  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemStatus():
 return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,_that.lastRun,_that.completedAt);case _:
@@ -199,7 +199,7 @@ return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number')  String? serialNumber,  String? status, @JsonKey(name: 'last_run')  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'last_run', readValue: _readLastRun)  String? lastRun, @JsonKey(name: 'completed_at')  String? completedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemStatus() when $default != null:
 return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,_that.lastRun,_that.completedAt);case _:
@@ -214,14 +214,14 @@ return $default(_that.deviceId,_that.deviceName,_that.serialNumber,_that.status,
 @JsonSerializable()
 
 class _LibraryItemStatus implements LibraryItemStatus {
-  const _LibraryItemStatus({@JsonKey(name: 'device_id', readValue: _readDeviceId) this.deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName) this.deviceName, @JsonKey(name: 'serial_number') this.serialNumber, this.status, @JsonKey(name: 'last_run') this.lastRun, @JsonKey(name: 'completed_at') this.completedAt});
+  const _LibraryItemStatus({@JsonKey(name: 'device_id', readValue: _readDeviceId) this.deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName) this.deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber) this.serialNumber, @JsonKey(readValue: _readStatus) this.status, @JsonKey(name: 'last_run', readValue: _readLastRun) this.lastRun, @JsonKey(name: 'completed_at') this.completedAt});
   factory _LibraryItemStatus.fromJson(Map<String, dynamic> json) => _$LibraryItemStatusFromJson(json);
 
 @override@JsonKey(name: 'device_id', readValue: _readDeviceId) final  String? deviceId;
 @override@JsonKey(name: 'device_name', readValue: _readDeviceName) final  String? deviceName;
-@override@JsonKey(name: 'serial_number') final  String? serialNumber;
-@override final  String? status;
-@override@JsonKey(name: 'last_run') final  String? lastRun;
+@override@JsonKey(name: 'serial_number', readValue: _readSerialNumber) final  String? serialNumber;
+@override@JsonKey(readValue: _readStatus) final  String? status;
+@override@JsonKey(name: 'last_run', readValue: _readLastRun) final  String? lastRun;
 @override@JsonKey(name: 'completed_at') final  String? completedAt;
 
 /// Create a copy of LibraryItemStatus
@@ -257,7 +257,7 @@ abstract mixin class _$LibraryItemStatusCopyWith<$Res> implements $LibraryItemSt
   factory _$LibraryItemStatusCopyWith(_LibraryItemStatus value, $Res Function(_LibraryItemStatus) _then) = __$LibraryItemStatusCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number') String? serialNumber, String? status,@JsonKey(name: 'last_run') String? lastRun,@JsonKey(name: 'completed_at') String? completedAt
+@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? serialNumber,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'last_run', readValue: _readLastRun) String? lastRun,@JsonKey(name: 'completed_at') String? completedAt
 });
 
 
@@ -293,7 +293,7 @@ as String?,
 /// @nodoc
 mixin _$LibraryItemActivity {
 
-@JsonKey(fromJson: _toNullableString) String? get id;@JsonKey(name: 'device_id', readValue: _readDeviceId) String? get deviceId;@JsonKey(name: 'device_name', readValue: _readDeviceName) String? get deviceName;@JsonKey(name: 'serial_number') String? get serialNumber; String? get action; String? get status;@JsonKey(name: 'created_at') String? get createdAt;@JsonKey(fromJson: _toNullableString) String? get details;
+@JsonKey(fromJson: _toNullableString) String? get id;@JsonKey(name: 'device_id', readValue: _readDeviceId) String? get deviceId;@JsonKey(name: 'device_name', readValue: _readDeviceName) String? get deviceName;@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? get serialNumber;@JsonKey(readValue: _readAction) String? get action;@JsonKey(readValue: _readStatus) String? get status;@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? get createdAt;@JsonKey(fromJson: _toNullableString) String? get details;
 /// Create a copy of LibraryItemActivity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -326,7 +326,7 @@ abstract mixin class $LibraryItemActivityCopyWith<$Res>  {
   factory $LibraryItemActivityCopyWith(LibraryItemActivity value, $Res Function(LibraryItemActivity) _then) = _$LibraryItemActivityCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number') String? serialNumber, String? action, String? status,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(fromJson: _toNullableString) String? details
+@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? serialNumber,@JsonKey(readValue: _readAction) String? action,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? createdAt,@JsonKey(fromJson: _toNullableString) String? details
 });
 
 
@@ -438,7 +438,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number')  String? serialNumber,  String? action,  String? status, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LibraryItemActivity() when $default != null:
 return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_that.action,_that.status,_that.createdAt,_that.details);case _:
@@ -459,7 +459,7 @@ return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number')  String? serialNumber,  String? action,  String? status, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemActivity():
 return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_that.action,_that.status,_that.createdAt,_that.details);case _:
@@ -479,7 +479,7 @@ return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number')  String? serialNumber,  String? action,  String? status, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(fromJson: _toNullableString)  String? id, @JsonKey(name: 'device_id', readValue: _readDeviceId)  String? deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName)  String? deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber)  String? serialNumber, @JsonKey(readValue: _readAction)  String? action, @JsonKey(readValue: _readStatus)  String? status, @JsonKey(name: 'created_at', readValue: _readCreatedAt)  String? createdAt, @JsonKey(fromJson: _toNullableString)  String? details)?  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemActivity() when $default != null:
 return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_that.action,_that.status,_that.createdAt,_that.details);case _:
@@ -494,16 +494,16 @@ return $default(_that.id,_that.deviceId,_that.deviceName,_that.serialNumber,_tha
 @JsonSerializable()
 
 class _LibraryItemActivity implements LibraryItemActivity {
-  const _LibraryItemActivity({@JsonKey(fromJson: _toNullableString) this.id, @JsonKey(name: 'device_id', readValue: _readDeviceId) this.deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName) this.deviceName, @JsonKey(name: 'serial_number') this.serialNumber, this.action, this.status, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(fromJson: _toNullableString) this.details});
+  const _LibraryItemActivity({@JsonKey(fromJson: _toNullableString) this.id, @JsonKey(name: 'device_id', readValue: _readDeviceId) this.deviceId, @JsonKey(name: 'device_name', readValue: _readDeviceName) this.deviceName, @JsonKey(name: 'serial_number', readValue: _readSerialNumber) this.serialNumber, @JsonKey(readValue: _readAction) this.action, @JsonKey(readValue: _readStatus) this.status, @JsonKey(name: 'created_at', readValue: _readCreatedAt) this.createdAt, @JsonKey(fromJson: _toNullableString) this.details});
   factory _LibraryItemActivity.fromJson(Map<String, dynamic> json) => _$LibraryItemActivityFromJson(json);
 
 @override@JsonKey(fromJson: _toNullableString) final  String? id;
 @override@JsonKey(name: 'device_id', readValue: _readDeviceId) final  String? deviceId;
 @override@JsonKey(name: 'device_name', readValue: _readDeviceName) final  String? deviceName;
-@override@JsonKey(name: 'serial_number') final  String? serialNumber;
-@override final  String? action;
-@override final  String? status;
-@override@JsonKey(name: 'created_at') final  String? createdAt;
+@override@JsonKey(name: 'serial_number', readValue: _readSerialNumber) final  String? serialNumber;
+@override@JsonKey(readValue: _readAction) final  String? action;
+@override@JsonKey(readValue: _readStatus) final  String? status;
+@override@JsonKey(name: 'created_at', readValue: _readCreatedAt) final  String? createdAt;
 @override@JsonKey(fromJson: _toNullableString) final  String? details;
 
 /// Create a copy of LibraryItemActivity
@@ -539,7 +539,7 @@ abstract mixin class _$LibraryItemActivityCopyWith<$Res> implements $LibraryItem
   factory _$LibraryItemActivityCopyWith(_LibraryItemActivity value, $Res Function(_LibraryItemActivity) _then) = __$LibraryItemActivityCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number') String? serialNumber, String? action, String? status,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(fromJson: _toNullableString) String? details
+@JsonKey(fromJson: _toNullableString) String? id,@JsonKey(name: 'device_id', readValue: _readDeviceId) String? deviceId,@JsonKey(name: 'device_name', readValue: _readDeviceName) String? deviceName,@JsonKey(name: 'serial_number', readValue: _readSerialNumber) String? serialNumber,@JsonKey(readValue: _readAction) String? action,@JsonKey(readValue: _readStatus) String? status,@JsonKey(name: 'created_at', readValue: _readCreatedAt) String? createdAt,@JsonKey(fromJson: _toNullableString) String? details
 });
 
 
