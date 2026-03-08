@@ -4,12 +4,23 @@ import '../../../core/extensions/datetime_extensions.dart';
 import '../../../domain/entities/device.dart';
 import 'platform_icon.dart';
 
-/// M3 list tile for a device — uses Card container for clear visual separation.
 class DeviceListTile extends StatelessWidget {
-  const DeviceListTile({super.key, required this.device, required this.onTap});
+  const DeviceListTile({
+    super.key,
+    required this.device,
+    required this.onTap,
+    this.onLongPress,
+    this.isSelectionMode = false,
+    this.isSelected = false,
+    this.onSelectionToggle,
+  });
 
   final Device device;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
+  final bool isSelectionMode;
+  final bool isSelected;
+  final VoidCallback? onSelectionToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +31,22 @@ class DeviceListTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       child: Card(
+        color: isSelected ? colorScheme.secondaryContainer : null,
         child: InkWell(
-          onTap: onTap,
+          onTap: isSelectionMode ? onSelectionToggle : onTap,
+          onLongPress: onLongPress,
           borderRadius: BorderRadius.circular(16),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
+                if (isSelectionMode) ...[
+                  Checkbox(
+                    value: isSelected,
+                    onChanged: (_) => onSelectionToggle?.call(),
+                  ),
+                  const SizedBox(width: 4),
+                ],
                 Container(
                   width: 48,
                   height: 48,

@@ -387,5 +387,19 @@
   "timeoutSeconds30": "Nach 30 Sekunden",
   "timeoutSeconds60": "Nach 1 Minute",
   "timeoutSeconds120": "Nach 2 Minuten",
-  "timeoutMinutes5": "Nach 5 Minuten"
+  "timeoutMinutes5": "Nach 5 Minuten",
+  "filterBlueprint": "Blueprint",
+  "allBlueprints": "Alle Blueprints",
+  "noBlueprint": "Kein Blueprint",
+  "presetSaveFilter": "Filtervoreinstellung speichern",
+  "presetLoad": "Voreinstellung laden",
+  "presetName": "Name der Voreinstellung",
+  "presetNameHint": "z.B. Nicht überwachte Macs",
+  "presetSaved": "Filtervoreinstellung gespeichert.",
+  "presetDeleted": "Filtervoreinstellung gelöscht.",
+  "presetApplied": "Voreinstellung \"{name}\" angewendet.",
+  "presetNoPresets": "Keine gespeicherten Voreinstellungen",
+  "presetNoPresetsMessage": "Speichern Sie Ihre aktuellen Filter als Voreinstellung für schnellen Zugriff.",
+  "presetDeleteConfirm": "Diese Voreinstellung löschen?",
+  "presetNameRequired": "Bitte geben Sie einen Namen für die Voreinstellung ein."
 }

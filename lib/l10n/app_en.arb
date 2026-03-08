@@ -1304,5 +1304,57 @@
   "timeoutMinutes5": "After 5 minutes",
   "@timeoutMinutes5": {
     "description": "Lock timeout option: 5 minutes"
+  },
+  "filterBlueprint": "Blueprint",
+  "allBlueprints": "All Blueprints",
+  "noBlueprint": "No Blueprint",
+  "presetSaveFilter": "Save Filter Preset",
+  "@presetSaveFilter": {
+    "description": "Action label to save current filter as a preset"
+  },
+  "presetLoad": "Load Preset",
+  "@presetLoad": {
+    "description": "Action label to load a saved filter preset"
+  },
+  "presetName": "Preset Name",
+  "@presetName": {
+    "description": "Label for the preset name input field"
+  },
+  "presetNameHint": "e.g. Unsupervised Macs",
+  "@presetNameHint": {
+    "description": "Hint text for preset name input"
+  },
+  "presetSaved": "Filter preset saved.",
+  "@presetSaved": {
+    "description": "Snackbar message after preset is saved"
+  },
+  "presetDeleted": "Filter preset deleted.",
+  "@presetDeleted": {
+    "description": "Snackbar message after preset is deleted"
+  },
+  "presetApplied": "Preset \"{name}\" applied.",
+  "@presetApplied": {
+    "description": "Snackbar message after preset is applied",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "presetNoPresets": "No saved presets",
+  "@presetNoPresets": {
+    "description": "Empty state when no presets exist"
+  },
+  "presetNoPresetsMessage": "Save your current filters as a preset for quick access.",
+  "@presetNoPresetsMessage": {
+    "description": "Empty state message when no presets exist"
+  },
+  "presetDeleteConfirm": "Delete this preset?",
+  "@presetDeleteConfirm": {
+    "description": "Confirmation message for preset deletion"
+  },
+  "presetNameRequired": "Please enter a preset name.",
+  "@presetNameRequired": {
+    "description": "Validation error when preset name is empty"
   }
 }

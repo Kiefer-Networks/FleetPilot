@@ -1270,4 +1270,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get timeoutMinutes5 => 'After 5 minutes';
+
+  @override
+  String get filterBlueprint => 'Blueprint';
+
+  @override
+  String get noBlueprint => 'No Blueprint';
+
+  @override
+  String get presetSaveFilter => 'Save Filter Preset';
+
+  @override
+  String get presetLoad => 'Load Preset';
+
+  @override
+  String get presetName => 'Preset Name';
+
+  @override
+  String get presetNameHint => 'e.g. Unsupervised Macs';
+
+  @override
+  String get presetSaved => 'Filter preset saved.';
+
+  @override
+  String get presetDeleted => 'Filter preset deleted.';
+
+  @override
+  String presetApplied(String name) {
+    return 'Preset \"$name\" applied.';
+  }
+
+  @override
+  String get presetNoPresets => 'No saved presets';
+
+  @override
+  String get presetNoPresetsMessage =>
+      'Save your current filters as a preset for quick access.';
+
+  @override
+  String get presetDeleteConfirm => 'Delete this preset?';
+
+  @override
+  String get presetNameRequired => 'Please enter a preset name.';
 }

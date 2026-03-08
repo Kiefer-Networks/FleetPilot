@@ -2415,6 +2415,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'After 5 minutes'**
   String get timeoutMinutes5;
+
+  /// No description provided for @filterBlueprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint'**
+  String get filterBlueprint;
+
+  /// No description provided for @noBlueprint.
+  ///
+  /// In en, this message translates to:
+  /// **'No Blueprint'**
+  String get noBlueprint;
+
+  /// Action label to save current filter as a preset
+  ///
+  /// In en, this message translates to:
+  /// **'Save Filter Preset'**
+  String get presetSaveFilter;
+
+  /// Action label to load a saved filter preset
+  ///
+  /// In en, this message translates to:
+  /// **'Load Preset'**
+  String get presetLoad;
+
+  /// Label for the preset name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Preset Name'**
+  String get presetName;
+
+  /// Hint text for preset name input
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Unsupervised Macs'**
+  String get presetNameHint;
+
+  /// Snackbar message after preset is saved
+  ///
+  /// In en, this message translates to:
+  /// **'Filter preset saved.'**
+  String get presetSaved;
+
+  /// Snackbar message after preset is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Filter preset deleted.'**
+  String get presetDeleted;
+
+  /// Snackbar message after preset is applied
+  ///
+  /// In en, this message translates to:
+  /// **'Preset \"{name}\" applied.'**
+  String presetApplied(String name);
+
+  /// Empty state when no presets exist
+  ///
+  /// In en, this message translates to:
+  /// **'No saved presets'**
+  String get presetNoPresets;
+
+  /// Empty state message when no presets exist
+  ///
+  /// In en, this message translates to:
+  /// **'Save your current filters as a preset for quick access.'**
+  String get presetNoPresetsMessage;
+
+  /// Confirmation message for preset deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this preset?'**
+  String get presetDeleteConfirm;
+
+  /// Validation error when preset name is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a preset name.'**
+  String get presetNameRequired;
 }
 
 class _AppLocalizationsDelegate

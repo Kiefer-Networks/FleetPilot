@@ -142,7 +142,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get filterAppleTv => 'Apple TV';
 
   @override
-  String get allBlueprints => 'Todos los blueprints';
+  String get allBlueprints => 'Todos los Blueprints';
 
   @override
   String loadingDevices(int count) {
@@ -1284,4 +1284,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get timeoutMinutes5 => 'Después de 5 minutos';
+
+  @override
+  String get filterBlueprint => 'Blueprint';
+
+  @override
+  String get noBlueprint => 'Sin Blueprint';
+
+  @override
+  String get presetSaveFilter => 'Guardar filtro predefinido';
+
+  @override
+  String get presetLoad => 'Cargar predefinido';
+
+  @override
+  String get presetName => 'Nombre del predefinido';
+
+  @override
+  String get presetNameHint => 'p. ej. Macs no supervisados';
+
+  @override
+  String get presetSaved => 'Filtro predefinido guardado.';
+
+  @override
+  String get presetDeleted => 'Filtro predefinido eliminado.';
+
+  @override
+  String presetApplied(String name) {
+    return 'Predefinido \"$name\" aplicado.';
+  }
+
+  @override
+  String get presetNoPresets => 'Sin predefinidos guardados';
+
+  @override
+  String get presetNoPresetsMessage =>
+      'Guarda tus filtros actuales como predefinido para acceso rápido.';
+
+  @override
+  String get presetDeleteConfirm => '¿Eliminar este predefinido?';
+
+  @override
+  String get presetNameRequired => 'Ingresa un nombre para el predefinido.';
 }

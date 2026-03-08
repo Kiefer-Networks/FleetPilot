@@ -238,3 +238,84 @@ final tagsProvider = FutureProvider<List<Tag>>((ref) async {
   final repo = await ref.watch(deviceRepositoryProvider.future);
   return repo.getTags();
 });
+
+/// Whether multi-select mode is active on the device list.
+final deviceSelectionModeProvider = StateProvider<bool>((ref) => false);
+
+/// Set of selected device IDs for bulk operations.
+final selectedDeviceIdsProvider =
+    StateNotifierProvider<SelectedDeviceIdsNotifier, Set<String>>(
+      (ref) => SelectedDeviceIdsNotifier(),
+    );
+
+class SelectedDeviceIdsNotifier extends StateNotifier<Set<String>> {
+  SelectedDeviceIdsNotifier() : super(const {});
+
+  void toggle(String deviceId) {
+    if (state.contains(deviceId)) {
+      state = {...state}..remove(deviceId);
+    } else {
+      state = {...state, deviceId};
+    }
+  }
+
+  void selectAll(List<String> deviceIds) {
+    state = {...deviceIds};
+  }
+
+  void deselectAll() {
+    state = const {};
+  }
+}
+
+/// Progress state for bulk operations.
+final bulkOperationProgressProvider =
+    StateNotifierProvider<BulkOperationProgressNotifier, BulkOperationProgress>(
+      (ref) => BulkOperationProgressNotifier(),
+    );
+
+class BulkOperationProgress {
+  const BulkOperationProgress({
+    this.isRunning = false,
+    this.total = 0,
+    this.completed = 0,
+    this.failed = 0,
+  });
+
+  final bool isRunning;
+  final int total;
+  final int completed;
+  final int failed;
+
+  double get progress => total > 0 ? completed / total : 0;
+}
+
+class BulkOperationProgressNotifier
+    extends StateNotifier<BulkOperationProgress> {
+  BulkOperationProgressNotifier() : super(const BulkOperationProgress());
+
+  void start(int total) {
+    state = BulkOperationProgress(isRunning: true, total: total);
+  }
+
+  void advance({bool success = true}) {
+    state = BulkOperationProgress(
+      isRunning: true,
+      total: state.total,
+      completed: state.completed + 1,
+      failed: state.failed + (success ? 0 : 1),
+    );
+  }
+
+  void finish() {
+    state = BulkOperationProgress(
+      total: state.total,
+      completed: state.completed,
+      failed: state.failed,
+    );
+  }
+
+  void reset() {
+    state = const BulkOperationProgress();
+  }
+}

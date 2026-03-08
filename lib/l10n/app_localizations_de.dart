@@ -1282,4 +1282,47 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get timeoutMinutes5 => 'Nach 5 Minuten';
+
+  @override
+  String get filterBlueprint => 'Blueprint';
+
+  @override
+  String get noBlueprint => 'Kein Blueprint';
+
+  @override
+  String get presetSaveFilter => 'Filtervoreinstellung speichern';
+
+  @override
+  String get presetLoad => 'Voreinstellung laden';
+
+  @override
+  String get presetName => 'Name der Voreinstellung';
+
+  @override
+  String get presetNameHint => 'z.B. Nicht überwachte Macs';
+
+  @override
+  String get presetSaved => 'Filtervoreinstellung gespeichert.';
+
+  @override
+  String get presetDeleted => 'Filtervoreinstellung gelöscht.';
+
+  @override
+  String presetApplied(String name) {
+    return 'Voreinstellung \"$name\" angewendet.';
+  }
+
+  @override
+  String get presetNoPresets => 'Keine gespeicherten Voreinstellungen';
+
+  @override
+  String get presetNoPresetsMessage =>
+      'Speichern Sie Ihre aktuellen Filter als Voreinstellung für schnellen Zugriff.';
+
+  @override
+  String get presetDeleteConfirm => 'Diese Voreinstellung löschen?';
+
+  @override
+  String get presetNameRequired =>
+      'Bitte geben Sie einen Namen für die Voreinstellung ein.';
 }
