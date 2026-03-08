@@ -1042,6 +1042,12 @@ abstract class AppLocalizations {
   /// **'Location data is not available for this device.'**
   String get locationNotAvailable;
 
+  /// Hint text shown on location tab when lost mode is not enabled
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Lost Mode to track this device.'**
+  String get enableLostModeHint;
+
   /// Label for lost mode enabled status
   ///
   /// In en, this message translates to:

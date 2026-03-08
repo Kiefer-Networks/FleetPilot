@@ -109,7 +109,7 @@ class DeviceApi {
     try {
       await dio.post<dynamic>(
         '/devices/$deviceId/action/${action.apiPath}',
-        data: body,
+        data: body ?? <String, dynamic>{},
       );
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);

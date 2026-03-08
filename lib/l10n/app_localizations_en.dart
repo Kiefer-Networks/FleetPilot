@@ -541,6 +541,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Location data is not available for this device.';
 
   @override
+  String get enableLostModeHint => 'Enable Lost Mode to track this device.';
+
+  @override
   String get lostModeEnabled => 'Lost Mode Enabled';
 
   @override

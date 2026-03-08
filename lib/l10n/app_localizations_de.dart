@@ -547,6 +547,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Standortdaten sind für dieses Gerät nicht verfügbar.';
 
   @override
+  String get enableLostModeHint =>
+      'Aktiviere den Verloren-Modus, um dieses Gerät zu orten.';
+
+  @override
   String get lostModeEnabled => 'Verloren-Modus aktiviert';
 
   @override

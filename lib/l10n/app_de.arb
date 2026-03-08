@@ -157,6 +157,7 @@
   "severity": "Schweregrad",
   "tabLocation": "Standort",
   "locationNotAvailable": "Standortdaten sind für dieses Gerät nicht verfügbar.",
+  "enableLostModeHint": "Aktiviere den Verloren-Modus, um dieses Gerät zu orten.",
   "lostModeEnabled": "Verloren-Modus aktiviert",
   "noLibraryItemsFound": "Keine Bibliothekselemente gefunden.",
   "licenses": "Lizenzen",

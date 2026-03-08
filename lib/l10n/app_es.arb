@@ -156,6 +156,7 @@
   "severity": "Gravedad",
   "tabLocation": "Ubicación",
   "locationNotAvailable": "Los datos de ubicación no están disponibles para este dispositivo.",
+  "enableLostModeHint": "Activa el modo perdido para rastrear este dispositivo.",
   "lostModeEnabled": "Modo perdido activado",
   "noLibraryItemsFound": "No se encontraron elementos de biblioteca.",
   "licenses": "Licencias",

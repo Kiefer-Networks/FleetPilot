@@ -678,6 +678,10 @@
   "@locationNotAvailable": {
     "description": "Message when no location data is available"
   },
+  "enableLostModeHint": "Enable Lost Mode to track this device.",
+  "@enableLostModeHint": {
+    "description": "Hint text shown on location tab when lost mode is not enabled"
+  },
   "lostModeEnabled": "Lost Mode Enabled",
   "@lostModeEnabled": {
     "description": "Label for lost mode enabled status"

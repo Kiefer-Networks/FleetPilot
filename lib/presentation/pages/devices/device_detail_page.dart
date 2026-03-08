@@ -374,11 +374,21 @@ class _DeviceDetailScaffold extends ConsumerWidget {
           context,
         ).showSnackBar(SnackBar(content: Text(l10n.actionSuccess)));
       }
-    } catch (_) {
+      // Lost mode actions need a delayed re-fetch since status updates async
+      if (action == DeviceAction.enableLostMode ||
+          action == DeviceAction.disableLostMode ||
+          action == DeviceAction.updateLocation) {
+        Future.delayed(const Duration(seconds: 5), () {
+          ref.invalidate(deviceDetailsProvider(device.deviceId));
+          ref.invalidate(deviceDetailProvider(device.deviceId));
+          ref.invalidate(devicesProvider);
+        });
+      }
+    } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
+        ).showSnackBar(SnackBar(content: Text('${l10n.actionFailed}: $e')));
       }
     }
   }
@@ -733,16 +743,22 @@ class _DeviceDetailScaffold extends ConsumerWidget {
       await repo.cancelLostMode(device.deviceId);
       ref.invalidate(deviceDetailsProvider(device.deviceId));
       ref.invalidate(deviceDetailProvider(device.deviceId));
+      ref.invalidate(devicesProvider);
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(l10n.lostModeCancelled)));
       }
-    } catch (_) {
+      Future.delayed(const Duration(seconds: 5), () {
+        ref.invalidate(deviceDetailsProvider(device.deviceId));
+        ref.invalidate(deviceDetailProvider(device.deviceId));
+        ref.invalidate(devicesProvider);
+      });
+    } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
+        ).showSnackBar(SnackBar(content: Text('${l10n.actionFailed}: $e')));
       }
     }
   }
@@ -2949,6 +2965,29 @@ class _LocationTab extends ConsumerWidget {
 
   final String deviceId;
 
+  Future<void> _updateLocation(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    try {
+      final useCase = await ref.read(executeDeviceActionUseCaseProvider.future);
+      await useCase.call(deviceId, DeviceAction.updateLocation);
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionSuccess)));
+      }
+      // Delayed re-fetch for location update
+      Future.delayed(const Duration(seconds: 5), () {
+        ref.invalidate(deviceDetailsProvider(deviceId));
+      });
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('${l10n.actionFailed}: $e')));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -2962,6 +3001,7 @@ class _LocationTab extends ConsumerWidget {
         final lat = lostMode?.latitude;
         final lng = lostMode?.longitude;
         final hasLocation = lat != null && lng != null;
+        final lostModeEnabled = lostMode?.isEnabled ?? false;
 
         if (!hasLocation) {
           return Center(
@@ -2983,7 +3023,7 @@ class _LocationTab extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Enable Lost Mode to track this device.',
+                    l10n.enableLostModeHint,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -2996,101 +3036,119 @@ class _LocationTab extends ConsumerWidget {
         }
 
         final position = LatLng(lat, lng);
-        final lostModeEnabled = lostMode?.isEnabled ?? false;
 
-        return Column(
+        return Stack(
           children: [
-            Expanded(
-              child: FlutterMap(
-                options: MapOptions(initialCenter: position, initialZoom: 15),
-                children: [
-                  TileLayer(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'de.kiefer_networks.fleetpilot',
-                  ),
-                  MarkerLayer(
-                    markers: [
-                      Marker(
-                        point: position,
-                        width: 40,
-                        height: 40,
-                        child: Icon(
-                          Icons.location_on,
-                          color: colorScheme.error,
-                          size: 40,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Info bar below the map
-            Card(
-              margin: const EdgeInsets.all(12),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          size: 18,
-                          color: colorScheme.primary,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            '${lat.toStringAsFixed(5)}, ${lng.toStringAsFixed(5)}',
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                        ),
-                      ],
+            Column(
+              children: [
+                Expanded(
+                  child: FlutterMap(
+                    options: MapOptions(
+                      initialCenter: position,
+                      initialZoom: 15,
                     ),
-                    if (lostMode?.lastLocationAt != null) ...[
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.access_time,
-                            size: 18,
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            lostMode!.lastLocationAt!,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        userAgentPackageName: 'de.kiefer_networks.fleetpilot',
+                      ),
+                      MarkerLayer(
+                        markers: [
+                          Marker(
+                            point: position,
+                            width: 40,
+                            height: 40,
+                            child: Icon(
+                              Icons.location_on,
+                              color: colorScheme.error,
+                              size: 40,
                             ),
                           ),
                         ],
                       ),
                     ],
-                    if (lostModeEnabled) ...[
-                      const SizedBox(height: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
+                  ),
+                ),
+                // Info bar below the map
+                Card(
+                  margin: const EdgeInsets.all(12),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              size: 18,
+                              color: colorScheme.primary,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                '${lat.toStringAsFixed(5)}, ${lng.toStringAsFixed(5)}',
+                                style: theme.textTheme.bodyMedium,
+                              ),
+                            ),
+                          ],
                         ),
-                        decoration: BoxDecoration(
-                          color: colorScheme.errorContainer,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          l10n.lostModeEnabled,
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            color: colorScheme.onErrorContainer,
+                        if (lostMode?.lastLocationAt != null) ...[
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.access_time,
+                                size: 18,
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                lostMode!.lastLocationAt!,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                    ],
-                  ],
+                        ],
+                        if (lostModeEnabled) ...[
+                          const SizedBox(height: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorScheme.errorContainer,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              l10n.lostModeEnabled,
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: colorScheme.onErrorContainer,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // FAB to update location — only active when Lost Mode is enabled
+            if (lostModeEnabled)
+              Positioned(
+                right: 16,
+                bottom: 100,
+                child: FloatingActionButton(
+                  heroTag: 'updateLocation',
+                  onPressed: () => _updateLocation(context, ref),
+                  tooltip: l10n.actionUpdateLocation,
+                  child: const Icon(Icons.my_location),
                 ),
               ),
-            ),
           ],
         );
       },
