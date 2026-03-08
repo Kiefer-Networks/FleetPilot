@@ -1908,7 +1908,7 @@ as String?,
 /// @nodoc
 mixin _$DeviceMdm {
 
-@JsonKey(name: 'mdm_enabled') bool? get mdmEnabled;@JsonKey(name: 'enrolled_via_dep') bool? get enrolledViaDep;@JsonKey(name: 'user_approved_enrollment') bool? get userApprovedEnrollment;@JsonKey(name: 'user_approved_mdm') bool? get userApprovedMdm;
+@JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool) bool? get mdmEnabled;@JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool) bool? get enrolledViaDep;@JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool) bool? get userApprovedEnrollment;@JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool) bool? get userApprovedMdm;
 /// Create a copy of DeviceMdm
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1941,7 +1941,7 @@ abstract mixin class $DeviceMdmCopyWith<$Res>  {
   factory $DeviceMdmCopyWith(DeviceMdm value, $Res Function(DeviceMdm) _then) = _$DeviceMdmCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'mdm_enabled') bool? mdmEnabled,@JsonKey(name: 'enrolled_via_dep') bool? enrolledViaDep,@JsonKey(name: 'user_approved_enrollment') bool? userApprovedEnrollment,@JsonKey(name: 'user_approved_mdm') bool? userApprovedMdm
+@JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool) bool? mdmEnabled,@JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool) bool? enrolledViaDep,@JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool) bool? userApprovedEnrollment,@JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool) bool? userApprovedMdm
 });
 
 
@@ -2049,7 +2049,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'mdm_enabled')  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep')  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment')  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm')  bool? userApprovedMdm)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool)  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool)  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool)  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool)  bool? userApprovedMdm)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DeviceMdm() when $default != null:
 return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollment,_that.userApprovedMdm);case _:
@@ -2070,7 +2070,7 @@ return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollme
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'mdm_enabled')  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep')  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment')  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm')  bool? userApprovedMdm)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool)  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool)  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool)  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool)  bool? userApprovedMdm)  $default,) {final _that = this;
 switch (_that) {
 case _DeviceMdm():
 return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollment,_that.userApprovedMdm);case _:
@@ -2090,7 +2090,7 @@ return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollme
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'mdm_enabled')  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep')  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment')  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm')  bool? userApprovedMdm)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool)  bool? mdmEnabled, @JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool)  bool? enrolledViaDep, @JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool)  bool? userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool)  bool? userApprovedMdm)?  $default,) {final _that = this;
 switch (_that) {
 case _DeviceMdm() when $default != null:
 return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollment,_that.userApprovedMdm);case _:
@@ -2105,13 +2105,13 @@ return $default(_that.mdmEnabled,_that.enrolledViaDep,_that.userApprovedEnrollme
 @JsonSerializable()
 
 class _DeviceMdm implements DeviceMdm {
-  const _DeviceMdm({@JsonKey(name: 'mdm_enabled') this.mdmEnabled, @JsonKey(name: 'enrolled_via_dep') this.enrolledViaDep, @JsonKey(name: 'user_approved_enrollment') this.userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm') this.userApprovedMdm});
+  const _DeviceMdm({@JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool) this.mdmEnabled, @JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool) this.enrolledViaDep, @JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool) this.userApprovedEnrollment, @JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool) this.userApprovedMdm});
   factory _DeviceMdm.fromJson(Map<String, dynamic> json) => _$DeviceMdmFromJson(json);
 
-@override@JsonKey(name: 'mdm_enabled') final  bool? mdmEnabled;
-@override@JsonKey(name: 'enrolled_via_dep') final  bool? enrolledViaDep;
-@override@JsonKey(name: 'user_approved_enrollment') final  bool? userApprovedEnrollment;
-@override@JsonKey(name: 'user_approved_mdm') final  bool? userApprovedMdm;
+@override@JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool) final  bool? mdmEnabled;
+@override@JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool) final  bool? enrolledViaDep;
+@override@JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool) final  bool? userApprovedEnrollment;
+@override@JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool) final  bool? userApprovedMdm;
 
 /// Create a copy of DeviceMdm
 /// with the given fields replaced by the non-null parameter values.
@@ -2146,7 +2146,7 @@ abstract mixin class _$DeviceMdmCopyWith<$Res> implements $DeviceMdmCopyWith<$Re
   factory _$DeviceMdmCopyWith(_DeviceMdm value, $Res Function(_DeviceMdm) _then) = __$DeviceMdmCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'mdm_enabled') bool? mdmEnabled,@JsonKey(name: 'enrolled_via_dep') bool? enrolledViaDep,@JsonKey(name: 'user_approved_enrollment') bool? userApprovedEnrollment,@JsonKey(name: 'user_approved_mdm') bool? userApprovedMdm
+@JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool) bool? mdmEnabled,@JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool) bool? enrolledViaDep,@JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool) bool? userApprovedEnrollment,@JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool) bool? userApprovedMdm
 });
 
 

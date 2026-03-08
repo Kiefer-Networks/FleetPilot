@@ -136,10 +136,10 @@ Map<String, dynamic> _$DeviceLostModeToJson(_DeviceLostMode instance) =>
     };
 
 _DeviceMdm _$DeviceMdmFromJson(Map<String, dynamic> json) => _DeviceMdm(
-  mdmEnabled: json['mdm_enabled'] as bool?,
-  enrolledViaDep: json['enrolled_via_dep'] as bool?,
-  userApprovedEnrollment: json['user_approved_enrollment'] as bool?,
-  userApprovedMdm: json['user_approved_mdm'] as bool?,
+  mdmEnabled: _toNullableBool(json['mdm_enabled']),
+  enrolledViaDep: _toNullableBool(json['enrolled_via_dep']),
+  userApprovedEnrollment: _toNullableBool(json['user_approved_enrollment']),
+  userApprovedMdm: _toNullableBool(json['user_approved_mdm']),
 );
 
 Map<String, dynamic> _$DeviceMdmToJson(_DeviceMdm instance) =>

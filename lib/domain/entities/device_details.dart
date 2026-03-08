@@ -197,10 +197,13 @@ abstract class DeviceLostMode with _$DeviceLostMode {
 @freezed
 abstract class DeviceMdm with _$DeviceMdm {
   const factory DeviceMdm({
-    @JsonKey(name: 'mdm_enabled') bool? mdmEnabled,
-    @JsonKey(name: 'enrolled_via_dep') bool? enrolledViaDep,
-    @JsonKey(name: 'user_approved_enrollment') bool? userApprovedEnrollment,
-    @JsonKey(name: 'user_approved_mdm') bool? userApprovedMdm,
+    @JsonKey(name: 'mdm_enabled', fromJson: _toNullableBool) bool? mdmEnabled,
+    @JsonKey(name: 'enrolled_via_dep', fromJson: _toNullableBool)
+    bool? enrolledViaDep,
+    @JsonKey(name: 'user_approved_enrollment', fromJson: _toNullableBool)
+    bool? userApprovedEnrollment,
+    @JsonKey(name: 'user_approved_mdm', fromJson: _toNullableBool)
+    bool? userApprovedMdm,
   }) = _DeviceMdm;
 
   factory DeviceMdm.fromJson(Map<String, dynamic> json) =>
@@ -217,6 +220,18 @@ abstract class DeviceNetwork with _$DeviceNetwork {
 
   factory DeviceNetwork.fromJson(Map<String, dynamic> json) =>
       _$DeviceNetworkFromJson(json);
+}
+
+/// Converts dynamic values (bool, String "Yes"/"No"/"true"/"false") to nullable bool.
+bool? _toNullableBool(dynamic value) {
+  if (value is bool) return value;
+  if (value is String) {
+    final lower = value.toLowerCase();
+    if (lower == 'yes' || lower == 'true') return true;
+    if (lower == 'no' || lower == 'false') return false;
+  }
+  if (value is num) return value != 0;
+  return null;
 }
 
 /// Converts dynamic values (num, String, bool) to nullable int.
