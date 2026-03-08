@@ -176,19 +176,23 @@ class _InfoTab extends ConsumerWidget {
     _addDateTimeIfPresent(rows, l10n.created, itemDetails!['created_at']);
     _addDateTimeIfPresent(rows, l10n.updated, itemDetails!['updated_at']);
 
-    // Script body for custom-script (from full detail endpoint)
+    // Script content — API field is "script" (not "body")
     final scriptBody = category == 'custom-script'
-        ? (fullDetail?['body'] as String?) ?? (itemDetails!['body'] as String?)
+        ? (itemDetails!['script'] as String?) ??
+            (fullDetail?['script'] as String?)
         : null;
 
-    // Profile XML for custom-profile (from full detail endpoint)
+    // Remediation script (optional second script)
+    final remediationScript = category == 'custom-script'
+        ? (itemDetails!['remediation_script'] as String?) ??
+            (fullDetail?['remediation_script'] as String?)
+        : null;
+
+    // Profile XML — API field is "profile"
     final profileBody = category == 'custom-profile'
-        ? (fullDetail?['profile'] as String?) ??
-            (itemDetails!['profile'] as String?)
+        ? (itemDetails!['profile'] as String?) ??
+            (fullDetail?['profile'] as String?)
         : null;
-
-    // Show loading indicator while fetching full detail
-    final isLoadingDetail = fullDetailAsync != null && fullDetailAsync.isLoading;
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -207,15 +211,22 @@ class _InfoTab extends ConsumerWidget {
         // Show all raw fields as a reference
         _RawFieldsCard(data: itemDetails!, category: category, l10n: l10n),
 
-        // Script viewer for custom scripts (last card)
-        if (isLoadingDetail &&
-            (category == 'custom-script' || category == 'custom-profile')) ...[
-          const SizedBox(height: 16),
-          const Center(child: CircularProgressIndicator()),
-        ],
+        // Script viewer for custom scripts (last cards)
         if (scriptBody != null && scriptBody.isNotEmpty) ...[
           const SizedBox(height: 16),
-          _ScriptViewerCard(script: scriptBody, l10n: l10n),
+          _ScriptViewerCard(
+            script: scriptBody,
+            l10n: l10n,
+            title: l10n.scriptBody,
+          ),
+        ],
+        if (remediationScript != null && remediationScript.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _ScriptViewerCard(
+            script: remediationScript,
+            l10n: l10n,
+            title: l10n.remediationScript,
+          ),
         ],
 
         // Profile XML viewer for custom profiles (last card)
@@ -269,10 +280,15 @@ String _translateFrequency(String freq, AppLocalizations l10n) {
 
 /// Dark code viewer for script bodies.
 class _ScriptViewerCard extends StatelessWidget {
-  const _ScriptViewerCard({required this.script, required this.l10n});
+  const _ScriptViewerCard({
+    required this.script,
+    required this.l10n,
+    this.title,
+  });
 
   final String script;
   final AppLocalizations l10n;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +305,7 @@ class _ScriptViewerCard extends StatelessWidget {
               Icon(Icons.code, size: 16, color: theme.colorScheme.primary),
               const SizedBox(width: 8),
               Text(
-                l10n.scriptBody,
+                title ?? l10n.scriptBody,
                 style: theme.textTheme.titleSmall?.copyWith(
                   color: theme.colorScheme.primary,
                 ),
@@ -724,7 +740,10 @@ class _RawFieldsCard extends StatelessWidget {
       if (e.value is String && (e.value as String).isEmpty) return false;
       if (e.key == 'id' || e.key == 'name' || e.key == 'active') return false;
       if (e.key == 'created_at' || e.key == 'updated_at') return false;
-      if (e.key == 'body' && category == 'custom-script') return false;
+      if (e.key == 'script' && category == 'custom-script') return false;
+      if (e.key == 'remediation_script' && category == 'custom-script') {
+        return false;
+      }
       if (e.key == 'profile' && category == 'custom-profile') return false;
       return true;
     }).toList();

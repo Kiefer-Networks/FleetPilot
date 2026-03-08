@@ -493,6 +493,7 @@
   "executionFrequencyEveryDay": "Täglich",
   "executionFrequencyNoEnforcement": "Keine Erzwingung",
   "scriptBody": "Skript",
+  "remediationScript": "Korrektur-Skript",
   "allProperties": "Alle Eigenschaften",
   "builtInLibraryItem": "Integriertes Bibliothekselement",
   "builtInDetailsHint": "Details auf dem Status-Tab verfügbar",

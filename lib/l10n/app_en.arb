@@ -1625,6 +1625,7 @@
   "executionFrequencyEveryDay": "Daily",
   "executionFrequencyNoEnforcement": "No enforcement",
   "scriptBody": "Script",
+  "remediationScript": "Remediation Script",
   "allProperties": "All Properties",
   "builtInLibraryItem": "Built-in library item",
   "builtInDetailsHint": "Details available on Status tab",

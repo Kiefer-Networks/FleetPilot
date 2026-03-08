@@ -493,6 +493,7 @@
   "executionFrequencyEveryDay": "Diario",
   "executionFrequencyNoEnforcement": "Sin aplicación",
   "scriptBody": "Script",
+  "remediationScript": "Script de corrección",
   "allProperties": "Todas las propiedades",
   "builtInLibraryItem": "Elemento de biblioteca integrado",
   "builtInDetailsHint": "Detalles disponibles en la pestaña Estado",
