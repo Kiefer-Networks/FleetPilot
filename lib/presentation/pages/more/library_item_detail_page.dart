@@ -212,101 +212,109 @@ class _InfoTab extends ConsumerWidget {
       ));
     }
 
+    // Use full details if available (has body/script/profile fields)
+    final d = fullDetail ?? itemDetails!;
+
     // Category-specific fields
     switch (category) {
       case 'custom-script':
-        _addFrequency(rows, l10n, itemDetails!['execution_frequency']);
-        _addBoolIfPresent(rows, l10n.restart, itemDetails!['restart'], l10n);
+        _addFrequency(rows, l10n, d['execution_frequency']);
+        _addBoolIfPresent(rows, l10n.restart, d['restart'], l10n);
         _addBoolIfPresent(
-            rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
+            rows, l10n.selfService, d['show_in_self_service'], l10n);
       case 'custom-app':
-        _addIfPresent(rows, l10n.installType, itemDetails!['install_type']);
-        _addIfPresent(rows, l10n.enforcement, itemDetails!['install_enforcement']);
+        _addIfPresent(rows, l10n.installType, d['install_type']);
+        _addIfPresent(rows, l10n.enforcement, d['install_enforcement']);
+        _addIfPresent(rows, 'Unzip Location', d['unzip_location']);
+        _addBoolIfPresent(rows, l10n.restart, d['restart'], l10n);
         _addBoolIfPresent(
-            rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
+            rows, l10n.selfService, d['show_in_self_service'], l10n);
+        _addIfPresent(rows, 'File Size', _formatFileSize(d['file_size']));
+        _addIfPresent(rows, 'SHA-256', d['sha256']);
+        _addDateTimeIfPresent(rows, 'File Updated', d['file_updated']);
       case 'custom-profile':
+        _addIfPresent(rows, 'MDM Identifier', d['mdm_identifier']);
         _addBoolIfPresent(
-            rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
+            rows, l10n.runsOnMac, d['runs_on_mac'], l10n);
         _addBoolIfPresent(
-            rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
+            rows, l10n.runsOnIphone, d['runs_on_iphone'], l10n);
         _addBoolIfPresent(
-            rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
+            rows, l10n.runsOnIpad, d['runs_on_ipad'], l10n);
+        _addBoolIfPresent(rows, 'Apple TV', d['runs_on_tv'], l10n);
+        _addBoolIfPresent(rows, 'Apple Vision', d['runs_on_vision'], l10n);
         _addBoolIfPresent(
-            rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
+            rows, l10n.selfService, d['show_in_self_service'], l10n);
       case 'in-house-app':
-        _addIfPresent(rows, l10n.appName, itemDetails!['app_name']);
-        _addIfPresent(rows, l10n.appVersion, itemDetails!['app_version']);
-        _addIfPresent(rows, 'Identifier', itemDetails!['app_identifier']);
-        _addIfPresent(rows, l10n.minOsVersion, itemDetails!['minimum_os_version']);
+        _addIfPresent(rows, l10n.appName, d['app_name']);
+        _addIfPresent(rows, l10n.appVersion, d['app_version']);
+        _addIfPresent(rows, 'Bundle ID', d['app_identifier']);
+        _addIfPresent(rows, 'Identifier', d['identifier']);
+        _addIfPresent(rows, l10n.minOsVersion, d['minimum_os_version']);
         _addBoolIfPresent(
-            rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
+            rows, l10n.runsOnIphone, d['runs_on_iphone'], l10n);
         _addBoolIfPresent(
-            rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
+            rows, l10n.runsOnIpad, d['runs_on_ipad'], l10n);
         _addBoolIfPresent(
-            rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
+            rows, l10n.runsOnMac, d['runs_on_mac'], l10n);
+        _addBoolIfPresent(rows, 'Apple TV', d['runs_on_tv'], l10n);
+        _addBoolIfPresent(rows, 'Apple Watch', d['runs_on_watch'], l10n);
+        _addBoolIfPresent(rows, 'iPod', d['runs_on_ipod'], l10n);
         _addBoolIfPresent(
-            rows, l10n.selfService, itemDetails!['show_in_self_service'], l10n);
-        _addIfPresent(rows, l10n.installType, itemDetails!['install_type']);
-        _addIfPresent(rows, l10n.enforcement, itemDetails!['install_enforcement']);
-      // VPP / automatic apps
+            rows, l10n.selfService, d['show_in_self_service'], l10n);
+        _addIfPresent(rows, l10n.installType, d['install_type']);
+        _addIfPresent(rows, l10n.enforcement, d['install_enforcement']);
+        _addIfPresent(rows, 'File Size', _formatFileSize(d['file_size']));
+        _addIfPresent(rows, 'SHA-256', d['sha256']);
+        _addDateTimeIfPresent(rows, 'File Updated', d['file_updated']);
+      // VPP / automatic apps — limited data from list-library-items
       case 'automatic-app':
-        _addIfPresent(rows, l10n.appName, itemDetails!['name']);
-        _addIfPresent(rows, 'Identifier', itemDetails!['identifier']);
-        _addIfPresent(rows, 'Bundle ID', itemDetails!['bundle_id']);
-        _addIfPresent(rows, l10n.appVersion, itemDetails!['version']);
-        _addIfPresent(rows, l10n.installType, itemDetails!['install_type']);
-        _addIfPresent(rows, l10n.enforcement, itemDetails!['install_enforcement']);
+        _addIfPresent(rows, 'Type', d['type']);
         _addBoolIfPresent(
-            rows, l10n.selfServiceEnabled, itemDetails!['show_in_self_service'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
-      // Managed profiles
+            rows, l10n.selfServiceEnabled, d['show_in_self_service'], l10n);
+      // Managed profiles — limited data from list-library-items
       case 'profile':
-        _addIfPresent(rows, l10n.appName, itemDetails!['name']);
+        _addIfPresent(rows, 'Type', d['type']);
         _addBoolIfPresent(
-            rows, l10n.selfServiceEnabled, itemDetails!['show_in_self_service'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnMac, itemDetails!['runs_on_mac'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnIphone, itemDetails!['runs_on_iphone'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnIpad, itemDetails!['runs_on_ipad'], l10n);
-      // Kandji setup, macOS release, threat policy — show common fields
+            rows, l10n.selfServiceEnabled, d['show_in_self_service'], l10n);
+      // Kandji-managed items — limited data from list-library-items
       case 'kandji-setup' || 'macos-release' || 'threat-security-policy':
-        _addIfPresent(rows, l10n.appName, itemDetails!['name']);
+        _addIfPresent(rows, 'Type', d['type']);
         _addBoolIfPresent(
-            rows, l10n.selfServiceEnabled, itemDetails!['show_in_self_service'], l10n);
-      // Any other type — show whatever common fields exist
+            rows, l10n.selfServiceEnabled, d['show_in_self_service'], l10n);
+      // Any other type
       default:
-        _addIfPresent(rows, l10n.appName, itemDetails!['name']);
-        _addIfPresent(rows, 'Type', itemDetails!['type']);
+        _addIfPresent(rows, 'Type', d['type']);
         _addBoolIfPresent(
-            rows, l10n.selfServiceEnabled, itemDetails!['show_in_self_service'], l10n);
+            rows, l10n.selfServiceEnabled, d['show_in_self_service'], l10n);
     }
 
-    _addDateTimeIfPresent(rows, l10n.created, itemDetails!['created_at']);
-    _addDateTimeIfPresent(rows, l10n.updated, itemDetails!['updated_at']);
+    _addDateTimeIfPresent(rows, l10n.created, d['created_at']);
+    _addDateTimeIfPresent(rows, l10n.updated, d['updated_at']);
 
     // Script content — API field is "script" (not "body")
     final scriptBody = category == 'custom-script'
-        ? (itemDetails!['script'] as String?) ??
-            (fullDetail?['script'] as String?)
+        ? (d['script'] as String?)
         : null;
 
     // Remediation script (optional second script)
     final remediationScript = category == 'custom-script'
-        ? (itemDetails!['remediation_script'] as String?) ??
-            (fullDetail?['remediation_script'] as String?)
+        ? (d['remediation_script'] as String?)
+        : null;
+
+    // Custom-app scripts: audit, preinstall, postinstall
+    final auditScript = category == 'custom-app'
+        ? (d['audit_script'] as String?)
+        : null;
+    final preinstallScript = category == 'custom-app'
+        ? (d['preinstall_script'] as String?)
+        : null;
+    final postinstallScript = category == 'custom-app'
+        ? (d['postinstall_script'] as String?)
         : null;
 
     // Profile XML — API field is "profile"
     final profileBody = category == 'custom-profile'
-        ? (itemDetails!['profile'] as String?) ??
-            (fullDetail?['profile'] as String?)
+        ? (d['profile'] as String?)
         : null;
 
     return ListView(
@@ -349,8 +357,51 @@ class _InfoTab extends ConsumerWidget {
           const SizedBox(height: 16),
           _ProfileViewerCard(profile: profileBody, l10n: l10n),
         ],
+
+        // Custom-app scripts: audit, preinstall, postinstall
+        if (auditScript != null && auditScript.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _ScriptViewerCard(
+            script: auditScript,
+            l10n: l10n,
+            title: 'Audit Script',
+          ),
+        ],
+        if (preinstallScript != null && preinstallScript.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _ScriptViewerCard(
+            script: preinstallScript,
+            l10n: l10n,
+            title: 'Pre-Install Script',
+          ),
+        ],
+        if (postinstallScript != null && postinstallScript.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _ScriptViewerCard(
+            script: postinstallScript,
+            l10n: l10n,
+            title: 'Post-Install Script',
+          ),
+        ],
       ],
     );
+  }
+
+  String? _formatFileSize(dynamic value) {
+    if (value == null) return null;
+    if (value is num) {
+      if (value >= 1073741824) {
+        return '${(value / 1073741824).toStringAsFixed(1)} GB';
+      }
+      if (value >= 1048576) {
+        return '${(value / 1048576).toStringAsFixed(1)} MB';
+      }
+      if (value >= 1024) {
+        return '${(value / 1024).toStringAsFixed(1)} KB';
+      }
+      return '$value B';
+    }
+    return value.toString();
   }
 
   void _addIfPresent(List<_InfoRow> rows, String label, dynamic value) {
