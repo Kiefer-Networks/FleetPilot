@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Disallow cleartext (HTTP) traffic for all domains -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- Certificate pinning for Kandji US API -->
+    <domain-config>
+        <domain includeSubdomains="true">api.kandji.io</domain>
+        <pin-set expiration="2027-06-01">
+            <!-- PRIMARY pin: Replace with actual leaf/intermediate SHA-256 hash -->
+            <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
+            <!-- BACKUP pin: Replace with a backup CA or intermediate SHA-256 hash -->
+            <pin digest="SHA-256">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=</pin>
+        </pin-set>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
+
+    <!-- Certificate pinning for Kandji EU API -->
+    <domain-config>
+        <domain includeSubdomains="true">api.eu.kandji.io</domain>
+        <pin-set expiration="2027-06-01">
+            <!-- PRIMARY pin: Replace with actual leaf/intermediate SHA-256 hash -->
+            <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
+            <!-- BACKUP pin: Replace with a backup CA or intermediate SHA-256 hash -->
+            <pin digest="SHA-256">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=</pin>
+        </pin-set>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
+</network-security-config>
