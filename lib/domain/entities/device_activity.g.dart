@@ -11,7 +11,7 @@ _DeviceActivity _$DeviceActivityFromJson(Map<String, dynamic> json) =>
       id: json['id'],
       actionType: json['action_type'] as String?,
       createdAt: json['created_at'] as String?,
-      details: _detailsFromJson(json['details']),
+      details: _detailsMapFromJson(json['details']),
       user: json['user'],
     );
 

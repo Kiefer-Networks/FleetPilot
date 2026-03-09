@@ -30,11 +30,10 @@ class TenantApi {
     int offset = 0,
   }) async {
     try {
-      final queryParams = <String, dynamic>{
-        'limit': limit,
-        'offset': offset,
-      };
-      if (classification != null) queryParams['classification'] = classification;
+      final queryParams = <String, dynamic>{'limit': limit, 'offset': offset};
+      if (classification != null) {
+        queryParams['classification'] = classification;
+      }
       if (term != null) queryParams['term'] = term;
       if (dateRange != null) queryParams['date_range'] = dateRange;
       if (sortBy != null) queryParams['sort_by'] = sortBy;
@@ -44,9 +43,9 @@ class TenantApi {
         queryParameters: queryParams,
       );
 
-      return _extractListItems(response.data)
-          .map(Threat.fromJson)
-          .toList(growable: false);
+      return _extractListItems(
+        response.data,
+      ).map(Threat.fromJson).toList(growable: false);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
@@ -74,9 +73,9 @@ class TenantApi {
         queryParameters: queryParams,
       );
 
-      return _extractListItems(response.data)
-          .map(Vulnerability.fromJson)
-          .toList(growable: false);
+      return _extractListItems(
+        response.data,
+      ).map(Vulnerability.fromJson).toList(growable: false);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
@@ -93,7 +92,7 @@ class TenantApi {
 
   /// Fetches audit events with pagination.
   Future<List<AuditEvent>> getAuditEvents({
-    int limit = 50,
+    int limit = 500,
     String sortBy = 'occurred_at',
     String? startDate,
     String? endDate,
@@ -256,11 +255,10 @@ class TenantApi {
     int offset = 0,
   }) async {
     try {
-      final queryParams = <String, dynamic>{
-        'limit': limit,
-        'offset': offset,
-      };
-      if (classification != null) queryParams['classification'] = classification;
+      final queryParams = <String, dynamic>{'limit': limit, 'offset': offset};
+      if (classification != null) {
+        queryParams['classification'] = classification;
+      }
       if (status != null) queryParams['status'] = status;
       if (dateRange != null) queryParams['date_range'] = dateRange;
       if (sortBy != null) queryParams['sort_by'] = sortBy;
@@ -535,6 +533,7 @@ class TenantApi {
         'file': await MultipartFile.fromFile(filePath, filename: fileName),
         'phone': phone,
         'email': email,
+        // ignore: use_null_aware_elements
         if (blueprintId != null) 'blueprint_id': blueprintId,
       });
       await dio.post<dynamic>(
@@ -570,6 +569,7 @@ class TenantApi {
   // ---------------------------------------------------------------------------
 
   /// Gets blueprint routing enrollment code and status.
+  /// Returns an empty map when routing is not configured (API returns 404).
   Future<Map<String, dynamic>> getBlueprintRouting() async {
     try {
       final response = await dio.get<dynamic>('/blueprint-routing/');
@@ -577,6 +577,7 @@ class TenantApi {
       if (data is Map<String, dynamic>) return data;
       return {};
     } on DioException catch (e) {
+      if (e.response?.statusCode == 404) return {};
       throw ApiExceptionMapper.fromDioException(e);
     }
   }
@@ -599,6 +600,7 @@ class TenantApi {
   }
 
   /// Gets blueprint routing activity events.
+  /// Returns an empty list when routing is not configured (API returns 404).
   Future<List<Map<String, dynamic>>> getBlueprintRoutingActivity({
     int limit = 300,
     int offset = 0,
@@ -610,6 +612,7 @@ class TenantApi {
       );
       return _extractListItems(response.data);
     } on DioException catch (e) {
+      if (e.response?.statusCode == 404) return [];
       throw ApiExceptionMapper.fromDioException(e);
     } on Failure {
       rethrow;
@@ -619,9 +622,7 @@ class TenantApi {
         error: e,
         stackTrace: st,
       );
-      throw UnexpectedFailure(
-        'Failed to parse blueprint routing activity: $e',
-      );
+      throw UnexpectedFailure('Failed to parse blueprint routing activity: $e');
     }
   }
 
@@ -921,10 +922,7 @@ class TenantApi {
       final formData = FormData.fromMap({
         'file': await MultipartFile.fromFile(filePath),
       });
-      await dio.post<dynamic>(
-        '/library/ipa-apps/$id/upload',
-        data: formData,
-      );
+      await dio.post<dynamic>('/library/ipa-apps/$id/upload', data: formData);
     } on DioException catch (e) {
       throw ApiExceptionMapper.fromDioException(e);
     }

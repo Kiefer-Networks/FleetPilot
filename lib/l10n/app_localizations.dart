@@ -5,9 +5,31 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
+import 'app_localizations_cs.dart';
+import 'app_localizations_da.dart';
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_hi.dart';
+import 'app_localizations_hr.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_nb.dart';
+import 'app_localizations_nl.dart';
+import 'app_localizations_pl.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_ro.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_sv.dart';
+import 'app_localizations_th.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_uk.dart';
+import 'app_localizations_vi.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -95,9 +117,31 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('cs'),
+    Locale('da'),
     Locale('de'),
     Locale('en'),
     Locale('es'),
+    Locale('fr'),
+    Locale('hi'),
+    Locale('hr'),
+    Locale('id'),
+    Locale('it'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('nb'),
+    Locale('nl'),
+    Locale('pl'),
+    Locale('pt'),
+    Locale('ro'),
+    Locale('ru'),
+    Locale('sv'),
+    Locale('th'),
+    Locale('tr'),
+    Locale('uk'),
+    Locale('vi'),
+    Locale('zh'),
   ];
 
   /// The application title
@@ -646,6 +690,18 @@ abstract class AppLocalizations {
   /// **'Only letters, numbers, and hyphens allowed. No leading or trailing hyphens.'**
   String get validationSubdomain;
 
+  /// Validation error for invalid API token format
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid token format. Must be 20–500 characters, alphanumeric and common delimiters only.'**
+  String get validationToken;
+
+  /// Error shown when PIN entry is rate-limited
+  ///
+  /// In en, this message translates to:
+  /// **'Too many failed attempts. Try again in {seconds} seconds.'**
+  String pinLockedOut(int seconds);
+
   /// Title for compliance status section
   ///
   /// In en, this message translates to:
@@ -1009,7 +1065,7 @@ abstract class AppLocalizations {
   /// App description in about
   ///
   /// In en, this message translates to:
-  /// **'FleetPilot is an open-source MDM management app for Kandji.'**
+  /// **'FleetPilot is an open-source mobile MDM management app for Apple device fleets.'**
   String get aboutDescription;
 
   /// Hint to tap to copy a secret
@@ -2623,7 +2679,7 @@ abstract class AppLocalizations {
   /// Empty state when no tags exist for picker
   ///
   /// In en, this message translates to:
-  /// **'No tags available. Create tags in the Kandji console.'**
+  /// **'No tags available. Create tags in the MDM web console.'**
   String get noTagsAvailable;
 
   /// Empty state when no blueprints exist for picker
@@ -2767,7 +2823,7 @@ abstract class AppLocalizations {
   /// Subtitle on the final onboarding page
   ///
   /// In en, this message translates to:
-  /// **'Connect your Kandji tenant to start managing your Apple device fleet. You\'ll set up your API connection and security PIN next.'**
+  /// **'Connect your MDM tenant to start managing your Apple device fleet. You\'ll set up your API connection and security PIN next.'**
   String get onboardingReadySubtitle;
 
   /// No description provided for @searchTags.
@@ -2995,7 +3051,7 @@ abstract class AppLocalizations {
   /// No description provided for @categoryKandjiSetup.
   ///
   /// In en, this message translates to:
-  /// **'Kandji Setup'**
+  /// **'MDM Setup'**
   String get categoryKandjiSetup;
 
   /// No description provided for @categoryMacosRelease.
@@ -3237,6 +3293,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enrollment code and routing for Manual / Android Work Profile enrollment'**
   String get blueprintRoutingDesc;
+
+  /// No description provided for @blueprintRoutingNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprint Routing is not configured for this tenant.'**
+  String get blueprintRoutingNotConfigured;
 
   /// No description provided for @enrollmentCodeActive.
   ///
@@ -3603,6 +3665,486 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VPP Licenses'**
   String get vppLicenses;
+
+  /// No description provided for @fileName.
+  ///
+  /// In en, this message translates to:
+  /// **'File Name'**
+  String get fileName;
+
+  /// No description provided for @navPrism.
+  ///
+  /// In en, this message translates to:
+  /// **'Prism'**
+  String get navPrism;
+
+  /// No description provided for @prismTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Intelligence'**
+  String get prismTitle;
+
+  /// No description provided for @prismCategoryActivationLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Activation Lock'**
+  String get prismCategoryActivationLock;
+
+  /// No description provided for @prismCategoryApps.
+  ///
+  /// In en, this message translates to:
+  /// **'Applications'**
+  String get prismCategoryApps;
+
+  /// No description provided for @prismCategoryApplicationFirewall.
+  ///
+  /// In en, this message translates to:
+  /// **'Application Firewall'**
+  String get prismCategoryApplicationFirewall;
+
+  /// No description provided for @prismCategoryCellular.
+  ///
+  /// In en, this message translates to:
+  /// **'Cellular'**
+  String get prismCategoryCellular;
+
+  /// No description provided for @prismCategoryCertificates.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificates'**
+  String get prismCategoryCertificates;
+
+  /// No description provided for @prismCategoryDesktopAndScreensaver.
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop & Screensaver'**
+  String get prismCategoryDesktopAndScreensaver;
+
+  /// No description provided for @prismCategoryDeviceInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Information'**
+  String get prismCategoryDeviceInformation;
+
+  /// No description provided for @prismCategoryFilevault.
+  ///
+  /// In en, this message translates to:
+  /// **'FileVault'**
+  String get prismCategoryFilevault;
+
+  /// No description provided for @prismCategoryGatekeeperAndXprotect.
+  ///
+  /// In en, this message translates to:
+  /// **'Gatekeeper & XProtect'**
+  String get prismCategoryGatekeeperAndXprotect;
+
+  /// No description provided for @prismCategoryInstalledProfiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Installed Profiles'**
+  String get prismCategoryInstalledProfiles;
+
+  /// No description provided for @prismCategoryKernelExtensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Kernel Extensions'**
+  String get prismCategoryKernelExtensions;
+
+  /// No description provided for @prismCategoryLaunchAgentsAndDaemons.
+  ///
+  /// In en, this message translates to:
+  /// **'Launch Agents & Daemons'**
+  String get prismCategoryLaunchAgentsAndDaemons;
+
+  /// No description provided for @prismCategoryLocalUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Users'**
+  String get prismCategoryLocalUsers;
+
+  /// No description provided for @prismCategoryStartupSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Startup Settings'**
+  String get prismCategoryStartupSettings;
+
+  /// No description provided for @prismCategorySystemExtensions.
+  ///
+  /// In en, this message translates to:
+  /// **'System Extensions'**
+  String get prismCategorySystemExtensions;
+
+  /// No description provided for @prismCategoryTransparencyDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Transparency Database'**
+  String get prismCategoryTransparencyDatabase;
+
+  /// No description provided for @prismRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} records'**
+  String prismRecords(int count);
+
+  /// No description provided for @prismNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data available for this category.'**
+  String get prismNoData;
+
+  /// No description provided for @prismExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get prismExport;
+
+  /// No description provided for @prismExportRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Export requested. Check back shortly for the download link.'**
+  String get prismExportRequested;
+
+  /// No description provided for @prismFilterByFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Family'**
+  String get prismFilterByFamily;
+
+  /// No description provided for @prismAllFamilies.
+  ///
+  /// In en, this message translates to:
+  /// **'All Families'**
+  String get prismAllFamilies;
+
+  /// Settings section title for appearance/theme
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// Label for theme mode setting
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get themeMode;
+
+  /// Theme follows system setting
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeModeSystem;
+
+  /// Light theme
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeModeLight;
+
+  /// Dark theme
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeModeDark;
+
+  /// No description provided for @shortTypeScript.
+  ///
+  /// In en, this message translates to:
+  /// **'Script'**
+  String get shortTypeScript;
+
+  /// No description provided for @shortTypeCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get shortTypeCustom;
+
+  /// No description provided for @shortTypeProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get shortTypeProfile;
+
+  /// No description provided for @shortTypeInHouse.
+  ///
+  /// In en, this message translates to:
+  /// **'In-House'**
+  String get shortTypeInHouse;
+
+  /// No description provided for @shortTypeVpp.
+  ///
+  /// In en, this message translates to:
+  /// **'VPP'**
+  String get shortTypeVpp;
+
+  /// No description provided for @shortTypeManaged.
+  ///
+  /// In en, this message translates to:
+  /// **'Managed'**
+  String get shortTypeManaged;
+
+  /// No description provided for @shortTypeKandji.
+  ///
+  /// In en, this message translates to:
+  /// **'Kandji'**
+  String get shortTypeKandji;
+
+  /// No description provided for @shortTypeMacos.
+  ///
+  /// In en, this message translates to:
+  /// **'macOS'**
+  String get shortTypeMacos;
+
+  /// No description provided for @shortTypeOs.
+  ///
+  /// In en, this message translates to:
+  /// **'OS'**
+  String get shortTypeOs;
+
+  /// No description provided for @shortTypeSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get shortTypeSecurity;
+
+  /// No description provided for @shortTypeAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get shortTypeAuto;
+
+  /// No description provided for @categoryOsUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'OS Updates'**
+  String get categoryOsUpdates;
+
+  /// No description provided for @categoryAutoApps.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Apps'**
+  String get categoryAutoApps;
+
+  /// No description provided for @autoApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto App'**
+  String get autoApp;
+
+  /// No description provided for @fileSize.
+  ///
+  /// In en, this message translates to:
+  /// **'File Size'**
+  String get fileSize;
+
+  /// No description provided for @unzipLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Unzip Location'**
+  String get unzipLocation;
+
+  /// No description provided for @sha256Label.
+  ///
+  /// In en, this message translates to:
+  /// **'SHA-256'**
+  String get sha256Label;
+
+  /// No description provided for @fileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'File Updated'**
+  String get fileUpdated;
+
+  /// No description provided for @mdmIdentifier.
+  ///
+  /// In en, this message translates to:
+  /// **'MDM Identifier'**
+  String get mdmIdentifier;
+
+  /// No description provided for @bundleId.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundle ID'**
+  String get bundleId;
+
+  /// No description provided for @appleTV.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple TV'**
+  String get appleTV;
+
+  /// No description provided for @appleVision.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Vision'**
+  String get appleVision;
+
+  /// No description provided for @appleWatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Watch'**
+  String get appleWatch;
+
+  /// No description provided for @iPodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'iPod'**
+  String get iPodLabel;
+
+  /// No description provided for @typeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get typeLabel;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageGerman.
+  ///
+  /// In en, this message translates to:
+  /// **'Deutsch'**
+  String get languageGerman;
+
+  /// No description provided for @languageSpanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Español'**
+  String get languageSpanish;
+
+  /// No description provided for @languageFrench.
+  ///
+  /// In en, this message translates to:
+  /// **'Français'**
+  String get languageFrench;
+
+  /// No description provided for @languagePortuguese.
+  ///
+  /// In en, this message translates to:
+  /// **'Português'**
+  String get languagePortuguese;
+
+  /// No description provided for @languageItalian.
+  ///
+  /// In en, this message translates to:
+  /// **'Italiano'**
+  String get languageItalian;
+
+  /// No description provided for @languagePolish.
+  ///
+  /// In en, this message translates to:
+  /// **'Polski'**
+  String get languagePolish;
+
+  /// No description provided for @languageCroatian.
+  ///
+  /// In en, this message translates to:
+  /// **'Hrvatski'**
+  String get languageCroatian;
+
+  /// No description provided for @languageRussian.
+  ///
+  /// In en, this message translates to:
+  /// **'Русский'**
+  String get languageRussian;
+
+  /// No description provided for @languageUkrainian.
+  ///
+  /// In en, this message translates to:
+  /// **'Українська'**
+  String get languageUkrainian;
+
+  /// No description provided for @languageArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'العربية'**
+  String get languageArabic;
+
+  /// No description provided for @languageHindi.
+  ///
+  /// In en, this message translates to:
+  /// **'हिन्दी'**
+  String get languageHindi;
+
+  /// No description provided for @languageChinese.
+  ///
+  /// In en, this message translates to:
+  /// **'中文'**
+  String get languageChinese;
+
+  /// No description provided for @languageJapanese.
+  ///
+  /// In en, this message translates to:
+  /// **'日本語'**
+  String get languageJapanese;
+
+  /// No description provided for @languageKorean.
+  ///
+  /// In en, this message translates to:
+  /// **'한국어'**
+  String get languageKorean;
+
+  /// No description provided for @languageTurkish.
+  ///
+  /// In en, this message translates to:
+  /// **'Türkçe'**
+  String get languageTurkish;
+
+  /// No description provided for @languageDutch.
+  ///
+  /// In en, this message translates to:
+  /// **'Nederlands'**
+  String get languageDutch;
+
+  /// No description provided for @languageSwedish.
+  ///
+  /// In en, this message translates to:
+  /// **'Svenska'**
+  String get languageSwedish;
+
+  /// No description provided for @languageCzech.
+  ///
+  /// In en, this message translates to:
+  /// **'Čeština'**
+  String get languageCzech;
+
+  /// No description provided for @languageRomanian.
+  ///
+  /// In en, this message translates to:
+  /// **'Română'**
+  String get languageRomanian;
+
+  /// No description provided for @languageThai.
+  ///
+  /// In en, this message translates to:
+  /// **'ไทย'**
+  String get languageThai;
+
+  /// No description provided for @languageDanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Dansk'**
+  String get languageDanish;
+
+  /// No description provided for @languageNorwegian.
+  ///
+  /// In en, this message translates to:
+  /// **'Norsk'**
+  String get languageNorwegian;
+
+  /// No description provided for @languageIndonesian.
+  ///
+  /// In en, this message translates to:
+  /// **'Bahasa Indonesia'**
+  String get languageIndonesian;
+
+  /// No description provided for @languageVietnamese.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiếng Việt'**
+  String get languageVietnamese;
 }
 
 class _AppLocalizationsDelegate
@@ -3615,8 +4157,33 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en', 'es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'cs',
+    'da',
+    'de',
+    'en',
+    'es',
+    'fr',
+    'hi',
+    'hr',
+    'id',
+    'it',
+    'ja',
+    'ko',
+    'nb',
+    'nl',
+    'pl',
+    'pt',
+    'ro',
+    'ru',
+    'sv',
+    'th',
+    'tr',
+    'uk',
+    'vi',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -3625,12 +4192,56 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'cs':
+      return AppLocalizationsCs();
+    case 'da':
+      return AppLocalizationsDa();
     case 'de':
       return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'hi':
+      return AppLocalizationsHi();
+    case 'hr':
+      return AppLocalizationsHr();
+    case 'id':
+      return AppLocalizationsId();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'nb':
+      return AppLocalizationsNb();
+    case 'nl':
+      return AppLocalizationsNl();
+    case 'pl':
+      return AppLocalizationsPl();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'ro':
+      return AppLocalizationsRo();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'sv':
+      return AppLocalizationsSv();
+    case 'th':
+      return AppLocalizationsTh();
+    case 'tr':
+      return AppLocalizationsTr();
+    case 'uk':
+      return AppLocalizationsUk();
+    case 'vi':
+      return AppLocalizationsVi();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

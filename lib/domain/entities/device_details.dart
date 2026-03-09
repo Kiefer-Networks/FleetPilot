@@ -154,8 +154,7 @@ abstract class DeviceHardware with _$DeviceHardware {
   String? get resolvedRam => totalRam ?? memory;
 
   /// Resolved processor.
-  String? get resolvedProcessor =>
-      processorName ?? processorType ?? chip;
+  String? get resolvedProcessor => processorName ?? processorType ?? chip;
 }
 
 @freezed
@@ -273,8 +272,12 @@ abstract class DeviceVolume with _$DeviceVolume {
 @freezed
 abstract class DeviceUsers with _$DeviceUsers {
   const factory DeviceUsers({
-    @JsonKey(name: 'regular_users') @Default([]) List<DeviceLocalUser> regularUsers,
-    @JsonKey(name: 'system_users') @Default([]) List<DeviceLocalUser> systemUsers,
+    @JsonKey(name: 'regular_users')
+    @Default([])
+    List<DeviceLocalUser> regularUsers,
+    @JsonKey(name: 'system_users')
+    @Default([])
+    List<DeviceLocalUser> systemUsers,
   }) = _DeviceUsers;
 
   factory DeviceUsers.fromJson(Map<String, dynamic> json) {

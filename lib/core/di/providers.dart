@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../data/datasources/remote/blueprint_api.dart';
 import '../../data/datasources/remote/device_api.dart';
+import '../../data/datasources/remote/prism_api.dart';
 import '../../data/datasources/remote/tenant_api.dart';
 import '../../data/datasources/remote/user_api.dart';
 import '../../data/repositories/blueprint_repository_impl.dart';
@@ -123,6 +124,12 @@ final userRepositoryProvider = FutureProvider<UserRepository>((ref) async {
 final tenantApiProvider = FutureProvider<TenantApi>((ref) async {
   final dio = await ref.watch(dioProvider.future);
   return TenantApi(dio: dio);
+});
+
+/// Prism API data source (async — depends on Dio).
+final prismApiProvider = FutureProvider<PrismApi>((ref) async {
+  final dio = await ref.watch(dioProvider.future);
+  return PrismApi(dio: dio);
 });
 
 /// Use case: verify credentials (stateless, no dependencies).

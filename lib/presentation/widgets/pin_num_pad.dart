@@ -88,8 +88,7 @@ class _PinNumPadState extends State<PinNumPad> {
     final key = event.logicalKey;
 
     // Digit keys (both main keyboard and numpad)
-    if (key == LogicalKeyboardKey.digit0 ||
-        key == LogicalKeyboardKey.numpad0) {
+    if (key == LogicalKeyboardKey.digit0 || key == LogicalKeyboardKey.numpad0) {
       widget.onDigit('0');
     } else if (key == LogicalKeyboardKey.digit1 ||
         key == LogicalKeyboardKey.numpad1) {

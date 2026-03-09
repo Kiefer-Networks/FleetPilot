@@ -109,14 +109,18 @@ final aggregatedLibraryItemsProvider =
         }),
       );
 
-      // Deduplicate by name (case-insensitive) to merge same item across
-      // blueprints/platforms. Fall back to id if name is missing.
+      // Deduplicate by item_id (stable library-item UUID) so the same item
+      // across blueprints merges, but genuinely different items stay separate.
+      // Fall back to name:type composite when item_id is not available.
       final map = <String, AggregatedLibraryItem>{};
       for (final result in results) {
         for (final raw in result.rawItems) {
           final item = LibraryItem.fromJson(raw);
-          final key = (item.name ?? item.id ?? '').toLowerCase();
-          if (key.isEmpty) continue;
+          final name = (item.name ?? '').toLowerCase();
+          if (name.isEmpty && item.id == null && item.itemId == null) continue;
+          // Prefer item_id (stable across blueprints); fall back to raw id
+          // (unique per assignment) which keeps genuinely different items apart.
+          final key = item.itemId ?? item.id ?? '$name:${item.type ?? ''}';
           if (map.containsKey(key)) {
             if (!map[key]!.blueprintNames.contains(result.blueprint.name)) {
               map[key]!.blueprintNames.add(result.blueprint.name);
@@ -133,9 +137,9 @@ final aggregatedLibraryItemsProvider =
 
       final list = map.values.toList();
       list.sort(
-        (a, b) => (a.item.name ?? '')
-            .toLowerCase()
-            .compareTo((b.item.name ?? '').toLowerCase()),
+        (a, b) => (a.item.name ?? '').toLowerCase().compareTo(
+          (b.item.name ?? '').toLowerCase(),
+        ),
       );
       return list;
     });
@@ -143,27 +147,49 @@ final aggregatedLibraryItemsProvider =
 /// All library item details across all categories (scripts, apps, profiles).
 /// Merges data from category-specific endpoints with raw data from
 /// blueprint list-library-items for types without dedicated endpoints.
+/// Uses /library/library-items for type resolution.
 final allLibraryItemDetailsProvider =
     FutureProvider<Map<String, Map<String, dynamic>>>((ref) async {
       final api = await ref.watch(blueprintApiProvider.future);
       final result = await api.getAllLibraryItemDetails();
 
-      // Also include raw data from aggregated items for types not covered
-      // by the dedicated endpoints (VPP apps, managed profiles, etc.)
+      // Merge aggregated items (from blueprint list-library-items) for
+      // items not already covered by dedicated endpoints.
       final aggregated = await ref.watch(aggregatedLibraryItemsProvider.future);
       for (final agg in aggregated) {
         final id = agg.item.id;
         if (id == null || result.containsKey(id)) continue;
         if (agg.rawData != null) {
-          result[id] = {
-            ...agg.rawData!,
-            '_category': agg.item.type ?? '_built-in',
-          };
+          // Infer type from name patterns for items with no dedicated endpoint.
+          final cat = _inferCategory(agg.item.name);
+          result[id] = {...agg.rawData!, '_category': cat};
         }
       }
 
       return result;
     });
+
+/// Infer library item category from name when API provides no type.
+String _inferCategory(String? name) {
+  if (name == null) return '_unknown';
+  final n = name.toLowerCase();
+  if (n.startsWith('macos ') ||
+      n.contains('tahoe') ||
+      n.contains('sequoia') ||
+      n.contains('sonoma') ||
+      n.contains('ventura')) {
+    return 'macos-release';
+  }
+  if (n.startsWith('ios ') || n.startsWith('ipados ')) return 'os-release';
+  if (n.contains('cis level') || n.contains('cis benchmark')) return 'profile';
+  if (n == 'edr in detect mode' || n.contains('threat')) {
+    return 'threat-security-policy';
+  }
+  if (n.contains('kandji self service') || n.contains('liftoff')) {
+    return 'kandji-setup';
+  }
+  return '_unknown';
+}
 
 /// Full detail for a single library item (includes body/profile fields).
 /// Parameter format: "category:itemId" (e.g. "custom-script:abc123").

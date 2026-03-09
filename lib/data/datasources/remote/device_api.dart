@@ -397,6 +397,24 @@ class DeviceApi {
     }
   }
 
+  Future<DeviceNote> getDeviceNote(String deviceId, String noteId) async {
+    try {
+      final response = await dio.get<dynamic>(
+        '/devices/$deviceId/notes/$noteId',
+      );
+      final data = response.data;
+      if (data is Map<String, dynamic>) return DeviceNote.fromJson(data);
+      throw const UnexpectedFailure('Unexpected note response');
+    } on DioException catch (e) {
+      throw ApiExceptionMapper.fromDioException(e);
+    } on Failure {
+      rethrow;
+    } catch (e, st) {
+      log.e('DeviceApi.getDeviceNote error: $e', error: e, stackTrace: st);
+      throw UnexpectedFailure('Failed to parse device note: $e');
+    }
+  }
+
   Future<DeviceNote> createDeviceNote(String deviceId, String content) async {
     try {
       final response = await dio.post<dynamic>(

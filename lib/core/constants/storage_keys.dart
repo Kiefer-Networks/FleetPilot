@@ -38,4 +38,13 @@ abstract final class StorageKeys {
 
   /// Key for whether the first-launch onboarding has been completed.
   static const String onboardingCompleted = 'fleetpilot_onboarding_completed';
+
+  /// Key for the user's preferred theme mode (system, light, dark).
+  static const String themeMode = 'fleetpilot_theme_mode';
+
+  /// Key for PIN failed-attempt counter (rate limiting).
+  static const String pinFailedAttempts = 'fleetpilot_pin_failed_attempts';
+
+  /// Key for PIN lockout-until timestamp in epoch ms (rate limiting).
+  static const String pinLockedUntil = 'fleetpilot_pin_locked_until';
 }

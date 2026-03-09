@@ -216,6 +216,9 @@ class _AddProfilePageState extends ConsumerState<AddProfilePage> {
                   if (value == null || value.trim().isEmpty) {
                     return l10n.validationRequired;
                   }
+                  if (!value.trim().isValidApiToken) {
+                    return l10n.validationToken;
+                  }
                   return null;
                 },
               ),

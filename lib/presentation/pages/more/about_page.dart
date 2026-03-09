@@ -31,8 +31,9 @@ class AboutPage extends ConsumerWidget {
     final pkgAsync = ref.watch(_packageInfoProvider);
     final appVersion = pkgAsync.value?.version ?? '';
     final buildNumber = pkgAsync.value?.buildNumber ?? '';
-    final versionString =
-        buildNumber.isNotEmpty ? '$appVersion+$buildNumber' : appVersion;
+    final versionString = buildNumber.isNotEmpty
+        ? '$appVersion+$buildNumber'
+        : appVersion;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.aboutApp)),

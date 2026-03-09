@@ -30,17 +30,19 @@ class LibraryItemsPage extends ConsumerWidget {
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(64),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: SearchBar(
                   hintText: l10n.searchLibraryItems,
                   leading: const Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: Icon(Icons.search),
                   ),
-                  onChanged: (value) => ref
-                      .read(libraryItemSearchQueryProvider.notifier)
-                      .state = value,
+                  onChanged: (value) =>
+                      ref.read(libraryItemSearchQueryProvider.notifier).state =
+                          value,
                   elevation: WidgetStateProperty.all(0),
                   backgroundColor: WidgetStateProperty.all(
                     theme.colorScheme.surfaceContainerHigh,
@@ -101,13 +103,25 @@ class LibraryItemsPage extends ConsumerWidget {
               'profile',
               'kandji-setup',
               'macos-release',
+              'os-release',
               'threat-security-policy',
+              '_unknown',
               '_built-in',
             ];
-            final sortedGroups = orderedKeys
-                .where((k) => groups.containsKey(k))
-                .map((k) => MapEntry(k, groups[k]!))
-                .toList();
+            // Also include any keys not explicitly listed.
+            final allKeys = groups.keys.toList();
+            final sortedGroups =
+                <MapEntry<String, List<AggregatedLibraryItem>>>[];
+            for (final k in orderedKeys) {
+              if (groups.containsKey(k)) {
+                sortedGroups.add(MapEntry(k, groups[k]!));
+                allKeys.remove(k);
+              }
+            }
+            // Append remaining categories not in the ordered list.
+            for (final k in allKeys) {
+              sortedGroups.add(MapEntry(k, groups[k]!));
+            }
 
             return ListView.builder(
               padding: const EdgeInsets.all(12),
@@ -234,11 +248,33 @@ class _LibraryItemTile extends StatelessWidget {
         ),
         child: Icon(icon, size: 18, color: color),
       ),
-      title: Text(
-        name,
-        style: theme.textTheme.bodyMedium,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+      title: Row(
+        children: [
+          Expanded(
+            child: Text(
+              name,
+              style: theme.textTheme.bodyMedium,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SizedBox(width: 6),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              _shortTypeLabel(category, l10n),
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: color,
+                fontSize: 9,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 4),
@@ -282,7 +318,11 @@ class _LibraryItemTile extends StatelessWidget {
         ),
       ),
       trailing: id != null
-          ? Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant, size: 20)
+          ? Icon(
+              Icons.chevron_right,
+              color: colorScheme.onSurfaceVariant,
+              size: 20,
+            )
           : null,
       dense: true,
       onTap: id != null
@@ -311,8 +351,9 @@ IconData _iconForCategory(String category) {
     'automatic-app' => Icons.shopping_bag_outlined,
     'profile' => Icons.settings_applications,
     'kandji-setup' => Icons.rocket_launch_outlined,
-    'macos-release' => Icons.system_update,
+    'macos-release' || 'os-release' => Icons.system_update,
     'threat-security-policy' => Icons.security,
+    '_unknown' => Icons.help_outline,
     _ => Icons.inventory_2,
   };
 }
@@ -326,9 +367,27 @@ Color _colorForCategory(String category, ColorScheme cs) {
     'automatic-app' => Colors.blue,
     'profile' => Colors.indigo,
     'kandji-setup' => Colors.deepPurple,
-    'macos-release' => Colors.green,
+    'macos-release' || 'os-release' => Colors.green,
     'threat-security-policy' => Colors.red,
+    '_unknown' => cs.outline,
     _ => cs.onSurfaceVariant,
+  };
+}
+
+String _shortTypeLabel(String category, AppLocalizations l10n) {
+  return switch (category) {
+    'custom-script' => l10n.shortTypeScript,
+    'custom-app' => l10n.shortTypeCustom,
+    'custom-profile' => l10n.shortTypeProfile,
+    'in-house-app' => l10n.shortTypeInHouse,
+    'automatic-app' => l10n.shortTypeVpp,
+    'profile' => l10n.shortTypeManaged,
+    'kandji-setup' => l10n.shortTypeKandji,
+    'macos-release' => l10n.shortTypeMacos,
+    'os-release' => l10n.shortTypeOs,
+    'threat-security-policy' => l10n.shortTypeSecurity,
+    '_unknown' => l10n.shortTypeAuto,
+    _ => category,
   };
 }
 
@@ -342,7 +401,9 @@ String _displayCategory(String category, AppLocalizations l10n) {
     'profile' => l10n.categoryManagedProfiles,
     'kandji-setup' => l10n.categoryKandjiSetup,
     'macos-release' => l10n.categoryMacosRelease,
+    'os-release' => l10n.categoryOsUpdates,
     'threat-security-policy' => l10n.categoryThreatPolicy,
-    _ => l10n.categoryBuiltIn,
+    '_unknown' => l10n.categoryAutoApps,
+    _ => category.replaceAll('-', ' ').replaceAll('_', ' '),
   };
 }

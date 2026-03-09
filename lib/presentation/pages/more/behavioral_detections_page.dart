@@ -174,7 +174,8 @@ class _BehavioralDetectionsPageState
                         onDeleted: () =>
                             ref
                                     .read(
-                                      behavioralMgmtStateFilterProvider.notifier,
+                                      behavioralMgmtStateFilterProvider
+                                          .notifier,
                                     )
                                     .state =
                                 null,
@@ -294,8 +295,9 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
         return StatefulBuilder(
           builder: (context, setSheetState) {
             final severity = ref.read(behavioralSeverityFilterProvider);
-            final classification =
-                ref.read(behavioralClassificationFilterProvider);
+            final classification = ref.read(
+              behavioralClassificationFilterProvider,
+            );
             final mgmt = ref.read(behavioralMgmtStateFilterProvider);
             final sortAsc = ref.read(behavioralSortAscProvider);
 
@@ -373,12 +375,12 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                               selected: severity == entry.key,
                               onSelected: (_) {
                                 ref
-                                        .read(
-                                          behavioralSeverityFilterProvider
-                                              .notifier,
-                                        )
-                                        .state =
-                                    severity == entry.key ? null : entry.key;
+                                    .read(
+                                      behavioralSeverityFilterProvider.notifier,
+                                    )
+                                    .state = severity == entry.key
+                                    ? null
+                                    : entry.key;
                                 setSheetState(() {});
                               },
                             ),
@@ -416,14 +418,13 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                               selected: classification == entry.key,
                               onSelected: (_) {
                                 ref
-                                        .read(
-                                          behavioralClassificationFilterProvider
-                                              .notifier,
-                                        )
-                                        .state =
-                                    classification == entry.key
-                                        ? null
-                                        : entry.key;
+                                    .read(
+                                      behavioralClassificationFilterProvider
+                                          .notifier,
+                                    )
+                                    .state = classification == entry.key
+                                    ? null
+                                    : entry.key;
                                 setSheetState(() {});
                               },
                             ),
@@ -461,12 +462,13 @@ class _BehavioralFilterBottomSheet extends StatelessWidget {
                               selected: mgmt == entry.key,
                               onSelected: (_) {
                                 ref
-                                        .read(
-                                          behavioralMgmtStateFilterProvider
-                                              .notifier,
-                                        )
-                                        .state =
-                                    mgmt == entry.key ? null : entry.key;
+                                    .read(
+                                      behavioralMgmtStateFilterProvider
+                                          .notifier,
+                                    )
+                                    .state = mgmt == entry.key
+                                    ? null
+                                    : entry.key;
                                 setSheetState(() {});
                               },
                             ),

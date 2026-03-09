@@ -316,6 +316,15 @@ class AppLocalizationsEs extends AppLocalizations {
       'Solo se permiten letras, números y guiones. Sin guiones al inicio o al final.';
 
   @override
+  String get validationToken =>
+      'Formato de token inválido. Debe tener 20–500 caracteres, solo alfanuméricos y delimitadores comunes.';
+
+  @override
+  String pinLockedOut(int seconds) {
+    return 'Demasiados intentos fallidos. Inténtalo de nuevo en $seconds segundos.';
+  }
+
+  @override
   String get complianceStatus => 'Estado de cumplimiento';
 
   @override
@@ -527,7 +536,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aboutDescription =>
-      'FleetPilot es una aplicación de gestión MDM de código abierto para Kandji.';
+      'FleetPilot es una aplicación de gestión MDM de código abierto para flotas de dispositivos Apple.';
 
   @override
   String get tapToCopy => 'Toca para copiar';
@@ -1411,7 +1420,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noTagsAvailable =>
-      'No hay etiquetas disponibles. Cree etiquetas en la consola de Kandji.';
+      'No hay etiquetas disponibles. Cree etiquetas en la consola web de MDM.';
 
   @override
   String get noBlueprintsAvailable => 'No hay blueprints disponibles.';
@@ -1493,7 +1502,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingReadySubtitle =>
-      'Conecta tu tenant de Kandji para comenzar a gestionar tu flota de dispositivos Apple. A continuación, configurarás tu conexión API y PIN de seguridad.';
+      'Conecta tu tenant de MDM para comenzar a gestionar tu flota de dispositivos Apple. A continuación, configurarás tu conexión API y PIN de seguridad.';
 
   @override
   String get searchTags => 'Buscar etiquetas';
@@ -1616,7 +1625,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryManagedProfiles => 'Perfiles administrados';
 
   @override
-  String get categoryKandjiSetup => 'Configuración Kandji';
+  String get categoryKandjiSetup => 'Configuración MDM';
 
   @override
   String get categoryMacosRelease => 'Actualizaciones macOS';
@@ -1755,6 +1764,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get blueprintRoutingDesc =>
       'Código de inscripción y enrutamiento para inscripción manual / Android Work Profile';
+
+  @override
+  String get blueprintRoutingNotConfigured =>
+      'El enrutamiento de Blueprint no está configurado para este inquilino.';
 
   @override
   String get enrollmentCodeActive => 'Activo';
@@ -1948,4 +1961,248 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vppLicenses => 'Licencias VPP';
+
+  @override
+  String get fileName => 'Nombre de archivo';
+
+  @override
+  String get navPrism => 'Prism';
+
+  @override
+  String get prismTitle => 'Device Intelligence';
+
+  @override
+  String get prismCategoryActivationLock => 'Bloqueo de activación';
+
+  @override
+  String get prismCategoryApps => 'Aplicaciones';
+
+  @override
+  String get prismCategoryApplicationFirewall => 'Firewall de aplicaciones';
+
+  @override
+  String get prismCategoryCellular => 'Celular';
+
+  @override
+  String get prismCategoryCertificates => 'Certificados';
+
+  @override
+  String get prismCategoryDesktopAndScreensaver => 'Escritorio y protector';
+
+  @override
+  String get prismCategoryDeviceInformation => 'Información del dispositivo';
+
+  @override
+  String get prismCategoryFilevault => 'FileVault';
+
+  @override
+  String get prismCategoryGatekeeperAndXprotect => 'Gatekeeper y XProtect';
+
+  @override
+  String get prismCategoryInstalledProfiles => 'Perfiles instalados';
+
+  @override
+  String get prismCategoryKernelExtensions => 'Extensiones del kernel';
+
+  @override
+  String get prismCategoryLaunchAgentsAndDaemons => 'Agentes y demonios';
+
+  @override
+  String get prismCategoryLocalUsers => 'Usuarios locales';
+
+  @override
+  String get prismCategoryStartupSettings => 'Configuración de inicio';
+
+  @override
+  String get prismCategorySystemExtensions => 'Extensiones del sistema';
+
+  @override
+  String get prismCategoryTransparencyDatabase =>
+      'Base de datos de transparencia';
+
+  @override
+  String prismRecords(int count) {
+    return '$count registros';
+  }
+
+  @override
+  String get prismNoData => 'No hay datos disponibles para esta categoría.';
+
+  @override
+  String get prismExport => 'Exportar CSV';
+
+  @override
+  String get prismExportRequested =>
+      'Exportación solicitada. El enlace de descarga estará disponible en breve.';
+
+  @override
+  String get prismFilterByFamily => 'Familia de dispositivos';
+
+  @override
+  String get prismAllFamilies => 'Todas las familias';
+
+  @override
+  String get appearance => 'Apariencia';
+
+  @override
+  String get themeMode => 'Tema';
+
+  @override
+  String get themeModeSystem => 'Sistema';
+
+  @override
+  String get themeModeLight => 'Claro';
+
+  @override
+  String get themeModeDark => 'Oscuro';
+
+  @override
+  String get shortTypeScript => 'Script';
+
+  @override
+  String get shortTypeCustom => 'Personal.';
+
+  @override
+  String get shortTypeProfile => 'Perfil';
+
+  @override
+  String get shortTypeInHouse => 'In-House';
+
+  @override
+  String get shortTypeVpp => 'VPP';
+
+  @override
+  String get shortTypeManaged => 'Administ.';
+
+  @override
+  String get shortTypeKandji => 'Kandji';
+
+  @override
+  String get shortTypeMacos => 'macOS';
+
+  @override
+  String get shortTypeOs => 'OS';
+
+  @override
+  String get shortTypeSecurity => 'Seguridad';
+
+  @override
+  String get shortTypeAuto => 'Auto';
+
+  @override
+  String get categoryOsUpdates => 'Actualizaciones de OS';
+
+  @override
+  String get categoryAutoApps => 'Apps automáticas';
+
+  @override
+  String get autoApp => 'App automática';
+
+  @override
+  String get fileSize => 'Tamaño de archivo';
+
+  @override
+  String get unzipLocation => 'Ubicación de descompresión';
+
+  @override
+  String get sha256Label => 'SHA-256';
+
+  @override
+  String get fileUpdated => 'Archivo actualizado';
+
+  @override
+  String get mdmIdentifier => 'Identificador MDM';
+
+  @override
+  String get bundleId => 'Bundle ID';
+
+  @override
+  String get appleTV => 'Apple TV';
+
+  @override
+  String get appleVision => 'Apple Vision';
+
+  @override
+  String get appleWatch => 'Apple Watch';
+
+  @override
+  String get iPodLabel => 'iPod';
+
+  @override
+  String get typeLabel => 'Tipo';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageGerman => 'Deutsch';
+
+  @override
+  String get languageSpanish => 'Español';
+
+  @override
+  String get languageFrench => 'Français';
+
+  @override
+  String get languagePortuguese => 'Português';
+
+  @override
+  String get languageItalian => 'Italiano';
+
+  @override
+  String get languagePolish => 'Polski';
+
+  @override
+  String get languageCroatian => 'Hrvatski';
+
+  @override
+  String get languageRussian => 'Русский';
+
+  @override
+  String get languageUkrainian => 'Українська';
+
+  @override
+  String get languageArabic => 'العربية';
+
+  @override
+  String get languageHindi => 'हिन्दी';
+
+  @override
+  String get languageChinese => '中文';
+
+  @override
+  String get languageJapanese => '日本語';
+
+  @override
+  String get languageKorean => '한국어';
+
+  @override
+  String get languageTurkish => 'Türkçe';
+
+  @override
+  String get languageDutch => 'Nederlands';
+
+  @override
+  String get languageSwedish => 'Svenska';
+
+  @override
+  String get languageCzech => 'Čeština';
+
+  @override
+  String get languageRomanian => 'Română';
+
+  @override
+  String get languageThai => 'ไทย';
+
+  @override
+  String get languageDanish => 'Dansk';
+
+  @override
+  String get languageNorwegian => 'Norsk';
+
+  @override
+  String get languageIndonesian => 'Bahasa Indonesia';
+
+  @override
+  String get languageVietnamese => 'Tiếng Việt';
 }

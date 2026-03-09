@@ -96,14 +96,25 @@ class _BiometricGatePageState extends ConsumerState<BiometricGatePage> {
   }
 
   Future<void> _verifyPin(String pin) async {
-    final valid = await ref.read(pinEnabledProvider.notifier).verifyPin(pin);
+    final result = await ref.read(pinEnabledProvider.notifier).verifyPin(pin);
     if (!mounted) return;
 
-    if (valid) {
+    if (result == true) {
       _unlockAndNavigate();
     } else {
+      final l10n = AppLocalizations.of(context);
+      String error;
+      if (result == null) {
+        // Rate-limited lockout
+        final remaining = await ref
+            .read(pinEnabledProvider.notifier)
+            .getRemainingLockoutSeconds();
+        error = l10n.pinLockedOut(remaining > 0 ? remaining : 30);
+      } else {
+        error = l10n.securityPinWrong;
+      }
       setState(() {
-        _pinError = AppLocalizations.of(context).securityPinWrong;
+        _pinError = error;
         _pin = '';
       });
     }

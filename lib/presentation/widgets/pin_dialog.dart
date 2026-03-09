@@ -31,9 +31,11 @@ class PinDialog extends StatefulWidget {
 
   /// Show fullscreen dialog to verify an existing PIN.
   /// Returns the verified PIN string if correct, null if cancelled.
+  /// The [verifier] returns `true` on success, `false` on wrong PIN,
+  /// or `null` if the account is rate-limited (locked out).
   static Future<String?> showVerifyPin(
     BuildContext context, {
-    required Future<bool> Function(String pin) verifier,
+    required Future<bool?> Function(String pin) verifier,
   }) {
     return showDialog<String>(
       context: context,
@@ -158,7 +160,7 @@ class _PinDialogState extends State<PinDialog> {
 }
 
 class _PinVerifyDialog extends StatefulWidget {
-  final Future<bool> Function(String pin) verifier;
+  final Future<bool?> Function(String pin) verifier;
 
   const _PinVerifyDialog({required this.verifier});
 
@@ -198,12 +200,16 @@ class _PinVerifyDialogState extends State<_PinVerifyDialog> {
     final success = await widget.verifier(pin);
     if (!mounted) return;
 
-    if (success) {
+    if (success == true) {
       Navigator.of(context).pop(pin);
     } else {
+      final l10n = AppLocalizations.of(context);
       setState(() {
         _verifying = false;
-        _error = AppLocalizations.of(context).securityPinWrong;
+        // null = rate-limited lockout, false = wrong PIN
+        _error = success == null
+            ? l10n.pinLockedOut(30)
+            : l10n.securityPinWrong;
         _pin = '';
       });
     }

@@ -320,9 +320,7 @@ class _BlueprintDetailScaffold extends ConsumerWidget {
                               final query = params.entries
                                   .map((e) => '${e.key}=${e.value}')
                                   .join('&');
-                              context.push(
-                                '/more/library-items/$id?$query',
-                              );
+                              context.push('/more/library-items/$id?$query');
                             }
                           },
                         ),

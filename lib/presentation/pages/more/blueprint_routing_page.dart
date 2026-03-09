@@ -28,10 +28,7 @@ class BlueprintRoutingPage extends ConsumerWidget {
           ),
         ),
         body: TabBarView(
-          children: [
-            _RoutingConfigTab(),
-            _RoutingActivityTab(),
-          ],
+          children: [_RoutingConfigTab(), _RoutingActivityTab()],
         ),
       ),
     );
@@ -47,6 +44,30 @@ class _RoutingConfigTab extends ConsumerWidget {
 
     return routingAsync.when(
       data: (data) {
+        if (data.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.route_outlined,
+                    size: 48,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    l10n.blueprintRoutingNotConfigured,
+                    style: theme.textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
         final enrollmentCode = data['enrollment_code'];
         if (enrollmentCode == null || enrollmentCode is! Map) {
           return Center(
@@ -136,17 +157,14 @@ class _RoutingConfigTab extends ConsumerWidget {
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton.icon(
-                        icon: Icon(
-                          isActive ? Icons.pause : Icons.play_arrow,
-                        ),
+                        icon: Icon(isActive ? Icons.pause : Icons.play_arrow),
                         label: Text(
                           isActive
                               ? l10n.enrollmentCodeInactive
                               : l10n.enrollmentCodeActive,
                         ),
                         onPressed: () async {
-                          final api =
-                              await ref.read(tenantApiProvider.future);
+                          final api = await ref.read(tenantApiProvider.future);
                           await api.updateBlueprintRouting({
                             'enrollment_code': {
                               'is_active': !isActive,
@@ -193,10 +211,7 @@ class _RoutingActivityTab extends ConsumerWidget {
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  l10n.noRoutingActivity,
-                  style: theme.textTheme.bodyLarge,
-                ),
+                Text(l10n.noRoutingActivity, style: theme.textTheme.bodyLarge),
               ],
             ),
           );

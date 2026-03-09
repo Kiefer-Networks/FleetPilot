@@ -131,9 +131,9 @@ class SelfServicePage extends ConsumerWidget {
       await api.createSelfServiceCategory({'name': result.trim()});
       ref.invalidate(selfServiceCategoriesProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.categoryCreated)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.categoryCreated)));
       }
     }
   }
@@ -166,9 +166,9 @@ class SelfServicePage extends ConsumerWidget {
       await api.deleteSelfServiceCategory(id);
       ref.invalidate(selfServiceCategoriesProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.categoryDeleted)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.categoryDeleted)));
       }
     }
   }

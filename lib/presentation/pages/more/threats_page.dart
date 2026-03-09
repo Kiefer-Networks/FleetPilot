@@ -298,11 +298,14 @@ class _ThreatFilterBottomSheet extends StatelessWidget {
                         onPressed: () {
                           ref.read(threatStatusFilterProvider.notifier).state =
                               null;
-                          ref.read(threatSeverityFilterProvider.notifier).state =
+                          ref
+                                  .read(threatSeverityFilterProvider.notifier)
+                                  .state =
                               null;
                           ref
                                   .read(
-                                    threatManagementStateFilterProvider.notifier,
+                                    threatManagementStateFilterProvider
+                                        .notifier,
                                   )
                                   .state =
                               null;
@@ -347,11 +350,10 @@ class _ThreatFilterBottomSheet extends StatelessWidget {
                               selected: status == entry.key,
                               onSelected: (_) {
                                 ref
-                                        .read(
-                                          threatStatusFilterProvider.notifier,
-                                        )
-                                        .state =
-                                    status == entry.key ? null : entry.key;
+                                    .read(threatStatusFilterProvider.notifier)
+                                    .state = status == entry.key
+                                    ? null
+                                    : entry.key;
                                 setSheetState(() {});
                               },
                             ),
@@ -388,11 +390,10 @@ class _ThreatFilterBottomSheet extends StatelessWidget {
                               selected: severity == entry.key,
                               onSelected: (_) {
                                 ref
-                                        .read(
-                                          threatSeverityFilterProvider.notifier,
-                                        )
-                                        .state =
-                                    severity == entry.key ? null : entry.key;
+                                    .read(threatSeverityFilterProvider.notifier)
+                                    .state = severity == entry.key
+                                    ? null
+                                    : entry.key;
                                 setSheetState(() {});
                               },
                             ),
@@ -430,12 +431,13 @@ class _ThreatFilterBottomSheet extends StatelessWidget {
                               selected: mgmt == entry.key,
                               onSelected: (_) {
                                 ref
-                                        .read(
-                                          threatManagementStateFilterProvider
-                                              .notifier,
-                                        )
-                                        .state =
-                                    mgmt == entry.key ? null : entry.key;
+                                    .read(
+                                      threatManagementStateFilterProvider
+                                          .notifier,
+                                    )
+                                    .state = mgmt == entry.key
+                                    ? null
+                                    : entry.key;
                                 setSheetState(() {});
                               },
                             ),

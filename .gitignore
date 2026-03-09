@@ -49,6 +49,7 @@ app.*.map.json
 
 # Work log
 **/coding.md
+CLAUDE.md
 
 # Generated localization files
 .dart_tool/flutter_gen/

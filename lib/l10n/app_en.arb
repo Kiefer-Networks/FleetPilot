@@ -399,6 +399,19 @@
   "@validationSubdomain": {
     "description": "Validation error for invalid subdomain"
   },
+  "validationToken": "Invalid token format. Must be 20–500 characters, alphanumeric and common delimiters only.",
+  "@validationToken": {
+    "description": "Validation error for invalid API token format"
+  },
+  "pinLockedOut": "Too many failed attempts. Try again in {seconds} seconds.",
+  "@pinLockedOut": {
+    "description": "Error shown when PIN entry is rate-limited",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
   "complianceStatus": "Compliance Status",
   "@complianceStatus": {
     "description": "Title for compliance status section"
@@ -654,7 +667,7 @@
   "@aboutApp": {
     "description": "Title for about section"
   },
-  "aboutDescription": "FleetPilot is an open-source MDM management app for Kandji.",
+  "aboutDescription": "FleetPilot is an open-source mobile MDM management app for Apple device fleets.",
   "@aboutDescription": {
     "description": "App description in about"
   },
@@ -1479,7 +1492,7 @@
   "@lockMessage": {
     "description": "Label for lock message field in bulk lock dialog"
   },
-  "noTagsAvailable": "No tags available. Create tags in the Kandji console.",
+  "noTagsAvailable": "No tags available. Create tags in the MDM web console.",
   "@noTagsAvailable": {
     "description": "Empty state when no tags exist for picker"
   },
@@ -1563,7 +1576,7 @@
   "@onboardingReadyTitle": {
     "description": "Title on the final onboarding page"
   },
-  "onboardingReadySubtitle": "Connect your Kandji tenant to start managing your Apple device fleet. You'll set up your API connection and security PIN next.",
+  "onboardingReadySubtitle": "Connect your MDM tenant to start managing your Apple device fleet. You'll set up your API connection and security PIN next.",
   "@onboardingReadySubtitle": {
     "description": "Subtitle on the final onboarding page"
   },
@@ -1618,7 +1631,7 @@
   "categoryBuiltIn": "Built-in",
   "categoryVppApps": "VPP / App Store Apps",
   "categoryManagedProfiles": "Managed Profiles",
-  "categoryKandjiSetup": "Kandji Setup",
+  "categoryKandjiSetup": "MDM Setup",
   "categoryMacosRelease": "macOS Updates",
   "categoryThreatPolicy": "Security Policies",
   "inBlueprints": "In {count, plural, =1{1 blueprint} other{{count} blueprints}}",
@@ -1664,6 +1677,7 @@
 
   "blueprintRouting": "Blueprint Routing",
   "blueprintRoutingDesc": "Enrollment code and routing for Manual / Android Work Profile enrollment",
+  "blueprintRoutingNotConfigured": "Blueprint Routing is not configured for this tenant.",
   "enrollmentCodeActive": "Active",
   "enrollmentCodeInactive": "Inactive",
   "routingActivity": "Routing Activity",
@@ -1732,5 +1746,111 @@
   "selectBlueprint": "Select Blueprint",
   "selectDevice": "Select Device",
   "selfServiceEnabled": "Self-Service",
-  "vppLicenses": "VPP Licenses"
+  "vppLicenses": "VPP Licenses",
+  "fileName": "File Name",
+
+  "navPrism": "Prism",
+  "prismTitle": "Device Intelligence",
+  "prismCategoryActivationLock": "Activation Lock",
+  "prismCategoryApps": "Applications",
+  "prismCategoryApplicationFirewall": "Application Firewall",
+  "prismCategoryCellular": "Cellular",
+  "prismCategoryCertificates": "Certificates",
+  "prismCategoryDesktopAndScreensaver": "Desktop & Screensaver",
+  "prismCategoryDeviceInformation": "Device Information",
+  "prismCategoryFilevault": "FileVault",
+  "prismCategoryGatekeeperAndXprotect": "Gatekeeper & XProtect",
+  "prismCategoryInstalledProfiles": "Installed Profiles",
+  "prismCategoryKernelExtensions": "Kernel Extensions",
+  "prismCategoryLaunchAgentsAndDaemons": "Launch Agents & Daemons",
+  "prismCategoryLocalUsers": "Local Users",
+  "prismCategoryStartupSettings": "Startup Settings",
+  "prismCategorySystemExtensions": "System Extensions",
+  "prismCategoryTransparencyDatabase": "Transparency Database",
+  "prismRecords": "{count} records",
+  "@prismRecords": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "prismNoData": "No data available for this category.",
+  "prismExport": "Export CSV",
+  "prismExportRequested": "Export requested. Check back shortly for the download link.",
+  "prismFilterByFamily": "Device Family",
+  "prismAllFamilies": "All Families",
+
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Settings section title for appearance/theme"
+  },
+  "themeMode": "Theme",
+  "@themeMode": {
+    "description": "Label for theme mode setting"
+  },
+  "themeModeSystem": "System",
+  "@themeModeSystem": {
+    "description": "Theme follows system setting"
+  },
+  "themeModeLight": "Light",
+  "@themeModeLight": {
+    "description": "Light theme"
+  },
+  "themeModeDark": "Dark",
+  "@themeModeDark": {
+    "description": "Dark theme"
+  },
+
+  "shortTypeScript": "Script",
+  "shortTypeCustom": "Custom",
+  "shortTypeProfile": "Profile",
+  "shortTypeInHouse": "In-House",
+  "shortTypeVpp": "VPP",
+  "shortTypeManaged": "Managed",
+  "shortTypeKandji": "Kandji",
+  "shortTypeMacos": "macOS",
+  "shortTypeOs": "OS",
+  "shortTypeSecurity": "Security",
+  "shortTypeAuto": "Auto",
+
+  "categoryOsUpdates": "OS Updates",
+  "categoryAutoApps": "Auto Apps",
+  "autoApp": "Auto App",
+
+  "fileSize": "File Size",
+  "unzipLocation": "Unzip Location",
+  "sha256Label": "SHA-256",
+  "fileUpdated": "File Updated",
+  "mdmIdentifier": "MDM Identifier",
+  "bundleId": "Bundle ID",
+  "appleTV": "Apple TV",
+  "appleVision": "Apple Vision",
+  "appleWatch": "Apple Watch",
+  "iPodLabel": "iPod",
+  "typeLabel": "Type",
+
+  "languageEnglish": "English",
+  "languageGerman": "Deutsch",
+  "languageSpanish": "Español",
+  "languageFrench": "Français",
+  "languagePortuguese": "Português",
+  "languageItalian": "Italiano",
+  "languagePolish": "Polski",
+  "languageCroatian": "Hrvatski",
+  "languageRussian": "Русский",
+  "languageUkrainian": "Українська",
+  "languageArabic": "العربية",
+  "languageHindi": "हिन्दी",
+  "languageChinese": "中文",
+  "languageJapanese": "日本語",
+  "languageKorean": "한국어",
+  "languageTurkish": "Türkçe",
+  "languageDutch": "Nederlands",
+  "languageSwedish": "Svenska",
+  "languageCzech": "Čeština",
+  "languageRomanian": "Română",
+  "languageThai": "ไทย",
+  "languageDanish": "Dansk",
+  "languageNorwegian": "Norsk",
+  "languageIndonesian": "Bahasa Indonesia",
+  "languageVietnamese": "Tiếng Việt"
 }

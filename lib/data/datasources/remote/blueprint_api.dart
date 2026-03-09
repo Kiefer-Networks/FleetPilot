@@ -233,10 +233,7 @@ class BlueprintApi {
     String? userEmail,
   }) async {
     try {
-      final queryParams = <String, dynamic>{
-        'limit': limit,
-        'offset': offset,
-      };
+      final queryParams = <String, dynamic>{'limit': limit, 'offset': offset};
       if (activityType != null) queryParams['activity_type'] = activityType;
       if (userId != null) queryParams['user_id'] = userId;
       if (userEmail != null) queryParams['user_email'] = userEmail;
@@ -283,10 +280,7 @@ class BlueprintApi {
     String? computerId,
   }) async {
     try {
-      final queryParams = <String, dynamic>{
-        'limit': limit,
-        'offset': offset,
-      };
+      final queryParams = <String, dynamic>{'limit': limit, 'offset': offset};
       if (computerId != null) queryParams['computer_id'] = computerId;
       final response = await dio.get<dynamic>(
         '/library/library-items/$itemId/status',

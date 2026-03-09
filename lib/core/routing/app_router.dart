@@ -24,6 +24,8 @@ import '../../presentation/pages/more/self_service_page.dart';
 import '../../presentation/pages/more/vulnerabilities_page.dart';
 import '../../presentation/pages/more/vulnerability_detail_page.dart';
 import '../../presentation/pages/onboarding/onboarding_page.dart';
+import '../../presentation/pages/prism/prism_detail_page.dart';
+import '../../presentation/pages/prism/prism_page.dart';
 import '../../presentation/pages/root_shell.dart';
 import '../../presentation/pages/settings/security_settings_page.dart';
 import '../../presentation/pages/settings/settings_page.dart';
@@ -82,6 +84,20 @@ GoRouter createRouter({
                 builder: (context, state) {
                   final deviceId = state.pathParameters['deviceId']!;
                   return DeviceDetailPage(deviceId: deviceId);
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/prism',
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: PrismPage()),
+            routes: [
+              GoRoute(
+                path: ':category',
+                builder: (context, state) {
+                  final category = state.pathParameters['category']!;
+                  return PrismDetailPage(category: category);
                 },
               ),
             ],

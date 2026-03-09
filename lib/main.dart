@@ -131,6 +131,7 @@ class _FleetPilotAppState extends ConsumerState<FleetPilotApp>
   @override
   Widget build(BuildContext context) {
     final locale = ref.watch(localeProvider);
+    final themeMode = ref.watch(themeModeProvider);
 
     // Listen for session unlock to clear the timestamp
     ref.listen<bool>(sessionLockedProvider, (previous, next) {
@@ -144,7 +145,7 @@ class _FleetPilotAppState extends ConsumerState<FleetPilotApp>
       debugShowCheckedModeBanner: false,
       theme: buildLightTheme(),
       darkTheme: buildDarkTheme(),
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       locale: locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,

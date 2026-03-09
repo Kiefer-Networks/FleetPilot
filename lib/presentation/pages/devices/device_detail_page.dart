@@ -388,7 +388,7 @@ class _DeviceDetailScaffold extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('${l10n.actionFailed}: $e')));
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -758,7 +758,7 @@ class _DeviceDetailScaffold extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('${l10n.actionFailed}: $e')));
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -1522,7 +1522,9 @@ class _HardwareCard extends StatelessWidget {
                 Icon(
                   batteryPct > 20 ? Icons.battery_std : Icons.battery_alert,
                   size: 20,
-                  color: batteryPct > 20 ? colorScheme.primary : colorScheme.error,
+                  color: batteryPct > 20
+                      ? colorScheme.primary
+                      : colorScheme.error,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -1775,15 +1777,9 @@ class _MdmCard extends StatelessWidget {
       children: [
         _SectionTitle(title: l10n.mdmInfo),
         if (mdm.mdmEnabled != null)
-          _StatusRow(
-            label: l10n.mdmEnabled,
-            isActive: mdm.mdmEnabled!,
-          ),
+          _StatusRow(label: l10n.mdmEnabled, isActive: mdm.mdmEnabled!),
         if (mdm.enrolledViaDep != null)
-          _StatusRow(
-            label: l10n.enrolledViaDep,
-            isActive: mdm.enrolledViaDep!,
-          ),
+          _StatusRow(label: l10n.enrolledViaDep, isActive: mdm.enrolledViaDep!),
         if (mdm.userApprovedEnrollment != null)
           _StatusRow(
             label: l10n.userApprovedEnrollment,
@@ -1815,7 +1811,12 @@ class _VolumesCard extends StatelessWidget {
         _SectionTitle(title: l10n.volumes),
         for (var i = 0; i < volumes.length; i++) ...[
           if (i > 0) const SizedBox(height: 12),
-          _VolumeRow(volume: volumes[i], theme: theme, colorScheme: colorScheme, l10n: l10n),
+          _VolumeRow(
+            volume: volumes[i],
+            theme: theme,
+            colorScheme: colorScheme,
+            l10n: l10n,
+          ),
         ],
       ],
     );
@@ -1869,8 +1870,8 @@ class _VolumeRow extends StatelessWidget {
               color: pct > 90
                   ? colorScheme.error
                   : pct > 75
-                      ? Colors.orange
-                      : colorScheme.primary,
+                  ? Colors.orange
+                  : colorScheme.primary,
               minHeight: 8,
             ),
           ),
@@ -1956,7 +1957,12 @@ class _UsersCard extends StatelessWidget {
             ),
           ),
           for (final user in users.regularUsers)
-            _UserRow(user: user, theme: theme, colorScheme: colorScheme, l10n: l10n),
+            _UserRow(
+              user: user,
+              theme: theme,
+              colorScheme: colorScheme,
+              l10n: l10n,
+            ),
         ],
         if (users.systemUsers.isNotEmpty) ...[
           if (users.regularUsers.isNotEmpty) const SizedBox(height: 8),
@@ -1970,7 +1976,12 @@ class _UsersCard extends StatelessWidget {
             ),
           ),
           for (final user in users.systemUsers)
-            _UserRow(user: user, theme: theme, colorScheme: colorScheme, l10n: l10n),
+            _UserRow(
+              user: user,
+              theme: theme,
+              colorScheme: colorScheme,
+              l10n: l10n,
+            ),
         ],
       ],
     );
@@ -2461,104 +2472,281 @@ class _ActivityTile extends StatelessWidget {
     final status = _deriveStatus(activity.actionType);
     final statusColor = _statusBadgeColor(status, colorScheme);
     final iconColor = _statusIconColor(status, colorScheme);
+    final summary = DeviceActivity.summarize(activity.details);
+    final hasDetails = activity.details != null && activity.details!.isNotEmpty;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: iconColor.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: hasDetails
+              ? () => _showDetailsSheet(context, theme, colorScheme)
+              : null,
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: iconColor.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    _activityIcon(activity.actionType),
+                    size: 20,
+                    color: iconColor,
+                  ),
                 ),
-                child: Icon(
-                  _activityIcon(activity.actionType),
-                  size: 20,
-                  color: iconColor,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              _formatActionType(activity.actionType),
+                              style: theme.textTheme.titleSmall,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: statusColor.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              status,
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: statusColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (summary != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
                           child: Text(
-                            _formatActionType(activity.actionType),
-                            style: theme.textTheme.titleSmall,
+                            summary,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 3,
-                          ),
-                          decoration: BoxDecoration(
-                            color: statusColor.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(
-                            status,
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: statusColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (activity.details != null &&
-                        activity.details!.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Text(
-                          activity.details!,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    if (activity.createdAt != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.schedule,
-                              size: 14,
-                              color: colorScheme.onSurfaceVariant,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              _formatTimestamp(activity.createdAt!),
-                              style: theme.textTheme.labelSmall?.copyWith(
+                      if (activity.createdAt != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.schedule,
+                                size: 14,
                                 color: colorScheme.onSurfaceVariant,
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 4),
+                              Text(
+                                _formatTimestamp(activity.createdAt!),
+                                style: theme.textTheme.labelSmall?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                if (hasDetails)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Icon(
+                      Icons.info_outline,
+                      size: 16,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  void _showDetailsSheet(
+    BuildContext context,
+    ThemeData theme,
+    ColorScheme cs,
+  ) {
+    final details = activity.details!;
+    final l10n = AppLocalizations.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (ctx) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.5,
+        maxChildSize: 0.85,
+        minChildSize: 0.3,
+        builder: (ctx, scrollController) => Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _formatActionType(activity.actionType),
+                      style: theme.textTheme.titleMedium,
+                    ),
+                  ),
+                  if (activity.createdAt != null)
+                    Text(
+                      _formatTimestamp(activity.createdAt!),
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: cs.onSurfaceVariant,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            Divider(height: 1, color: cs.outlineVariant),
+            Expanded(
+              child: ListView(
+                controller: scrollController,
+                padding: const EdgeInsets.all(16),
+                children: _buildDetailRows(details, theme, cs, l10n),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildDetailRows(
+    Map<String, dynamic> details,
+    ThemeData theme,
+    ColorScheme cs,
+    AppLocalizations l10n,
+  ) {
+    final rows = <Widget>[];
+    for (final entry in details.entries) {
+      if (entry.key.startsWith('_')) continue;
+      final label = _formatKey(entry.key);
+      final value = entry.value;
+
+      if (value is Map) {
+        // Nested map: show as section
+        rows.add(
+          Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 4),
+            child: Text(
+              label,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: cs.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        );
+        for (final sub in value.entries) {
+          rows.add(
+            _detailRow(
+              _formatKey(sub.key.toString()),
+              _formatValue(sub.value),
+              theme,
+              cs,
+            ),
+          );
+        }
+      } else {
+        rows.add(_detailRow(label, _formatValue(value), theme, cs));
+      }
+    }
+    return rows;
+  }
+
+  Widget _detailRow(
+    String label,
+    String value,
+    ThemeData theme,
+    ColorScheme cs,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 130,
+            child: Text(
+              label,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: cs.onSurfaceVariant,
+              ),
+            ),
+          ),
+          Expanded(
+            child: SelectableText(value, style: theme.textTheme.bodySmall),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatKey(String key) {
+    const acronyms = {
+      'mdm',
+      'os',
+      'id',
+      'api',
+      'ade',
+      'vpn',
+      'url',
+      'ip',
+      'dns',
+      'uuid',
+    };
+    return key
+        .replaceAll('__', ' ')
+        .split('_')
+        .map((w) {
+          if (w.isEmpty) return '';
+          if (acronyms.contains(w.toLowerCase())) return w.toUpperCase();
+          return '${w[0].toUpperCase()}${w.substring(1)}';
+        })
+        .join(' ');
+  }
+
+  String _formatValue(dynamic value) {
+    if (value == null) return '–';
+    if (value is bool) return value ? 'Yes' : 'No';
+    if (value is List) {
+      if (value.isEmpty) return '–';
+      return value.map((e) => e.toString()).join(', ');
+    }
+    if (value is Map) {
+      return value.entries.map((e) => '${e.key}: ${e.value}').join(', ');
+    }
+    return value.toString();
   }
 
   /// Derives a status label from the action type string.
@@ -2570,7 +2758,7 @@ class _ActivityTile extends StatelessWidget {
     return 'Info';
   }
 
-  /// Badge color mapped to status: Success=primary, Failed=error, Pending=tertiary.
+  /// Badge color mapped to status.
   Color _statusBadgeColor(String status, ColorScheme cs) => switch (status) {
     'Success' => cs.primary,
     'Failed' => cs.error,
@@ -2578,7 +2766,6 @@ class _ActivityTile extends StatelessWidget {
     _ => cs.onSurfaceVariant,
   };
 
-  /// Icon circle color mapped to status.
   Color _statusIconColor(String status, ColorScheme cs) => switch (status) {
     'Success' => cs.primary,
     'Failed' => cs.error,
@@ -2596,10 +2783,14 @@ class _ActivityTile extends StatelessWidget {
 
   String _formatActionType(String? type) {
     if (type == null) return 'Unknown';
-    // Convert snake_case to Title Case
+    const acronyms = {'mdm', 'os', 'id', 'api', 'ade', 'vpn'};
     return type
         .split('_')
-        .map((w) => w.isEmpty ? '' : '${w[0].toUpperCase()}${w.substring(1)}')
+        .map((w) {
+          if (w.isEmpty) return '';
+          if (acronyms.contains(w.toLowerCase())) return w.toUpperCase();
+          return '${w[0].toUpperCase()}${w.substring(1)}';
+        })
         .join(' ');
   }
 
@@ -2688,66 +2879,168 @@ class _CommandTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final cs = theme.colorScheme;
     final statusLabel = DeviceCommand.statusLabel(command.status);
-    final statusColor = _commandStatusColor(command.status, colorScheme);
+    final statusColor = _commandStatusColor(command.status, cs);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            children: [
-              Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  _commandStatusIcon(command.status),
-                  size: 18,
-                  color: statusColor,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      command.requestType ?? command.commandType ?? 'Unknown',
-                      style: theme.textTheme.titleSmall,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (command.dateRequested != null)
-                      Text(
-                        _formatDate(command.dateRequested!),
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  statusLabel,
-                  style: theme.textTheme.labelSmall?.copyWith(
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => _showDetailsSheet(context, theme, cs),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: statusColor.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(
+                    _commandStatusIcon(command.status),
+                    size: 18,
                     color: statusColor,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        command.requestType ?? command.commandType ?? 'Unknown',
+                        style: theme.textTheme.titleSmall,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (command.dateRequested != null)
+                        Text(
+                          _formatDate(command.dateRequested!),
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: cs.onSurfaceVariant,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: statusColor.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    statusLabel,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: statusColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Icon(Icons.info_outline, size: 16, color: cs.onSurfaceVariant),
+              ],
+            ),
           ),
+        ),
+      ),
+    );
+  }
+
+  void _showDetailsSheet(
+    BuildContext context,
+    ThemeData theme,
+    ColorScheme cs,
+  ) {
+    final statusLabel = DeviceCommand.statusLabel(command.status);
+    final statusColor = _commandStatusColor(command.status, cs);
+
+    final rows = <(String, String)>[
+      if (command.requestType != null) ('Request Type', command.requestType!),
+      if (command.commandType != null) ('Command Type', command.commandType!),
+      ('Status', statusLabel),
+      if (command.uuid != null) ('UUID', command.uuid!),
+      if (command.dateRequested != null)
+        ('Requested', _formatDate(command.dateRequested!)),
+      if (command.dateCompleted != null)
+        ('Completed', _formatDate(command.dateCompleted!)),
+      if (command.lastPushed != null)
+        ('Last Pushed', _formatDate(command.lastPushed!)),
+      if (command.attempts != null) ('Attempts', '${command.attempts}'),
+      if (command.priority != null) ('Priority', '${command.priority}'),
+    ];
+
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    command.requestType ?? command.commandType ?? 'Unknown',
+                    style: theme.textTheme.titleMedium,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: statusColor.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    statusLabel,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: statusColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Divider(height: 1, color: cs.outlineVariant),
+            const SizedBox(height: 12),
+            ...rows.map(
+              (r) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      child: Text(
+                        r.$1,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: cs.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SelectableText(
+                        r.$2,
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -2771,8 +3064,9 @@ class _CommandTile extends StatelessWidget {
   String _formatDate(String dateStr) {
     final parsed = DateTime.tryParse(dateStr);
     if (parsed == null) return dateStr;
-    return '${parsed.year}-${parsed.month.toString().padLeft(2, '0')}-${parsed.day.toString().padLeft(2, '0')} '
-        '${parsed.hour.toString().padLeft(2, '0')}:${parsed.minute.toString().padLeft(2, '0')}';
+    final local = parsed.toLocal();
+    return '${local.year}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')} '
+        '${local.hour.toString().padLeft(2, '0')}:${local.minute.toString().padLeft(2, '0')}';
   }
 }
 
@@ -3550,7 +3844,7 @@ class _LocationTab extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('${l10n.actionFailed}: $e')));
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }

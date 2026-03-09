@@ -76,12 +76,12 @@ final behavioralSearchQueryProvider = StateProvider<String>((ref) => '');
 final behavioralSeverityFilterProvider = StateProvider<String?>((ref) => null);
 
 /// Classification filter for behavioral detections (mal, pup, sus).
-final behavioralClassificationFilterProvider =
-    StateProvider<String?>((ref) => null);
+final behavioralClassificationFilterProvider = StateProvider<String?>(
+  (ref) => null,
+);
 
 /// Management state filter for behavioral detections (open, closed).
-final behavioralMgmtStateFilterProvider =
-    StateProvider<String?>((ref) => null);
+final behavioralMgmtStateFilterProvider = StateProvider<String?>((ref) => null);
 
 /// Sort direction for behavioral detections (true = A-Z, false = Z-A).
 final behavioralSortAscProvider = StateProvider<bool>((ref) => true);
@@ -195,7 +195,9 @@ final threatStatusFilterProvider = StateProvider<String?>((ref) => null);
 final threatSeverityFilterProvider = StateProvider<String?>((ref) => null);
 
 /// Management state filter for threats (open, closed).
-final threatManagementStateFilterProvider = StateProvider<String?>((ref) => null);
+final threatManagementStateFilterProvider = StateProvider<String?>(
+  (ref) => null,
+);
 
 /// Sort direction for threats (true = A-Z, false = Z-A).
 final threatSortAscProvider = StateProvider<bool>((ref) => true);
@@ -301,11 +303,12 @@ final filteredAuditEventsProvider = Provider<AsyncValue<List<AuditEvent>>>((
 // ---------------------------------------------------------------------------
 
 /// Provider for blueprint routing config.
-final blueprintRoutingProvider =
-    FutureProvider<Map<String, dynamic>>((ref) async {
-      final api = await ref.watch(tenantApiProvider.future);
-      return api.getBlueprintRouting();
-    });
+final blueprintRoutingProvider = FutureProvider<Map<String, dynamic>>((
+  ref,
+) async {
+  final api = await ref.watch(tenantApiProvider.future);
+  return api.getBlueprintRouting();
+});
 
 /// Provider for blueprint routing activity.
 final blueprintRoutingActivityProvider =

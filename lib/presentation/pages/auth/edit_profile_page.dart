@@ -273,7 +273,15 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                 obscureText: true,
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (_) => _verifyAndSave(),
-                // Token is optional on edit — empty means keep existing
+                validator: (value) {
+                  // Token is optional on edit — empty means keep existing
+                  if (value != null &&
+                      value.trim().isNotEmpty &&
+                      !value.trim().isValidApiToken) {
+                    return l10n.validationToken;
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 24),
 

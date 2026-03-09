@@ -644,7 +644,8 @@ class _AdeDetailScaffold extends ConsumerWidget {
                   child: Text(l10n.cancel),
                 ),
                 FilledButton(
-                  onPressed: filePath != null &&
+                  onPressed:
+                      filePath != null &&
                           phoneController.text.isNotEmpty &&
                           emailController.text.isNotEmpty &&
                           !uploading

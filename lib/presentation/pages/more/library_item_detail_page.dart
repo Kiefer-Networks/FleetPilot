@@ -117,21 +117,18 @@ class LibraryItemDetailPage extends ConsumerWidget {
 
     try {
       final api = await ref.read(blueprintApiProvider.future);
-      await api.assignLibraryItem(
-        selectedBpId,
-        {'library_item_id': itemId},
-      );
+      await api.assignLibraryItem(selectedBpId, {'library_item_id': itemId});
       ref.invalidate(aggregatedLibraryItemsProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.libraryItemAssigned)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.libraryItemAssigned)));
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.actionFailed)));
       }
     }
   }
@@ -145,9 +142,11 @@ class LibraryItemDetailPage extends ConsumerWidget {
       'automatic-app' => l10n.categoryVppApps,
       'profile' => l10n.categoryManagedProfiles,
       'kandji-setup' => l10n.categoryKandjiSetup,
-      'macos-release' => l10n.categoryMacosRelease,
+      'macos-release' || 'os-release' => l10n.categoryMacosRelease,
       'threat-security-policy' => l10n.categoryThreatPolicy,
-      _ => null,
+      '_unknown' => l10n.autoApp,
+      null || '_built-in' => null,
+      _ => category.replaceAll('-', ' ').replaceAll('_', ' '),
     };
   }
 }
@@ -206,10 +205,12 @@ class _InfoTab extends ConsumerWidget {
     // Common fields
     final rows = <_InfoRow>[];
     if (active != null) {
-      rows.add(_InfoRow(
-        label: l10n.active,
-        value: active == true ? l10n.yes : l10n.no,
-      ));
+      rows.add(
+        _InfoRow(
+          label: l10n.active,
+          value: active == true ? l10n.yes : l10n.no,
+        ),
+      );
     }
 
     // Use full details if available (has body/script/profile fields).
@@ -224,71 +225,104 @@ class _InfoTab extends ConsumerWidget {
         _addFrequency(rows, l10n, d['execution_frequency']);
         _addBoolIfPresent(rows, l10n.restart, d['restart'], l10n);
         _addBoolIfPresent(
-            rows, l10n.selfService, d['show_in_self_service'], l10n);
+          rows,
+          l10n.selfService,
+          d['show_in_self_service'],
+          l10n,
+        );
       case 'custom-app':
         _addIfPresent(rows, l10n.installType, d['install_type']);
         _addIfPresent(rows, l10n.enforcement, d['install_enforcement']);
-        _addIfPresent(rows, 'Unzip Location', d['unzip_location']);
+        _addBoolIfPresent(rows, l10n.active, d['active'], l10n);
         _addBoolIfPresent(rows, l10n.restart, d['restart'], l10n);
         _addBoolIfPresent(
-            rows, l10n.selfService, d['show_in_self_service'], l10n);
-        _addIfPresent(rows, 'File Size', _formatFileSize(d['file_size']));
-        _addIfPresent(rows, 'SHA-256', d['sha256']);
-        _addDateTimeIfPresent(rows, 'File Updated', d['file_updated']);
+          rows,
+          l10n.selfService,
+          d['show_in_self_service'],
+          l10n,
+        );
+        // Extract filename from file_key (last path segment)
+        final fileKey = d['file_key']?.toString();
+        if (fileKey != null && fileKey.isNotEmpty) {
+          final fileName = fileKey.split('/').last;
+          _addIfPresent(rows, l10n.fileName, fileName);
+        }
+        _addIfPresent(rows, l10n.fileSize, _formatFileSize(d['file_size']));
+        _addIfPresent(rows, l10n.unzipLocation, d['unzip_location']);
+        _addIfPresent(rows, l10n.sha256Label, d['sha256']);
+        _addDateTimeIfPresent(rows, l10n.fileUpdated, d['file_updated']);
       case 'custom-profile':
-        _addIfPresent(rows, 'MDM Identifier', d['mdm_identifier']);
+        _addIfPresent(rows, l10n.mdmIdentifier, d['mdm_identifier']);
+        _addBoolIfPresent(rows, l10n.runsOnMac, d['runs_on_mac'], l10n);
+        _addBoolIfPresent(rows, l10n.runsOnIphone, d['runs_on_iphone'], l10n);
+        _addBoolIfPresent(rows, l10n.runsOnIpad, d['runs_on_ipad'], l10n);
+        _addBoolIfPresent(rows, l10n.appleTV, d['runs_on_tv'], l10n);
+        _addBoolIfPresent(rows, l10n.appleVision, d['runs_on_vision'], l10n);
         _addBoolIfPresent(
-            rows, l10n.runsOnMac, d['runs_on_mac'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnIphone, d['runs_on_iphone'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnIpad, d['runs_on_ipad'], l10n);
-        _addBoolIfPresent(rows, 'Apple TV', d['runs_on_tv'], l10n);
-        _addBoolIfPresent(rows, 'Apple Vision', d['runs_on_vision'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.selfService, d['show_in_self_service'], l10n);
+          rows,
+          l10n.selfService,
+          d['show_in_self_service'],
+          l10n,
+        );
       case 'in-house-app':
         _addIfPresent(rows, l10n.appName, d['app_name']);
         _addIfPresent(rows, l10n.appVersion, d['app_version']);
-        _addIfPresent(rows, 'Bundle ID', d['app_identifier']);
-        _addIfPresent(rows, 'Identifier', d['identifier']);
+        _addIfPresent(rows, l10n.bundleId, d['app_identifier']);
+        _addIfPresent(rows, l10n.identifier, d['identifier']);
         _addIfPresent(rows, l10n.minOsVersion, d['minimum_os_version']);
+        _addBoolIfPresent(rows, l10n.runsOnIphone, d['runs_on_iphone'], l10n);
+        _addBoolIfPresent(rows, l10n.runsOnIpad, d['runs_on_ipad'], l10n);
+        _addBoolIfPresent(rows, l10n.runsOnMac, d['runs_on_mac'], l10n);
+        _addBoolIfPresent(rows, l10n.appleTV, d['runs_on_tv'], l10n);
+        _addBoolIfPresent(rows, l10n.appleWatch, d['runs_on_watch'], l10n);
+        _addBoolIfPresent(rows, l10n.iPodLabel, d['runs_on_ipod'], l10n);
         _addBoolIfPresent(
-            rows, l10n.runsOnIphone, d['runs_on_iphone'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnIpad, d['runs_on_ipad'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.runsOnMac, d['runs_on_mac'], l10n);
-        _addBoolIfPresent(rows, 'Apple TV', d['runs_on_tv'], l10n);
-        _addBoolIfPresent(rows, 'Apple Watch', d['runs_on_watch'], l10n);
-        _addBoolIfPresent(rows, 'iPod', d['runs_on_ipod'], l10n);
-        _addBoolIfPresent(
-            rows, l10n.selfService, d['show_in_self_service'], l10n);
+          rows,
+          l10n.selfService,
+          d['show_in_self_service'],
+          l10n,
+        );
         _addIfPresent(rows, l10n.installType, d['install_type']);
         _addIfPresent(rows, l10n.enforcement, d['install_enforcement']);
-        _addIfPresent(rows, 'File Size', _formatFileSize(d['file_size']));
-        _addIfPresent(rows, 'SHA-256', d['sha256']);
-        _addDateTimeIfPresent(rows, 'File Updated', d['file_updated']);
+        _addIfPresent(rows, l10n.fileSize, _formatFileSize(d['file_size']));
+        _addIfPresent(rows, l10n.sha256Label, d['sha256']);
+        _addDateTimeIfPresent(rows, l10n.fileUpdated, d['file_updated']);
       // VPP / automatic apps — limited data from list-library-items
       case 'automatic-app':
-        _addIfPresent(rows, 'Type', d['type']);
+        _addIfPresent(rows, l10n.typeLabel, d['type']);
         _addBoolIfPresent(
-            rows, l10n.selfServiceEnabled, d['show_in_self_service'], l10n);
+          rows,
+          l10n.selfServiceEnabled,
+          d['show_in_self_service'],
+          l10n,
+        );
       // Managed profiles — limited data from list-library-items
       case 'profile':
-        _addIfPresent(rows, 'Type', d['type']);
+        _addIfPresent(rows, l10n.typeLabel, d['type']);
         _addBoolIfPresent(
-            rows, l10n.selfServiceEnabled, d['show_in_self_service'], l10n);
+          rows,
+          l10n.selfServiceEnabled,
+          d['show_in_self_service'],
+          l10n,
+        );
       // Kandji-managed items — limited data from list-library-items
       case 'kandji-setup' || 'macos-release' || 'threat-security-policy':
-        _addIfPresent(rows, 'Type', d['type']);
+        _addIfPresent(rows, l10n.typeLabel, d['type']);
         _addBoolIfPresent(
-            rows, l10n.selfServiceEnabled, d['show_in_self_service'], l10n);
+          rows,
+          l10n.selfServiceEnabled,
+          d['show_in_self_service'],
+          l10n,
+        );
       // Any other type
       default:
-        _addIfPresent(rows, 'Type', d['type']);
+        _addIfPresent(rows, l10n.typeLabel, d['type']);
         _addBoolIfPresent(
-            rows, l10n.selfServiceEnabled, d['show_in_self_service'], l10n);
+          rows,
+          l10n.selfServiceEnabled,
+          d['show_in_self_service'],
+          l10n,
+        );
     }
 
     _addDateTimeIfPresent(rows, l10n.created, d['created_at']);
@@ -413,16 +447,16 @@ class _InfoTab extends ConsumerWidget {
   }
 
   void _addBoolIfPresent(
-      List<_InfoRow> rows, String label, dynamic value, AppLocalizations l10n) {
+    List<_InfoRow> rows,
+    String label,
+    dynamic value,
+    AppLocalizations l10n,
+  ) {
     if (value == null) return;
-    rows.add(_InfoRow(
-      label: label,
-      value: value == true ? l10n.yes : l10n.no,
-    ));
+    rows.add(_InfoRow(label: label, value: value == true ? l10n.yes : l10n.no));
   }
 
-  void _addDateTimeIfPresent(
-      List<_InfoRow> rows, String label, dynamic value) {
+  void _addDateTimeIfPresent(List<_InfoRow> rows, String label, dynamic value) {
     if (value == null) return;
     if (value is String) {
       rows.add(_InfoRow(label: label, value: _formatDateTime(value)));
@@ -430,7 +464,10 @@ class _InfoTab extends ConsumerWidget {
   }
 
   void _addFrequency(
-      List<_InfoRow> rows, AppLocalizations l10n, dynamic value) {
+    List<_InfoRow> rows,
+    AppLocalizations l10n,
+    dynamic value,
+  ) {
     if (value == null) return;
     final display = _translateFrequency(value.toString(), l10n);
     rows.add(_InfoRow(label: l10n.execution, value: display));
@@ -636,7 +673,8 @@ class _ScriptViewerCard extends StatelessWidget {
           return spans;
         }
         spans.add(
-            TextSpan(text: line.substring(i, end + 1), style: stringStyle));
+          TextSpan(text: line.substring(i, end + 1), style: stringStyle),
+        );
         i = end + 1;
         continue;
       }
@@ -650,7 +688,8 @@ class _ScriptViewerCard extends StatelessWidget {
           return spans;
         }
         spans.add(
-            TextSpan(text: line.substring(i, end + 1), style: stringStyle));
+          TextSpan(text: line.substring(i, end + 1), style: stringStyle),
+        );
         i = end + 1;
         continue;
       }
@@ -662,15 +701,15 @@ class _ScriptViewerCard extends StatelessWidget {
           final end = line.indexOf('}', i + 2);
           if (end != -1) {
             spans.add(
-                TextSpan(text: line.substring(i, end + 1), style: varStyle));
+              TextSpan(text: line.substring(i, end + 1), style: varStyle),
+            );
             i = end + 1;
             continue;
           }
         }
         // Simple $VAR
         var j = i + 1;
-        while (j < line.length &&
-            (RegExp(r'[a-zA-Z0-9_]').hasMatch(line[j]))) {
+        while (j < line.length && (RegExp(r'[a-zA-Z0-9_]').hasMatch(line[j]))) {
           j++;
         }
         spans.add(TextSpan(text: line.substring(i, j), style: varStyle));
@@ -687,13 +726,59 @@ class _ScriptViewerCard extends StatelessWidget {
   }
 
   static const _shellKeywords = {
-    'if', 'then', 'else', 'elif', 'fi', 'for', 'while', 'do', 'done',
-    'case', 'esac', 'in', 'function', 'return', 'exit', 'echo', 'printf',
-    'export', 'local', 'readonly', 'declare', 'set', 'unset', 'shift',
-    'source', 'eval', 'exec', 'trap', 'wait', 'true', 'false',
-    'sudo', 'cd', 'ls', 'rm', 'cp', 'mv', 'mkdir', 'chmod', 'chown',
-    'cat', 'grep', 'sed', 'awk', 'curl', 'wget', 'python', 'python3',
-    'pip', 'brew', 'defaults', 'launchctl', 'systemctl',
+    'if',
+    'then',
+    'else',
+    'elif',
+    'fi',
+    'for',
+    'while',
+    'do',
+    'done',
+    'case',
+    'esac',
+    'in',
+    'function',
+    'return',
+    'exit',
+    'echo',
+    'printf',
+    'export',
+    'local',
+    'readonly',
+    'declare',
+    'set',
+    'unset',
+    'shift',
+    'source',
+    'eval',
+    'exec',
+    'trap',
+    'wait',
+    'true',
+    'false',
+    'sudo',
+    'cd',
+    'ls',
+    'rm',
+    'cp',
+    'mv',
+    'mkdir',
+    'chmod',
+    'chown',
+    'cat',
+    'grep',
+    'sed',
+    'awk',
+    'curl',
+    'wget',
+    'python',
+    'python3',
+    'pip',
+    'brew',
+    'defaults',
+    'launchctl',
+    'systemctl',
   };
 }
 
@@ -716,7 +801,11 @@ class _ProfileViewerCard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 4, bottom: 8),
           child: Row(
             children: [
-              Icon(Icons.description, size: 16, color: theme.colorScheme.primary),
+              Icon(
+                Icons.description,
+                size: 16,
+                color: theme.colorScheme.primary,
+              ),
               const SizedBox(width: 8),
               Text(
                 l10n.profileBody,
@@ -827,7 +916,9 @@ class _ProfileViewerCard extends StatelessWidget {
       if (line.startsWith('<!--', i)) {
         final end = line.indexOf('-->', i);
         if (end != -1) {
-          spans.add(TextSpan(text: line.substring(i, end + 3), style: commentStyle));
+          spans.add(
+            TextSpan(text: line.substring(i, end + 3), style: commentStyle),
+          );
           i = end + 3;
           continue;
         }
@@ -848,13 +939,18 @@ class _ProfileViewerCard extends StatelessWidget {
             // Highlight attribute="value" pairs
             var j = 0;
             while (j < rest.length) {
-              final attrPair = RegExp(r'''(\s+)([\w:.-]+)(=)(".*?"|'.*?')''')
-                  .matchAsPrefix(rest, j);
+              final attrPair = RegExp(
+                r'''(\s+)([\w:.-]+)(=)(".*?"|'.*?')''',
+              ).matchAsPrefix(rest, j);
               if (attrPair != null) {
                 spans.add(TextSpan(text: attrPair.group(1), style: baseStyle));
-                spans.add(TextSpan(text: attrPair.group(2), style: attrNameStyle));
+                spans.add(
+                  TextSpan(text: attrPair.group(2), style: attrNameStyle),
+                );
                 spans.add(TextSpan(text: attrPair.group(3), style: baseStyle));
-                spans.add(TextSpan(text: attrPair.group(4), style: attrValueStyle));
+                spans.add(
+                  TextSpan(text: attrPair.group(4), style: attrValueStyle),
+                );
                 j = attrPair.end;
               } else {
                 spans.add(TextSpan(text: rest[j], style: tagStyle));
@@ -887,11 +983,7 @@ class _ProfileViewerCard extends StatelessWidget {
 
 /// Shows all fields from the API response grouped logically.
 class _RawFieldsCard extends StatelessWidget {
-  const _RawFieldsCard({
-    required this.data,
-    this.category,
-    required this.l10n,
-  });
+  const _RawFieldsCard({required this.data, this.category, required this.l10n});
 
   final Map<String, dynamic> data;
   final String? category;
@@ -914,6 +1006,15 @@ class _RawFieldsCard extends StatelessWidget {
         return false;
       }
       if (e.key == 'profile' && category == 'custom-profile') return false;
+      // Hide script fields shown as dedicated script viewers
+      if (category == 'custom-app' &&
+          (e.key == 'audit_script' ||
+              e.key == 'preinstall_script' ||
+              e.key == 'postinstall_script')) {
+        return false;
+      }
+      // Hide fields already shown in structured section
+      if (_structuredFields.contains(e.key)) return false;
       return true;
     }).toList();
 
@@ -957,6 +1058,35 @@ class _RawFieldsCard extends StatelessWidget {
       ),
     );
   }
+
+  /// Fields already shown in the structured properties card.
+  static const _structuredFields = {
+    'type',
+    'active',
+    'install_type',
+    'install_enforcement',
+    'restart',
+    'show_in_self_service',
+    'file_size',
+    'file_key',
+    'file_updated',
+    'sha256',
+    'unzip_location',
+    'execution_frequency',
+    'mdm_identifier',
+    'app_name',
+    'app_version',
+    'app_identifier',
+    'identifier',
+    'minimum_os_version',
+    'runs_on_mac',
+    'runs_on_iphone',
+    'runs_on_ipad',
+    'runs_on_tv',
+    'runs_on_vision',
+    'runs_on_watch',
+    'runs_on_ipod',
+  };
 
   String _formatKey(String key) {
     return key
@@ -1018,8 +1148,7 @@ class _StatusTab extends ConsumerWidget {
         return ListView.builder(
           padding: const EdgeInsets.all(12),
           itemCount: statuses.length,
-          itemBuilder: (context, index) =>
-              _StatusTile(status: statuses[index]),
+          itemBuilder: (context, index) => _StatusTile(status: statuses[index]),
         );
       },
       loading: () => const LoadingWidget(),
@@ -1336,10 +1465,9 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         status,
-        style: Theme.of(context)
-            .textTheme
-            .labelSmall
-            ?.copyWith(color: _foregroundColor(colorScheme)),
+        style: Theme.of(
+          context,
+        ).textTheme.labelSmall?.copyWith(color: _foregroundColor(colorScheme)),
       ),
     );
   }
@@ -1357,10 +1485,7 @@ String? _firstLine(String? text) {
 String _formatAction(String action) {
   return action
       .replaceAll(RegExp(r'[_-]'), ' ')
-      .replaceAllMapped(
-        RegExp(r'(^|\s)\w'),
-        (m) => m.group(0)!.toUpperCase(),
-      );
+      .replaceAllMapped(RegExp(r'(^|\s)\w'), (m) => m.group(0)!.toUpperCase());
 }
 
 String _formatDateTime(String dateStr) {

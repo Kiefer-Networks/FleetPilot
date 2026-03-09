@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DeviceActivity {
 
- dynamic get id;@JsonKey(name: 'action_type') String? get actionType;@JsonKey(name: 'created_at') String? get createdAt;@JsonKey(fromJson: _detailsFromJson) String? get details; dynamic get user;
+ dynamic get id;@JsonKey(name: 'action_type') String? get actionType;@JsonKey(name: 'created_at') String? get createdAt;@JsonKey(fromJson: _detailsMapFromJson) Map<String, dynamic>? get details; dynamic get user;
 /// Create a copy of DeviceActivity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,12 +28,12 @@ $DeviceActivityCopyWith<DeviceActivity> get copyWith => _$DeviceActivityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceActivity&&const DeepCollectionEquality().equals(other.id, id)&&(identical(other.actionType, actionType) || other.actionType == actionType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.details, details) || other.details == details)&&const DeepCollectionEquality().equals(other.user, user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceActivity&&const DeepCollectionEquality().equals(other.id, id)&&(identical(other.actionType, actionType) || other.actionType == actionType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.details, details)&&const DeepCollectionEquality().equals(other.user, user));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(id),actionType,createdAt,details,const DeepCollectionEquality().hash(user));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(id),actionType,createdAt,const DeepCollectionEquality().hash(details),const DeepCollectionEquality().hash(user));
 
 @override
 String toString() {
@@ -48,7 +48,7 @@ abstract mixin class $DeviceActivityCopyWith<$Res>  {
   factory $DeviceActivityCopyWith(DeviceActivity value, $Res Function(DeviceActivity) _then) = _$DeviceActivityCopyWithImpl;
 @useResult
 $Res call({
- dynamic id,@JsonKey(name: 'action_type') String? actionType,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(fromJson: _detailsFromJson) String? details, dynamic user
+ dynamic id,@JsonKey(name: 'action_type') String? actionType,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(fromJson: _detailsMapFromJson) Map<String, dynamic>? details, dynamic user
 });
 
 
@@ -71,7 +71,7 @@ id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as dynamic,actionType: freezed == actionType ? _self.actionType : actionType // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String?,details: freezed == details ? _self.details : details // ignore: cast_nullable_to_non_nullable
-as String?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as dynamic,
   ));
 }
@@ -157,7 +157,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( dynamic id, @JsonKey(name: 'action_type')  String? actionType, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _detailsFromJson)  String? details,  dynamic user)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( dynamic id, @JsonKey(name: 'action_type')  String? actionType, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _detailsMapFromJson)  Map<String, dynamic>? details,  dynamic user)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DeviceActivity() when $default != null:
 return $default(_that.id,_that.actionType,_that.createdAt,_that.details,_that.user);case _:
@@ -178,7 +178,7 @@ return $default(_that.id,_that.actionType,_that.createdAt,_that.details,_that.us
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( dynamic id, @JsonKey(name: 'action_type')  String? actionType, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _detailsFromJson)  String? details,  dynamic user)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( dynamic id, @JsonKey(name: 'action_type')  String? actionType, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _detailsMapFromJson)  Map<String, dynamic>? details,  dynamic user)  $default,) {final _that = this;
 switch (_that) {
 case _DeviceActivity():
 return $default(_that.id,_that.actionType,_that.createdAt,_that.details,_that.user);case _:
@@ -198,7 +198,7 @@ return $default(_that.id,_that.actionType,_that.createdAt,_that.details,_that.us
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( dynamic id, @JsonKey(name: 'action_type')  String? actionType, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _detailsFromJson)  String? details,  dynamic user)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( dynamic id, @JsonKey(name: 'action_type')  String? actionType, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(fromJson: _detailsMapFromJson)  Map<String, dynamic>? details,  dynamic user)?  $default,) {final _that = this;
 switch (_that) {
 case _DeviceActivity() when $default != null:
 return $default(_that.id,_that.actionType,_that.createdAt,_that.details,_that.user);case _:
@@ -213,13 +213,21 @@ return $default(_that.id,_that.actionType,_that.createdAt,_that.details,_that.us
 @JsonSerializable()
 
 class _DeviceActivity implements DeviceActivity {
-  const _DeviceActivity({this.id, @JsonKey(name: 'action_type') this.actionType, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(fromJson: _detailsFromJson) this.details, this.user});
+  const _DeviceActivity({this.id, @JsonKey(name: 'action_type') this.actionType, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(fromJson: _detailsMapFromJson) final  Map<String, dynamic>? details, this.user}): _details = details;
   factory _DeviceActivity.fromJson(Map<String, dynamic> json) => _$DeviceActivityFromJson(json);
 
 @override final  dynamic id;
 @override@JsonKey(name: 'action_type') final  String? actionType;
 @override@JsonKey(name: 'created_at') final  String? createdAt;
-@override@JsonKey(fromJson: _detailsFromJson) final  String? details;
+ final  Map<String, dynamic>? _details;
+@override@JsonKey(fromJson: _detailsMapFromJson) Map<String, dynamic>? get details {
+  final value = _details;
+  if (value == null) return null;
+  if (_details is EqualUnmodifiableMapView) return _details;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
 @override final  dynamic user;
 
 /// Create a copy of DeviceActivity
@@ -235,12 +243,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceActivity&&const DeepCollectionEquality().equals(other.id, id)&&(identical(other.actionType, actionType) || other.actionType == actionType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.details, details) || other.details == details)&&const DeepCollectionEquality().equals(other.user, user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceActivity&&const DeepCollectionEquality().equals(other.id, id)&&(identical(other.actionType, actionType) || other.actionType == actionType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._details, _details)&&const DeepCollectionEquality().equals(other.user, user));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(id),actionType,createdAt,details,const DeepCollectionEquality().hash(user));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(id),actionType,createdAt,const DeepCollectionEquality().hash(_details),const DeepCollectionEquality().hash(user));
 
 @override
 String toString() {
@@ -255,7 +263,7 @@ abstract mixin class _$DeviceActivityCopyWith<$Res> implements $DeviceActivityCo
   factory _$DeviceActivityCopyWith(_DeviceActivity value, $Res Function(_DeviceActivity) _then) = __$DeviceActivityCopyWithImpl;
 @override @useResult
 $Res call({
- dynamic id,@JsonKey(name: 'action_type') String? actionType,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(fromJson: _detailsFromJson) String? details, dynamic user
+ dynamic id,@JsonKey(name: 'action_type') String? actionType,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(fromJson: _detailsMapFromJson) Map<String, dynamic>? details, dynamic user
 });
 
 
@@ -277,8 +285,8 @@ class __$DeviceActivityCopyWithImpl<$Res>
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as dynamic,actionType: freezed == actionType ? _self.actionType : actionType // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as String?,details: freezed == details ? _self.details : details // ignore: cast_nullable_to_non_nullable
-as String?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as String?,details: freezed == details ? _self._details : details // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as dynamic,
   ));
 }
