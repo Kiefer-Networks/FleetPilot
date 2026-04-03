@@ -58,14 +58,14 @@ class AppLocalizationsVi extends AppLocalizations {
   String get subdomainHint => 'tenant-cua-ban';
 
   @override
-  String get apiToken => 'Token API';
+  String get apiToken => 'API Token';
 
   @override
-  String get apiTokenHint => 'Dán token API tại đây';
+  String get apiTokenHint => 'Dán API token tại đây';
 
   @override
   String urlPreview(String url) {
-    return 'URL API: $url';
+    return 'API URL: $url';
   }
 
   @override
@@ -79,7 +79,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get errorInvalidToken =>
-      'Token API không hợp lệ. Vui lòng kiểm tra token của bạn trong bảng điều khiển web.';
+      'API token không hợp lệ. Vui lòng kiểm tra token của bạn trong bảng điều khiển web.';
 
   @override
   String get errorInsufficientPermissions =>
@@ -141,7 +141,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get filterAppleTv => 'Apple TV';
 
   @override
-  String get allBlueprints => 'Tất cả Blueprint';
+  String get allBlueprints => 'Tất cả Blueprints';
 
   @override
   String loadingDevices(int count) {
@@ -154,6 +154,7 @@ class AppLocalizationsVi extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count thiết bị',
+      one: '1 thiết bị',
       zero: 'Không có thiết bị',
     );
     return '$_temp0';
@@ -261,7 +262,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get actionFailed => 'Hành động thất bại. Vui lòng thử lại.';
 
   @override
-  String get biometricReason => 'Xác thực cho FleetPilot';
+  String get biometricReason => 'Xác thực để truy cập FleetPilot';
 
   @override
   String get biometricReasonSecrets => 'Xác thực để xem dữ liệu nhạy cảm';
@@ -339,6 +340,7 @@ class AppLocalizationsVi extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count người dùng',
+      one: '1 người dùng',
       zero: 'Không có người dùng',
     );
     return '$_temp0';
@@ -364,7 +366,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count blueprint',
+      other: '$count blueprints',
+      one: '1 blueprint',
       zero: 'Không có blueprint',
     );
     return '$_temp0';
@@ -451,6 +454,7 @@ class AppLocalizationsVi extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count ứng dụng',
+      one: '1 ứng dụng',
       zero: 'Không có ứng dụng',
     );
     return '$_temp0';
@@ -528,7 +532,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get aboutDescription =>
-      'FleetPilot là ứng dụng quản lý MDM mã nguồn mở dành cho đội thiết bị Apple.';
+      'FleetPilot là ứng dụng quản lý MDM di động mã nguồn mở dành cho đội thiết bị Apple.';
 
   @override
   String get tapToCopy => 'Nhấn để sao chép';
@@ -748,7 +752,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get eraseReturnToService => 'Return to Service';
 
   @override
-  String get lockMessage => 'Tin nhắn Khóa';
+  String get lockMessage => 'Tin nhắn khóa (tùy chọn)';
 
   @override
   String get lockPhone => 'Số điện thoại';
@@ -895,13 +899,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get enrollmentCode => 'Mã Đăng ký';
 
   @override
-  String get assignLibraryItem => 'Giao Mục Thư viện';
+  String get assignLibraryItem => 'Gán Mục Thư viện';
 
   @override
   String get removeLibraryItem => 'Xóa Mục Thư viện';
 
   @override
-  String get libraryItemAssigned => 'Mục thư viện đã giao.';
+  String get libraryItemAssigned => 'Mục thư viện đã gán.';
 
   @override
   String get libraryItemRemoved => 'Mục thư viện đã xóa.';
@@ -1042,6 +1046,7 @@ class AppLocalizationsVi extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count phát hiện',
+      one: '1 phát hiện',
       zero: 'Không có phát hiện',
     );
     return '$_temp0';
@@ -1053,6 +1058,7 @@ class AppLocalizationsVi extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count tích hợp',
+      one: '1 tích hợp',
       zero: 'Không có tích hợp',
     );
     return '$_temp0';
@@ -1076,6 +1082,7 @@ class AppLocalizationsVi extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count phần mềm',
+      one: '1 phần mềm',
       zero: 'Không có phần mềm',
     );
     return '$_temp0';
@@ -1223,7 +1230,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get aboutFramework => 'Framework';
 
   @override
-  String get aboutStateManagement => 'State Management';
+  String get aboutStateManagement => 'Quản lý Trạng thái';
 
   @override
   String get aboutArchitecture => 'Kiến trúc';
@@ -1451,11 +1458,11 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get onboardingDevicesFeature2 =>
-      'Gửi lệnh từ xa: Khóa, Khởi động lại, Xóa sạch và nhiều hơn nữa';
+      'Gửi lệnh từ xa: khóa, khởi động lại, xóa sạch và nhiều hơn nữa';
 
   @override
   String get onboardingDevicesFeature3 =>
-      'Theo dõi blueprint, ứng dụng và trạng thái tuân thủ';
+      'Theo dõi blueprints, ứng dụng và trạng thái tuân thủ';
 
   @override
   String get onboardingSecurityTitle => 'Xây dựng cho Bảo mật';
@@ -1559,7 +1566,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sortByDeviceCount => 'Thiết bị Bị ảnh hưởng';
 
   @override
-  String get sortByCveId => 'CVE-ID';
+  String get sortByCveId => 'CVE ID';
 
   @override
   String vulnCount(int count) {
@@ -1617,7 +1624,7 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count blueprint',
+      other: '$count blueprints',
       one: '1 blueprint',
     );
     return 'Trong $_temp0';
@@ -1704,6 +1711,7 @@ class AppLocalizationsVi extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count mục',
+      one: '1 mục',
       zero: 'Không có mục',
     );
     return '$_temp0';
@@ -1760,11 +1768,11 @@ class AppLocalizationsVi extends AppLocalizations {
   String get noRoutingActivity => 'Không tìm thấy hoạt động routing.';
 
   @override
-  String get selfServiceCategories => 'Danh mục Self-Service';
+  String get selfServiceCategories => 'Danh mục Self Service';
 
   @override
   String get selfServiceDesc =>
-      'Quản lý danh mục self-service cho người dùng của bạn';
+      'Quản lý danh mục Self Service cho người dùng của bạn';
 
   @override
   String get addCategory => 'Thêm Danh mục';
@@ -1800,7 +1808,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get mdmEnabled => 'MDM Đã bật';
 
   @override
-  String get enrolledViaDep => 'Đăng ký Qua DEP';
+  String get enrolledViaDep => 'Đăng ký qua DEP';
 
   @override
   String get userApprovedMdm => 'MDM Được Người dùng Chấp thuận';
@@ -1857,7 +1865,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get generalStatus => 'Trạng thái Chung';
 
   @override
-  String get apiLevel => 'Cấp độ API';
+  String get apiLevel => 'API Level';
 
   @override
   String get userApprovedEnrollment => 'Đăng ký Được Người dùng Chấp thuận';
@@ -1983,7 +1991,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get prismCategoryKernelExtensions => 'Phần mở rộng Kernel';
 
   @override
-  String get prismCategoryLaunchAgentsAndDaemons => 'Launch Agent & Daemon';
+  String get prismCategoryLaunchAgentsAndDaemons => 'Launch Agents & Daemons';
 
   @override
   String get prismCategoryLocalUsers => 'Người dùng Cục bộ';
@@ -2091,7 +2099,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get mdmIdentifier => 'Mã định danh MDM';
 
   @override
-  String get bundleId => 'Bundle-ID';
+  String get bundleId => 'Bundle ID';
 
   @override
   String get appleTV => 'Apple TV';
