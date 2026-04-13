@@ -141,7 +141,7 @@ void main() {
       );
 
       expect(find.text('Lost'), findsOneWidget);
-      expect(find.byIcon(Icons.location_off), findsOneWidget);
+      expect(find.byIcon(Icons.location_off_rounded), findsOneWidget);
     });
 
     testWidgets('does not display lost badge when lostModeStatus is null', (
@@ -171,14 +171,7 @@ void main() {
         buildSubject(device: makeDevice(generalStatus: 'PASS')),
       );
 
-      final containers = tester
-          .widgetList<Container>(find.byType(Container))
-          .where(
-            (c) =>
-                c.constraints?.maxWidth == 10 && c.constraints?.maxHeight == 10,
-          )
-          .toList();
-      expect(containers, isNotEmpty);
+      expect(find.byIcon(Icons.check_circle_rounded), findsOneWidget);
     });
 
     testWidgets('does not display compliance dot when generalStatus is null', (
@@ -188,20 +181,16 @@ void main() {
         buildSubject(device: makeDevice(generalStatus: null)),
       );
 
-      final dotContainers = tester
-          .widgetList<Container>(find.byType(Container))
-          .where(
-            (c) =>
-                c.constraints?.maxWidth == 10 && c.constraints?.maxHeight == 10,
-          )
-          .toList();
-      expect(dotContainers, isEmpty);
+      expect(find.byIcon(Icons.check_circle_rounded), findsNothing);
+      expect(find.byIcon(Icons.cancel_rounded), findsNothing);
+      expect(find.byIcon(Icons.warning_rounded), findsNothing);
+      expect(find.byIcon(Icons.remove_circle_outlined), findsNothing);
     });
 
     testWidgets('displays chevron_right icon', (WidgetTester tester) async {
       await tester.pumpWidget(buildSubject(device: makeDevice()));
 
-      expect(find.byIcon(Icons.chevron_right), findsOneWidget);
+      expect(find.byIcon(Icons.chevron_right_rounded), findsOneWidget);
     });
 
     testWidgets('invokes onTap when tapped outside selection mode', (
@@ -321,7 +310,7 @@ void main() {
 
         final card = tester.widget<Card>(find.byType(Card));
         final theme = Theme.of(tester.element(find.byType(DeviceListTile)));
-        expect(card.color, theme.colorScheme.secondaryContainer);
+        expect(card.color, theme.colorScheme.primaryContainer);
       });
     });
 
