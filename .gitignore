@@ -1,3 +1,6 @@
+# Override global gitignore (Python rule blocks Flutter's lib/)
+!lib/
+
 # Claude Code
 .claude/
 
