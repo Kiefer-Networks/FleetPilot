@@ -16,6 +16,7 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final b = Theme.of(context).brightness;
     final profilesAsync = ref.watch(profilesProvider);
     final activeIdAsync = ref.watch(activeProfileIdProvider);
     final currentLocale = ref.watch(localeProvider);
@@ -36,7 +37,7 @@ class SettingsPage extends ConsumerWidget {
                   if (profiles.isEmpty) {
                     return SettingsTile(
                       icon: Icons.person_add_outlined,
-                      iconColor: AppColors.iconBlue,
+                      iconColor: AppColors.iconBlue(b),
                       title: l10n.addProfile,
                       onTap: () => context.push('/auth/setup'),
                     );
@@ -51,7 +52,7 @@ class SettingsPage extends ConsumerWidget {
                     children: [
                       SettingsTile(
                         icon: Icons.swap_horiz,
-                        iconColor: AppColors.iconIndigo,
+                        iconColor: AppColors.iconIndigo(b),
                         title: l10n.switchProfile,
                         subtitleText: activeProfile != null
                             ? l10n.activeProfile(activeProfile.displayName)
@@ -74,7 +75,7 @@ class SettingsPage extends ConsumerWidget {
             children: [
               SettingsCategoryTile(
                 icon: Icons.lock_outline,
-                iconColor: AppColors.iconRed,
+                iconColor: AppColors.iconRed(b),
                 title: l10n.securityAppLock,
                 subtitle: ref.watch(pinEnabledProvider)
                     ? l10n.securityAppLockActive
@@ -91,7 +92,7 @@ class SettingsPage extends ConsumerWidget {
             children: [
               SettingsTile(
                 icon: Icons.dark_mode_outlined,
-                iconColor: AppColors.iconPurple,
+                iconColor: AppColors.iconPurple(b),
                 title: l10n.themeMode,
                 subtitleText: _themeModeLabel(currentThemeMode, l10n),
                 onTap: () async {
@@ -136,7 +137,7 @@ class SettingsPage extends ConsumerWidget {
             children: [
               SettingsTile(
                 icon: Icons.language,
-                iconColor: AppColors.iconCyan,
+                iconColor: AppColors.iconCyan(b),
                 title: l10n.language,
                 subtitleText: _languageLabel(currentLocale, l10n),
                 onTap: () async {

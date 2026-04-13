@@ -14,6 +14,7 @@ class SecuritySettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final b = Theme.of(context).brightness;
     final pinEnabled = ref.watch(pinEnabledProvider);
     final biometricEnabled = ref.watch(biometricEnabledProvider);
 
@@ -29,7 +30,7 @@ class SecuritySettingsPage extends ConsumerWidget {
             children: [
               SettingsTile(
                 icon: Icons.pin,
-                iconColor: AppColors.iconIndigo,
+                iconColor: AppColors.iconIndigo(b),
                 title: 'PIN',
                 subtitleText: pinEnabled
                     ? l10n.securityAppLockActive
@@ -108,7 +109,7 @@ class _BiometricTile extends ConsumerWidget {
 
     return SettingsSwitchTile(
       icon: Icons.fingerprint,
-      iconColor: AppColors.iconGreen,
+      iconColor: AppColors.iconGreen(Theme.of(context).brightness),
       title: l10n.securityBiometricEnable,
       subtitleText: subtitleText,
       value: biometricEnabled,
@@ -147,7 +148,7 @@ class _LockTimeoutTile extends ConsumerWidget {
 
     return SettingsTile(
       icon: Icons.timer_outlined,
-      iconColor: AppColors.iconOrange,
+      iconColor: AppColors.iconOrange(Theme.of(context).brightness),
       title: l10n.securityAutoLock,
       subtitleText: _timeoutLabel(currentTimeout, l10n),
       onTap: () async {

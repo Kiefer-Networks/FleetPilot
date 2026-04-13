@@ -22,7 +22,9 @@ class MorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final b = theme.brightness;
     final extra = _sidebarExtraItems(context);
     final isPhone = MediaQuery.of(context).size.width < 600;
 
@@ -53,13 +55,13 @@ class MorePage extends StatelessWidget {
                 children: [
                   SettingsCategoryTile(
                     icon: Icons.layers_outlined,
-                    iconColor: AppColors.iconBlue,
+                    iconColor: AppColors.iconBlue(b),
                     title: l10n.navBlueprints,
                     onTap: () => context.push('/blueprints'),
                   ),
                   SettingsCategoryTile(
                     icon: Icons.route_outlined,
-                    iconColor: AppColors.iconGreen,
+                    iconColor: AppColors.iconGreen(b),
                     title: l10n.blueprintRouting,
                     onTap: () => context.push('/more/blueprint-routing'),
                   ),
@@ -75,28 +77,28 @@ class MorePage extends StatelessWidget {
                 if (showThreats)
                   SettingsCategoryTile(
                     icon: Icons.shield_outlined,
-                    iconColor: AppColors.iconOrange,
+                    iconColor: AppColors.iconOrange(b),
                     title: l10n.threats,
                     onTap: () => context.push('/more/threats'),
                   ),
                 if (showVulns)
                   SettingsCategoryTile(
                     icon: Icons.bug_report_outlined,
-                    iconColor: AppColors.iconRed,
+                    iconColor: AppColors.iconRed(b),
                     title: l10n.vulnerabilities,
                     onTap: () => context.push('/more/vulnerabilities'),
                   ),
                 if (showBehavioral)
                   SettingsCategoryTile(
                     icon: Icons.psychology_outlined,
-                    iconColor: AppColors.iconDeepOrange,
+                    iconColor: AppColors.iconDeepOrange(b),
                     title: l10n.behavioralDetections,
                     onTap: () => context.push('/more/behavioral-detections'),
                   ),
                 if (showAudit)
                   SettingsCategoryTile(
                     icon: Icons.history,
-                    iconColor: AppColors.iconIndigo,
+                    iconColor: AppColors.iconIndigo(b),
                     title: l10n.auditLog,
                     onTap: () => context.push('/more/audit-log'),
                   ),
@@ -111,13 +113,13 @@ class MorePage extends StatelessWidget {
                 children: [
                   SettingsCategoryTile(
                     icon: Icons.library_books_outlined,
-                    iconColor: AppColors.iconPurple,
+                    iconColor: AppColors.iconPurple(b),
                     title: l10n.libraryItems,
                     onTap: () => context.push('/more/library-items'),
                   ),
                   SettingsCategoryTile(
                     icon: Icons.app_shortcut,
-                    iconColor: AppColors.iconCyan,
+                    iconColor: AppColors.iconCyan(b),
                     title: l10n.selfServiceCategories,
                     onTap: () => context.push('/more/self-service'),
                   ),
@@ -133,7 +135,7 @@ class MorePage extends StatelessWidget {
                 children: [
                   SettingsCategoryTile(
                     icon: Icons.label_outlined,
-                    iconColor: AppColors.iconTeal,
+                    iconColor: AppColors.iconTeal(b),
                     title: l10n.manageTags,
                     onTap: () => context.push('/more/tags'),
                   ),
@@ -149,7 +151,7 @@ class MorePage extends StatelessWidget {
                 children: [
                   SettingsCategoryTile(
                     icon: Icons.device_hub_outlined,
-                    iconColor: AppColors.iconBlue,
+                    iconColor: AppColors.iconBlue(b),
                     title: l10n.adeIntegrations,
                     onTap: () => context.push('/more/ade-integrations'),
                   ),
@@ -165,7 +167,7 @@ class MorePage extends StatelessWidget {
                 children: [
                   SettingsCategoryTile(
                     icon: Icons.route_outlined,
-                    iconColor: AppColors.iconGreen,
+                    iconColor: AppColors.iconGreen(b),
                     title: l10n.blueprintRouting,
                     onTap: () => context.push('/more/blueprint-routing'),
                   ),
@@ -185,7 +187,7 @@ class MorePage extends StatelessWidget {
                 ),
                 SettingsCategoryTile(
                   icon: Icons.info_outline,
-                  iconColor: AppColors.iconGrey,
+                  iconColor: AppColors.iconGrey(b),
                   title: l10n.aboutApp,
                   onTap: () => context.push('/more/about'),
                 ),
