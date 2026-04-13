@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../core/di/providers.dart';
+import '../../data/repositories/blueprint_repository_impl.dart';
 import '../../domain/entities/blueprint.dart';
 import '../../domain/entities/blueprint_template.dart';
 import '../../domain/entities/library_item.dart';
@@ -17,9 +18,20 @@ final blueprintSearchQueryProvider = StateProvider<String>((ref) => '');
 /// Selected blueprint ID for master-detail layout on wide screens.
 final selectedBlueprintIdProvider = StateProvider<String?>((ref) => null);
 
-/// Provider for the full blueprint list.
+/// Provider for the full blueprint list with stale-while-revalidate caching.
 final blueprintsProvider = FutureProvider<List<Blueprint>>((ref) async {
   final repo = await ref.watch(blueprintRepositoryProvider.future);
+
+  // Show cached data first if available.
+  if (repo is BlueprintRepositoryImpl) {
+    final cached = await repo.getCachedBlueprints();
+    if (cached != null && cached.isNotEmpty) {
+      // Return cache immediately; background refresh handled by invalidate.
+      repo.getBlueprints(); // fire-and-forget to update cache
+      return cached;
+    }
+  }
+
   return repo.getBlueprints();
 });
 

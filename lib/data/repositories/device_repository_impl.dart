@@ -1,3 +1,4 @@
+import '../../core/cache/cache_service.dart';
 import '../../domain/entities/device.dart';
 import '../../domain/entities/device_action.dart';
 import '../../domain/entities/device_activity.dart';
@@ -12,22 +13,54 @@ import '../../domain/repositories/device_repository.dart';
 import '../datasources/remote/device_api.dart';
 
 /// Concrete implementation of [DeviceRepository] using [DeviceApi].
+///
+/// Supports stale-while-revalidate caching: callers receive cached
+/// data immediately via [getCachedDevices], then call the normal
+/// fetch methods to refresh in the background.
 class DeviceRepositoryImpl implements DeviceRepository {
-  DeviceRepositoryImpl({required this.api});
+  DeviceRepositoryImpl({required this.api, required this.cache});
 
   final DeviceApi api;
+  final CacheService cache;
+
+  // ── Cache helpers ──────────────────────────────────────────
+
+  /// Returns cached device list or `null` if no cache exists.
+  Future<List<Device>?> getCachedDevices() async {
+    final raw = await cache.read<List<dynamic>>('devices');
+    if (raw == null) return null;
+    return raw
+        .cast<Map<String, dynamic>>()
+        .map((j) => Device.fromJson(j))
+        .toList();
+  }
+
+  /// Returns cached tags or `null`.
+  Future<List<Tag>?> getCachedTags() async {
+    final raw = await cache.read<List<dynamic>>('tags');
+    if (raw == null) return null;
+    return raw
+        .cast<Map<String, dynamic>>()
+        .map(Tag.fromJson)
+        .toList();
+  }
 
   @override
   Future<List<Device>> getDevices({
     String? platform,
     String? blueprintId,
     void Function(int loadedCount)? onPageLoaded,
-  }) {
-    return api.getAllDevices(
+  }) async {
+    final devices = await api.getAllDevices(
       platform: platform,
       blueprintId: blueprintId,
       onPageLoaded: onPageLoaded,
     );
+    // Only cache full unfiltered lists.
+    if (platform == null && blueprintId == null) {
+      cache.write('devices', devices.map((d) => d.toJson()).toList());
+    }
+    return devices;
   }
 
   @override
@@ -36,13 +69,18 @@ class DeviceRepositoryImpl implements DeviceRepository {
     String? platform,
     String? blueprintId,
     String? ordering,
-  }) {
-    return api.getDevicesPage(
+  }) async {
+    final page = await api.getDevicesPage(
       offset: offset,
       platform: platform,
       blueprintId: blueprintId,
       ordering: ordering,
     );
+    // Cache the first unfiltered page as a quick-load snapshot.
+    if (offset == 0 && platform == null && blueprintId == null) {
+      cache.write('devices', page.map((d) => d.toJson()).toList());
+    }
+    return page;
   }
 
   @override
@@ -116,7 +154,14 @@ class DeviceRepositoryImpl implements DeviceRepository {
 
   // Tags CRUD
   @override
-  Future<List<Tag>> getTags() => api.getTags();
+  Future<List<Tag>> getTags() async {
+    final tags = await api.getTags();
+    cache.write(
+      'tags',
+      tags.map((t) => {'tag_id': t.tagId, 'tag_name': t.name}).toList(),
+    );
+    return tags;
+  }
 
   @override
   Future<Tag> createTag(String name) => api.createTag(name);

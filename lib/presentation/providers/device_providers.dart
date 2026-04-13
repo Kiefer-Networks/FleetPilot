@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/legacy.dart';
 
 import '../../core/constants/api_constants.dart';
 import '../../core/di/providers.dart';
+import '../../data/repositories/device_repository_impl.dart';
+import '../../domain/repositories/device_repository.dart';
 import '../../domain/entities/device.dart';
 import '../../domain/entities/device_activity.dart';
 import '../../domain/entities/device_app.dart';
@@ -64,7 +66,29 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
     ref.read(devicesLoadingCountProvider.notifier).state = 0;
     ref.read(devicesFullyLoadedProvider.notifier).state = false;
 
-    // Fetch the first page and return it immediately so the UI can render.
+    // ── Stale-while-revalidate: show cached data immediately ──
+    if (platform == null && blueprintId == null && repo is DeviceRepositoryImpl) {
+      final cached = await repo.getCachedDevices();
+      if (cached != null && cached.isNotEmpty) {
+        // Show cache instantly, then refresh in background.
+        state = AsyncData(cached);
+        ref.read(devicesLoadingCountProvider.notifier).state = cached.length;
+        _refreshFromApi(repo, platform, blueprintId, ordering);
+        return cached;
+      }
+    }
+
+    // No cache available — fetch from API as before.
+    return _fetchFirstPage(repo, platform, blueprintId, ordering);
+  }
+
+  /// Fetches the first page from API and schedules remaining pages.
+  Future<List<Device>> _fetchFirstPage(
+    DeviceRepository repo,
+    String? platform,
+    String? blueprintId,
+    String ordering,
+  ) async {
     final firstPage = await repo.getDevicesPage(
       offset: 0,
       platform: platform,
@@ -74,13 +98,11 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
 
     ref.read(devicesLoadingCountProvider.notifier).state = firstPage.length;
 
-    // If the first page is smaller than the limit, all devices fit in one page.
     if (firstPage.length < ApiConstants.pageLimit) {
       ref.read(devicesFullyLoadedProvider.notifier).state = true;
       return firstPage;
     }
 
-    // Schedule background fetching of remaining pages.
     _fetchRemainingPages(
       platform: platform,
       blueprintId: blueprintId,
@@ -89,6 +111,21 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
     );
 
     return firstPage;
+  }
+
+  /// Background refresh: fetches all pages from API and replaces cached state.
+  Future<void> _refreshFromApi(
+    DeviceRepository repo,
+    String? platform,
+    String? blueprintId,
+    String ordering,
+  ) async {
+    try {
+      final fresh = await _fetchFirstPage(repo, platform, blueprintId, ordering);
+      state = AsyncData(fresh);
+    } on Exception {
+      // Background refresh failed — cached data remains visible.
+    }
   }
 
   /// Fetches all remaining pages in the background and appends them

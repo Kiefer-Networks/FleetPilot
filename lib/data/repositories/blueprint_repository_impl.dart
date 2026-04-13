@@ -1,3 +1,4 @@
+import '../../core/cache/cache_service.dart';
 import '../../domain/entities/blueprint.dart';
 import '../../domain/entities/blueprint_template.dart';
 import '../../domain/entities/library_item.dart';
@@ -7,13 +8,26 @@ import '../datasources/remote/blueprint_api.dart';
 
 /// Concrete implementation of [BlueprintRepository] using [BlueprintApi].
 class BlueprintRepositoryImpl implements BlueprintRepository {
-  BlueprintRepositoryImpl({required this.api});
+  BlueprintRepositoryImpl({required this.api, required this.cache});
 
   final BlueprintApi api;
+  final CacheService cache;
+
+  /// Returns cached blueprints or `null`.
+  Future<List<Blueprint>?> getCachedBlueprints() async {
+    final raw = await cache.read<List<dynamic>>('blueprints');
+    if (raw == null) return null;
+    return raw
+        .cast<Map<String, dynamic>>()
+        .map((j) => Blueprint.fromJson(j))
+        .toList();
+  }
 
   @override
-  Future<List<Blueprint>> getBlueprints() {
-    return api.getBlueprints();
+  Future<List<Blueprint>> getBlueprints() async {
+    final blueprints = await api.getBlueprints();
+    cache.write('blueprints', blueprints.map((b) => b.toJson()).toList());
+    return blueprints;
   }
 
   @override

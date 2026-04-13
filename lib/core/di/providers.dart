@@ -19,6 +19,7 @@ import '../../domain/repositories/user_repository.dart';
 import '../../domain/usecases/execute_device_action.dart';
 import '../../domain/usecases/get_devices.dart';
 import '../../domain/usecases/verify_credentials.dart';
+import '../cache/cache_service.dart';
 import '../constants/api_constants.dart';
 import '../network/api_client.dart';
 
@@ -68,6 +69,12 @@ final dioProvider = FutureProvider<Dio>((ref) async {
   );
 });
 
+/// Cache service scoped to the active profile.
+final cacheServiceProvider = FutureProvider<CacheService>((ref) async {
+  final profile = await ref.watch(activeProfileProvider.future);
+  return CacheService(profileId: profile?.id ?? 'anonymous');
+});
+
 /// Device API data source (async — depends on Dio).
 final deviceApiProvider = FutureProvider<DeviceApi>((ref) async {
   final dio = await ref.watch(dioProvider.future);
@@ -80,18 +87,20 @@ final blueprintApiProvider = FutureProvider<BlueprintApi>((ref) async {
   return BlueprintApi(dio: dio);
 });
 
-/// Device repository (async — depends on DeviceApi).
+/// Device repository (async — depends on DeviceApi + CacheService).
 final deviceRepositoryProvider = FutureProvider<DeviceRepository>((ref) async {
   final api = await ref.watch(deviceApiProvider.future);
-  return DeviceRepositoryImpl(api: api);
+  final cache = await ref.watch(cacheServiceProvider.future);
+  return DeviceRepositoryImpl(api: api, cache: cache);
 });
 
-/// Blueprint repository (async — depends on BlueprintApi).
+/// Blueprint repository (async — depends on BlueprintApi + CacheService).
 final blueprintRepositoryProvider = FutureProvider<BlueprintRepository>((
   ref,
 ) async {
   final api = await ref.watch(blueprintApiProvider.future);
-  return BlueprintRepositoryImpl(api: api);
+  final cache = await ref.watch(cacheServiceProvider.future);
+  return BlueprintRepositoryImpl(api: api, cache: cache);
 });
 
 /// Use case: get all devices (async — depends on DeviceRepository).
@@ -114,10 +123,11 @@ final userApiProvider = FutureProvider<UserApi>((ref) async {
   return UserApi(dio: dio);
 });
 
-/// User repository (async — depends on UserApi).
+/// User repository (async — depends on UserApi + CacheService).
 final userRepositoryProvider = FutureProvider<UserRepository>((ref) async {
   final api = await ref.watch(userApiProvider.future);
-  return UserRepositoryImpl(api: api);
+  final cache = await ref.watch(cacheServiceProvider.future);
+  return UserRepositoryImpl(api: api, cache: cache);
 });
 
 /// Tenant API data source (async — depends on Dio).

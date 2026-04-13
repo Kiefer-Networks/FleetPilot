@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../core/di/providers.dart';
+import '../../data/repositories/user_repository_impl.dart';
+import '../../domain/repositories/user_repository.dart';
 import '../../domain/entities/device.dart';
 import '../../domain/entities/mdm_user.dart';
 import 'device_providers.dart';
@@ -30,11 +32,37 @@ class UsersNotifier extends AsyncNotifier<List<MdmUser>> {
   @override
   Future<List<MdmUser>> build() async {
     final repo = await ref.watch(userRepositoryProvider.future);
+
+    // Show cached data first if available.
+    if (repo is UserRepositoryImpl) {
+      final cached = await repo.getCachedUsers();
+      if (cached != null && cached.isNotEmpty) {
+        state = AsyncData(cached);
+        // Background refresh — updates cache and state.
+        _backgroundRefresh(repo);
+        return cached;
+      }
+    }
+
     return repo.getUsers(
       onPageLoaded: (count) {
         ref.read(usersLoadingCountProvider.notifier).state = count;
       },
     );
+  }
+
+  /// Fetches fresh data in the background without showing a loading state.
+  Future<void> _backgroundRefresh(UserRepository repo) async {
+    try {
+      final fresh = await repo.getUsers(
+        onPageLoaded: (int count) {
+          ref.read(usersLoadingCountProvider.notifier).state = count;
+        },
+      );
+      state = AsyncData(fresh);
+    } on Exception {
+      // Background refresh failed — cached data stays visible.
+    }
   }
 
   /// Silently refresh: keep showing old data while fetching new.
