@@ -49,6 +49,8 @@ dependencies:
   package_info_plus: ^9.0.0
   path_provider: ^2.1.5
 
+  flutter_native_splash: ^2.4.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -64,9 +66,23 @@ dev_dependencies:
   # Testing
   mockito: ^5.6.3
 
+flutter_native_splash:
+  color: "#5B5BD6"
+  color_dark: "#1A1A2E"
+  image: assets/images/fleetpilot-logo.png
+  android: true
+  ios: true
+  android_12:
+    color: "#5B5BD6"
+    color_dark: "#1A1A2E"
+    image: assets/images/fleetpilot-logo.png
+    icon_background_color: "#5B5BD6"
+    icon_background_color_dark: "#1A1A2E"
+
 flutter:
   uses-material-design: true
   generate: true
 
   assets:
     - assets/certs/
+    - assets/images/

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/images/fleetpilot-logo.png" alt="FleetPilot Logo" width="128" height="128">
+</p>
+
 # FleetPilot
 
 **Open-source mobile MDM management client for [Kandji](https://kandji.io).**
