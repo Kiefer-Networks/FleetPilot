@@ -1,0 +1,30 @@
+FleetPilot, Kandji için tam MDM yönetimini telefonunuza, tabletinize ve masaüstünüze getiren açık kaynaklı bir mobil istemcidir. Tüm Apple cihaz filonuzu görüntüleyin, şablonları yönetin, Otomatik Cihaz Kaydı'nı yürütün, güvenlik açıklarını takip edin ve cihaz eylemlerini gerçekleştirin — hepsi Material Design 3 ile tek bir uygulamada.
+
+Özellikler:
+- Kayıtlı tüm Mac, iPhone, iPad ve Apple TV cihazlarını görüntüleme, arama ve filtreleme
+- 8 sekmeli cihaz detay görünümü: Genel Bakış, Uygulamalar, Durum, Etkinlik, Komutlar, Gizli Bilgiler, Notlar, Konum
+- 15'ten fazla MDM cihaz eylemi: Kilitleme, Yeniden Başlatma, Kapatma, Silme, Kayıp Modu, Uzak Masaüstü ve daha fazlası
+- Şablon yönetimi: oluşturma, düzenleme, silme, kütüphane öğelerini yönetme, OTA profillerini indirme
+- Otomatik Cihaz Kaydı (ADE): entegrasyon oluşturma, belirteç yükleme, kayıtlı cihazları görüntüleme
+- İmleç tabanlı sayfalama ve arama ile kullanıcı yönetimi
+- Güvenlik açığı yönetimi: önem derecesi, CVSS puanları ve etkilenen cihazlara göre CVE görüntüleme
+- Tehdit algılama ve davranışsal tespitler (arama desteğiyle)
+- 10 renk ön ayarı ile etiket yönetimi
+- Tür, yönetici, cihaz veya kullanıcıya göre arama yapılabilen denetim günlüğü
+- Kütüphane öğesi etkinliği ve dağıtım durumu
+- Cihaz limitleri ve platform dağılımı ile lisans genel bakışı
+- Çok kiracılı destek: birden fazla Kandji profili arasında anında geçiş
+- 25 dil desteği
+- Duyarlı düzen: telefonlarda alt gezinme çubuğu, tabletlerde ve masaüstlerinde gezinme rayı
+
+Güvenlik:
+- İlk kurulumda zorunlu 6 haneli PIN
+- İsteğe bağlı biyometrik kilit açma (Face ID, Touch ID, parmak izi)
+- API belirteçleri platformun yerel güvenli depolama alanında saklanır (iOS Keychain, Android Keystore)
+- Cihaz gizli bilgilerini görüntülemeden önce biyometrik/PIN doğrulaması gerekir
+- Yıkıcı eylemler yazılı onay gerektirir
+- İzleme yok, analitik yok, telemetri yok
+
+FleetPilot tamamen ücretsizdir — uygulama içi satın alma, abonelik veya özellik kısıtlaması yoktur. MIT lisansı altında tamamen açık kaynaklıdır.
+
+FleetPilot'u faydalı buluyorsanız, Liberapay üzerinden geliştirmeyi desteklemeyi düşünün: https://de.liberapay.com/beli3ver

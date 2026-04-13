@@ -1,0 +1,30 @@
+FleetPilot adalah klien seluler open source untuk Kandji yang menghadirkan manajemen MDM lengkap ke ponsel, tablet, dan desktop Anda. Jelajahi seluruh armada perangkat Apple, kelola blueprint, tangani Pendaftaran Perangkat Otomatis, lacak kerentanan, dan jalankan tindakan perangkat — semuanya dari satu aplikasi dengan Material Design 3.
+
+Fitur:
+- Jelajahi, cari, dan filter semua perangkat Mac, iPhone, iPad, dan Apple TV yang terdaftar
+- Tampilan detail perangkat 8 tab: Ikhtisar, Aplikasi, Status, Aktivitas, Perintah, Rahasia, Catatan, Lokasi
+- 15+ tindakan MDM perangkat: Kunci, Mulai Ulang, Matikan, Hapus, Mode Hilang, Desktop Jarak Jauh, dan lainnya
+- Manajemen blueprint: buat, edit, hapus, kelola item perpustakaan, unduh profil OTA
+- Pendaftaran Perangkat Otomatis (ADE): buat integrasi, unggah token, jelajahi perangkat terdaftar
+- Manajemen pengguna dengan paginasi berbasis kursor dan pencarian
+- Manajemen kerentanan: jelajahi CVE berdasarkan tingkat keparahan, skor CVSS, perangkat yang terpengaruh
+- Deteksi ancaman dan deteksi perilaku dengan pencarian
+- Manajemen tag dengan 10 preset warna
+- Log audit dengan pencarian berdasarkan jenis, admin, perangkat, atau pengguna
+- Aktivitas item perpustakaan dan status deployment
+- Ikhtisar lisensi dengan batas perangkat dan rincian platform
+- Dukungan multi-tenant: beberapa profil Kandji dengan perpindahan instan
+- Mendukung 25 bahasa
+- Tata letak responsif: navigasi bawah di ponsel, rel navigasi di tablet dan desktop
+
+Keamanan:
+- PIN 6 digit wajib saat pengaturan pertama
+- Buka kunci biometrik opsional (Face ID, Touch ID, sidik jari)
+- Token API disimpan di penyimpanan aman bawaan platform (iOS Keychain, Android Keystore)
+- Rahasia perangkat memerlukan verifikasi biometrik/PIN sebelum dilihat
+- Tindakan destruktif memerlukan konfirmasi yang diketik
+- Tanpa pelacakan, tanpa analitik, tanpa telemetri
+
+FleetPilot sepenuhnya gratis tanpa pembelian dalam aplikasi, tanpa langganan, dan tanpa batasan fitur. Sepenuhnya open source di bawah lisensi MIT.
+
+Jika Anda merasa FleetPilot berguna, pertimbangkan untuk mendukung pengembangan melalui Liberapay: https://de.liberapay.com/beli3ver

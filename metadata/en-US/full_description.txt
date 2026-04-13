@@ -1,0 +1,30 @@
+FleetPilot is an open-source mobile client for Kandji that brings full MDM management to your phone, tablet, and desktop. Browse your entire Apple device fleet, manage blueprints, handle Automated Device Enrollment, track vulnerabilities, and execute device actions — all from a single app with Material Design 3.
+
+Features:
+- Browse, search, and filter all enrolled Mac, iPhone, iPad, and Apple TV devices
+- 8-tab device detail view: Overview, Apps, Status, Activity, Commands, Secrets, Notes, Location
+- 15+ MDM device actions: Lock, Restart, Shutdown, Erase, Lost Mode, Remote Desktop, and more
+- Blueprint management: create, edit, delete, manage library items, download OTA profiles
+- Automated Device Enrollment (ADE): create integrations, upload tokens, browse enrolled devices
+- User management with cursor-based pagination and search
+- Vulnerability management: browse CVEs by severity, CVSS scores, affected devices
+- Threat detection and behavioral detections with search
+- Tag management with 10 color presets
+- Audit log with search by type, admin, device, or user
+- Library item activity and deployment status
+- Licensing overview with device limits and platform breakdown
+- Multi-tenant support: multiple Kandji profiles with instant switching
+- 25 languages supported
+- Responsive layout: bottom nav on phones, navigation rail on tablets and desktops
+
+Security:
+- Mandatory 6-digit PIN on first setup
+- Optional biometric unlock (Face ID, Touch ID, fingerprint)
+- API tokens stored in platform-native secure storage (iOS Keychain, Android Keystore)
+- Device secrets require biometric/PIN verification before viewing
+- Destructive actions require typed confirmation
+- No tracking, no analytics, no telemetry
+
+FleetPilot is completely free with no in-app purchases, no subscriptions, and no feature restrictions. Fully open-source under the MIT license.
+
+If you find FleetPilot useful, consider supporting development via Liberapay: https://de.liberapay.com/beli3ver

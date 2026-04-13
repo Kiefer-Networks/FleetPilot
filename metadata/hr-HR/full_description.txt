@@ -1,0 +1,30 @@
+FleetPilot je mobilni klijent otvorenog koda za Kandji koji donosi potpuno MDM upravljanje na vaš telefon, tablet i stolno računalo. Pregledajte cijelu flotu Apple uređaja, upravljajte nacrtima, obradite automatsku registraciju uređaja, pratite ranjivosti i izvršavajte radnje na uređajima — sve iz jedne aplikacije s Material Design 3.
+
+Značajke:
+- Pregledajte, pretražujte i filtrirajte sve registrirane Mac, iPhone, iPad i Apple TV uređaje
+- Prikaz detalja uređaja s 8 kartica: Pregled, Aplikacije, Status, Aktivnost, Naredbe, Tajne, Bilješke, Lokacija
+- 15+ MDM radnji na uređajima: Zaključavanje, Ponovno pokretanje, Isključivanje, Brisanje, Način izgubljenog uređaja, Udaljena radna površina i više
+- Upravljanje nacrtima: stvaranje, uređivanje, brisanje, upravljanje stavkama knjižnice, preuzimanje OTA profila
+- Automatska registracija uređaja (ADE): stvaranje integracija, prijenos tokena, pregledavanje registriranih uređaja
+- Upravljanje korisnicima s paginacijom temeljenom na kursoru i pretragom
+- Upravljanje ranjivostima: pregledavanje CVE-ova prema ozbiljnosti, CVSS ocjenama, pogođenim uređajima
+- Otkrivanje prijetnji i otkrivanje ponašanja s pretragom
+- Upravljanje oznakama s 10 unaprijed postavljenih boja
+- Revizijski dnevnik s pretragom prema vrsti, administratoru, uređaju ili korisniku
+- Aktivnost stavki knjižnice i status implementacije
+- Pregled licenci s ograničenjima uređaja i raspodjelom po platformama
+- Podrška za više organizacija: više Kandji profila s trenutačnim prebacivanjem
+- Podrška za 25 jezika
+- Prilagodljiv raspored: donja navigacija na telefonima, navigacijska traka na tabletima i stolnim računalima
+
+Sigurnost:
+- Obavezan 6-znamenkasti PIN pri prvom postavljanju
+- Neobavezno biometrijsko otključavanje (Face ID, Touch ID, otisak prsta)
+- API tokeni pohranjeni u platformski zaštićenoj pohrani (iOS Keychain, Android Keystore)
+- Tajne uređaja zahtijevaju biometrijsku/PIN provjeru prije pregledavanja
+- Destruktivne radnje zahtijevaju upisanu potvrdu
+- Bez praćenja, bez analitike, bez telemetrije
+
+FleetPilot je potpuno besplatan — bez kupnji unutar aplikacije, bez pretplata, bez ograničenja značajki. Potpuno otvorenog koda pod MIT licencom.
+
+Ako vam je FleetPilot koristan, razmislite o podršci razvoju putem Liberapay: https://de.liberapay.com/beli3ver

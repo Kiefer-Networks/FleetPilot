@@ -1,0 +1,30 @@
+FleetPilot este un client mobil open source pentru Kandji care aduce managementul MDM complet pe telefonul, tableta și desktopul tău. Explorează întreaga flotă de dispozitive Apple, gestionează blueprint-uri, administrează Înregistrarea Automată a Dispozitivelor, urmărește vulnerabilitățile și execută acțiuni pe dispozitive — totul dintr-o singură aplicație cu Material Design 3.
+
+Funcționalități:
+- Explorează, caută și filtrează toate dispozitivele Mac, iPhone, iPad și Apple TV înregistrate
+- Vizualizare detalii dispozitiv cu 8 file: Prezentare generală, Aplicații, Stare, Activitate, Comenzi, Secrete, Note, Locație
+- 15+ acțiuni MDM pe dispozitive: Blocare, Repornire, Oprire, Ștergere, Mod Pierdut, Desktop la Distanță și altele
+- Gestionare blueprint-uri: creare, editare, ștergere, gestionare elemente din bibliotecă, descărcare profiluri OTA
+- Înregistrare Automată a Dispozitivelor (ADE): creare integrări, încărcare tokenuri, explorare dispozitive înregistrate
+- Gestionare utilizatori cu paginare bazată pe cursor și căutare
+- Gestionare vulnerabilități: explorare CVE-uri după severitate, scoruri CVSS, dispozitive afectate
+- Detectare amenințări și detectare comportamentală cu căutare
+- Gestionare etichete cu 10 presetări de culori
+- Jurnal de audit cu căutare după tip, administrator, dispozitiv sau utilizator
+- Activitate elemente din bibliotecă și stare de implementare
+- Prezentare generală licențe cu limite de dispozitive și detalii pe platforme
+- Suport multi-tenant: mai multe profiluri Kandji cu comutare instantanee
+- 25 limbi suportate
+- Aspect responsiv: navigare de jos pe telefoane, bară de navigare pe tablete și desktopuri
+
+Securitate:
+- PIN obligatoriu de 6 cifre la prima configurare
+- Deblocare biometrică opțională (Face ID, Touch ID, amprentă)
+- Tokenurile API stocate în stocarea securizată nativă a platformei (iOS Keychain, Android Keystore)
+- Secretele dispozitivului necesită verificare biometrică/PIN înainte de vizualizare
+- Acțiunile distructive necesită confirmare tastată
+- Fără urmărire, fără analiză, fără telemetrie
+
+FleetPilot este complet gratuit — fără achiziții în aplicație, fără abonamente, fără restricții de funcționalitate. Complet open source sub licența MIT.
+
+Dacă FleetPilot îți este util, ia în considerare sprijinirea dezvoltării prin Liberapay: https://de.liberapay.com/beli3ver

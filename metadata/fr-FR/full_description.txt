@@ -1,0 +1,30 @@
+FleetPilot est un client mobile open source pour Kandji qui apporte la gestion MDM complète sur votre téléphone, tablette et ordinateur de bureau. Parcourez l'ensemble de votre flotte d'appareils Apple, gérez les blueprints, utilisez l'inscription automatique des appareils, suivez les vulnérabilités et exécutez des actions sur les appareils — le tout depuis une seule application avec Material Design 3.
+
+Fonctionnalités :
+- Parcourir, rechercher et filtrer tous les Mac, iPhone, iPad et Apple TV inscrits
+- Vue détaillée de l'appareil en 8 onglets : Aperçu, Apps, Statut, Activité, Commandes, Secrets, Notes, Localisation
+- Plus de 15 actions MDM : Verrouiller, Redémarrer, Éteindre, Effacer, Mode Perdu, Bureau à distance, et plus
+- Gestion des blueprints : créer, modifier, supprimer, gérer les éléments de bibliothèque, télécharger les profils OTA
+- Inscription automatique des appareils (ADE) : créer des intégrations, téléverser des jetons, parcourir les appareils inscrits
+- Gestion des utilisateurs avec pagination par curseur et recherche
+- Gestion des vulnérabilités : parcourir les CVE par gravité, scores CVSS, appareils affectés
+- Détection des menaces et détections comportementales avec recherche
+- Gestion des tags avec 10 couleurs prédéfinies
+- Journal d'audit avec recherche par type, administrateur, appareil ou utilisateur
+- Activité des éléments de bibliothèque et état de déploiement
+- Vue d'ensemble des licences avec limites d'appareils et répartition par plateforme
+- Support multi-tenant : plusieurs profils Kandji avec basculement instantané
+- 25 langues prises en charge
+- Mise en page responsive : navigation en bas sur téléphones, barre latérale sur tablettes et ordinateurs
+
+Sécurité :
+- Code PIN à 6 chiffres obligatoire lors de la première configuration
+- Déverrouillage biométrique optionnel (Face ID, Touch ID, empreinte digitale)
+- Jetons API stockés dans le stockage sécurisé natif de la plateforme (Trousseau iOS, Android Keystore)
+- Les secrets de l'appareil nécessitent une vérification biométrique/PIN avant affichage
+- Les actions destructives nécessitent une confirmation saisie au clavier
+- Aucun suivi, aucune analyse, aucune télémétrie
+
+FleetPilot est entièrement gratuit, sans achats intégrés, sans abonnement et sans restriction de fonctionnalités. Entièrement open source sous licence MIT.
+
+Si FleetPilot vous est utile, pensez à soutenir le développement via Liberapay : https://de.liberapay.com/beli3ver

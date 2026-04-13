@@ -1,0 +1,1 @@
+v1.2.0: Security hardening, 25 languages, stale-while-revalidate caching, brightness-aware theme, FleetPilot branding with new app icon and splash screen across all platforms.

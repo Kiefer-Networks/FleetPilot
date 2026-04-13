@@ -1,0 +1,30 @@
+FleetPilot là ứng dụng di động mã nguồn mở dành cho Kandji, mang đến khả năng quản lý MDM đầy đủ trên điện thoại, máy tính bảng và máy tính để bàn. Duyệt toàn bộ đội thiết bị Apple, quản lý blueprint, xử lý Đăng ký Thiết bị Tự động, theo dõi lỗ hổng bảo mật và thực hiện các hành động trên thiết bị — tất cả từ một ứng dụng duy nhất với Material Design 3.
+
+Tính năng:
+- Duyệt, tìm kiếm và lọc tất cả thiết bị Mac, iPhone, iPad và Apple TV đã đăng ký
+- Xem chi tiết thiết bị 8 tab: Tổng quan, Ứng dụng, Trạng thái, Hoạt động, Lệnh, Bí mật, Ghi chú, Vị trí
+- Hơn 15 hành động MDM: Khóa, Khởi động lại, Tắt máy, Xóa, Chế độ Mất, Điều khiển Từ xa và nhiều hơn nữa
+- Quản lý blueprint: tạo, chỉnh sửa, xóa, quản lý mục thư viện, tải xuống cấu hình OTA
+- Đăng ký Thiết bị Tự động (ADE): tạo tích hợp, tải lên token, duyệt thiết bị đã đăng ký
+- Quản lý người dùng với phân trang dựa trên con trỏ và tìm kiếm
+- Quản lý lỗ hổng: duyệt CVE theo mức độ nghiêm trọng, điểm CVSS, thiết bị bị ảnh hưởng
+- Phát hiện mối đe dọa và phát hiện hành vi với tìm kiếm
+- Quản lý thẻ với 10 bảng màu có sẵn
+- Nhật ký kiểm toán với tìm kiếm theo loại, quản trị viên, thiết bị hoặc người dùng
+- Hoạt động mục thư viện và trạng thái triển khai
+- Tổng quan giấy phép với giới hạn thiết bị và phân tích nền tảng
+- Hỗ trợ đa tổ chức: nhiều hồ sơ Kandji với chuyển đổi tức thì
+- Hỗ trợ 25 ngôn ngữ
+- Bố cục đáp ứng: thanh điều hướng dưới trên điện thoại, thanh điều hướng bên trên máy tính bảng và máy tính để bàn
+
+Bảo mật:
+- Mã PIN 6 chữ số bắt buộc khi thiết lập lần đầu
+- Mở khóa sinh trắc học tùy chọn (Face ID, Touch ID, vân tay)
+- Token API được lưu trữ trong bộ nhớ bảo mật gốc của nền tảng (iOS Keychain, Android Keystore)
+- Bí mật thiết bị yêu cầu xác minh sinh trắc học/PIN trước khi xem
+- Hành động phá hủy yêu cầu xác nhận bằng cách nhập
+- Không theo dõi, không phân tích, không thu thập dữ liệu
+
+FleetPilot hoàn toàn miễn phí, không mua hàng trong ứng dụng, không đăng ký và không giới hạn tính năng. Mã nguồn mở hoàn toàn theo giấy phép MIT.
+
+Nếu bạn thấy FleetPilot hữu ích, hãy cân nhắc hỗ trợ phát triển qua Liberapay: https://de.liberapay.com/beli3ver

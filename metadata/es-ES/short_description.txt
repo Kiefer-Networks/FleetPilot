@@ -1,0 +1,1 @@
+Cliente MDM de código abierto para Kandji — gestiona tu flota Apple

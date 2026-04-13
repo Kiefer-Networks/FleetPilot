@@ -1,0 +1,30 @@
+FleetPilot är en mobilklient med öppen källkod för Kandji som ger dig fullständig MDM-hantering på din telefon, surfplatta och dator. Bläddra bland alla dina Apple-enheter, hantera blueprints, automatiserad enhetsregistrering, spåra sårbarheter och utför enhetsåtgärder — allt från en enda app med Material Design 3.
+
+Funktioner:
+- Bläddra, sök och filtrera alla registrerade Mac-, iPhone-, iPad- och Apple TV-enheter
+- Enhetsdetaljvy med 8 flikar: Översikt, Appar, Status, Aktivitet, Kommandon, Hemligheter, Anteckningar, Plats
+- 15+ MDM-enhetsåtgärder: Lås, Starta om, Stäng av, Radera, Förlorat läge, Fjärrskrivbord med mera
+- Blueprint-hantering: skapa, redigera, ta bort, hantera biblioteksobjekt, ladda ner OTA-profiler
+- Automatiserad enhetsregistrering (ADE): skapa integrationer, ladda upp tokens, bläddra bland registrerade enheter
+- Användarhantering med markörbaserad paginering och sökning
+- Sårbarhetshantering: bläddra bland CVE:er efter allvarlighetsgrad, CVSS-poäng, påverkade enheter
+- Hotdetektering och beteendedetektering med sökning
+- Tagghantering med 10 färgförinställningar
+- Granskningslogg med sökning efter typ, administratör, enhet eller användare
+- Biblioteksobjektsaktivitet och distributionsstatus
+- Licensöversikt med enhetsgränser och plattformsfördelning
+- Stöd för flera organisationer: flera Kandji-profiler med omedelbar växling
+- 25 språk stöds
+- Responsiv layout: bottennavigering på telefoner, navigeringsfält på surfplattor och datorer
+
+Säkerhet:
+- Obligatorisk 6-siffrig PIN-kod vid första installationen
+- Valfri biometrisk upplåsning (Face ID, Touch ID, fingeravtryck)
+- API-tokens lagras i plattformens säkra lagring (iOS Keychain, Android Keystore)
+- Enhetshemligheter kräver biometrisk/PIN-verifiering innan visning
+- Destruktiva åtgärder kräver skriftlig bekräftelse
+- Ingen spårning, ingen analys, ingen telemetri
+
+FleetPilot är helt gratis utan köp i appen, inga prenumerationer och inga funktionsbegränsningar. Helt öppen källkod under MIT-licensen.
+
+Om du tycker att FleetPilot är användbart, överväg att stödja utvecklingen via Liberapay: https://de.liberapay.com/beli3ver

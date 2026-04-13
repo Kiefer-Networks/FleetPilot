@@ -1,0 +1,1 @@
+v1.2.0: Penguatan keamanan, 25 bahasa, cache stale-while-revalidate, tema adaptif, ikon dan layar splash baru FleetPilot.

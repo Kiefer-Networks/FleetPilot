@@ -1,0 +1,30 @@
+FleetPilot is een open-source mobiele client voor Kandji die volledig MDM-beheer naar je telefoon, tablet en desktop brengt. Blader door je volledige Apple-apparatenvloot, beheer blueprints, gebruik geautomatiseerde apparaatregistratie, volg kwetsbaarheden en voer apparaatacties uit — alles vanuit één app met Material Design 3.
+
+Functies:
+- Alle geregistreerde Mac-, iPhone-, iPad- en Apple TV-apparaten bekijken, zoeken en filteren
+- Gedetailleerde apparaatweergave met 8 tabbladen: Overzicht, Apps, Status, Activiteit, Opdrachten, Geheimen, Notities, Locatie
+- Meer dan 15 MDM-apparaatacties: Vergrendelen, Herstarten, Uitschakelen, Wissen, Verloren-modus, Extern bureaublad en meer
+- Blueprintbeheer: aanmaken, bewerken, verwijderen, bibliotheekelementen beheren, OTA-profielen downloaden
+- Geautomatiseerde apparaatregistratie (ADE): integraties aanmaken, tokens uploaden, geregistreerde apparaten bekijken
+- Gebruikersbeheer met cursorgebaseerde paginering en zoekfunctie
+- Kwetsbaarheidsbeheer: CVE's bekijken op ernst, CVSS-scores, getroffen apparaten
+- Detectie van bedreigingen en gedragsdetecties met zoekfunctie
+- Tagbeheer met 10 kleurpresets
+- Auditlogboek met zoeken op type, beheerder, apparaat of gebruiker
+- Activiteit van bibliotheekelementen en implementatiestatus
+- Licentieoverzicht met apparaatlimieten en platformverdeling
+- Multi-tenant ondersteuning: meerdere Kandji-profielen met direct wisselen
+- 25 ondersteunde talen
+- Responsieve lay-out: navigatie onderaan op telefoons, navigatiebalk op tablets en desktops
+
+Beveiliging:
+- Verplichte 6-cijferige pincode bij eerste instelling
+- Optionele biometrische ontgrendeling (Face ID, Touch ID, vingerafdruk)
+- API-tokens opgeslagen in platformeigen beveiligde opslag (iOS Sleutelhanger, Android Keystore)
+- Apparaatgeheimen vereisen biometrische/PIN-verificatie voor weergave
+- Destructieve acties vereisen ingetypte bevestiging
+- Geen tracking, geen analyses, geen telemetrie
+
+FleetPilot is volledig gratis, zonder in-app-aankopen, zonder abonnementen en zonder functiebeperkingen. Volledig open source onder de MIT-licentie.
+
+Als je FleetPilot nuttig vindt, overweeg dan de ontwikkeling te steunen via Liberapay: https://de.liberapay.com/beli3ver

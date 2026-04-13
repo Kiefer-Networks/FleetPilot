@@ -1,0 +1,50 @@
+Categories:
+  - System
+  - Internet
+License: MIT
+WebSite: https://kiefer-networks.de
+SourceCode: https://github.com/Kiefer-Networks/FleetPilot
+IssueTracker: https://github.com/Kiefer-Networks/FleetPilot/issues
+Changelog: https://github.com/Kiefer-Networks/FleetPilot/releases
+Donate: https://de.liberapay.com/beli3ver
+
+AutoName: FleetPilot
+Summary: Open-source MDM management client for Kandji.
+Description: |
+    FleetPilot is a native Flutter client for Kandji that brings full MDM
+    management to your phone, tablet, and desktop. Browse your entire Apple
+    device fleet, manage blueprints, handle Automated Device Enrollment,
+    track vulnerabilities, and execute device actions — all from a single
+    app with Material Design 3.
+
+    Features:
+    - Browse, search, and filter all enrolled Mac, iPhone, iPad, and Apple TV devices
+    - 8-tab device detail view with hardware, apps, status, activity, commands, secrets, notes, location
+    - 15+ MDM device actions including Lock, Restart, Erase, Lost Mode, Remote Desktop
+    - Blueprint management with library items and OTA enrollment profiles
+    - Automated Device Enrollment (ADE) with token upload and device browsing
+    - Vulnerability management with CVE severity, CVSS scores, affected devices
+    - Threat detection and behavioral detections
+    - Multi-tenant support with instant profile switching
+    - 25 languages supported
+    - No tracking, no analytics, no telemetry
+
+RepoType: git
+Repo: https://github.com/Kiefer-Networks/FleetPilot
+
+Builds:
+  - versionName: "1.2.0"
+    versionCode: 3
+    commit: HEAD
+    subdir: .
+    output: build/app/outputs/flutter-apk/app-release.apk
+    build:
+      - flutter pub get
+      - dart run build_runner build --delete-conflicting-outputs
+      - flutter gen-l10n
+      - flutter build apk --release
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: "1.2.0"
+CurrentVersionCode: 3

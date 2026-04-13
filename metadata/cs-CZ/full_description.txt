@@ -1,0 +1,30 @@
+FleetPilot je open-source mobilní klient pro Kandji, který přináší kompletní správu MDM na váš telefon, tablet a počítač. Procházejte celou flotilu zařízení Apple, spravujte blueprinty, zpracovávejte automatický zápis zařízení, sledujte zranitelnosti a provádějte akce se zařízeními — vše z jediné aplikace s Material Design 3.
+
+Funkce:
+- Procházejte, vyhledávejte a filtrujte všechna zaregistrovaná zařízení Mac, iPhone, iPad a Apple TV
+- Zobrazení detailů zařízení s 8 kartami: Přehled, Aplikace, Stav, Aktivita, Příkazy, Tajemství, Poznámky, Poloha
+- 15+ MDM akcí se zařízeními: Zamknutí, Restart, Vypnutí, Smazání, Režim ztráty, Vzdálená plocha a další
+- Správa blueprintů: vytváření, úpravy, mazání, správa položek knihovny, stahování OTA profilů
+- Automatický zápis zařízení (ADE): vytváření integrací, nahrávání tokenů, procházení zaregistrovaných zařízení
+- Správa uživatelů s kurzorovou paginací a vyhledáváním
+- Správa zranitelností: procházení CVE podle závažnosti, skóre CVSS, ovlivněných zařízení
+- Detekce hrozeb a behaviorální detekce s vyhledáváním
+- Správa štítků s 10 barevnými předvolbami
+- Protokol auditu s vyhledáváním podle typu, správce, zařízení nebo uživatele
+- Aktivita položek knihovny a stav nasazení
+- Přehled licencí s limity zařízení a rozdělením podle platforem
+- Podpora více organizací: více profilů Kandji s okamžitým přepínáním
+- Podpora 25 jazyků
+- Responzivní rozložení: spodní navigace na telefonech, navigační lišta na tabletech a počítačích
+
+Zabezpečení:
+- Povinný 6místný PIN při prvním nastavení
+- Volitelné biometrické odemknutí (Face ID, Touch ID, otisk prstu)
+- Tokeny API uloženy v nativním zabezpečeném úložišti platformy (iOS Keychain, Android Keystore)
+- Zobrazení tajemství zařízení vyžaduje biometrické/PIN ověření
+- Destruktivní akce vyžadují zadané potvrzení
+- Žádné sledování, žádná analytika, žádná telemetrie
+
+FleetPilot je zcela zdarma — žádné nákupy v aplikaci, žádná předplatná, žádná omezení funkcí. Plně open-source pod licencí MIT.
+
+Pokud vám FleetPilot pomáhá, zvažte podporu vývoje přes Liberapay: https://de.liberapay.com/beli3ver

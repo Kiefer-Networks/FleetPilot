@@ -1,0 +1,30 @@
+O FleetPilot é um cliente móvel de código aberto para Kandji que traz a gestão MDM completa para o seu telemóvel, tablet e computador. Navegue por toda a sua frota de dispositivos Apple, faça a gestão de blueprints, utilize a inscrição automatizada de dispositivos, acompanhe vulnerabilidades e execute ações nos dispositivos — tudo a partir de uma única aplicação com Material Design 3.
+
+Funcionalidades:
+- Navegar, pesquisar e filtrar todos os Mac, iPhone, iPad e Apple TV inscritos
+- Vista detalhada do dispositivo com 8 separadores: Resumo, Apps, Estado, Atividade, Comandos, Segredos, Notas, Localização
+- Mais de 15 ações MDM: Bloquear, Reiniciar, Encerrar, Apagar, Modo Perdido, Ambiente de Trabalho Remoto e mais
+- Gestão de blueprints: criar, editar, eliminar, gerir elementos de biblioteca, transferir perfis OTA
+- Inscrição automatizada de dispositivos (ADE): criar integrações, carregar tokens, navegar pelos dispositivos inscritos
+- Gestão de utilizadores com paginação baseada em cursor e pesquisa
+- Gestão de vulnerabilidades: navegar por CVEs por gravidade, pontuações CVSS, dispositivos afetados
+- Deteção de ameaças e deteções comportamentais com pesquisa
+- Gestão de etiquetas com 10 cores predefinidas
+- Registo de auditoria com pesquisa por tipo, administrador, dispositivo ou utilizador
+- Atividade dos elementos de biblioteca e estado de implementação
+- Resumo de licenças com limites de dispositivos e distribuição por plataforma
+- Suporte multi-tenant: múltiplos perfis Kandji com alternância instantânea
+- 25 idiomas suportados
+- Layout responsivo: navegação inferior em telemóveis, barra lateral em tablets e computadores
+
+Segurança:
+- PIN obrigatório de 6 dígitos na primeira configuração
+- Desbloqueio biométrico opcional (Face ID, Touch ID, impressão digital)
+- Tokens API armazenados no armazenamento seguro nativo da plataforma (Porta-chaves iOS, Android Keystore)
+- Os segredos do dispositivo requerem verificação biométrica/PIN antes da visualização
+- Ações destrutivas requerem confirmação digitada
+- Sem rastreamento, sem analíticas, sem telemetria
+
+O FleetPilot é completamente gratuito, sem compras na aplicação, sem subscrições e sem restrições de funcionalidades. Totalmente de código aberto sob a licença MIT.
+
+Se considera o FleetPilot útil, pondere apoiar o desenvolvimento através do Liberapay: https://de.liberapay.com/beli3ver

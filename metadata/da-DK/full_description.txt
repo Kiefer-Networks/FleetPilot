@@ -1,0 +1,30 @@
+FleetPilot er en open source-mobilklient til Kandji, der giver dig fuld MDM-styring på din telefon, tablet og computer. Gennemse hele din Apple-enhedsflåde, administrer blueprints, håndter automatiseret enhedsregistrering, spor sårbarheder og udfør enhedshandlinger — alt fra en enkelt app med Material Design 3.
+
+Funktioner:
+- Gennemse, søg og filtrer alle tilmeldte Mac-, iPhone-, iPad- og Apple TV-enheder
+- Enhedsdetaljevisning med 8 faner: Oversigt, Apps, Status, Aktivitet, Kommandoer, Hemmeligheder, Noter, Placering
+- 15+ MDM-enhedshandlinger: Lås, Genstart, Luk ned, Slet, Mistet tilstand, Fjernskrivebord og mere
+- Blueprint-administration: opret, rediger, slet, administrer bibliotekselementer, download OTA-profiler
+- Automatiseret enhedsregistrering (ADE): opret integrationer, upload tokens, gennemse tilmeldte enheder
+- Brugeradministration med markørbaseret paginering og søgning
+- Sårbarhedshåndtering: gennemse CVE'er efter alvorlighed, CVSS-score, berørte enheder
+- Trusselsdetektion og adfærdsdetektion med søgning
+- Tag-administration med 10 farveforudindstillinger
+- Revisionslog med søgning efter type, administrator, enhed eller bruger
+- Bibliotekselementaktivitet og udrulningsstatus
+- Licensoversigt med enhedsgrænser og platformsopdeling
+- Multi-tenant-understøttelse: flere Kandji-profiler med øjeblikkelig skift
+- 25 understøttede sprog
+- Responsivt layout: bundnavigation på telefoner, navigationspanel på tablets og computere
+
+Sikkerhed:
+- Obligatorisk 6-cifret PIN-kode ved første opsætning
+- Valgfri biometrisk oplåsning (Face ID, Touch ID, fingeraftryk)
+- API-tokens opbevares i platformens sikre lagring (iOS Keychain, Android Keystore)
+- Enhedshemmeligheder kræver biometrisk/PIN-verifikation før visning
+- Destruktive handlinger kræver indtastet bekræftelse
+- Ingen sporing, ingen analyse, ingen telemetri
+
+FleetPilot er helt gratis uden køb i appen, ingen abonnementer og ingen funktionsbegrænsninger. Fuldt open source under MIT-licensen.
+
+Hvis du finder FleetPilot nyttigt, kan du overveje at støtte udviklingen via Liberapay: https://de.liberapay.com/beli3ver

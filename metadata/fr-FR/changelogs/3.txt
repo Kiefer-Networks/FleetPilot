@@ -1,0 +1,1 @@
+v1.2.0 : Renforcement de la sécurité, 25 langues, mise en cache stale-while-revalidate, thème adaptatif, nouvelle icône et écran de démarrage FleetPilot.
