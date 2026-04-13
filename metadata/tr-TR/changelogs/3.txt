@@ -1,1 +1,0 @@
-v1.2.0: Güvenlik güçlendirme, 25 dil, stale-while-revalidate önbellekleme, parlaklık uyarlamalı tema, yeni uygulama simgesi ve açılış ekranı.

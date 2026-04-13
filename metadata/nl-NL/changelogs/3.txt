@@ -1,1 +1,0 @@
-v1.2.0: Beveiligingsversterking, 25 talen, stale-while-revalidate-caching, helderheidsadaptief thema, FleetPilot-branding met nieuw app-icoon en opstartscherm.

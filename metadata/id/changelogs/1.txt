@@ -1,0 +1,1 @@
+v1.0.0: Rilis publik pertama. Manajemen MDM Kandji lengkap dengan aksi perangkat, blueprint, integrasi ADE, pelacakan kerentanan, 25 bahasa, keamanan biometrik, dan Material Design 3.

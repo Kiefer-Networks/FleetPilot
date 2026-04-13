@@ -1,1 +1,0 @@
-v1.2.0: Tăng cường bảo mật, 25 ngôn ngữ, bộ nhớ đệm stale-while-revalidate, giao diện thích ứng độ sáng, biểu tượng và màn hình khởi động mới.

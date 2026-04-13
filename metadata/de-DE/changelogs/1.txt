@@ -1,0 +1,1 @@
+v1.0.0: Erste öffentliche Veröffentlichung. Vollständige Kandji-MDM-Verwaltung mit Geräteaktionen, Blueprints, ADE-Integrationen, Schwachstellenverfolgung, 25 Sprachen, biometrischer Sicherheit und Material Design 3.

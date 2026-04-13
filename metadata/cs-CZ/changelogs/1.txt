@@ -1,0 +1,1 @@
+v1.0.0: První veřejné vydání. Kompletní správa MDM Kandji s akcemi zařízení, blueprinty, integracemi ADE, sledováním zranitelností, 25 jazyky, biometrickým zabezpečením a Material Design 3.

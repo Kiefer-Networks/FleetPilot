@@ -1,1 +1,0 @@
-v1.2.0: Jačanje sigurnosti, 25 jezika, stale-while-revalidate predmemorija, prilagodljiva tema, nova ikona i početni zaslon.

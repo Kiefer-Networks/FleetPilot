@@ -1,1 +1,0 @@
-v1.2.0: Sikkerhedsforbedringer, 25 sprog, stale-while-revalidate-caching, lysstyrkeadaptivt tema, nyt appikon og startskærm.

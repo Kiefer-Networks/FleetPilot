@@ -1,0 +1,1 @@
+v1.0.0: Eerste publieke release. Volledige Kandji MDM-beheer met apparaatacties, blueprints, ADE-integraties, kwetsbaarheidstracking, 25 talen, biometrische beveiliging en Material Design 3.

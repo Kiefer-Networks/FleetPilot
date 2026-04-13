@@ -1,1 +1,0 @@
-v1.2.0: Sicherheitshärtung, 25 Sprachen, Stale-While-Revalidate-Caching, helligkeitsadaptives Design, FleetPilot-Branding mit neuem App-Icon und Splash-Screen.

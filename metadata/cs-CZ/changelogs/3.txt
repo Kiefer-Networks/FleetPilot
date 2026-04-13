@@ -1,1 +1,0 @@
-v1.2.0: Posílení zabezpečení, 25 jazyků, cache stale-while-revalidate, adaptivní motiv, nová ikona a úvodní obrazovka.

@@ -1,0 +1,1 @@
+v1.0.0: Pierwsza publiczna wersja. Pełne zarządzanie MDM Kandji z akcjami urządzeń, blueprintami, integracjami ADE, śledzeniem podatności, 25 językami, bezpieczeństwem biometrycznym i Material Design 3.

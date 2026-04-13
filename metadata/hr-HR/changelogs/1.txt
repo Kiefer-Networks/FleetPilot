@@ -1,0 +1,1 @@
+v1.0.0: Prvo javno izdanje. Potpuno upravljanje MDM-om Kandji s radnjama uređaja, nacrtima, ADE integracijama, praćenjem ranjivosti, 25 jezika, biometrijskom sigurnošću i Material Design 3.

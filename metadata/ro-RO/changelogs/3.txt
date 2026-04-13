@@ -1,1 +1,0 @@
-v1.2.0: Întărirea securității, 25 limbi, cache stale-while-revalidate, temă adaptivă, pictogramă și ecran de pornire noi.
