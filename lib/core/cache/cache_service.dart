@@ -27,8 +27,7 @@ class CacheService {
   }
 
   /// Builds a safe filename from a cache key.
-  String _filename(String key) =>
-      key.replaceAll(RegExp(r'[^\w\-.]'), '_');
+  String _filename(String key) => key.replaceAll(RegExp(r'[^\w\-.]'), '_');
 
   /// Writes [data] to cache under [key].
   Future<void> write(String key, dynamic data) async {
@@ -60,7 +59,10 @@ class CacheService {
   }
 
   /// Returns `true` if cached data for [key] is fresher than [maxAge].
-  Future<bool> isFresh(String key, {Duration maxAge = const Duration(minutes: 5)}) async {
+  Future<bool> isFresh(
+    String key, {
+    Duration maxAge = const Duration(minutes: 5),
+  }) async {
     try {
       final dir = await _dir();
       final file = File('${dir.path}/${_filename(key)}.json');

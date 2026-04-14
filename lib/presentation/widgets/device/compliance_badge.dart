@@ -19,23 +19,23 @@ class ComplianceBadge extends StatelessWidget {
 
     final (label, color, bgColor, icon) = switch (status) {
       ComplianceStatus.pass => (
-          l10n.compliancePass,
-          AppColors.success(brightness),
-          AppColors.successContainer(brightness),
-          Icons.check_circle_rounded,
-        ),
+        l10n.compliancePass,
+        AppColors.success(brightness),
+        AppColors.successContainer(brightness),
+        Icons.check_circle_rounded,
+      ),
       ComplianceStatus.fail => (
-          l10n.complianceFail,
-          theme.colorScheme.error,
-          theme.colorScheme.errorContainer,
-          Icons.cancel_rounded,
-        ),
+        l10n.complianceFail,
+        theme.colorScheme.error,
+        theme.colorScheme.errorContainer,
+        Icons.cancel_rounded,
+      ),
       ComplianceStatus.pending => (
-          l10n.compliancePending,
-          AppColors.warning(brightness),
-          AppColors.warningContainer(brightness),
-          Icons.warning_rounded,
-        ),
+        l10n.compliancePending,
+        AppColors.warning(brightness),
+        AppColors.warningContainer(brightness),
+        Icons.warning_rounded,
+      ),
     };
 
     return Semantics(

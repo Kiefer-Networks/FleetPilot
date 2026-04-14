@@ -39,10 +39,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
   Future<List<Tag>?> getCachedTags() async {
     final raw = await cache.read<List<dynamic>>('tags');
     if (raw == null) return null;
-    return raw
-        .cast<Map<String, dynamic>>()
-        .map(Tag.fromJson)
-        .toList();
+    return raw.cast<Map<String, dynamic>>().map(Tag.fromJson).toList();
   }
 
   @override

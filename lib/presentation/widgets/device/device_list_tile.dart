@@ -100,10 +100,7 @@ class DeviceListTile extends StatelessWidget {
                 if (lastCheckIn != null)
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
-                    child: Text(
-                      lastCheckIn,
-                      style: theme.textTheme.labelSmall,
-                    ),
+                    child: Text(lastCheckIn, style: theme.textTheme.labelSmall),
                   ),
                 const SizedBox(width: 4),
                 Icon(
@@ -180,10 +177,7 @@ class _StatusBadge extends StatelessWidget {
 
 /// Accessible compliance indicator — icon + color (not color-only).
 class _ComplianceIndicator extends StatelessWidget {
-  const _ComplianceIndicator({
-    required this.status,
-    required this.brightness,
-  });
+  const _ComplianceIndicator({required this.status, required this.brightness});
 
   final String status;
   final Brightness brightness;

@@ -67,7 +67,9 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
     ref.read(devicesFullyLoadedProvider.notifier).state = false;
 
     // ── Stale-while-revalidate: show cached data immediately ──
-    if (platform == null && blueprintId == null && repo is DeviceRepositoryImpl) {
+    if (platform == null &&
+        blueprintId == null &&
+        repo is DeviceRepositoryImpl) {
       final cached = await repo.getCachedDevices();
       if (cached != null && cached.isNotEmpty) {
         // Show cache instantly, then refresh in background.
@@ -121,7 +123,12 @@ class DevicesNotifier extends AsyncNotifier<List<Device>> {
     String ordering,
   ) async {
     try {
-      final fresh = await _fetchFirstPage(repo, platform, blueprintId, ordering);
+      final fresh = await _fetchFirstPage(
+        repo,
+        platform,
+        blueprintId,
+        ordering,
+      );
       state = AsyncData(fresh);
     } on Exception {
       // Background refresh failed — cached data remains visible.
