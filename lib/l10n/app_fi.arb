@@ -1,0 +1,1855 @@
+{
+  "@@locale": "fi",
+  "appTitle": "FleetPilot",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "navDevices": "Laitteet",
+  "@navDevices": {
+    "description": "Navigation label for devices tab"
+  },
+  "navBlueprints": "Blueprintit",
+  "@navBlueprints": {
+    "description": "Navigation label for blueprints tab"
+  },
+  "navUsers": "Käyttäjät",
+  "@navUsers": {
+    "description": "Navigation label for users tab"
+  },
+  "navSettings": "Asetukset",
+  "@navSettings": {
+    "description": "Navigation label for settings tab"
+  },
+  "welcomeTitle": "Tervetuloa FleetPilotiin",
+  "@welcomeTitle": {
+    "description": "Title on the welcome/onboarding screen"
+  },
+  "welcomeSubtitle": "Hallitse Apple-laitekanttaasi mistä tahansa.",
+  "@welcomeSubtitle": {
+    "description": "Subtitle on the welcome screen"
+  },
+  "addProfile": "Lisää profiili",
+  "@addProfile": {
+    "description": "Button label to add a new connection profile"
+  },
+  "editProfile": "Muokkaa profiilia",
+  "@editProfile": {
+    "description": "Title for editing a profile"
+  },
+  "displayName": "Näyttönimi",
+  "@displayName": {
+    "description": "Label for profile display name field"
+  },
+  "displayNameHint": "esim. Acme Corp — Tuotanto",
+  "@displayNameHint": {
+    "description": "Hint text for profile display name"
+  },
+  "region": "Alue",
+  "@region": {
+    "description": "Label for region selector"
+  },
+  "regionUs": "US",
+  "@regionUs": {
+    "description": "US region label"
+  },
+  "regionEu": "EU",
+  "@regionEu": {
+    "description": "EU region label"
+  },
+  "subdomain": "Alidomain",
+  "@subdomain": {
+    "description": "Label for subdomain field"
+  },
+  "subdomainHint": "oma-vuokralainen",
+  "@subdomainHint": {
+    "description": "Hint text for subdomain field"
+  },
+  "apiToken": "API-avain",
+  "@apiToken": {
+    "description": "Label for API token field"
+  },
+  "apiTokenHint": "Liitä API-avaimesi tähän",
+  "@apiTokenHint": {
+    "description": "Hint text for API token field"
+  },
+  "urlPreview": "API-osoite: {url}",
+  "@urlPreview": {
+    "description": "Preview of constructed API URL",
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyAndSave": "Vahvista ja tallenna",
+  "@verifyAndSave": {
+    "description": "Button label for verifying and saving credentials"
+  },
+  "verifying": "Vahvistetaan yhteyttä...",
+  "@verifying": {
+    "description": "Loading message during credential verification"
+  },
+  "connectionSuccess": "Yhteys vahvistettu onnistuneesti!",
+  "@connectionSuccess": {
+    "description": "Success message after credential verification"
+  },
+  "errorInvalidToken": "Virheellinen API-avain. Tarkista avaimesi hallintakonsolista.",
+  "@errorInvalidToken": {
+    "description": "Error message for 401 response"
+  },
+  "errorInsufficientPermissions": "Avaimella ei ole riittäviä oikeuksia. Varmista, että avaimella on lukuoikeus laitteisiin.",
+  "@errorInsufficientPermissions": {
+    "description": "Error message for 403 response"
+  },
+  "errorNetworkUnreachable": "API:iin ei saatu yhteyttä. Tarkista internet-yhteytesi ja alidomain.",
+  "@errorNetworkUnreachable": {
+    "description": "Error message for network failures"
+  },
+  "errorNotFound": "Pyydettyä resurssia ei löytynyt.",
+  "@errorNotFound": {
+    "description": "Error message for 404 response"
+  },
+  "errorValidation": "Pyynnössä oli virheellistä tietoa. Tarkista syötteesi.",
+  "@errorValidation": {
+    "description": "Error message for 422 response"
+  },
+  "errorRateLimit": "Liian monta pyyntöä. Odota hetki ja yritä uudelleen.",
+  "@errorRateLimit": {
+    "description": "Error message for 429 response"
+  },
+  "errorServer": "Palvelimella tapahtui virhe. Yritä myöhemmin uudelleen.",
+  "@errorServer": {
+    "description": "Error message for 500 response"
+  },
+  "errorUnexpected": "Odottamaton virhe tapahtui. Yritä uudelleen.",
+  "@errorUnexpected": {
+    "description": "Error message for unexpected errors"
+  },
+  "retry": "Yritä uudelleen",
+  "@retry": {
+    "description": "Retry button label"
+  },
+  "cancel": "Peruuta",
+  "@cancel": {
+    "description": "Cancel button label"
+  },
+  "delete": "Poista",
+  "@delete": {
+    "description": "Delete button label"
+  },
+  "save": "Tallenna",
+  "@save": {
+    "description": "Save button label"
+  },
+  "search": "Haku",
+  "@search": {
+    "description": "Search label"
+  },
+  "searchDevices": "Hae laitteita...",
+  "@searchDevices": {
+    "description": "Placeholder for device search bar"
+  },
+  "filterAll": "Kaikki",
+  "@filterAll": {
+    "description": "Filter chip label for all items"
+  },
+  "filterMac": "Mac",
+  "@filterMac": {
+    "description": "Filter chip label for Mac devices"
+  },
+  "filterIphone": "iPhone",
+  "@filterIphone": {
+    "description": "Filter chip label for iPhone devices"
+  },
+  "filterIpad": "iPad",
+  "@filterIpad": {
+    "description": "Filter chip label for iPad devices"
+  },
+  "filterAppleTv": "Apple TV",
+  "@filterAppleTv": {
+    "description": "Filter chip label for Apple TV devices"
+  },
+  "allBlueprints": "Kaikki Blueprintit",
+  "@allBlueprints": {
+    "description": "Filter chip label for all blueprints"
+  },
+  "loadingDevices": "Ladataan {count} laitetta...",
+  "@loadingDevices": {
+    "description": "Loading indicator during device pagination",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deviceCount": "{count, plural, =0{Ei laitteita} =1{1 laite} other{{count} laitetta}}",
+  "@deviceCount": {
+    "description": "Device count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noDevicesFound": "Laitteita ei löytynyt",
+  "@noDevicesFound": {
+    "description": "Empty state title when no devices match"
+  },
+  "noDevicesFoundMessage": "Kokeile muuttaa hakua tai suodattimia.",
+  "@noDevicesFoundMessage": {
+    "description": "Empty state message when no devices match"
+  },
+  "lastCheckIn": "Viimeisin kuittaus: {time}",
+  "@lastCheckIn": {
+    "description": "Label for last check-in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "compliancePass": "Hyväksytty",
+  "@compliancePass": {
+    "description": "Compliance status pass"
+  },
+  "complianceFail": "Hylätty",
+  "@complianceFail": {
+    "description": "Compliance status fail"
+  },
+  "compliancePending": "Odottaa",
+  "@compliancePending": {
+    "description": "Compliance status pending"
+  },
+  "deviceDetails": "Laitteen tiedot",
+  "@deviceDetails": {
+    "description": "Title for device detail screen"
+  },
+  "serialNumber": "Sarjanumero",
+  "@serialNumber": {
+    "description": "Label for serial number"
+  },
+  "model": "Malli",
+  "@model": {
+    "description": "Label for device model"
+  },
+  "osVersion": "Käyttöjärjestelmäversio",
+  "@osVersion": {
+    "description": "Label for OS version"
+  },
+  "assetTag": "Omaisuustunniste",
+  "@assetTag": {
+    "description": "Label for asset tag"
+  },
+  "blueprint": "Blueprint",
+  "@blueprint": {
+    "description": "Label for blueprint"
+  },
+  "enrolledDate": "Rekisteröity",
+  "@enrolledDate": {
+    "description": "Label for enrollment date"
+  },
+  "assignedUser": "Määritetty käyttäjä",
+  "@assignedUser": {
+    "description": "Label for assigned user"
+  },
+  "actions": "Toiminnot",
+  "@actions": {
+    "description": "Title for actions section"
+  },
+  "actionLock": "Lukitse",
+  "@actionLock": {
+    "description": "Device action: lock"
+  },
+  "actionRestart": "Käynnistä uudelleen",
+  "@actionRestart": {
+    "description": "Device action: restart"
+  },
+  "actionShutdown": "Sammuta",
+  "@actionShutdown": {
+    "description": "Device action: shutdown"
+  },
+  "actionErase": "Tyhjennä",
+  "@actionErase": {
+    "description": "Device action: erase"
+  },
+  "actionBlankPush": "Lähetä tyhjä push",
+  "@actionBlankPush": {
+    "description": "Device action: send blank push"
+  },
+  "actionReinstallAgent": "Asenna agentti uudelleen",
+  "@actionReinstallAgent": {
+    "description": "Device action: reinstall agent"
+  },
+  "actionUpdateInventory": "Päivitä inventaario",
+  "@actionUpdateInventory": {
+    "description": "Device action: update inventory"
+  },
+  "actionRecoveryLock": "Palautuslukko",
+  "@actionRecoveryLock": {
+    "description": "Device action: recovery lock"
+  },
+  "actionRemoteDesktopEnable": "Ota etätyöpöytä käyttöön",
+  "@actionRemoteDesktopEnable": {
+    "description": "Device action: enable remote desktop"
+  },
+  "actionRemoteDesktopDisable": "Poista etätyöpöytä käytöstä",
+  "@actionRemoteDesktopDisable": {
+    "description": "Device action: disable remote desktop"
+  },
+  "actionLostMode": "Ota kadonnut-tila käyttöön",
+  "@actionLostMode": {
+    "description": "Device action: enable lost mode for mobile devices"
+  },
+  "destructiveActionTitle": "Vahvista tuhoava toiminto",
+  "@destructiveActionTitle": {
+    "description": "Title for destructive action confirmation dialog"
+  },
+  "destructiveActionMessage": "Tätä toimintoa ei voi kumota. Kirjoita \"{deviceName}\" vahvistaaksesi.",
+  "@destructiveActionMessage": {
+    "description": "Message for destructive action confirmation",
+    "placeholders": {
+      "deviceName": {
+        "type": "String"
+      }
+    }
+  },
+  "destructiveActionHint": "Kirjoita laitteen nimi vahvistaaksesi",
+  "@destructiveActionHint": {
+    "description": "Hint for destructive action confirmation input"
+  },
+  "confirm": "Vahvista",
+  "@confirm": {
+    "description": "Confirm button label"
+  },
+  "actionSuccess": "Toiminto suoritettu onnistuneesti.",
+  "@actionSuccess": {
+    "description": "Success message after device action"
+  },
+  "actionFailed": "Toiminto epäonnistui. Yritä uudelleen.",
+  "@actionFailed": {
+    "description": "Error message after device action failure"
+  },
+  "biometricReason": "Tunnistaudu käyttääksesi FleetPilotia",
+  "@biometricReason": {
+    "description": "Reason shown in biometric prompt"
+  },
+  "biometricReasonSecrets": "Tunnistaudu nähdäksesi arkaluonteiset tiedot",
+  "@biometricReasonSecrets": {
+    "description": "Reason shown in biometric prompt for secret access"
+  },
+  "biometricReasonDestructive": "Tunnistaudu suorittaaksesi tämän toiminnon",
+  "@biometricReasonDestructive": {
+    "description": "Reason shown in biometric prompt for destructive actions"
+  },
+  "biometricFailed": "Tunnistautuminen epäonnistui. Yritä uudelleen.",
+  "@biometricFailed": {
+    "description": "Error message when biometric auth fails"
+  },
+  "profiles": "Profiilit",
+  "@profiles": {
+    "description": "Title for profiles section in settings"
+  },
+  "activeProfile": "Aktiivinen: {name}",
+  "@activeProfile": {
+    "description": "Active profile indicator",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "switchProfile": "Vaihda profiilia",
+  "@switchProfile": {
+    "description": "Label for profile switcher"
+  },
+  "deleteProfile": "Poista profiili",
+  "@deleteProfile": {
+    "description": "Label for delete profile action"
+  },
+  "deleteProfileConfirm": "Haluatko varmasti poistaa tämän profiilin? Tätä toimintoa ei voi kumota.",
+  "@deleteProfileConfirm": {
+    "description": "Confirmation message for profile deletion"
+  },
+  "noProfiles": "Profiileja ei ole määritetty",
+  "@noProfiles": {
+    "description": "Empty state when no profiles exist"
+  },
+  "settings": "Asetukset",
+  "@settings": {
+    "description": "Settings page title"
+  },
+  "about": "Tietoja",
+  "@about": {
+    "description": "About section label"
+  },
+  "version": "Versio {version}",
+  "@version": {
+    "description": "Version display",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "validationRequired": "Tämä kenttä on pakollinen.",
+  "@validationRequired": {
+    "description": "Validation error for empty required fields"
+  },
+  "validationSubdomain": "Vain kirjaimet, numerot ja väliviivat sallittu. Ei väliviivaa alussa tai lopussa.",
+  "@validationSubdomain": {
+    "description": "Validation error for invalid subdomain"
+  },
+  "validationToken": "Virheellinen avainmuoto. Pituus 20–500 merkkiä, vain aakkosnumeeriset merkit ja yleiset erottimet.",
+  "@validationToken": {
+    "description": "Validation error for invalid API token format"
+  },
+  "pinLockedOut": "Liian monta epäonnistunutta yritystä. Yritä uudelleen {seconds} sekunnin kuluttua.",
+  "@pinLockedOut": {
+    "description": "Error shown when PIN entry is rate-limited",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "complianceStatus": "Vaatimustenmukaisuuden tila",
+  "@complianceStatus": {
+    "description": "Title for compliance status section"
+  },
+  "platform": "Alusta",
+  "@platform": {
+    "description": "Label for device platform"
+  },
+  "deviceName": "Laitteen nimi",
+  "@deviceName": {
+    "description": "Label for device name"
+  },
+  "searchUsers": "Hae käyttäjiä...",
+  "@searchUsers": {
+    "description": "Placeholder for user search bar"
+  },
+  "userCount": "{count, plural, =0{Ei käyttäjiä} =1{1 käyttäjä} other{{count} käyttäjää}}",
+  "@userCount": {
+    "description": "User count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noUsersFound": "Käyttäjiä ei löytynyt",
+  "@noUsersFound": {
+    "description": "Empty state title when no users match"
+  },
+  "noUsersFoundMessage": "Kokeile muuttaa hakua tai suodattimia.",
+  "@noUsersFoundMessage": {
+    "description": "Empty state message when no users match"
+  },
+  "showArchived": "Näytä arkistoidut",
+  "@showArchived": {
+    "description": "Label for showing archived users toggle"
+  },
+  "archived": "Arkistoitu",
+  "@archived": {
+    "description": "Label for archived status"
+  },
+  "email": "Sähköposti",
+  "@email": {
+    "description": "Label for email"
+  },
+  "blueprintCount": "{count, plural, =0{Ei blueprinttejä} =1{1 blueprint} other{{count} blueprinttiä}}",
+  "@blueprintCount": {
+    "description": "Blueprint count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noBlueprintsFound": "Blueprinttejä ei löytynyt",
+  "@noBlueprintsFound": {
+    "description": "Empty state title when no blueprints found"
+  },
+  "noBlueprintsFoundMessage": "Blueprinttejä ei ole vielä määritetty.",
+  "@noBlueprintsFoundMessage": {
+    "description": "Empty state message when no blueprints found"
+  },
+  "enrollmentActive": "Rekisteröinti aktiivinen",
+  "@enrollmentActive": {
+    "description": "Label for active enrollment code"
+  },
+  "enrollmentInactive": "Rekisteröinti ei aktiivinen",
+  "@enrollmentInactive": {
+    "description": "Label for inactive enrollment code"
+  },
+  "tabOverview": "Yleiskatsaus",
+  "@tabOverview": {
+    "description": "Tab label for device overview"
+  },
+  "tabApps": "Sovellukset",
+  "@tabApps": {
+    "description": "Tab label for installed apps"
+  },
+  "tabStatus": "Tila",
+  "@tabStatus": {
+    "description": "Tab label for device status"
+  },
+  "tabActivity": "Toiminta",
+  "@tabActivity": {
+    "description": "Tab label for device activity"
+  },
+  "tabCommands": "Komennot",
+  "@tabCommands": {
+    "description": "Tab label for MDM commands"
+  },
+  "hardware": "Laitteisto",
+  "@hardware": {
+    "description": "Section title for hardware info"
+  },
+  "security": "Turvallisuus",
+  "@security": {
+    "description": "Section title for security info"
+  },
+  "totalStorage": "Kokonaistallennustila",
+  "@totalStorage": {
+    "description": "Label for total storage capacity"
+  },
+  "availableStorage": "Vapaa tallennustila",
+  "@availableStorage": {
+    "description": "Label for available storage"
+  },
+  "totalRam": "RAM yhteensä",
+  "@totalRam": {
+    "description": "Label for total RAM"
+  },
+  "wifiMac": "Wi-Fi MAC-osoite",
+  "@wifiMac": {
+    "description": "Label for Wi-Fi MAC address"
+  },
+  "encryption": "Salaus",
+  "@encryption": {
+    "description": "Label for encryption status"
+  },
+  "passcode": "Pääsykoodi",
+  "@passcode": {
+    "description": "Label for passcode status"
+  },
+  "noAppsFound": "Sovelluksia ei löytynyt",
+  "@noAppsFound": {
+    "description": "Empty state when no apps on device"
+  },
+  "noActivityFound": "Toimintaa ei löytynyt",
+  "@noActivityFound": {
+    "description": "Empty state when no activity on device"
+  },
+  "noCommandsFound": "Komentoja ei löytynyt",
+  "@noCommandsFound": {
+    "description": "Empty state when no commands for device"
+  },
+  "libraryItems": "Kirjastokohteet",
+  "@libraryItems": {
+    "description": "Section title for library items"
+  },
+  "parameters": "Parametrit",
+  "@parameters": {
+    "description": "Section title for parameters"
+  },
+  "imei": "IMEI",
+  "@imei": {
+    "description": "Label for IMEI number"
+  },
+  "osBuild": "Käyttöjärjestelmän koontiversio",
+  "@osBuild": {
+    "description": "Label for OS build number"
+  },
+  "cellular": "Mobiiliverkko",
+  "@cellular": {
+    "description": "Section title for cellular info"
+  },
+  "appCount": "{count, plural, =0{Ei sovelluksia} =1{1 sovellus} other{{count} sovellusta}}",
+  "@appCount": {
+    "description": "App count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sortAZ": "A → Ö",
+  "@sortAZ": {
+    "description": "Sort ascending label"
+  },
+  "sortZA": "Ö → A",
+  "@sortZA": {
+    "description": "Sort descending label"
+  },
+  "userDetails": "Käyttäjän tiedot",
+  "@userDetails": {
+    "description": "Title for user detail screen"
+  },
+  "jobTitle": "Tehtävänimike",
+  "@jobTitle": {
+    "description": "Label for job title"
+  },
+  "department": "Osasto",
+  "@department": {
+    "description": "Label for department"
+  },
+  "createdAt": "Luotu",
+  "@createdAt": {
+    "description": "Label for creation date"
+  },
+  "updatedAt": "Päivitetty",
+  "@updatedAt": {
+    "description": "Label for last update date"
+  },
+  "assignedDevices": "Määritetyt laitteet",
+  "@assignedDevices": {
+    "description": "Section title for user's devices"
+  },
+  "noAssignedDevices": "Tälle käyttäjälle ei ole määritetty laitteita.",
+  "@noAssignedDevices": {
+    "description": "Empty state when user has no devices"
+  },
+  "userInfo": "Käyttäjätiedot",
+  "@userInfo": {
+    "description": "Section title for user information"
+  },
+  "navMore": "Lisää",
+  "@navMore": {
+    "description": "Navigation label for more tab"
+  },
+  "tabSecrets": "Salaisuudet",
+  "@tabSecrets": {
+    "description": "Tab label for device secrets"
+  },
+  "filevaultKey": "FileVault-palautusavain",
+  "@filevaultKey": {
+    "description": "Label for FileVault recovery key"
+  },
+  "unlockPin": "Lukituksen avaus -PIN",
+  "@unlockPin": {
+    "description": "Label for device unlock PIN"
+  },
+  "recoveryPassword": "Palautuslukon salasana",
+  "@recoveryPassword": {
+    "description": "Label for recovery lock password"
+  },
+  "bypassCode": "Aktivointilukon ohituskoodi",
+  "@bypassCode": {
+    "description": "Label for activation lock bypass code"
+  },
+  "noSecretsFound": "Tälle laitteelle ei ole saatavilla salaisuuksia.",
+  "@noSecretsFound": {
+    "description": "Empty state when no secrets found"
+  },
+  "secretCopied": "Salaisuus kopioitu leikepöydälle",
+  "@secretCopied": {
+    "description": "Snackbar message when secret is copied"
+  },
+  "threats": "Uhat",
+  "@threats": {
+    "description": "Title for threats section"
+  },
+  "noThreatsFound": "Uhkia ei havaittu.",
+  "@noThreatsFound": {
+    "description": "Empty state when no threats found"
+  },
+  "vulnerabilities": "Haavoittuvuudet",
+  "@vulnerabilities": {
+    "description": "Title for vulnerabilities section"
+  },
+  "noVulnerabilitiesFound": "Haavoittuvuuksia ei havaittu.",
+  "@noVulnerabilitiesFound": {
+    "description": "Empty state when no vulnerabilities found"
+  },
+  "aboutApp": "Tietoja FleetPilotista",
+  "@aboutApp": {
+    "description": "Title for about section"
+  },
+  "aboutDescription": "FleetPilot on avoimen lähdekoodin mobiili MDM-hallintasovellus Apple-laitteille.",
+  "@aboutDescription": {
+    "description": "App description in about"
+  },
+  "tapToCopy": "Kopioi napauttamalla",
+  "@tapToCopy": {
+    "description": "Hint to tap to copy a secret"
+  },
+  "devices": "Laitteet",
+  "@devices": {
+    "description": "Label for devices count"
+  },
+  "severity": "Vakavuus",
+  "@severity": {
+    "description": "Label for vulnerability severity"
+  },
+  "tabLocation": "Sijainti",
+  "@tabLocation": {
+    "description": "Tab label for device location"
+  },
+  "locationNotAvailable": "Sijaintitietoja ei ole saatavilla tälle laitteelle.",
+  "@locationNotAvailable": {
+    "description": "Message when no location data is available"
+  },
+  "enableLostModeHint": "Ota kadonnut-tila käyttöön seurataksesi tätä laitetta.",
+  "@enableLostModeHint": {
+    "description": "Hint text shown on location tab when lost mode is not enabled"
+  },
+  "lostModeEnabled": "Kadonnut-tila käytössä",
+  "@lostModeEnabled": {
+    "description": "Label for lost mode enabled status"
+  },
+  "noLibraryItemsFound": "Kirjastokohteita ei löytynyt.",
+  "@noLibraryItemsFound": {
+    "description": "Empty state when no library items found"
+  },
+  "licenses": "Lisenssit",
+  "@licenses": {
+    "description": "Label for licenses section"
+  },
+  "lostModeMessage": "Kadonnut-tilan viesti",
+  "@lostModeMessage": {
+    "description": "Label for lost mode message field"
+  },
+  "lostModePhone": "Puhelinnumero",
+  "@lostModePhone": {
+    "description": "Label for lost mode phone number field"
+  },
+  "lostModeFootnote": "Valinnainen viesti ja puhelinnumero näytetään laitteella",
+  "@lostModeFootnote": {
+    "description": "Footnote explaining lost mode message and phone fields"
+  },
+  "supervised": "Valvottu",
+  "@supervised": {
+    "description": "Label for supervised device status"
+  },
+  "unsupervised": "Valvomaton",
+  "@unsupervised": {
+    "description": "Label for unsupervised device status"
+  },
+  "filterSupervised": "Valvottu",
+  "@filterSupervised": {
+    "description": "Filter chip label for supervised devices"
+  },
+  "filterUnsupervised": "Valvomaton",
+  "@filterUnsupervised": {
+    "description": "Filter chip label for unsupervised devices"
+  },
+  "language": "Kieli",
+  "@language": {
+    "description": "Label for language setting"
+  },
+  "languageSystem": "Järjestelmän oletus",
+  "@languageSystem": {
+    "description": "Label for system default language option"
+  },
+  "actionDisableLostMode": "Poista kadonnut-tila käytöstä",
+  "@actionDisableLostMode": {
+    "description": "Device action: disable lost mode"
+  },
+  "actionClearPasscode": "Tyhjennä pääsykoodi",
+  "@actionClearPasscode": {
+    "description": "Device action: clear passcode"
+  },
+  "filterLostMode": "Kadonnut-tila",
+  "@filterLostMode": {
+    "description": "Filter chip label for devices in lost mode"
+  },
+  "lostMode": "Kadonnut-tila",
+  "@lostMode": {
+    "description": "Label for lost mode status badge"
+  },
+  "sectionManagement": "Hallinta",
+  "@sectionManagement": {
+    "description": "Section title for device management info"
+  },
+  "sectionStatus": "Tila",
+  "@sectionStatus": {
+    "description": "Section title for device status indicators"
+  },
+  "statusMissing": "Puuttuu",
+  "@statusMissing": {
+    "description": "Status label for missing device"
+  },
+  "statusRemoved": "Poistettu",
+  "@statusRemoved": {
+    "description": "Status label for removed device"
+  },
+  "agent": "Agentti",
+  "@agent": {
+    "description": "Label for device agent version"
+  },
+  "identifier": "Tunniste",
+  "@identifier": {
+    "description": "Label for hardware model identifier"
+  },
+  "processor": "Suoritin",
+  "@processor": {
+    "description": "Label for device processor"
+  },
+  "hardwareUuid": "Laitteiston UUID",
+  "@hardwareUuid": {
+    "description": "Label for hardware UUID"
+  },
+  "devicePosture": "Laitteen turva-asento",
+  "@devicePosture": {
+    "description": "Label for device posture security status"
+  },
+  "unknownDevice": "Tuntematon laite",
+  "@unknownDevice": {
+    "description": "Fallback name for a device with no name"
+  },
+  "securityAppLock": "Sovelluksen lukitus",
+  "@securityAppLock": {
+    "description": "Title for app lock section in security settings"
+  },
+  "securityAppLockDescription": "Aseta 6-numeroinen PIN sovelluksen suojaamiseksi. Biometrinen tunnistautuminen voidaan ottaa käyttöön PIN-koodin asettamisen jälkeen.",
+  "@securityAppLockDescription": {
+    "description": "Description for app lock feature"
+  },
+  "securityAppLockActive": "Sovelluksen lukitus käytössä",
+  "@securityAppLockActive": {
+    "description": "Subtitle when app lock is active"
+  },
+  "securityAppLockInactive": "Sovelluksen lukitusta ei ole määritetty",
+  "@securityAppLockInactive": {
+    "description": "Subtitle when app lock is not configured"
+  },
+  "securitySetPin": "Aseta PIN",
+  "@securitySetPin": {
+    "description": "Button label to set a new PIN"
+  },
+  "securityChangePin": "Vaihda PIN",
+  "@securityChangePin": {
+    "description": "Button label to change existing PIN"
+  },
+  "securityRemovePin": "Poista PIN",
+  "@securityRemovePin": {
+    "description": "Button label to remove PIN"
+  },
+  "securityCurrentPin": "Nykyinen PIN",
+  "@securityCurrentPin": {
+    "description": "Dialog title for entering current PIN"
+  },
+  "securityNewPin": "Uusi PIN",
+  "@securityNewPin": {
+    "description": "Dialog title for entering new PIN"
+  },
+  "securityConfirmPin": "Syötä PIN uudelleen vahvistaaksesi.",
+  "@securityConfirmPin": {
+    "description": "Label for PIN confirmation step"
+  },
+  "securityPinLength": "PIN-koodin on oltava 6 numeroa.",
+  "@securityPinLength": {
+    "description": "Error when PIN is not 6 digits"
+  },
+  "securityPinMismatch": "PIN-koodit eivät täsmää.",
+  "@securityPinMismatch": {
+    "description": "Error when confirmation PIN does not match"
+  },
+  "securityPinWrong": "Väärä PIN-koodi.",
+  "@securityPinWrong": {
+    "description": "Error when entered PIN is wrong"
+  },
+  "securityPinSet": "PIN-koodi on asetettu.",
+  "@securityPinSet": {
+    "description": "Snackbar after PIN is set"
+  },
+  "securityPinChanged": "PIN-koodi on vaihdettu.",
+  "@securityPinChanged": {
+    "description": "Snackbar after PIN is changed"
+  },
+  "securityPinRemoved": "PIN-koodi ja sovelluksen lukitus on poistettu.",
+  "@securityPinRemoved": {
+    "description": "Snackbar after PIN is removed"
+  },
+  "securityBiometric": "Biometrinen",
+  "@securityBiometric": {
+    "description": "Title for biometric section"
+  },
+  "securityBiometricDescription": "Käytä sormenjälkeä tai kasvojentunnistusta sovelluksen avaamiseen PIN-koodin sijasta.",
+  "@securityBiometricDescription": {
+    "description": "Description for biometric feature"
+  },
+  "securityBiometricEnable": "Biometrinen avaus",
+  "@securityBiometricEnable": {
+    "description": "Toggle label for biometric unlock"
+  },
+  "securityBiometricActive": "Aktiivinen",
+  "@securityBiometricActive": {
+    "description": "Subtitle when biometric is active"
+  },
+  "securityBiometricInactive": "Ei aktiivinen",
+  "@securityBiometricInactive": {
+    "description": "Subtitle when biometric is inactive"
+  },
+  "securityBiometricUnavailable": "Biometrinen tunnistautuminen ei ole käytettävissä tällä laitteella.",
+  "@securityBiometricUnavailable": {
+    "description": "Error when biometric is not available"
+  },
+  "securityNext": "Seuraava",
+  "@securityNext": {
+    "description": "Button label for next step in PIN setup"
+  },
+  "actionRenewMdm": "Uusi MDM-profiili",
+  "@actionRenewMdm": {
+    "description": "Device action: renew MDM profile"
+  },
+  "actionSetName": "Aseta laitteen nimi",
+  "@actionSetName": {
+    "description": "Device action: set device name"
+  },
+  "actionSetNameHint": "Syötä uusi laitteen nimi",
+  "@actionSetNameHint": {
+    "description": "Hint for set device name input"
+  },
+  "actionDeleteUser": "Poista käyttäjä",
+  "@actionDeleteUser": {
+    "description": "Device action: delete user from Mac"
+  },
+  "actionDeleteUserName": "Käyttäjänimi",
+  "@actionDeleteUserName": {
+    "description": "Label for username field in delete user dialog"
+  },
+  "actionDeleteAllUsers": "Poista kaikki käyttäjät",
+  "@actionDeleteAllUsers": {
+    "description": "Checkbox label for deleting all users"
+  },
+  "actionForceDeletion": "Pakota poisto",
+  "@actionForceDeletion": {
+    "description": "Checkbox label for forcing user deletion"
+  },
+  "actionUnlockAccount": "Avaa tili",
+  "@actionUnlockAccount": {
+    "description": "Device action: unlock user account on Mac"
+  },
+  "actionPlayLostModeSound": "Soita kadonnut-tilan ääni",
+  "@actionPlayLostModeSound": {
+    "description": "Device action: play sound on lost device"
+  },
+  "actionUpdateLocation": "Päivitä sijainti",
+  "@actionUpdateLocation": {
+    "description": "Device action: update device location"
+  },
+  "erasePin": "6-numeroinen PIN",
+  "@erasePin": {
+    "description": "Label for erase PIN field"
+  },
+  "erasePinHint": "Pakollinen mobiililaitteille",
+  "@erasePinHint": {
+    "description": "Hint for erase PIN"
+  },
+  "erasePreserveDataPlan": "Säilytä datapaketti",
+  "@erasePreserveDataPlan": {
+    "description": "Checkbox label for preserving cellular data plan"
+  },
+  "eraseDisallowProximitySetup": "Estä läheisyysasetus",
+  "@eraseDisallowProximitySetup": {
+    "description": "Checkbox label for disallowing proximity setup"
+  },
+  "eraseReturnToService": "Palaa käyttöön",
+  "@eraseReturnToService": {
+    "description": "Checkbox label for return to service after erase"
+  },
+  "lockMessage": "Lukitusviesti",
+  "@lockMessage": {
+    "description": "Label for lock screen message"
+  },
+  "lockPhone": "Puhelinnumero",
+  "@lockPhone": {
+    "description": "Label for lock screen phone number"
+  },
+  "restartRebuildKernelCache": "Kokoa kernel-välimuisti uudelleen",
+  "@restartRebuildKernelCache": {
+    "description": "Checkbox label for rebuilding kernel cache on restart"
+  },
+  "restartNotifyUser": "Ilmoita käyttäjälle",
+  "@restartNotifyUser": {
+    "description": "Checkbox label for notifying user before restart"
+  },
+  "actionRemoteDesktop": "Etätyöpöytä",
+  "@actionRemoteDesktop": {
+    "description": "Device action: toggle remote desktop"
+  },
+  "tabNotes": "Muistiinpanot",
+  "@tabNotes": {
+    "description": "Tab label for device notes"
+  },
+  "noNotesFound": "Ei muistiinpanoja",
+  "@noNotesFound": {
+    "description": "Empty state when no notes found"
+  },
+  "addNote": "Lisää muistiinpano",
+  "@addNote": {
+    "description": "Button label to add a new note"
+  },
+  "editNote": "Muokkaa muistiinpanoa",
+  "@editNote": {
+    "description": "Title for editing a note"
+  },
+  "deleteNote": "Poista muistiinpano",
+  "@deleteNote": {
+    "description": "Action label for deleting a note"
+  },
+  "deleteNoteConfirm": "Haluatko varmasti poistaa tämän muistiinpanon?",
+  "@deleteNoteConfirm": {
+    "description": "Confirmation message for note deletion"
+  },
+  "noteContent": "Muistiinpanon sisältö",
+  "@noteContent": {
+    "description": "Hint for note content field"
+  },
+  "noteSaved": "Muistiinpano tallennettu.",
+  "@noteSaved": {
+    "description": "Snackbar after note is saved"
+  },
+  "noteDeleted": "Muistiinpano poistettu.",
+  "@noteDeleted": {
+    "description": "Snackbar after note is deleted"
+  },
+  "editDevice": "Muokkaa laitetta",
+  "@editDevice": {
+    "description": "Title for edit device dialog"
+  },
+  "deviceUpdated": "Laite päivitetty.",
+  "@deviceUpdated": {
+    "description": "Snackbar after device is updated"
+  },
+  "deleteDevice": "Poista laite",
+  "@deleteDevice": {
+    "description": "Action label for deleting a device from MDM"
+  },
+  "deleteDeviceConfirm": "Tämä poistaa laitteen pysyvästi MDM:stä. Tätä toimintoa ei voi kumota.",
+  "@deleteDeviceConfirm": {
+    "description": "Confirmation message for device deletion"
+  },
+  "deviceDeleted": "Laite poistettu.",
+  "@deviceDeleted": {
+    "description": "Snackbar after device is deleted"
+  },
+  "cancelLostMode": "Peruuta kadonnut-tila",
+  "@cancelLostMode": {
+    "description": "Action label for cancelling stuck lost mode"
+  },
+  "cancelLostModeConfirm": "Peruutetaanko odottava kadonnut-tila-pyyntö?",
+  "@cancelLostModeConfirm": {
+    "description": "Confirmation message for cancelling lost mode"
+  },
+  "lostModeCancelled": "Kadonnut-tila peruutettu.",
+  "@lostModeCancelled": {
+    "description": "Snackbar after lost mode is cancelled"
+  },
+  "tags": "Tunnisteet",
+  "@tags": {
+    "description": "Label for tags"
+  },
+  "noTags": "Ei tunnisteita",
+  "@noTags": {
+    "description": "Empty state when no tags"
+  },
+  "addTag": "Lisää tunniste",
+  "@addTag": {
+    "description": "Button label to add a tag"
+  },
+  "tagName": "Tunnisteen nimi",
+  "@tagName": {
+    "description": "Label for tag name field"
+  },
+  "manageTags": "Hallitse tunnisteita",
+  "@manageTags": {
+    "description": "Title for tag management"
+  },
+  "auditLog": "Tarkastusloki",
+  "@auditLog": {
+    "description": "Title for audit log page"
+  },
+  "noAuditEvents": "Tarkastustapahtumia ei löytynyt",
+  "@noAuditEvents": {
+    "description": "Empty state when no audit events"
+  },
+  "actionDailyCheckIn": "Päivittäinen kuittaus",
+  "@actionDailyCheckIn": {
+    "description": "Device action: daily check-in and CSP sync"
+  },
+  "licensing": "Lisensointi",
+  "@licensing": {
+    "description": "Title for licensing section"
+  },
+  "deviceLimit": "Laiteraja",
+  "@deviceLimit": {
+    "description": "Label for device limit"
+  },
+  "devicesUsed": "Käytössä olevat laitteet",
+  "@devicesUsed": {
+    "description": "Label for devices used count"
+  },
+  "licenseType": "Lisenssityyppi",
+  "@licenseType": {
+    "description": "Label for license type"
+  },
+  "appleDevices": "Apple-laitteet",
+  "@appleDevices": {
+    "description": "Label for Apple device count"
+  },
+  "deleteUser": "Poista käyttäjä",
+  "@deleteUser": {
+    "description": "Action label for deleting a user"
+  },
+  "deleteUserConfirm": "Haluatko varmasti poistaa tämän käyttäjän? Tätä toimintoa ei voi kumota.",
+  "@deleteUserConfirm": {
+    "description": "Confirmation message for user deletion"
+  },
+  "userDeleted": "Käyttäjä poistettu.",
+  "@userDeleted": {
+    "description": "Snackbar after user is deleted"
+  },
+  "createBlueprint": "Luo Blueprint",
+  "@createBlueprint": {
+    "description": "Title for creating a blueprint"
+  },
+  "editBlueprint": "Muokkaa Blueprinttiä",
+  "@editBlueprint": {
+    "description": "Title for editing a blueprint"
+  },
+  "deleteBlueprint": "Poista Blueprint",
+  "@deleteBlueprint": {
+    "description": "Action label for deleting a blueprint"
+  },
+  "deleteBlueprintConfirm": "Blueprintin poistaminen poistaa kaikki siihen liitetyt laitteet rekisteröinnistä. Tätä toimintoa ei voi kumota.",
+  "@deleteBlueprintConfirm": {
+    "description": "Confirmation message for blueprint deletion"
+  },
+  "blueprintCreated": "Blueprint luotu.",
+  "@blueprintCreated": {
+    "description": "Snackbar after blueprint is created"
+  },
+  "blueprintUpdated": "Blueprint päivitetty.",
+  "@blueprintUpdated": {
+    "description": "Snackbar after blueprint is updated"
+  },
+  "blueprintDeleted": "Blueprint poistettu.",
+  "@blueprintDeleted": {
+    "description": "Snackbar after blueprint is deleted"
+  },
+  "blueprintName": "Blueprintin nimi",
+  "@blueprintName": {
+    "description": "Label for blueprint name field"
+  },
+  "blueprintDescription": "Kuvaus",
+  "@blueprintDescription": {
+    "description": "Label for blueprint description field"
+  },
+  "enrollmentCode": "Rekisteröintikoodi",
+  "@enrollmentCode": {
+    "description": "Label for enrollment code toggle"
+  },
+  "assignLibraryItem": "Liitä kirjastokohde",
+  "@assignLibraryItem": {
+    "description": "Title for assigning library item to blueprint"
+  },
+  "removeLibraryItem": "Poista kirjastokohde",
+  "@removeLibraryItem": {
+    "description": "Action label for removing library item from blueprint"
+  },
+  "libraryItemAssigned": "Kirjastokohde liitetty.",
+  "@libraryItemAssigned": {
+    "description": "Snackbar after library item is assigned"
+  },
+  "libraryItemRemoved": "Kirjastokohde poistettu.",
+  "@libraryItemRemoved": {
+    "description": "Snackbar after library item is removed"
+  },
+  "lostModeDetails": "Kadonnut-tilan tiedot",
+  "@lostModeDetails": {
+    "description": "Title for lost mode details section"
+  },
+  "lostModeEnabledBy": "Käyttöön ottanut",
+  "@lostModeEnabledBy": {
+    "description": "Label for who enabled lost mode"
+  },
+  "lostModeEnabledAt": "Käyttöönottoaika",
+  "@lostModeEnabledAt": {
+    "description": "Label for when lost mode was enabled"
+  },
+  "searchBlueprints": "Hae blueprinttejä...",
+  "searchVulnerabilities": "Hae haavoittuvuuksia...",
+  "searchThreats": "Hae uhkia...",
+  "searchAuditLog": "Hae tarkastuslokista...",
+  "filterCritical": "Kriittinen",
+  "filterHigh": "Korkea",
+  "filterMedium": "Keskitaso",
+  "filterLow": "Matala",
+  "filterClearAll": "Tyhjennä kaikki",
+  "filterTitle": "Suodattimet",
+  "filterApply": "Käytä",
+  "filterPlatform": "Alusta",
+  "filterSupervision": "Valvonta",
+  "filterStatus": "Tila",
+  "adeIntegrations": "ADE-integraatiot",
+  "noAdeIntegrations": "ADE-integraatioita ei löytynyt.",
+  "adeDevices": "ADE-laitteet",
+  "noAdeDevices": "ADE-laitteita ei löytynyt.",
+  "tokenExpiry": "Avaimen vanheneminen",
+  "tokenValid": "Avain voimassa",
+  "tokenExpired": "Avain vanhentunut",
+  "orgName": "Organisaatio",
+  "defaultBlueprint": "Oletus-Blueprint",
+  "renewToken": "Uusi avain",
+  "publicKey": "Julkinen avain",
+  "vulnerabilityDetections": "Haavoittuvuushavainnot",
+  "noDetectionsFound": "Havaintoja ei löytynyt.",
+  "behavioralDetections": "Käyttäytymishavainnot",
+  "noBehavioralDetections": "Käyttäytymishavaintoja ei löytynyt.",
+  "searchBehavioralDetections": "Hae havaintoja...",
+  "affectedDevices": "Vaikutuksen alaiset laitteet",
+  "noAffectedDevices": "Vaikutuksen alaisia laitteita ei löytynyt. Aiemmin vaikutuksen alaiset laitteet on saatettu poistaa.",
+  "affectedSoftware": "Vaikutuksen alainen ohjelmisto",
+  "blueprintTemplates": "Blueprint-mallit",
+  "noTemplatesFound": "Malleja ei löytynyt.",
+  "otaEnrollmentProfile": "OTA-rekisteröintiprofiili",
+  "libraryItemActivity": "Toiminta",
+  "libraryItemDeploymentStatus": "Käyttöönoton tila",
+  "noActivityFound2": "Toimintaa ei löytynyt.",
+  "noStatusFound": "Käyttöönoton tilaa ei löytynyt.",
+  "detectionCount": "{count, plural, =0{Ei havaintoja} =1{1 havainto} other{{count} havaintoa}}",
+  "@detectionCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "integrationCount": "{count, plural, =0{Ei integraatioita} =1{1 integraatio} other{{count} integraatiota}}",
+  "@integrationCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "vulnerabilityDetail": "Haavoittuvuuden tiedot",
+  "description": "Kuvaus",
+  "firstDetected": "Ensimmäinen havainto",
+  "lastDetected": "Viimeisin havainto",
+  "softwareCount": "{count, plural, =0{Ei ohjelmistoja} =1{1 ohjelmisto} other{{count} ohjelmistoa}}",
+  "@softwareCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "editIntegration": "Muokkaa integraatiota",
+  "deleteIntegration": "Poista integraatio",
+  "deleteIntegrationConfirm": "Haluatko varmasti poistaa tämän ADE-integraation? Tätä ei voi kumota.",
+  "integrationDeleted": "Integraatio poistettu.",
+  "integrationUpdated": "Integraatio päivitetty.",
+  "defaultBlueprintId": "Oletus-Blueprintin ID",
+  "phone": "Puhelin",
+  "downloadOtaProfile": "Lataa rekisteröintiprofiili",
+  "otaProfileCopied": "Rekisteröintiprofiili kopioitu leikepöydälle.",
+  "noOtaProfile": "Rekisteröintiprofiilia ei ole saatavilla.",
+  "createTag": "Luo tunniste",
+  "editTag": "Muokkaa tunnistetta",
+  "deleteTag": "Poista tunniste",
+  "deleteTagConfirm": "Haluatko varmasti poistaa tämän tunnisteen?",
+  "tagColor": "Väri",
+  "tagCreated": "Tunniste luotu.",
+  "tagUpdated": "Tunniste päivitetty.",
+  "tagDeleted": "Tunniste poistettu.",
+  "noTagsFound": "Tunnisteita ei löytynyt.",
+  "libraryItemDetail": "Kirjastokohde",
+  "viewActivity": "Näytä toiminta",
+  "viewStatus": "Näytä tila",
+  "installations": "Asennukset",
+  "createAdeIntegration": "Luo ADE-integraatio",
+  "adeCreateDescription": "Lähetä palvelinavaimen tiedosto (.p7m) Apple Business Managerista luodaksesi uuden ADE-integraation.",
+  "selectTokenFile": "Valitse avaintiedosto",
+  "tokenFileSelected": "Avaintiedosto: {name}",
+  "@tokenFileSelected": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "noTokenFileSelected": "Avaintiedostoa ei ole valittu",
+  "integrationCreated": "Integraatio luotu.",
+  "create": "Luo",
+  "step1GetPublicKey": "Vaihe 1: Lataa julkinen avain",
+  "step1Description": "Kopioi julkinen avain ja lataa se Apple Business Manageriin.",
+  "step2UploadToken": "Vaihe 2: Lähetä palvelinavain",
+  "step2Description": "Valitse Applelta ladattu .p7m-avaintiedosto.",
+  "step3Configure": "Vaihe 3: Määritä",
+  "publicKeyCopied": "Julkinen avain kopioitu leikepöydälle.",
+  "renewTokenDescription": "Lähetä uusi .p7m-avaintiedosto uusiaksesi tämän integraation avaimen.",
+  "tokenRenewed": "Avain uusittu.",
+  "aboutLinks": "Linkit",
+  "aboutWebsite": "Verkkosivu",
+  "aboutWebsiteDomain": "kiefer-networks.de",
+  "aboutSourceCode": "Lähdekoodi",
+  "aboutGitHub": "GitHub",
+  "aboutTechStack": "Teknologiapino",
+  "aboutFramework": "Kehys",
+  "aboutStateManagement": "Tilanhallinta",
+  "aboutArchitecture": "Arkkitehtuuri",
+  "aboutApi": "API",
+  "aboutDataClasses": "Dataluokat",
+  "aboutNavigationLabel": "Navigointi",
+  "aboutOpenSourceLicenses": "Avoimen lähdekoodin lisenssit",
+  "aboutShowHide": "Vaihda näkyvyys",
+  "editProfileTitle": "Muokkaa yhteyttä",
+  "editProfileSubtitle": "Päivitä vuokralaisen yhteysasetukset.",
+  "apiTokenHintEdit": "Jätä tyhjäksi säilyttääksesi nykyinen avain",
+  "profileUpdated": "Profiili päivitetty.",
+  "profileSwitched": "Vaihdettu profiiliin {name}.",
+  "@profileSwitched": {
+    "description": "Snackbar message after switching profile",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "securityAutoLock": "Automaattinen lukitus",
+  "@securityAutoLock": {
+    "description": "Title for session auto-lock timeout setting"
+  },
+  "securityAutoLockDescription": "Vaadi tunnistautuminen automaattisesti, kun sovellus on ollut taustalla.",
+  "@securityAutoLockDescription": {
+    "description": "Description for auto-lock feature"
+  },
+  "timeoutImmediately": "Heti",
+  "@timeoutImmediately": {
+    "description": "Lock timeout option: immediately on background"
+  },
+  "timeoutSeconds30": "30 sekunnin jälkeen",
+  "@timeoutSeconds30": {
+    "description": "Lock timeout option: 30 seconds"
+  },
+  "timeoutSeconds60": "1 minuutin jälkeen",
+  "@timeoutSeconds60": {
+    "description": "Lock timeout option: 60 seconds"
+  },
+  "timeoutSeconds120": "2 minuutin jälkeen",
+  "@timeoutSeconds120": {
+    "description": "Lock timeout option: 120 seconds"
+  },
+  "timeoutMinutes5": "5 minuutin jälkeen",
+  "@timeoutMinutes5": {
+    "description": "Lock timeout option: 5 minutes"
+  },
+  "filterBlueprint": "Blueprint",
+  "allBlueprints": "Kaikki Blueprintit",
+  "noBlueprint": "Ei Blueprinttiä",
+  "presetSaveFilter": "Tallenna suodatinasetus",
+  "@presetSaveFilter": {
+    "description": "Action label to save current filter as a preset"
+  },
+  "presetLoad": "Lataa asetus",
+  "@presetLoad": {
+    "description": "Action label to load a saved filter preset"
+  },
+  "presetName": "Asetuksen nimi",
+  "@presetName": {
+    "description": "Label for the preset name input field"
+  },
+  "presetNameHint": "esim. Valvomattomat Macit",
+  "@presetNameHint": {
+    "description": "Hint text for preset name input"
+  },
+  "presetSaved": "Suodatinasetus tallennettu.",
+  "@presetSaved": {
+    "description": "Snackbar message after preset is saved"
+  },
+  "presetDeleted": "Suodatinasetus poistettu.",
+  "@presetDeleted": {
+    "description": "Snackbar message after preset is deleted"
+  },
+  "presetApplied": "Asetus \"{name}\" otettu käyttöön.",
+  "@presetApplied": {
+    "description": "Snackbar message after preset is applied",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "presetNoPresets": "Ei tallennettuja asetuksia",
+  "@presetNoPresets": {
+    "description": "Empty state when no presets exist"
+  },
+  "presetNoPresetsMessage": "Tallenna nykyiset suodattimet asetukseksi nopeaa käyttöä varten.",
+  "@presetNoPresetsMessage": {
+    "description": "Empty state message when no presets exist"
+  },
+  "presetDeleteConfirm": "Poistetaanko tämä asetus?",
+  "@presetDeleteConfirm": {
+    "description": "Confirmation message for preset deletion"
+  },
+  "presetNameRequired": "Anna asetukselle nimi.",
+  "@presetNameRequired": {
+    "description": "Validation error when preset name is empty"
+  },
+  "selectedCount": "{count} valittu",
+  "@selectedCount": {
+    "description": "Number of selected devices in selection mode",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectAll": "Valitse kaikki",
+  "@selectAll": {
+    "description": "Tooltip for select all button"
+  },
+  "deselectAll": "Poista kaikki valinnat",
+  "@deselectAll": {
+    "description": "Tooltip for deselect all button"
+  },
+  "bulkActions": "Toiminnot",
+  "@bulkActions": {
+    "description": "Label for bulk actions FAB"
+  },
+  "bulkActionsTitle": "Toiminnot {count} laitteelle",
+  "@bulkActionsTitle": {
+    "description": "Title of bulk action bottom sheet",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bulkActionAssignTag": "Liitä tunniste",
+  "@bulkActionAssignTag": {
+    "description": "Bulk action: assign a tag"
+  },
+  "bulkActionAssignTagDescription": "Lisää tunniste kaikkiin valittuihin laitteisiin",
+  "@bulkActionAssignTagDescription": {
+    "description": "Description for bulk tag assignment"
+  },
+  "bulkActionAssignBlueprint": "Liitä Blueprint",
+  "@bulkActionAssignBlueprint": {
+    "description": "Bulk action: assign a blueprint"
+  },
+  "bulkActionAssignBlueprintDescription": "Siirrä valitut laitteet blueprinttiin",
+  "@bulkActionAssignBlueprintDescription": {
+    "description": "Description for bulk blueprint assignment"
+  },
+  "bulkActionLock": "Lukitse laitteet",
+  "@bulkActionLock": {
+    "description": "Bulk action: lock devices"
+  },
+  "bulkActionLockDescription": "Lukitse kaikki valitut laitteet etänä",
+  "@bulkActionLockDescription": {
+    "description": "Description for bulk lock action"
+  },
+  "bulkActionRestart": "Käynnistä laitteet uudelleen",
+  "@bulkActionRestart": {
+    "description": "Bulk action: restart devices"
+  },
+  "bulkActionRestartDescription": "Käynnistä kaikki valitut laitteet uudelleen",
+  "@bulkActionRestartDescription": {
+    "description": "Description for bulk restart action"
+  },
+  "bulkRestartConfirmMessage": "Haluatko varmasti käynnistää {count} laitetta uudelleen?",
+  "@bulkRestartConfirmMessage": {
+    "description": "Confirmation message for bulk restart",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bulkActionSuccess": "Toiminto suoritettu onnistuneesti {count} laitteelle.",
+  "@bulkActionSuccess": {
+    "description": "Snackbar message when all bulk actions succeed",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bulkActionPartialSuccess": "Suoritettu {success} laitteelle, {failed} epäonnistui.",
+  "@bulkActionPartialSuccess": {
+    "description": "Snackbar message when some bulk actions fail",
+    "placeholders": {
+      "success": {
+        "type": "int"
+      },
+      "failed": {
+        "type": "int"
+      }
+    }
+  },
+  "bulkProgressStatus": "{completed}/{total} suoritettu",
+  "@bulkProgressStatus": {
+    "description": "Progress label during bulk operation",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "biometricReasonBulkAction": "Tunnistaudu suorittaaksesi joukkotoiminnon",
+  "@biometricReasonBulkAction": {
+    "description": "Biometric prompt reason for bulk actions"
+  },
+  "lockPin": "Lukitus-PIN (valinnainen)",
+  "@lockPin": {
+    "description": "Label for lock PIN field in bulk lock dialog"
+  },
+  "lockMessage": "Lukitusviesti (valinnainen)",
+  "@lockMessage": {
+    "description": "Label for lock message field in bulk lock dialog"
+  },
+  "noTagsAvailable": "Tunnisteita ei ole saatavilla. Luo tunnisteita MDM-hallintakonsolissa.",
+  "@noTagsAvailable": {
+    "description": "Empty state when no tags exist for picker"
+  },
+  "noBlueprintsAvailable": "Blueprinttejä ei ole saatavilla.",
+  "@noBlueprintsAvailable": {
+    "description": "Empty state when no blueprints exist for picker"
+  },
+  "selectADevice": "Valitse laite",
+  "@selectADevice": {
+    "description": "Placeholder shown in detail pane when no device is selected"
+  },
+  "selectABlueprint": "Valitse Blueprint",
+  "@selectABlueprint": {
+    "description": "Placeholder shown in detail pane when no blueprint is selected"
+  },
+  "clearSearch": "Tyhjennä haku",
+  "refresh": "Päivitä",
+  "moreActions": "Lisätoiminnot",
+  "close": "Sulje",
+  "onboardingSkip": "Ohita",
+  "@onboardingSkip": {
+    "description": "Button to skip onboarding"
+  },
+  "onboardingNext": "Seuraava",
+  "@onboardingNext": {
+    "description": "Button to go to next onboarding page"
+  },
+  "onboardingGetStarted": "Aloita",
+  "@onboardingGetStarted": {
+    "description": "Button to finish onboarding and go to profile setup"
+  },
+  "onboardingWelcomeTitle": "Tervetuloa FleetPilotiin",
+  "@onboardingWelcomeTitle": {
+    "description": "Title on the first onboarding page"
+  },
+  "onboardingWelcomeSubtitle": "Mobiili komentokeskuksesi Apple-laitekannan hallintaan. Seuraa, hallitse ja suojaa koko laitekantaasi mistä tahansa.",
+  "@onboardingWelcomeSubtitle": {
+    "description": "Subtitle on the first onboarding page"
+  },
+  "onboardingDevicesTitle": "Laitehallinta",
+  "@onboardingDevicesTitle": {
+    "description": "Title on the device management onboarding page"
+  },
+  "onboardingDevicesSubtitle": "Täysi näkyvyys ja hallinta jokaiseen laitteeseen laitekannassasi.",
+  "@onboardingDevicesSubtitle": {
+    "description": "Subtitle on the device management onboarding page"
+  },
+  "onboardingDevicesFeature1": "Näe kaikki rekisteröidyt iPhonet, iPadit, Macit ja Apple TV:t",
+  "@onboardingDevicesFeature1": {
+    "description": "First device management feature"
+  },
+  "onboardingDevicesFeature2": "Lähetä etäkomentoja: lukitse, käynnistä uudelleen, tyhjennä ja muuta",
+  "@onboardingDevicesFeature2": {
+    "description": "Second device management feature"
+  },
+  "onboardingDevicesFeature3": "Seuraa blueprinttejä, sovelluksia ja vaatimustenmukaisuuden tilaa",
+  "@onboardingDevicesFeature3": {
+    "description": "Third device management feature"
+  },
+  "onboardingSecurityTitle": "Rakennettu turvallisuutta varten",
+  "@onboardingSecurityTitle": {
+    "description": "Title on the security onboarding page"
+  },
+  "onboardingSecuritySubtitle": "Laitekantasi tiedot pysyvät suojattuina useilla turvallisuuskerroksilla.",
+  "@onboardingSecuritySubtitle": {
+    "description": "Subtitle on the security onboarding page"
+  },
+  "onboardingSecurityFeature1": "Biometrinen tunnistautuminen Face ID:llä tai sormenjäljellä",
+  "@onboardingSecurityFeature1": {
+    "description": "First security feature"
+  },
+  "onboardingSecurityFeature2": "6-numeroinen PIN-lukitus sovelluksen käyttöön",
+  "@onboardingSecurityFeature2": {
+    "description": "Second security feature"
+  },
+  "onboardingSecurityFeature3": "Automaattinen istunnon lukitus aikakatkaisun jälkeen",
+  "@onboardingSecurityFeature3": {
+    "description": "Third security feature"
+  },
+  "onboardingReadyTitle": "Valmis käyttöön",
+  "@onboardingReadyTitle": {
+    "description": "Title on the final onboarding page"
+  },
+  "onboardingReadySubtitle": "Yhdistä MDM-vuokralainen aloittaaksesi Apple-laitekannan hallinnan. Seuraavaksi määrität API-yhteyden ja turva-PIN:n.",
+  "@onboardingReadySubtitle": {
+    "description": "Subtitle on the final onboarding page"
+  },
+
+  "searchTags": "Hae tunnisteita",
+  "tagDeviceCount": "{count} laitetta",
+  "@tagDeviceCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "sortTitle": "Lajittelu",
+  "sortDirection": "Lajittelusuunta",
+  "ascending": "Nouseva",
+  "descending": "Laskeva",
+  "filterSeverity": "Vakavuus",
+  "filterSort": "Suodata ja lajittele",
+  "statusQuarantined": "Karanteenissa",
+  "statusNotQuarantined": "Ei karanteenissa",
+  "statusDetected": "Havaittu",
+  "statusReleased": "Vapautettu",
+  "severityCritical": "Kriittinen",
+  "severityHigh": "Korkea",
+  "severityMedium": "Keskitaso",
+  "severityLow": "Matala",
+  "threatCount": "{count} uhkaa",
+  "@threatCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "behavioralDetectionCount": "{count} havaintoa",
+  "@behavioralDetectionCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "downloadPublicKey": "Lataa",
+  "publicKeySaved": "Julkinen avain tallennettu",
+  "sortBy": "Lajittele",
+  "sortByCvss": "CVSS-pistemäärä",
+  "sortByDeviceCount": "Laitteet joihin vaikuttaa",
+  "sortByCveId": "CVE-tunniste",
+  "vulnCount": "{count} haavoittuvuutta",
+  "@vulnCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "assignTags": "Tunnisteet",
+  "noTagsAvailableMessage": "Tunnisteita ei ole saatavilla. Luo tunnisteita ensin.",
+  "failedToLoadTags": "Tunnisteiden lataaminen epäonnistui",
+  "details": "Tiedot",
+
+  "searchLibraryItems": "Hae kirjastokohteita...",
+  "categoryCustomScript": "Mukautettu komentosarja",
+  "categoryCustomApp": "Mukautettu sovellus",
+  "categoryCustomProfile": "Mukautettu profiili",
+  "categoryInHouseApp": "Sisäinen sovellus",
+  "categoryBuiltIn": "Sisäänrakennettu",
+  "categoryVppApps": "VPP / App Store -sovellukset",
+  "categoryManagedProfiles": "Hallitut profiilit",
+  "categoryKandjiSetup": "MDM-asennus",
+  "categoryMacosRelease": "macOS-päivitykset",
+  "categoryThreatPolicy": "Turvallisuuskäytännöt",
+  "inBlueprints": "{count, plural, =1{1 blueprintissä} other{{count} blueprintissä}}",
+  "@inBlueprints": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "executionFrequencyOnce": "Kerran",
+  "executionFrequencyEvery15Min": "15 minuutin välein",
+  "executionFrequencyEveryDay": "Päivittäin",
+  "executionFrequencyNoEnforcement": "Ei pakotusta",
+  "scriptBody": "Komentosarja",
+  "remediationScript": "Korjauskomentosarja",
+  "allProperties": "Kaikki ominaisuudet",
+  "builtInLibraryItem": "Sisäänrakennettu kirjastokohde",
+  "builtInDetailsHint": "Tiedot saatavilla Tila-välilehdellä",
+  "active": "Aktiivinen",
+  "yes": "Kyllä",
+  "no": "Ei",
+  "execution": "Suoritus",
+  "restart": "Uudelleenkäynnistys",
+  "selfService": "Itsepalvelu",
+  "installType": "Asennustyyppi",
+  "enforcement": "Pakotus",
+  "runsOnMac": "Toimii Macissa",
+  "runsOnIphone": "Toimii iPhonessa",
+  "runsOnIpad": "Toimii iPadissa",
+  "appName": "Sovelluksen nimi",
+  "appVersion": "Sovelluksen versio",
+  "minOsVersion": "Käyttöjärjestelmän vähimmäisversio",
+  "created": "Luotu",
+  "updated": "Päivitetty",
+  "libraryItemCount": "{count, plural, =0{Ei kohteita} =1{1 kohde} other{{count} kohdetta}}",
+
+  "statusResolved": "Ratkaistu",
+  "severityInformational": "Tiedoksi",
+  "managementState": "Hallinnan tila",
+  "managementStateOpen": "Avoin",
+  "managementStateClosed": "Suljettu",
+  "classificationMalware": "Haittaohjelma",
+  "classificationPup": "PUP",
+  "classificationSus": "Epäilyttävä",
+  "classificationMal": "Haitallinen",
+
+  "blueprintRouting": "Blueprint-reititys",
+  "blueprintRoutingDesc": "Rekisteröintikoodi ja reititys manuaalista / Android Work Profile -rekisteröintiä varten",
+  "blueprintRoutingNotConfigured": "Blueprint-reititystä ei ole määritetty tälle vuokralaiselle.",
+  "enrollmentCodeActive": "Aktiivinen",
+  "enrollmentCodeInactive": "Ei aktiivinen",
+  "routingActivity": "Reititystoiminta",
+  "noRoutingActivity": "Reititystoimintaa ei löytynyt.",
+
+  "selfServiceCategories": "Itsepalvelukategoriat",
+  "selfServiceDesc": "Hallitse itsepalvelukategorioita käyttäjillesi",
+  "addCategory": "Lisää kategoria",
+  "categoryName": "Kategorian nimi",
+  "deleteCategory": "Poista kategoria",
+  "deleteCategoryConfirm": "Haluatko varmasti poistaa tämän kategorian?",
+  "noCategoriesFound": "Kategorioita ei löytynyt.",
+  "categoryCreated": "Kategoria luotu",
+  "categoryDeleted": "Kategoria poistettu",
+
+  "profileBody": "Profiilin XML",
+  "customProfile": "Mukautettu profiili",
+  "classification": "Luokitus",
+
+  "mdmEnabled": "MDM käytössä",
+  "enrolledViaDep": "Rekisteröity DEP:n kautta",
+  "userApprovedMdm": "Käyttäjän hyväksymä MDM",
+  "network": "Verkko",
+  "ipAddress": "IP-osoite",
+  "wifiNetwork": "WiFi-verkko",
+  "bluetoothMac": "Bluetooth MAC",
+  "activationLock": "Aktivointilukko",
+  "googlePlayProtect": "Google Play Protect",
+  "developerMode": "Kehittäjätila",
+  "adbEnabled": "ADB käytössä",
+  "unknownSources": "Tuntemattomat lähteet",
+  "securityPatch": "Tietoturvapäivitys",
+  "provisioningUdid": "Provisioinnin UDID",
+  "meid": "MEID",
+  "mdmInfo": "MDM-tiedot",
+  "lastEnrollment": "Viimeisin rekisteröinti",
+  "enterpriseId": "Yritystunniste",
+  "manufacturer": "Valmistaja",
+  "generalStatus": "Yleinen tila",
+  "apiLevel": "API-taso",
+  "userApprovedEnrollment": "Käyttäjän hyväksymä rekisteröinti",
+
+  "hostname": "Isäntänimi",
+  "macAddress": "MAC-osoite",
+  "publicIp": "Julkinen IP",
+  "volumes": "Taltiot",
+  "volumeUsed": "{percent} % käytetty",
+  "@volumeUsed": { "placeholders": { "percent": { "type": "String" } } },
+  "volumeAvailable": "{available} vapaana / {total}",
+  "@volumeAvailable": { "placeholders": { "available": { "type": "String" }, "total": { "type": "String" } } },
+  "encrypted": "Salattu",
+  "cpuInfo": "Suoritin",
+  "processorCores": "{cores} ydintä",
+  "@processorCores": { "placeholders": { "cores": { "type": "String" } } },
+  "processors": "{count} suoritinta",
+  "@processors": { "placeholders": { "count": { "type": "String" } } },
+  "batteryLevel": "Akun varaustaso",
+  "lastUser": "Viimeisin käyttäjä",
+  "bootVolume": "Käynnistystaltio",
+  "localUsers": "Paikalliset käyttäjät",
+  "regularUsers": "Tavalliset käyttäjät",
+  "systemUsers": "Järjestelmäkäyttäjät",
+  "admin": "Ylläpitäjä",
+  "assignToBlueprint": "Liitä Blueprinttiin",
+  "installOnDevice": "Asenna laitteelle",
+  "selectBlueprint": "Valitse Blueprint",
+  "selectDevice": "Valitse laite",
+  "selfServiceEnabled": "Itsepalvelu",
+  "vppLicenses": "VPP-lisenssit",
+  "fileName": "Tiedostonimi",
+
+  "navPrism": "Prism",
+  "prismTitle": "Laitetiedustelu",
+  "prismCategoryActivationLock": "Aktivointilukko",
+  "prismCategoryApps": "Sovellukset",
+  "prismCategoryApplicationFirewall": "Sovelluspalomuu",
+  "prismCategoryCellular": "Mobiiliverkko",
+  "prismCategoryCertificates": "Varmenteet",
+  "prismCategoryDesktopAndScreensaver": "Työpöytä ja näytönsäästäjä",
+  "prismCategoryDeviceInformation": "Laitteen tiedot",
+  "prismCategoryFilevault": "FileVault",
+  "prismCategoryGatekeeperAndXprotect": "Gatekeeper ja XProtect",
+  "prismCategoryInstalledProfiles": "Asennetut profiilit",
+  "prismCategoryKernelExtensions": "Kernel-laajennukset",
+  "prismCategoryLaunchAgentsAndDaemons": "Launch Agentit ja Daemonit",
+  "prismCategoryLocalUsers": "Paikalliset käyttäjät",
+  "prismCategoryStartupSettings": "Käynnistysasetukset",
+  "prismCategorySystemExtensions": "Järjestelmälaajennukset",
+  "prismCategoryTransparencyDatabase": "Läpinäkyvyystietokanta",
+  "prismRecords": "{count} tietuetta",
+  "@prismRecords": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "prismNoData": "Tietoja ei ole saatavilla tälle kategorialle.",
+  "prismExport": "Vie CSV",
+  "prismExportRequested": "Vienti pyydetty. Tarkista latauslinkki hetken kuluttua.",
+  "prismFilterByFamily": "Laiteperhe",
+  "prismAllFamilies": "Kaikki perheet",
+
+  "appearance": "Ulkoasu",
+  "@appearance": {
+    "description": "Settings section title for appearance/theme"
+  },
+  "themeMode": "Teema",
+  "@themeMode": {
+    "description": "Label for theme mode setting"
+  },
+  "themeModeSystem": "Järjestelmä",
+  "@themeModeSystem": {
+    "description": "Theme follows system setting"
+  },
+  "themeModeLight": "Vaalea",
+  "@themeModeLight": {
+    "description": "Light theme"
+  },
+  "themeModeDark": "Tumma",
+  "@themeModeDark": {
+    "description": "Dark theme"
+  },
+
+  "shortTypeScript": "Komentosarja",
+  "shortTypeCustom": "Mukautettu",
+  "shortTypeProfile": "Profiili",
+  "shortTypeInHouse": "Sisäinen",
+  "shortTypeVpp": "VPP",
+  "shortTypeManaged": "Hallittu",
+  "shortTypeKandji": "Kandji",
+  "shortTypeMacos": "macOS",
+  "shortTypeOs": "OS",
+  "shortTypeSecurity": "Turvallisuus",
+  "shortTypeAuto": "Auto",
+
+  "categoryOsUpdates": "Käyttöjärjestelmäpäivitykset",
+  "categoryAutoApps": "Automaattiset sovellukset",
+  "autoApp": "Automaattinen sovellus",
+
+  "fileSize": "Tiedostokoko",
+  "unzipLocation": "Purkamiskohde",
+  "sha256Label": "SHA-256",
+  "fileUpdated": "Tiedosto päivitetty",
+  "mdmIdentifier": "MDM-tunniste",
+  "bundleId": "Bundle ID",
+  "appleTV": "Apple TV",
+  "appleVision": "Apple Vision",
+  "appleWatch": "Apple Watch",
+  "iPodLabel": "iPod",
+  "typeLabel": "Tyyppi",
+
+  "languageEnglish": "English",
+  "languageGerman": "Deutsch",
+  "languageSpanish": "Español",
+  "languageFrench": "Français",
+  "languagePortuguese": "Português",
+  "languageItalian": "Italiano",
+  "languagePolish": "Polski",
+  "languageCroatian": "Hrvatski",
+  "languageRussian": "Русский",
+  "languageUkrainian": "Українська",
+  "languageArabic": "العربية",
+  "languageHindi": "हिन्दी",
+  "languageChinese": "中文",
+  "languageJapanese": "日本語",
+  "languageKorean": "한국어",
+  "languageTurkish": "Türkçe",
+  "languageDutch": "Nederlands",
+  "languageSwedish": "Svenska",
+  "languageCzech": "Čeština",
+  "languageRomanian": "Română",
+  "languageThai": "ไทย",
+  "languageDanish": "Dansk",
+  "languageNorwegian": "Norsk",
+  "languageIndonesian": "Bahasa Indonesia",
+  "languageVietnamese": "Tiếng Việt"
+}

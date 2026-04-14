@@ -1,1 +1,1 @@
-v1.0.0: Initial public release. Full Kandji MDM management with device actions, blueprints, ADE integrations, vulnerability tracking, 25 languages, biometric security, and Material Design 3.
+v2.0.0: Fresh start release. Full Kandji MDM management with device actions, blueprints, ADE integrations, vulnerability tracking, Finnish language added (26 total), biometric security, and Material Design 3.

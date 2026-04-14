@@ -14,7 +14,7 @@ Funcionalidades:
 - Actividad de elementos de biblioteca y estado de despliegue
 - Vista general de licencias con límites de dispositivos y desglose por plataforma
 - Soporte multi-tenant: múltiples perfiles de Kandji con cambio instantáneo
-- 25 idiomas soportados
+- 26 idiomas soportados
 - Diseño responsivo: navegación inferior en teléfonos, barra lateral en tabletas y escritorios
 
 Seguridad:

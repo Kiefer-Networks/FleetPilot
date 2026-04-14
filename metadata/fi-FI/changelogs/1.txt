@@ -1,0 +1,1 @@
+v2.0.0: Uusi alku. Täysi Kandji MDM -hallinta laitetoiminnoilla, blueprinteillä, ADE-integraatioilla, haavoittuvuuksien seurannalla, suomi lisätty (26 kieltä), biometrinen suojaus ja Material Design 3.

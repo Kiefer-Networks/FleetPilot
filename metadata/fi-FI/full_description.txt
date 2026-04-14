@@ -1,0 +1,30 @@
+FleetPilot on avoimen lähdekoodin mobiilisovellus Kandjille, joka tuo täyden MDM-hallinnan puhelimeesi, tablettiisi ja työpöydällesi. Selaa koko Apple-laitekantaasi, hallitse blueprinttejä, käsittele automaattista laiterekisteröintiä, seuraa haavoittuvuuksia ja suorita laitetoimintoja — kaikki yhdestä sovelluksesta Material Design 3 -käyttöliittymällä.
+
+Ominaisuudet:
+- Selaa, hae ja suodata kaikkia rekisteröityjä Mac-, iPhone-, iPad- ja Apple TV -laitteita
+- 8 välilehden laitetietonäkymä: Yleiskatsaus, Sovellukset, Tila, Toiminta, Komennot, Salaisuudet, Muistiinpanot, Sijainti
+- Yli 15 MDM-laitetoimintoa: Lukitse, Käynnistä uudelleen, Sammuta, Tyhjennä, Kadonnut tila, Etätyöpöytä ja paljon muuta
+- Blueprinttien hallinta: luo, muokkaa, poista, hallitse kirjastonimikkeitä, lataa OTA-profiileja
+- Automaattinen laiterekisteröinti (ADE): luo integraatioita, lataa tokeneita, selaa rekisteröityjä laitteita
+- Käyttäjähallinta kursoripohjaisen sivutuksen ja haun avulla
+- Haavoittuvuuksien hallinta: selaa CVE-tunnisteita vakavuuden, CVSS-pisteiden ja vaikutettujen laitteiden mukaan
+- Uhkien tunnistus ja käyttäytymishavainnot haulla
+- Tunnisteiden hallinta 10 värivalinnalla
+- Tarkastusloki hakutoiminnolla tyypin, ylläpitäjän, laitteen tai käyttäjän mukaan
+- Kirjastonimikkeiden toiminta ja käyttöönottotila
+- Lisenssien yleiskatsaus laiterajoituksineen ja alustaerittelyineen
+- Usean vuokralaisen tuki: useita Kandji-profiileja pikavaihdolla
+- 26 kieltä tuettuna
+- Responsiivinen asettelu: pohjanavigaatio puhelimissa, sivunavigaatio tableteissa ja työpöydillä
+
+Turvallisuus:
+- Pakollinen 6-numeroinen PIN-koodi ensimmäisellä käynnistyskerralla
+- Valinnainen biometrinen lukituksen avaus (Face ID, Touch ID, sormenjälki)
+- API-tunnisteet tallennetaan alustan natiiviin suojattuun tallennustilaan (iOS Keychain, Android Keystore)
+- Laitteiden salaisuudet vaativat biometrisen/PIN-vahvistuksen ennen tarkastelua
+- Tuhoavat toiminnot vaativat kirjoitetun vahvistuksen
+- Ei seurantaa, ei analytiikkaa, ei telemetriaa
+
+FleetPilot on täysin ilmainen ilman sovelluksen sisäisiä ostoja, tilauksia tai ominaisuusrajoituksia. Täysin avoimen lähdekoodin MIT-lisenssillä.
+
+Jos FleetPilot on sinulle hyödyllinen, harkitse kehityksen tukemista Liberapayn kautta: https://de.liberapay.com/beli3ver

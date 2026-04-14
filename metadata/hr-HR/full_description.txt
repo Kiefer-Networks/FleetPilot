@@ -14,7 +14,7 @@ Značajke:
 - Aktivnost stavki knjižnice i status implementacije
 - Pregled licenci s ograničenjima uređaja i raspodjelom po platformama
 - Podrška za više organizacija: više Kandji profila s trenutačnim prebacivanjem
-- Podrška za 25 jezika
+- Podrška za 26 jezika
 - Prilagodljiv raspored: donja navigacija na telefonima, navigacijska traka na tabletima i stolnim računalima
 
 Sigurnost:

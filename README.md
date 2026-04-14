@@ -48,7 +48,7 @@ FleetPilot is a native Flutter client for [Kandji](https://kandji.io) that bring
 | **Library Items** | Activity log and per-device deployment status for all library items |
 | **Licensing Overview** | Device limits, usage counts, and platform breakdown |
 | **Multi-Tenant** | Multiple Kandji profiles (production, staging, different orgs) with instant switching |
-| **25 Languages** | Arabic, Chinese, Czech, Danish, Dutch, English, French, German, Hindi, Croatian, Indonesian, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Thai, Turkish, Ukrainian, Vietnamese |
+| **26 Languages** | Arabic, Chinese, Croatian, Czech, Danish, Dutch, English, Finnish, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Thai, Turkish, Ukrainian, Vietnamese |
 | **No Tracking** | No analytics, no telemetry, no ads — fully open-source |
 
 ## Platforms
@@ -193,9 +193,9 @@ flutter test
 
 ## Localization
 
-Available in 25 languages:
+Available in 26 languages:
 
-Arabic, Chinese, Croatian, Czech, Danish, Dutch, English, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Thai, Turkish, Ukrainian, Vietnamese
+Arabic, Chinese, Croatian, Czech, Danish, Dutch, English, Finnish, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Thai, Turkish, Ukrainian, Vietnamese
 
 Translation files are in `lib/l10n/`. Contributions for additional languages are welcome.
 

@@ -14,7 +14,7 @@ Funkce:
 - Aktivita položek knihovny a stav nasazení
 - Přehled licencí s limity zařízení a rozdělením podle platforem
 - Podpora více organizací: více profilů Kandji s okamžitým přepínáním
-- Podpora 25 jazyků
+- Podpora 26 jazyků
 - Responzivní rozložení: spodní navigace na telefonech, navigační lišta na tabletech a počítačích
 
 Zabezpečení:

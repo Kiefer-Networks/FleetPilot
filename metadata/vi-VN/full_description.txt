@@ -14,7 +14,7 @@ Tính năng:
 - Hoạt động mục thư viện và trạng thái triển khai
 - Tổng quan giấy phép với giới hạn thiết bị và phân tích nền tảng
 - Hỗ trợ đa tổ chức: nhiều hồ sơ Kandji với chuyển đổi tức thì
-- Hỗ trợ 25 ngôn ngữ
+- Hỗ trợ 26 ngôn ngữ
 - Bố cục đáp ứng: thanh điều hướng dưới trên điện thoại, thanh điều hướng bên trên máy tính bảng và máy tính để bàn
 
 Bảo mật:

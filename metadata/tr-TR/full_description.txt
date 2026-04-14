@@ -14,7 +14,7 @@ FleetPilot, Kandji için tam MDM yönetimini telefonunuza, tabletinize ve masaü
 - Kütüphane öğesi etkinliği ve dağıtım durumu
 - Cihaz limitleri ve platform dağılımı ile lisans genel bakışı
 - Çok kiracılı destek: birden fazla Kandji profili arasında anında geçiş
-- 25 dil desteği
+- 26 dil desteği
 - Duyarlı düzen: telefonlarda alt gezinme çubuğu, tabletlerde ve masaüstlerinde gezinme rayı
 
 Güvenlik:

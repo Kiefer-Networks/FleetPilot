@@ -14,7 +14,7 @@ Funkcje:
 - Aktywność elementów biblioteki i status wdrożenia
 - Przegląd licencji z limitami urządzeń i podziałem na platformy
 - Obsługa wielu dzierżawców: wiele profili Kandji z natychmiastowym przełączaniem
-- Obsługa 25 języków
+- Obsługa 26 języków
 - Responsywny układ: nawigacja dolna na telefonach, szyna nawigacyjna na tabletach i komputerach
 
 Bezpieczeństwo:

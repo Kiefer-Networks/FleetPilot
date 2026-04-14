@@ -1,1 +1,1 @@
-v1.0.0: Primeira versão pública. Gestão MDM Kandji completa com ações de dispositivo, blueprints, integrações ADE, rastreamento de vulnerabilidades, 25 idiomas, segurança biométrica e Material Design 3.
+v2.0.0: Versão de recomeço. Gestão MDM Kandji completa com ações de dispositivo, blueprints, integrações ADE, rastreamento de vulnerabilidades, finlandês adicionado (26 idiomas), segurança biométrica e Material Design 3.

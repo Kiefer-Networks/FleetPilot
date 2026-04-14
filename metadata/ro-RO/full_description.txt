@@ -14,7 +14,7 @@ Funcționalități:
 - Activitate elemente din bibliotecă și stare de implementare
 - Prezentare generală licențe cu limite de dispozitive și detalii pe platforme
 - Suport multi-tenant: mai multe profiluri Kandji cu comutare instantanee
-- 25 limbi suportate
+- 26 limbi suportate
 - Aspect responsiv: navigare de jos pe telefoane, bară de navigare pe tablete și desktopuri
 
 Securitate:

@@ -14,7 +14,7 @@ Fitur:
 - Aktivitas item perpustakaan dan status deployment
 - Ikhtisar lisensi dengan batas perangkat dan rincian platform
 - Dukungan multi-tenant: beberapa profil Kandji dengan perpindahan instan
-- Mendukung 25 bahasa
+- Mendukung 26 bahasa
 - Tata letak responsif: navigasi bawah di ponsel, rel navigasi di tablet dan desktop
 
 Keamanan:

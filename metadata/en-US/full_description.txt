@@ -14,7 +14,7 @@ Features:
 - Library item activity and deployment status
 - Licensing overview with device limits and platform breakdown
 - Multi-tenant support: multiple Kandji profiles with instant switching
-- 25 languages supported
+- 26 languages supported
 - Responsive layout: bottom nav on phones, navigation rail on tablets and desktops
 
 Security:

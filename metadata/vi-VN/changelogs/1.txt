@@ -1,1 +1,1 @@
-v1.0.0: Phiên bản công khai đầu tiên. Quản lý MDM Kandji đầy đủ với hành động thiết bị, blueprint, tích hợp ADE, theo dõi lỗ hổng, 25 ngôn ngữ, bảo mật sinh trắc học và Material Design 3.
+v2.0.0: Phiên bản khởi đầu mới. Quản lý MDM Kandji đầy đủ với hành động thiết bị, blueprint, tích hợp ADE, theo dõi lỗ hổng, thêm tiếng Phần Lan (26 ngôn ngữ), bảo mật sinh trắc học và Material Design 3.

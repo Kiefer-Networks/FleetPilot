@@ -14,7 +14,7 @@ Funzionalità:
 - Attività degli elementi della libreria e stato di distribuzione
 - Panoramica licenze con limiti dispositivi e suddivisione per piattaforma
 - Supporto multi-tenant: più profili Kandji con cambio istantaneo
-- 25 lingue supportate
+- 26 lingue supportate
 - Layout responsive: navigazione in basso su telefoni, barra laterale su tablet e desktop
 
 Sicurezza:

@@ -14,7 +14,7 @@ Fonctionnalités :
 - Activité des éléments de bibliothèque et état de déploiement
 - Vue d'ensemble des licences avec limites d'appareils et répartition par plateforme
 - Support multi-tenant : plusieurs profils Kandji avec basculement instantané
-- 25 langues prises en charge
+- 26 langues prises en charge
 - Mise en page responsive : navigation en bas sur téléphones, barre latérale sur tablettes et ordinateurs
 
 Sécurité :

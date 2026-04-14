@@ -1,1 +1,1 @@
-v1.0.0: Första publika utgåvan. Fullständig Kandji MDM-hantering med enhetsåtgärder, blueprints, ADE-integrationer, sårbarhetsspårning, 25 språk, biometrisk säkerhet och Material Design 3.
+v2.0.0: Nystart. Fullständig Kandji MDM-hantering med enhetsåtgärder, blueprints, ADE-integrationer, sårbarhetsspårning, finska tillagt (26 språk), biometrisk säkerhet och Material Design 3.

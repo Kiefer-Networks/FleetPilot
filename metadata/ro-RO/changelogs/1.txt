@@ -1,1 +1,1 @@
-v1.0.0: Prima versiune publică. Gestionare completă MDM Kandji cu acțiuni dispozitive, planuri, integrări ADE, urmărire vulnerabilități, 25 limbi, securitate biometrică și Material Design 3.
+v2.0.0: Versiune de pornire nouă. Gestionare completă MDM Kandji cu acțiuni dispozitive, planuri, integrări ADE, urmărire vulnerabilități, finlandeză adăugată (26 limbi), securitate biometrică și Material Design 3.

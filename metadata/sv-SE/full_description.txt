@@ -14,7 +14,7 @@ Funktioner:
 - Biblioteksobjektsaktivitet och distributionsstatus
 - Licensöversikt med enhetsgränser och plattformsfördelning
 - Stöd för flera organisationer: flera Kandji-profiler med omedelbar växling
-- 25 språk stöds
+- 26 språk stöds
 - Responsiv layout: bottennavigering på telefoner, navigeringsfält på surfplattor och datorer
 
 Säkerhet:

@@ -1,1 +1,1 @@
-v1.0.0: İlk genel sürüm. Cihaz eylemleri, planlar, ADE entegrasyonları, güvenlik açığı takibi, 25 dil, biyometrik güvenlik ve Material Design 3 ile tam Kandji MDM yönetimi.
+v2.0.0: Yeni başlangıç sürümü. Cihaz eylemleri, planlar, ADE entegrasyonları, güvenlik açığı takibi, Fince eklendi (26 dil), biyometrik güvenlik ve Material Design 3 ile tam Kandji MDM yönetimi.

@@ -40,7 +40,7 @@ jobs:
           EN_KEYS=$(jq -r 'keys[] | select(startswith("@") | not)' lib/l10n/app_en.arb | sort -u)
           ERRORS=0
 
-          for ARB in lib/l10n/app_de.arb lib/l10n/app_es.arb; do
+          for ARB in lib/l10n/app_de.arb lib/l10n/app_es.arb lib/l10n/app_fi.arb; do
             LOCALE=$(basename "$ARB" .arb | sed 's/app_//')
             ARB_KEYS=$(jq -r 'keys[] | select(startswith("@") | not)' "$ARB" | sort -u)
 
