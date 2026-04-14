@@ -47,5 +47,5 @@ Builds:
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: "2.0.0"
-CurrentVersionCode: 1
+CurrentVersion: "2.0.3"
+CurrentVersionCode: 4
