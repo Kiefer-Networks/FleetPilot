@@ -9,6 +9,7 @@ Changelog: https://github.com/Kiefer-Networks/FleetPilot/releases
 Donate: https://de.liberapay.com/beli3ver
 
 AutoName: FleetPilot
+Name: FleetPilot
 Summary: Open-source MDM management client for Kandji.
 Description: |
     FleetPilot is a native Flutter client for Kandji that brings full MDM
